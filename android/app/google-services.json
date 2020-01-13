@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "441932810779",
+    "firebase_url": "https://delau-cadca.firebaseio.com",
+    "project_id": "delau-cadca",
+    "storage_bucket": "delau-cadca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:441932810779:android:7cec972988332af92286be",
+        "android_client_info": {
+          "package_name": "com.example.delau"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "441932810779-jdss16fhfur7uv5dkqvcvmcqk6m52i4u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfmn24-K6CuKA53_ojcv6b6NCH6o1tbTs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "441932810779-jdss16fhfur7uv5dkqvcvmcqk6m52i4u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

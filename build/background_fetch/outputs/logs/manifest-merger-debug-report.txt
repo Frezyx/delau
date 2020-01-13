@@ -1,0 +1,39 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml:1:1-13:12
+INJECTED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml:1:1-13:12
+INJECTED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml:1:1-13:12
+	package
+		ADDED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml:2:3-55
+		INJECTED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml:1:11-69
+application
+ADDED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml:3:5-12:19
+service#com.transistorsoft.flutter.backgroundfetch.HeadlessJobService
+ADDED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml:5:9-178
+	android:exported
+		ADDED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml:5:152-175
+	android:permission
+		ADDED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml:5:95-151
+	android:name
+		ADDED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml:5:18-94
+receiver#com.transistorsoft.flutter.backgroundfetch.HeadlessBroadcastReceiver
+ADDED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml:7:9-11:20
+	android:name
+		ADDED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml:7:19-102
+intent-filter#action:name:${applicationId}.event.BACKGROUND_FETCH
+ADDED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml:8:13-10:29
+action#${applicationId}.event.BACKGROUND_FETCH
+ADDED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml:9:17-82
+	android:name
+		ADDED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml:9:25-79
+uses-sdk
+INJECTED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml
+INJECTED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml
+		ADDED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\FREZY\Desktop\flutter\.pub-cache\git\flutter_background_fetch-a5deef54e57e464f5cd63f88027dac8531a31682\android\src\main\AndroidManifest.xml
