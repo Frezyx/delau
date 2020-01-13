@@ -26,8 +26,8 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
   String _name;
   String _surname;
 
-  String print_time = "Введите время";
-  String print_date = "Введите дату";
+  String print_time = "Введите время ";
+  String print_date = "Введите дату ";
 
   DateTime _date = new DateTime.now();
   TimeOfDay _time = new TimeOfDay.now();

@@ -9,6 +9,11 @@ import 'dart:convert';
 import 'package:delau/widget/notification.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:delau/models/dbModels.dart';
+import 'package:delau/utils/database_helper.dart';
+import 'package:sqflite/sqflite.dart';
 // import 'package:speech_recognition/speech_recognition.dart';
 // import 'package:delau/pages/bottomBar.dart';
 
@@ -57,13 +62,14 @@ class Post {
   final String date_zd;
   final int marker;
   final int paginator;
+  final bool done;
  
   Post({ this.id, this.post_header, this.post_body,
    this.date_zd, this.time_zd, this.marker,
-   this.paginator});
+   this.paginator, this.done,});
  
   factory Post.fromJson(Map<String, dynamic> json) {
-    // print(json['id'].toString());
+    // print(json['done'].toString());
     return Post(
       // userId: json['userId'] as int,
       id: int.parse(json['id']),
@@ -73,6 +79,7 @@ class Post {
       date_zd: json['date-zd'] as String,
       marker: int.parse(json['marker']),
       paginator: int.parse(json['paginator']),
+      done: (int.parse(json['done']) == 0),
     );
   }
 }
@@ -123,7 +130,6 @@ class StarDisplay extends StatelessWidget {
 
 class ListViewPosts extends StatelessWidget {
   final List<Post> posts;
- 
   ListViewPosts({Key key, this.posts}) : super(key: key);
  
   List<IconData> i_add = [
@@ -134,6 +140,7 @@ class ListViewPosts extends StatelessWidget {
     MdiIcons.fromString('shopping'),
     FontAwesome.spinner
     ];
+    
 
   @override
   Widget build(BuildContext context) {
@@ -155,20 +162,23 @@ class ListViewPosts extends StatelessWidget {
                     style: TextStyle(fontSize: 18.0, fontFamily: 'Exo 2', fontWeight: FontWeight.w300,),
                     overflow: TextOverflow.ellipsis,
                     ),
-
                   subtitle: get_subtitle(posts, position),
-                  //  Text('Дата: ${posts[position].date_zd.toString().substring(5,10)}      Время: ${posts[position].time_zd.toString().substring(0,5)}',
-                                    // ),
-                  trailing:
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    tooltip: 'Next page',
-                    onPressed: (){
-                      httpGet("https://delau.000webhostapp.com/flutter/delete.php?id="+posts[position].id.toString());
-                      posts.removeAt(position);
+                  trailing: Checkbox(
+                    value: posts[position].done,
+                    onChanged: (bool value) {
 
-                    },
+                     httpGet("https://delau.000webhostapp.com/flutter/nodeletedone.php?id="+posts[position].id.toString()); 
+                    }
                   ),
+                  // IconButton(
+                  //   icon: const Icon(Icons.close),
+                  //   tooltip: 'Next page',
+                  //   onPressed: (){
+                  //     httpGet("https://delau.000webhostapp.com/flutter/delete.php?id="+posts[position].id.toString());
+                  //     posts.removeAt(position);
+
+                  //   },
+                  // ),
                   onTap: () {
                     _onTapItem(context, posts[position]);
                     Navigator.pushNamed(context, '/postPage/${posts[position].id}');
@@ -181,7 +191,8 @@ class ListViewPosts extends StatelessWidget {
           }),
     );
   }
- 
+
+
   void _onTapItem(BuildContext context, Post post) {
 
   }
@@ -194,17 +205,27 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
+void updateListView() {
+
+		final Future<Database> dbFuture = databaseHelper.initializeDatabase();
+		dbFuture.then((database) {
+
+			Future<List<Note>> noteListFuture = databaseHelper.getNoteList();
+			noteListFuture.then((noteList) {
+				setState(() {
+				  this.noteList = noteList;
+				  this.count = noteList.length;
+				});
+			});
+		});
+  }
+
+// SQLite
+	DatabaseHelper databaseHelper = DatabaseHelper();
+	List<Note> noteList;
+	int count = 0;
+
 // РОУТИННГ
-  // int curentTab = 0;
-
-  // final List<Widget> screens =[
-  //   MyStatefulWidget(),
-  // ];
-  // SpeechRecognition _speechRecognition;
-  // bool _isAvailable = false;
-  // bool _isListerning = false;
-  // String resultText = "";
-
   List<String> slider_titles = [
     "Учеба",
     "Работа",
@@ -222,9 +243,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     FontAwesome.spinner
     ];
 
-
-
-  // Future<List<Post>> posters = fetchPosts(http.Client());
   Widget getPreviewData(AsyncSnapshot<List<Post>> snapshot){
     return snapshot.hasData
               ? ListViewPosts(posts: snapshot.data) // return the ListView widget
@@ -235,80 +253,18 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     return  fetchPosts(http.Client());
   }
 
-  // void refresher() async{
-  //   setState(() {
-  //   const oneSecond = const Duration(seconds: 10);
-  //   new Timer.periodic(oneSecond, (Timer t) =>  setState((){}));
-  // });
-  // }
-
   @override
   void initState() {
 
   super.initState();
     setState(() {
-      const oneSecond = const Duration(seconds: 1);
+      const oneSecond = const Duration(milliseconds: 10000);
       new Timer.periodic(oneSecond, (Timer t) =>  setState((){}));
     });
-
-    // initSpeechRecognizer();
   }
-
-  // void initSpeechRecognizer(){
-  //   _speechRecognition = SpeechRecognition();
-
-  //   _speechRecognition.setAvailabilityHandler(
-  //     (bool result) => setState(() => _isAvailable = result),
-  //     );
-
-  //   _speechRecognition.setRecognitionStartedHandler(
-  //     () => setState(() => _isListerning = true),
-  //     );
-
-  //   _speechRecognition.setRecognitionResultHandler(
-  //     (String speech) => setState(() => resultText = speech),
-  //     );
-    
-  //   _speechRecognition.setRecognitionCompleteHandler(
-  //     () => setState(() => _isListerning = false),
-  //     );
-    
-  //   _speechRecognition.activate().then(
-  //     (result) => setState(()=> _isAvailable = result),
-  //     );
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // new Timer.periodic(oneSecond, (Timer t) => setState((){}));
     return Scaffold(
-          // appBar: new AppBar(
-          //   title: new Text("csd"),
-          //   backgroundColor: Colors.transparent,
-          //   elevation: 0.0,
-          // ),
-          //  appBar: AppBar(
-          //     backgroundColor: Colors.transparent,
-          //     title: const Text('DELAU'),
-          //     centerTitle: true,
-          //     actions: <Widget>[
-          //     IconButton(
-          //       icon: const Icon(Icons.speaker_notes),
-          //       tooltip: 'Next page',
-          //       onPressed: () {
-          //         // speak();
-          //       },
-          //     ),
-          //     IconButton(
-          //       icon: const Icon(Icons.notification_important),
-          //       tooltip: 'Show Snackbar',
-          //       onPressed: () {
-                
-          //       },
-          //     ),
-          //   ],
-          // ),
-
       body:
       SafeArea(
         bottom: false,
@@ -341,20 +297,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                         blurRadius: 15.0,
                       ),
                     ],
-                    // gradient: new LinearGradient(
-                    //   colors: [
-                    //   Color.fromRGBO(162, 122, 246, 1),
-                    //   Color.fromRGBO(114, 103, 239, 1),
-                    //   // Color.fromRGBO(81, 20, 219, 1),
-                    //   // Color.fromRGBO(31, 248, 169, 1),
-                    //   ],
-
-                    // begin: Alignment.topLeft,
-                    // end: Alignment.bottomLeft,
-                    // stops: [0.0,1.0],
-
-                    //   tileMode: TileMode.clamp),
-                    // color: Color.fromRGBO(114, 103, 239, 1),
                         border: Border.all(
                           color: Colors.transparent,
                           width: 0,
