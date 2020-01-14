@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:delau/models/dbModels.dart';
 import 'package:delau/utils/database_helper.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'dart:math' as math;
 // import 'package:speech_recognition/speech_recognition.dart';
 // import 'package:delau/pages/bottomBar.dart';
@@ -175,15 +176,6 @@ class ListViewPosts extends StatelessWidget {
                      httpGet("https://delau.000webhostapp.com/flutter/nodeletedone.php?id="+posts[position].id.toString()); 
                     }
                   ),
-                  // IconButton(
-                  //   icon: const Icon(Icons.close),
-                  //   tooltip: 'Next page',
-                  //   onPressed: (){
-                  //     httpGet("https://delau.000webhostapp.com/flutter/delete.php?id="+posts[position].id.toString());
-                  //     posts.removeAt(position);
-
-                  //   },
-                  // ),
                   onTap: () {
                     _onTapItem(context, posts[position]);
                     Navigator.pushNamed(context, '/postPage/${posts[position].id}');
@@ -228,32 +220,34 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     FontAwesome.spinner
     ];
 
-  Widget getPreviewData(AsyncSnapshot<List<Post>> snapshot){
-    return snapshot.hasData
-              ? ListViewPosts(posts: snapshot.data) // return the ListView widget
-              : Center(child: CircularProgressIndicator());
-  }
+  // Widget getPreviewData(AsyncSnapshot<List<Post>> snapshot){
+  //   return snapshot.hasData
+  //             ? ListViewPosts(posts: snapshot.data) // return the ListView widget
+  //             : Center(child: CircularProgressIndicator());
+  // }
 
-  Future<List<Post>> buildCountWidget() {
-    return  fetchPosts(http.Client());
-  }
+  // Future<List<Post>> buildCountWidget() {
+  //   return  fetchPosts(http.Client());
+  // }
 
-  @override
-  void initState() {
+  // @override
+  // void initState() {
 
-  super.initState();
-    setState(() {
-      const oneSecond = const Duration(milliseconds: 10000);
-      new Timer.periodic(oneSecond, (Timer t) =>  setState((){}));
-    });
-  }
+  // super.initState();
+  //   setState(() {
+  //     const oneSecond = const Duration(milliseconds: 10000);
+  //     new Timer.periodic(oneSecond, (Timer t) =>  setState((){}));
+  //   });
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body:
-      SafeArea(
-        bottom: false,
-        top: false,
+      Container(
+        // bottom: false,
+        // top: false,
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         child:                         
       Column(
         children: [
@@ -321,9 +315,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
                       tileMode: TileMode.clamp),
            ),
-                              // image: DecorationImage(
-                              //     image: NetworkImage(
-                              //         'https://placeimg.com/320/240/any'),fit: BoxFit.fill)),
         ),
         
          Expanded(
@@ -334,20 +325,102 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           if (snapshot.hasData) 
           {
             return ListView.builder(
-              padding: const EdgeInsets.only(bottom: 0.0, top: 10.0, right: 5.0, left:5.0),
+              padding: const EdgeInsets.only(bottom: 0.0, top: 10.0, right: 0.0, left:0.0),
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
                 Client item = snapshot.data[index];
                 return Dismissible(
                   key: UniqueKey(),
-                  background: Container(color: Colors.red),
+                  background: 
+                  Container(
+                    padding: EdgeInsets.only( top: 6.0, left: 5.0),
+                    color: Colors.red[300],
+                    alignment: Alignment.centerLeft,
+                      child: Column(
+                  children: <Widget>[
+                        Icon(
+                        FontAwesome.close,
+                        color: Colors.white,
+                  ),
+                  Text("Удалить", 
+                  style: TextStyle(
+                    color: Colors.white,
+                     fontSize: 14.0,
+                      fontFamily: 'Exo 2',
+                       fontWeight: FontWeight.w600,),),
+                  ],
+                  ),
+                  ),
+                  secondaryBackground:                   Container(
+                    padding: EdgeInsets.only( top: 6.0, right: 5.0),
+                    color: Colors.green[300],
+                    alignment: Alignment.centerRight,
+                      child: Column(
+                  children: <Widget>[
+                        Icon(
+                        FontAwesome.check,
+                        color: Colors.white,
+                  ),
+                  Text("Выполнил", 
+                  style: TextStyle(
+                    color: Colors.white,
+                     fontSize: 14.0,
+                      fontFamily: 'Exo 2',
+                       fontWeight: FontWeight.w600,),),
+                  ],
+                  ),
+                  ),
+                  // confirmDismiss: (DismissDirection direction) async {
+                  //   final bool res = await showDialog(
+                  //     context: context,
+                  //     builder: (BuildContext context) {
+                  //       return AlertDialog(
+                  //         title: const Text("Подтвердите действие"),
+                  //         content: const Text("Are you sure you wish to delete this item?"),
+                  //         actions: <Widget>[
+                  //           FlatButton(
+                  //             onPressed: () => Navigator.of(context).pop(true),
+                  //             child: const Text("DELETE")
+                  //           ),
+                  //           FlatButton(
+                  //             onPressed: () => Navigator.of(context).pop(false),
+                  //             child: const Text("CANCEL"),
+                  //           ),
+                  //         ],
+                  //       );
+                  //     },
+                  //   );
+                  // },
+                  // key: UniqueKey(),
+                  direction: DismissDirection.endToStart,
                   onDismissed: (direction) {
                     DBProvider.db.deleteClient(item.id);
+                    httpGet("https://delau.000webhostapp.com/flutter/delete.php?id="+item.id.toString());
+// setState(() {});
+                    //TODO DELETE
+                    Scaffold.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: Theme.of(context).accentColor,
+                        content: Text(
+                          'test',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    );
                   },
+                  // onDismissed: (direction) {
+                  //   DBProvider.db.deleteClient(item.id);
+                  //   httpGet("https://delau.000webhostapp.com/flutter/delete.php?id="+item.id.toString());
+                  // },
                   child: ListTile(
-                    leading: Icon(i_add[item.marker],
+                    leading: Icon(
+                    i_add[item.marker],
                     color: Color.fromRGBO(114, 103, 239, 1),
-                    size: 24.0,
+                    size: 28.0,
                   ),
                     title: Text('${item.title}',
                     style: TextStyle(fontSize: 18.0, fontFamily: 'Exo 2', fontWeight: FontWeight.w300,),
@@ -356,6 +429,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     subtitle: get_subtitle_of_SQLI(item),
                     trailing: Checkbox(
                       onChanged: (bool value) {
+                         httpGet("https://delau.000webhostapp.com/flutter/nodeletedone.php?id="+item.id.toString()); 
                         DBProvider.db.blockOrUnblock(item);
                         setState(() {});
                       },
@@ -387,105 +461,124 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       ),
 
     
-      bottomNavigationBar:
-             BottomAppBar(
-              shape: const CircularNotchedRectangle(),
-              child: Container(
-                height: 50.0,
-                child: Row(
-                  children: <Widget>[
-                    FlatButton(
-                      color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
-                      padding: EdgeInsets.only( left: 0.0, top: 15, bottom: 15, ),
-                      onPressed: () {
-                        // if(_isAvailable && ! _isListerning)
-                        // {
-                        //   _speechRecognition.listen(locale: "ru_RU").then(
-                        //     (result) => print('$result')
-                        //   );
-                        // }
-                      },
-                      child: 
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          // Icon(Icons.calendar_today,size: 20.0,),
-                          Text(
-                              "Старт",
-                              style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
-                            ),
-                        ],
+      // bottomNavigationBar:
+      //        BottomAppBar(
+      //         shape: const CircularNotchedRectangle(),
+      //         child: Container(
+      //           height: 50.0,
+      //           child: Row(
+      //             children: <Widget>[
+      //               FlatButton(
+      //                 color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
+      //                 padding: EdgeInsets.only( left: 0.0, top: 15, bottom: 15, ),
+      //                 onPressed: () {
+      //                   // if(_isAvailable && ! _isListerning)
+      //                   // {
+      //                   //   _speechRecognition.listen(locale: "ru_RU").then(
+      //                   //     (result) => print('$result')
+      //                   //   );
+      //                   // }
+      //                 },
+      //                 child: 
+      //                 Row(
+      //                   mainAxisSize: MainAxisSize.max,
+      //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //                   children: <Widget>[
+      //                     // Icon(Icons.calendar_today,size: 20.0,),
+      //                     Text(
+      //                         "Старт",
+      //                         style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
+      //                       ),
+      //                   ],
       
-                      ),
-                    ),
+      //                 ),
+      //               ),
       
-                    FlatButton(
-                      color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
-                      padding: EdgeInsets.only( left: 0.0, top: 15, bottom: 15),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/new');
-                      },
-                      child: 
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          // Icon(Icons.perm_contact_calendar,size: 20.0,),
-                          Text(
-                              "Стоп",
-                              style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
-                            ),
-                        ],
+      //               FlatButton(
+      //                 color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
+      //                 padding: EdgeInsets.only( left: 0.0, top: 15, bottom: 15),
+      //                 onPressed: () {
+      //                   Navigator.pushNamed(context, '/new');
+      //                 },
+      //                 child: 
+      //                 Row(
+      //                   mainAxisSize: MainAxisSize.max,
+      //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //                   children: <Widget>[
+      //                     // Icon(Icons.perm_contact_calendar,size: 20.0,),
+      //                     Text(
+      //                         "Стоп",
+      //                         style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
+      //                       ),
+      //                   ],
       
-                      ),
-                    ),
+      //                 ),
+      //               ),
       
-                    FlatButton(
-                      color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
-                      padding: EdgeInsets.only( left: 60.0, top: 15, bottom: 15),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/new');
-                      },
-                      child: 
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          // Icon(Icons.perm_contact_calendar,size: 20.0,),
-                          Text(
-                              "Очистить",
-                              style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
-                            ),
-                        ], 
-                      ),
-                    ),
+      //               FlatButton(
+      //                 color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
+      //                 padding: EdgeInsets.only( left: 60.0, top: 15, bottom: 15),
+      //                 onPressed: () {
+      //                   Navigator.pushNamed(context, '/new');
+      //                 },
+      //                 child: 
+      //                 Row(
+      //                   mainAxisSize: MainAxisSize.max,
+      //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //                   children: <Widget>[
+      //                     // Icon(Icons.perm_contact_calendar,size: 20.0,),
+      //                     Text(
+      //                         "Очистить",
+      //                         style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
+      //                       ),
+      //                   ], 
+      //                 ),
+      //               ),
       
-                                  FlatButton(
-                      color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
-                      padding: EdgeInsets.only(left: 0.0, top: 15, bottom: 15),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/ntf');
-                      },
-                      child: Text(
-                        "Поиск",
-                        style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
-                      ),
-                    ),
+      //                             FlatButton(
+      //                 color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
+      //                 padding: EdgeInsets.only(left: 0.0, top: 15, bottom: 15),
+      //                 onPressed: () {
+      //                   Navigator.pushNamed(context, '/ntf');
+      //                 },
+      //                 child: Text(
+      //                   "Поиск",
+      //                   style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
+      //                 ),
+      //               ),
                     
-                  ],
-                ),
-              ),
-            ),
-            floatingActionButton: FloatingActionButton(
-              heroTag: "btn_num_1",
-              onPressed: () {
-                // print("Я как бы нажался");
-                Navigator.pushNamed(context, '/second/123');},
-              child: Icon(Icons.add),
-              backgroundColor: Color.fromRGBO(114, 103, 239, 1),
-            ),
-            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      //             ],
+      //           ),
+      //         ),
+      //       ),
+      //       floatingActionButton: FloatingActionButton(
+      //         heroTag: "btn_num_1",
+      //         onPressed: () {
+      //           // print("Я как бы нажался");
+      //           Navigator.pushNamed(context, '/second/123');},
+      //         child: Icon(Icons.add),
+      //         backgroundColor: Color.fromRGBO(114, 103, 239, 1),
+      //       ),
+      //       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
+      bottomNavigationBar: CurvedNavigationBar(
+        height: 50.0,
+    backgroundColor: Colors.transparent,
+    items: <Widget>[
+      Icon(Icons.add, size: 30, color: Colors.black,),
+      Icon(Icons.list, size: 30, color: Colors.black,),
+      // Icon(Icons.compare_arrows, size: 30, color: Colors.black,),
+      // Icon(Icons.add, size: 30, color: Colors.black,),
+      // Icon(Icons.list, size: 30, color: Colors.black,),
+    ],
+    index: 0,
+    animationCurve: Curves.bounceInOut,
+    onTap: (index) {
+      if(index == 1){
+        Navigator.pushNamed(context, '/second/1');
+      }
+    },
+  ),
           );
         }
 }

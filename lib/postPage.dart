@@ -53,98 +53,98 @@ class _PostPageState extends State<PostPage> {
         },
       ),
 
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        child: Container(
-          height: 50.0,
-          child: Row(
-            children: <Widget>[
-              FlatButton(
-                color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
-                padding: EdgeInsets.only( left: 0.0, top: 15, bottom: 15, ),
-                onPressed: () {
+      // bottomNavigationBar: BottomAppBar(
+      //   shape: const CircularNotchedRectangle(),
+      //   child: Container(
+      //     height: 50.0,
+      //     child: Row(
+      //       children: <Widget>[
+      //         FlatButton(
+      //           color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
+      //           padding: EdgeInsets.only( left: 0.0, top: 15, bottom: 15, ),
+      //           onPressed: () {
 
-                },
-                child: 
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    // Icon(Icons.calendar_today,size: 20.0,),
-                    Text(
-                        "Сегодня",
-                        style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
-                      ),
-                  ],
+      //           },
+      //           child: 
+      //           Row(
+      //             mainAxisSize: MainAxisSize.max,
+      //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //             children: <Widget>[
+      //               // Icon(Icons.calendar_today,size: 20.0,),
+      //               Text(
+      //                   "Сегодня",
+      //                   style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
+      //                 ),
+      //             ],
 
-                ),
-              ),
+      //           ),
+      //         ),
 
-              FlatButton(
-                color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
-                padding: EdgeInsets.only( left: 0.0, top: 15, bottom: 15),
-                onPressed: () {
-                  /*...*/
-                },
-                child: 
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    // Icon(Icons.perm_contact_calendar,size: 20.0,),
-                    Text(
-                        "Завтра",
-                        style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
-                      ),
-                  ],
+      //         FlatButton(
+      //           color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
+      //           padding: EdgeInsets.only( left: 0.0, top: 15, bottom: 15),
+      //           onPressed: () {
+      //             /*...*/
+      //           },
+      //           child: 
+      //           Row(
+      //             mainAxisSize: MainAxisSize.max,
+      //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //             children: <Widget>[
+      //               // Icon(Icons.perm_contact_calendar,size: 20.0,),
+      //               Text(
+      //                   "Завтра",
+      //                   style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
+      //                 ),
+      //             ],
 
-                ),
-              ),
+      //           ),
+      //         ),
 
-              FlatButton(
-                color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
-                padding: EdgeInsets.only( left: 60.0, top: 15, bottom: 15),
-                onPressed: () {
-                  /*...*/
-                },
-                child: 
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    // Icon(Icons.perm_contact_calendar,size: 20.0,),
-                    Text(
-                        "Календарь",
-                        style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
-                      ),
-                  ],
+      //         FlatButton(
+      //           color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
+      //           padding: EdgeInsets.only( left: 60.0, top: 15, bottom: 15),
+      //           onPressed: () {
+      //             /*...*/
+      //           },
+      //           child: 
+      //           Row(
+      //             mainAxisSize: MainAxisSize.max,
+      //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //             children: <Widget>[
+      //               // Icon(Icons.perm_contact_calendar,size: 20.0,),
+      //               Text(
+      //                   "Календарь",
+      //                   style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
+      //                 ),
+      //             ],
 
-                ),
-              ),
+      //           ),
+      //         ),
 
-                            FlatButton(
-                color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
-                padding: EdgeInsets.only(left: 0.0, top: 15, bottom: 15),
-                onPressed: () {
-                  /*...*/
-                },
-                child: Text(
-                  "Поиск",
-                  style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
-                ),
-              ),
+      //                       FlatButton(
+      //           color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
+      //           padding: EdgeInsets.only(left: 0.0, top: 15, bottom: 15),
+      //           onPressed: () {
+      //             /*...*/
+      //           },
+      //           child: Text(
+      //             "Поиск",
+      //             style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
+      //           ),
+      //         ),
               
               
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {Navigator.pushNamed(context, '/second/123');},
-        child: Icon(Icons.add),
-        backgroundColor: Color.fromRGBO(114, 103, 239, 1),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      //       ],
+      //     ),
+      //   ),
+      // ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {Navigator.pushNamed(context, '/second/123');},
+      //   child: Icon(Icons.add),
+      //   backgroundColor: Color.fromRGBO(114, 103, 239, 1),
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

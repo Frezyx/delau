@@ -1,9 +1,10 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:speech_recognition/speech_recognition.dart';
 import 'package:delau/models/dbModels.dart';
 import 'package:delau/utils/database_helper.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:delau/utils/recognize_helper.dart';
 
 class MyStatefulWidget3 extends StatefulWidget {
   String _id;
@@ -81,6 +82,9 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
       () {
         setState(() {
           requestSendFlag++;
+          // ВОТ ТУТ НУЖНО ДОБАВИТЬ ЕБАНУЮ ДОБАВКУ В БД БЛЯТЬ 
+          perseTaskFromResponse(resultText);
+          // print("FSQL://title:"+response[0]+"  subtitle:"+response[1]);
           return httpRecognitionRequest("https://delau.000webhostapp.com/flutter/addTaskRecognition.php?request="+resultText);
           // return _isListerning = false;
         });
@@ -470,116 +474,138 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
 
       ],
      ),),),
-     bottomNavigationBar:
-             BottomAppBar(
-              shape: const CircularNotchedRectangle(),
-              child: Container(
-                height: 50.0,
-                child: Row(
-                  children: <Widget>[
-                    FlatButton(
-                      color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
-                      padding: EdgeInsets.only( left: 0.0, top: 15, bottom: 15, ),
-                      onPressed: () {
+    //  bottomNavigationBar:
+    //          BottomAppBar(
+    //           shape: const CircularNotchedRectangle(),
+    //           child: Container(
+    //             height: 50.0,
+    //             child: Row(
+    //               children: <Widget>[
+    //                 FlatButton(
+    //                   color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
+    //                   padding: EdgeInsets.only( left: 0.0, top: 15, bottom: 15, ),
+    //                   onPressed: () {
 
-                      },
-                      child: 
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          // Icon(Icons.calendar_today,size: 20.0,),
-                          Text(
-                              "Старт",
-                              style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
-                            ),
-                        ],
+    //                   },
+    //                   child: 
+    //                   Row(
+    //                     mainAxisSize: MainAxisSize.max,
+    //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                     children: <Widget>[
+    //                       // Icon(Icons.calendar_today,size: 20.0,),
+    //                       Text(
+    //                           "Старт",
+    //                           style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
+    //                         ),
+    //                     ],
       
-                      ),
-                    ),
+    //                   ),
+    //                 ),
       
-                    FlatButton(
-                      color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
-                      padding: EdgeInsets.only( left: 0.0, top: 15, bottom: 15),
-                      onPressed: () {
-                        // if(_isListerning){
-                        //   _speechRecognition.stop().then(
-                        //     (result) => setState(() => _isListerning = result));
+    //                 FlatButton(
+    //                   color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
+    //                   padding: EdgeInsets.only( left: 0.0, top: 15, bottom: 15),
+    //                   onPressed: () {
+    //                     // if(_isListerning){
+    //                     //   _speechRecognition.stop().then(
+    //                     //     (result) => setState(() => _isListerning = result));
                           
-                        // }
-                      },
-                      child: 
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          // Icon(Icons.perm_contact_calendar,size: 20.0,),
-                          Text(
-                              "Стоп",
-                              style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
-                            ),
-                        ],
+    //                     // }
+    //                   },
+    //                   child: 
+    //                   Row(
+    //                     mainAxisSize: MainAxisSize.max,
+    //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                     children: <Widget>[
+    //                       // Icon(Icons.perm_contact_calendar,size: 20.0,),
+    //                       Text(
+    //                           "Стоп",
+    //                           style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
+    //                         ),
+    //                     ],
       
-                      ),
-                    ),
+    //                   ),
+    //                 ),
       
-                    FlatButton(
-                      color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
-                      padding: EdgeInsets.only( left: 60.0, top: 15, bottom: 15),
-                      onPressed: () {
-                        // if(_isListerning){
-                        //   _speechRecognition.cancel().then(
-                        //     (result) => setState((){
-                        //       _isListerning = result;
-                        //       resultText = "";
-                        //     })
-                        //   );
-                        // }
-                      },
-                      child: 
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          // Icon(Icons.perm_contact_calendar,size: 20.0,),
-                          Text(
-                              "Очистить",
-                              style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
-                            ),
-                        ], 
-                      ),
-                    ),
+    //                 FlatButton(
+    //                   color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
+    //                   padding: EdgeInsets.only( left: 60.0, top: 15, bottom: 15),
+    //                   onPressed: () {
+    //                     // if(_isListerning){
+    //                     //   _speechRecognition.cancel().then(
+    //                     //     (result) => setState((){
+    //                     //       _isListerning = result;
+    //                     //       resultText = "";
+    //                     //     })
+    //                     //   );
+    //                     // }
+    //                   },
+    //                   child: 
+    //                   Row(
+    //                     mainAxisSize: MainAxisSize.max,
+    //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                     children: <Widget>[
+    //                       // Icon(Icons.perm_contact_calendar,size: 20.0,),
+    //                       Text(
+    //                           "Очистить",
+    //                           style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
+    //                         ),
+    //                     ], 
+    //                   ),
+    //                 ),
       
-                                  FlatButton(
-                      color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
-                      padding: EdgeInsets.only(left: 0.0, top: 15, bottom: 15),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/ntf');
-                      },
-                      child: Text(
-                        "Поиск",
-                        style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
-                      ),
-                    ),
+    //                               FlatButton(
+    //                   color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
+    //                   padding: EdgeInsets.only(left: 0.0, top: 15, bottom: 15),
+    //                   onPressed: () {
+    //                     Navigator.pushNamed(context, '/ntf');
+    //                   },
+    //                   child: Text(
+    //                     "Поиск",
+    //                     style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
+    //                   ),
+    //                 ),
                     
-                  ],
-                ),
-              ),
-            ),
-            floatingActionButton: FloatingActionButton(
-              heroTag: "btn_num_1_12_234555",
-              onPressed: () {
-                      if(_isAvailable && ! _isListerning)
-                        {
-                          // httpGet("https://delau.000webhostapp.com/flutter/addTask.php?header=1&body=1&date=2020-01-15&time=24:13:00&marker=1&paginator=1");
-                          _speechRecognition.listen(locale: "ru_RU").then((result) => print("aaaaa"));
-                        }
-                        // httpRecognitionRequest("https://delau.000webhostapp.com/flutter/addTaskRecognition.php?request="+result),
-                },
-              child: Icon(Icons.record_voice_over),
-              backgroundColor: Color.fromRGBO(114, 103, 239, 1),
-            ),
+    //               ],
+    //             ),
+    //           ),
+    //         ),
+            // floatingActionButton: FloatingActionButton(
+            //   heroTag: "btn_num_1_12_234555",
+            //   onPressed: () {
+            //           if(_isAvailable && ! _isListerning)
+            //             {
+            //               // httpGet("https://delau.000webhostapp.com/flutter/addTask.php?header=1&body=1&date=2020-01-15&time=24:13:00&marker=1&paginator=1");
+            //               _speechRecognition.listen(locale: "ru_RU").then((result) => print("aaaaa"));
+            //             }
+            //             // httpRecognitionRequest("https://delau.000webhostapp.com/flutter/addTaskRecognition.php?request="+result),
+            //     },
+            //   child: Icon(Icons.record_voice_over),
+            //   backgroundColor: Color.fromRGBO(114, 103, 239, 1),
+            // ),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+            bottomNavigationBar: CurvedNavigationBar(
+              backgroundColor: Colors.transparent,
+              items: <Widget>[
+                Icon(Icons.add, size: 30, color: Colors.black,),
+                Icon(Icons.list, size: 30, color: Colors.black,),
+                // Icon(Icons.compare_arrows, size: 30, color: Colors.black,),
+                // Icon(Icons.add, size: 30, color: Colors.black,),
+                // Icon(Icons.list, size: 30, color: Colors.black,),
+                
+              ],
+              height: 50.0,
+              index: 1,
+              animationCurve: Curves.bounceInOut,
+              onTap: (index) {
+                if(index == 0){
+                  Navigator.pushNamed(context, '/');
+                }
+                if(index == 1){
+                  Navigator.pushNamed(context, '/second/123');
+                }
+              },
+            ),
             );
   }
   
