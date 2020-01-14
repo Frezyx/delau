@@ -250,9 +250,13 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
         new TextFormField(
           cursorColor: Color.fromRGBO(114, 103, 239, 1),
           decoration: InputDecoration(   
-          labelText: 'Название задачи',       
-          focusedBorder: UnderlineInputBorder(      
-            borderSide: BorderSide(color: Color.fromRGBO(114, 103, 239, 1)),   
+          labelText: 'Название задачи',  
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),     
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0),
+            borderSide: BorderSide(color: Color.fromRGBO(114, 103, 239, 1)),
           ),    
         ),
           validator: (value){
@@ -282,10 +286,14 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
           cursorColor: Color.fromRGBO(114, 103, 239, 1),
           decoration: InputDecoration(        
           labelText: 'Пояснение задачи',  
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),     
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0),
+            borderSide: BorderSide(color: Color.fromRGBO(114, 103, 239, 1)),
+          ),  
           
-          focusedBorder: UnderlineInputBorder(      
-            borderSide: BorderSide(color: Color.fromRGBO(114, 103, 239, 1)),  
-            ),
           ),
           validator: (value){
           if (value.isEmpty) return 'Введите пояснение для задания';

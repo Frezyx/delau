@@ -334,15 +334,15 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   background: 
                   Container(
                     padding: EdgeInsets.only( top: 6.0, left: 5.0),
-                    color: Colors.red[300],
+                    color: Colors.green[300],
                     alignment: Alignment.centerLeft,
                       child: Column(
                   children: <Widget>[
                         Icon(
-                        FontAwesome.close,
+                        FontAwesome.check,
                         color: Colors.white,
                   ),
-                  Text("Удалить", 
+                  Text("Выполнил", 
                   style: TextStyle(
                     color: Colors.white,
                      fontSize: 14.0,
@@ -351,17 +351,18 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   ],
                   ),
                   ),
-                  secondaryBackground:                   Container(
+                  secondaryBackground:
+                   Container(
                     padding: EdgeInsets.only( top: 6.0, right: 5.0),
-                    color: Colors.green[300],
+                    color: Colors.red[300],
                     alignment: Alignment.centerRight,
                       child: Column(
                   children: <Widget>[
                         Icon(
-                        FontAwesome.check,
+                        FontAwesome.close,
                         color: Colors.white,
                   ),
-                  Text("Выполнил", 
+                  Text("Удалить", 
                   style: TextStyle(
                     color: Colors.white,
                      fontSize: 14.0,
