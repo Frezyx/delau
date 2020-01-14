@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:speech_recognition/speech_recognition.dart';
+import 'package:delau/models/dbModels.dart';
+import 'package:delau/utils/database_helper.dart';
+import 'package:sqflite/sqflite.dart';
 
 class MyStatefulWidget3 extends StatefulWidget {
   String _id;
@@ -440,6 +443,18 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
         new RaisedButton(onPressed: (){
           if(_formKey.currentState.validate()){
             if(_name != null && _surname != null){
+
+              Client now_client = new Client(
+                    title: _name,
+                    description: _surname,
+                    marker: selected_radio-1,
+                    priority: rating.round(),
+                    date: _date.toString(),
+                    time: _time.toString(),
+                    done: false
+                  );
+
+              addAtLocalDB(now_client);
               httpGet("https://delau.000webhostapp.com/flutter/addTask.php?header="+_name+"&body="+_surname+"&date="+_date.toString()+"&time="+_time.toString()+"&marker="+(selected_radio-1).toString()+"&paginator="+rating.toString());  
             }
           }
@@ -566,5 +581,11 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
             ),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
             );
+  }
+  
+  void addAtLocalDB(Client nowClient) async{
+              await DBProvider.db.newClient(
+                nowClient
+              );
   }
 }

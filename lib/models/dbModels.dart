@@ -1,98 +1,55 @@
-import 'dart:core';
+import 'dart:convert';
 
-class Note{
+Client clientFromJson(String str) {
+  final jsonData = json.decode(str);
+  return Client.fromMap(jsonData);
+}
 
-  int _id;
-  String _title;
-  String _description;
-  String _date;
-  String _time;
-  int _priority;
-  int _marker;
-  int _done;
+String clientToJson(Client data) {
+  final dyn = data.toMap();
+  return json.encode(dyn);
+}
 
-  Note(this._date, this._description, this._done,
-  this._marker, this._priority, this._time, this._title);
+class Client {
+  int id;
+  String title;
+  String description;
+  String date;
+  String time;
+  int priority;
+  int marker;
+  bool done;
 
-  Note.withId(this._id, this._date, this._description, this._done,
-  this._marker, this._priority, this._time, this._title);
+  Client({
+		this.id,
+		this.title,
+		this.description,
+		this.priority,
+    this.marker,
+		this.date,
+    this.time,
+    this.done,
+  });
 
-  int get id => _id;
-  String get title => _title;
-  String get description => _description;
-  String get date => _date;
-  String get time => _time;
-  int get priority => _priority;
-  int get marker => _marker;
-  int get done => _done;
-
-  set title(String newTitle){
-    if(newTitle.length < 255){
-      this.title = newTitle;
-    }
-  }
-
-  set description(String newDescription){
-    if(newDescription.length < 255){
-      this.description = newDescription;
-    }
-  }
-
-  set date(String newDate){
-    if(newDate.length < 255){
-      this.date = newDate;
-    }
-  }
-
-  set time(String newTime){
-    if(newTime.length < 255){
-      this.time = newTime;
-    }
-  }
-
-  set priority(int newPriority){
-      this.priority = newPriority;
-  }
-
-  set marker(int newMarker){
-      this.marker = newMarker;
-  }
-
-  set done(int newDone){
-      this.done = newDone;
-  }
-
-  //Создаем модель в обьекте MAP
-
-  	Map<String, dynamic> toMap() {
-
-		var map = Map<String, dynamic>();
-		if (id != null) {
-			map['id'] = _id;
-		}
-		map['title'] = _title;
-		map['description'] = _description;
-		map['priority'] = _priority;
-    map['marker'] = _priority;
-    map['time'] = _priority;
-		map['date'] = _date;
-    map['done'] = _done;
-
-		return map;
-	}
-
-  	// ПЕрекидываем обьекты из Мапы в Ноту
-
-
-	Note.fromMapObject(Map<String, dynamic> map) {
-		this._id = map['id'];
-		this._title = map['title'];
-		this._description = map['description'];
-		this._priority = map['priority'];
-    this._marker = map['marker'];
-		this._date = map['date'];
-    this._time = map['time'];
-    this._done = map['done'];
-	}
-
+  factory Client.fromMap(Map<String, dynamic> json) => new Client(
+        id: json["id"],
+        title: json["title"],
+        description: json["description"],
+        priority: json["priority"],
+        marker: json["marker"],
+        date: json["date"],
+        time: json["time"],
+        done: json["done"] == 1,
+      );
+      
+  Map<String, dynamic> toMap() => {
+        "id": id,
+        "title": title,
+        "description": description,
+        "priority": priority,
+        "marker": marker,
+        "date": date,
+        "time": time,
+        "done": done,
+      };
 }

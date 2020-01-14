@@ -7,7 +7,9 @@ INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\
 MERGED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:1:1-38:12
 MERGED from [:flutter_tts] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_tts\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:speech_recognition] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\speech_recognition\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
+MERGED from [:sqflite] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:flutter_local_notifications] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:path_provider] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\path_provider\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\5142c893ecb753b292f60ea536430843\fragment-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.media:media:1.1.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\1ad3c91f1e9730b7cdb74e2f80ac52b2\media-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\9989348f7380404574b9c0d4f46339fa\legacy-support-core-ui-1.0.0\AndroidManifest.xml:17:1-22:12
@@ -107,8 +109,12 @@ MERGED from [:flutter_tts] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\fl
 MERGED from [:flutter_tts] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_tts\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:speech_recognition] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\speech_recognition\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-44
 MERGED from [:speech_recognition] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\speech_recognition\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-44
+MERGED from [:sqflite] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:sqflite] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:flutter_local_notifications] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:flutter_local_notifications] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:path_provider] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\path_provider\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:path_provider] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\path_provider\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\5142c893ecb753b292f60ea536430843\fragment-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\5142c893ecb753b292f60ea536430843\fragment-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.media:media:1.1.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\1ad3c91f1e9730b7cdb74e2f80ac52b2\media-1.1.0\AndroidManifest.xml:20:5-22:41

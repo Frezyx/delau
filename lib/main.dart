@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:delau/models/dbModels.dart';
 import 'package:delau/utils/database_helper.dart';
 import 'package:sqflite/sqflite.dart';
+import 'dart:math' as math;
 // import 'package:speech_recognition/speech_recognition.dart';
 // import 'package:delau/pages/bottomBar.dart';
 
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
       '/':(BuildContext context) => MyStatefulWidget(),
       '/second':(BuildContext context) => MyStatefulWidget3(),
       '/ntf':(BuildContext context) => LocalNotificationWidget(),
+      '/new':(BuildContext context) => MP(),
       // '/services':(BuildContext context) => Services(),
     },
     onGenerateRoute: (RouteSettings){
@@ -140,7 +142,10 @@ class ListViewPosts extends StatelessWidget {
     MdiIcons.fromString('shopping'),
     FontAwesome.spinner
     ];
-    
+
+    List<Client> testClients = [
+    Client(title: "Raouf", description: "Rahiche", done: false),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -204,26 +209,6 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-
-void updateListView() {
-
-		final Future<Database> dbFuture = databaseHelper.initializeDatabase();
-		dbFuture.then((database) {
-
-			Future<List<Note>> noteListFuture = databaseHelper.getNoteList();
-			noteListFuture.then((noteList) {
-				setState(() {
-				  this.noteList = noteList;
-				  this.count = noteList.length;
-				});
-			});
-		});
-  }
-
-// SQLite
-	DatabaseHelper databaseHelper = DatabaseHelper();
-	List<Note> noteList;
-	int count = 0;
 
 // РОУТИННГ
   List<String> slider_titles = [
@@ -343,16 +328,59 @@ void updateListView() {
         
          Expanded(
           child: Container(
-            child: FutureBuilder<List<Post>>(
-            future: buildCountWidget(),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) print(snapshot.error);
+            child: FutureBuilder<List<Client>>(
+        future: DBProvider.db.getAllClients(),
+        builder: (BuildContext context, AsyncSnapshot<List<Client>> snapshot) {
+          if (snapshot.hasData) 
+          {
+            return ListView.builder(
+              padding: const EdgeInsets.only(bottom: 0.0, top: 10.0, right: 5.0, left:5.0),
+              itemCount: snapshot.data.length,
+              itemBuilder: (BuildContext context, int index) {
+                Client item = snapshot.data[index];
+                return Dismissible(
+                  key: UniqueKey(),
+                  background: Container(color: Colors.red),
+                  onDismissed: (direction) {
+                    DBProvider.db.deleteClient(item.id);
+                  },
+                  child: ListTile(
+                    leading: Icon(i_add[item.marker],
+                    color: Color.fromRGBO(114, 103, 239, 1),
+                    size: 24.0,
+                  ),
+                    title: Text('${item.title}',
+                    style: TextStyle(fontSize: 18.0, fontFamily: 'Exo 2', fontWeight: FontWeight.w300,),
+                    overflow: TextOverflow.ellipsis,
+                    ),
+                    subtitle: get_subtitle_of_SQLI(item),
+                    trailing: Checkbox(
+                      onChanged: (bool value) {
+                        DBProvider.db.blockOrUnblock(item);
+                        setState(() {});
+                      },
+                      value: item.done,
+                    ),
+                    onTap: () {
+                    // _onTapItem(context, item);
+                    Navigator.pushNamed(context, '/postPage/${item.id}');
+                  }
+                  ),
+                );
+              },
+            );
+
+          } 
           
-              return getPreviewData(snapshot);
-            },
-          ),
-          ),
-        ),
+          else 
+          {
+            return Center(child: CircularProgressIndicator());
+          }
+
+        },
+      ),
+      ),
+    ),
 
       ],
       ), 
@@ -396,11 +424,7 @@ void updateListView() {
                       color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
                       padding: EdgeInsets.only( left: 0.0, top: 15, bottom: 15),
                       onPressed: () {
-                        // if(_isListerning){
-                        //   _speechRecognition.stop().then(
-                        //     (result) => setState(() => _isListerning = result));
-                          
-                        // }
+                        Navigator.pushNamed(context, '/new');
                       },
                       child: 
                       Row(
@@ -421,14 +445,7 @@ void updateListView() {
                       color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
                       padding: EdgeInsets.only( left: 60.0, top: 15, bottom: 15),
                       onPressed: () {
-                        // if(_isListerning){
-                        //   _speechRecognition.cancel().then(
-                        //     (result) => setState((){
-                        //       _isListerning = result;
-                        //       resultText = "";
-                        //     })
-                        //   );
-                        // }
+                        Navigator.pushNamed(context, '/new');
                       },
                       child: 
                       Row(
@@ -471,4 +488,106 @@ void updateListView() {
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           );
         }
+}
+
+
+
+class MP extends StatefulWidget {
+  @override
+  _MPState createState() => _MPState();
+}
+
+class _MPState extends State<MP> {
+  // data for testing
+  List<Client> testClients = [
+    Client(title: "Raouf",
+    description: "Rahiche",
+    marker: 4,
+    priority: 3,
+    date: "2001-12-12",
+    time: "22:22",
+    done: false),
+  ];
+  List<IconData> i_add = [
+    FontAwesome.book,
+    FontAwesome.briefcase,
+    MdiIcons.fromString('basketball'),
+    FontAwesome.users, 
+    MdiIcons.fromString('shopping'),
+    FontAwesome.spinner
+    ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Flutter SQLite")),
+      body: FutureBuilder<List<Client>>(
+        future: DBProvider.db.getAllClients(),
+        builder: (BuildContext context, AsyncSnapshot<List<Client>> snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data.length,
+              itemBuilder: (BuildContext context, int index) {
+                Client item = snapshot.data[index];
+                return Dismissible(
+                  key: UniqueKey(),
+                  background: Container(color: Colors.red),
+                  onDismissed: (direction) {
+                    DBProvider.db.deleteClient(item.id);
+                  },
+                  child: ListTile(
+                    title: Text(item.title),
+                    leading: Text(item.id.toString()),
+                    trailing: Checkbox(
+                      onChanged: (bool value) {
+                        DBProvider.db.blockOrUnblock(item);
+                        setState(() {});
+                      },
+                      value: item.done,
+                    ),
+                  ),
+                );
+              },
+            );
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () async {
+          Client rnd = testClients[math.Random().nextInt(testClients.length)];
+          await DBProvider.db.newClient(rnd);
+          setState(() {});
+        },
+      ),
+    );
+  }
+}
+
+Widget get_subtitle_of_SQLI(Client item){
+  return 
+  Align(
+    alignment: AlignmentDirectional.centerStart,
+    child:
+    Column(
+      children: <Widget>[
+      Align(
+      alignment: AlignmentDirectional.centerStart,
+      child:
+        Text(
+          'Дата: ${item.date.substring(5,10)}     Время: ${item.time.substring(10,15)}',
+              style: TextStyle(fontSize: 12.0, fontFamily: 'Exo 2', fontWeight: FontWeight.w500, color:  Color.fromRGBO(114, 103, 239, 1),
+              ),
+            ),
+          ),
+      Align(
+      alignment: AlignmentDirectional.centerStart,
+      child:
+        StarDisplay(value: item.priority ~/ 2),
+      ),
+      ],
+    ),
+  );
 }

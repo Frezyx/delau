@@ -31,9 +31,8 @@ dependencies:
   flutter_local_notifications: ^0.9.1
   speech_recognition: ^0.3.0
   flutter_tts: ^0.8.5
-  sqflite: ^1.2.0
-  path_provider: ^1.5.1
-  intl: ^0.16.1
+  sqflite: any
+  path_provider: any
   # background_fetch:
   #   git:
   #     url: https://github.com/transistorsoft/flutter_background_fetch
