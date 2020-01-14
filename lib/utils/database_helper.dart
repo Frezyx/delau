@@ -111,7 +111,7 @@ class DBProvider {
 
   Future<List<Client>> getAllClients() async {
     final db = await database;
-    var res = await db.query("Client", orderBy: "priority DESC, date DESC, time DESC ");
+    var res = await db.query("Client", orderBy: "done ASC, priority DESC, date DESC, time DESC ");
     List<Client> list =
         res.isNotEmpty ? res.map((c) => Client.fromMap(c)).toList() : [];
     return list;

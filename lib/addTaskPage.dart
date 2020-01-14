@@ -585,10 +585,11 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
             // ),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
             bottomNavigationBar: CurvedNavigationBar(
+              animationDuration: Duration(microseconds: 2500),
               backgroundColor: Colors.transparent,
               items: <Widget>[
-                Icon(Icons.add, size: 30, color: Colors.black,),
                 Icon(Icons.list, size: 30, color: Colors.black,),
+                Icon(Icons.add, size: 30, color: Colors.black,),
                 // Icon(Icons.compare_arrows, size: 30, color: Colors.black,),
                 // Icon(Icons.add, size: 30, color: Colors.black,),
                 // Icon(Icons.list, size: 30, color: Colors.black,),

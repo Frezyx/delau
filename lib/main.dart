@@ -400,9 +400,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     //TODO DELETE
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
-                        backgroundColor: Theme.of(context).accentColor,
+                        backgroundColor: Color.fromRGBO(114, 103, 239, 1),
                         content: Text(
-                          'test',
+                          'Задача удалена',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20.0,
@@ -564,9 +564,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       bottomNavigationBar: CurvedNavigationBar(
         height: 50.0,
     backgroundColor: Colors.transparent,
+    animationDuration: Duration(microseconds: 2500),
     items: <Widget>[
-      Icon(Icons.add, size: 30, color: Colors.black,),
       Icon(Icons.list, size: 30, color: Colors.black,),
+      Icon(Icons.add, size: 30, color: Colors.black,),
       // Icon(Icons.compare_arrows, size: 30, color: Colors.black,),
       // Icon(Icons.add, size: 30, color: Colors.black,),
       // Icon(Icons.list, size: 30, color: Colors.black,),
