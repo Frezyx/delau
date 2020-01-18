@@ -1,20 +1,25 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:1:1-38:12
-INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:1:1-38:12
-INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:1:1-38:12
-INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:1:1-38:12
-MERGED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:1:1-38:12
+ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:1:1-43:12
+INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:1:1-43:12
+INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:1:1-43:12
+INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:1:1-43:12
+MERGED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:1:1-43:12
 MERGED from [:flutter_tts] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_tts\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:speech_recognition] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\speech_recognition\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
+MERGED from [:android_alarm_manager] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\android_alarm_manager\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:permission_handler] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\permission_handler\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:sqflite] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:flutter_local_notifications] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:path_provider] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\path_provider\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.appcompat:appcompat:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\7c0d0722226f706374b441a1e6c17b73\appcompat-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\5142c893ecb753b292f60ea536430843\fragment-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.media:media:1.1.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\1ad3c91f1e9730b7cdb74e2f80ac52b2\media-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\c846050d668310d169ad01b4659be153\vectordrawable-animated-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\9989348f7380404574b9c0d4f46339fa\legacy-support-core-ui-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\62b3080491770234c7f21acdfb7c8923\legacy-support-core-utils-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.loader:loader:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\3f572eba56da53515282b3f662d21157\loader-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\c0eca4891f230e4f4da1ac553cb003de\vectordrawable-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\2ea4fd985f33c4bd9e8bcb34cdf5dd2e\viewpager-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\a98f336aba7ce2b6c50de5eec2759cac\coordinatorlayout-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\584f462e497034607680be1c0f15c9b1\drawerlayout-1.0.0\AndroidManifest.xml:17:1-22:12
@@ -29,8 +34,8 @@ MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\FREZY\.g
 MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\3c99e28d386080bffaa1cee996ecaf35\core-runtime-2.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\406d8debce58e67c65485dcc3994c3be\lifecycle-viewmodel-2.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\c43e4b62ce4072afa5b376661949c684\versionedparcelable-1.1.0\AndroidManifest.xml:17:1-27:12
-MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\503e3444c15685214d2cfa3ef69ce2cd\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\613b5f932c9b6ee6c86e465f98ad3f48\cursoradapter-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\503e3444c15685214d2cfa3ef69ce2cd\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\df7b7dda9b28b2d3a4c6011154023e19\documentfile-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\a34041503aa4ff89bca2169af07a45d5\localbroadcastmanager-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.print:print:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\c1a9728ae22208602aa686d898ab9193\print-1.0.0\AndroidManifest.xml:17:1-22:12
@@ -43,11 +48,11 @@ INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\debug
 		INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\debug\AndroidManifest.xml
 	android:versionName
 		INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:1:1-38:12
+		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:1:1-43:12
 		INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\debug\AndroidManifest.xml
 	android:versionCode
 		INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:1:1-38:12
+		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:1:1-43:12
 		INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\debug\AndroidManifest.xml
 	xmlns:android
 		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:1:11-69
@@ -55,8 +60,14 @@ uses-permission#android.permission.RECORD_AUDIO
 ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:5:5-71
 	android:name
 		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:5:22-68
+uses-permission#android.permission.INTERNET
+ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:6:5-67
+MERGED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:6:5-67
+MERGED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:6:5-67
+	android:name
+		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:6:22-64
 application
-ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:11:5-37:19
+ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:16:5-42:19
 MERGED from [androidx.core:core:1.1.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\1128c5e807499d6aa189b07ac586a9bf\core-1.1.0\AndroidManifest.xml:24:5-89
 MERGED from [androidx.core:core:1.1.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\1128c5e807499d6aa189b07ac586a9bf\core-1.1.0\AndroidManifest.xml:24:5-89
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\c43e4b62ce4072afa5b376661949c684\versionedparcelable-1.1.0\AndroidManifest.xml:24:5-25:19
@@ -64,43 +75,43 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\FR
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.1.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\1128c5e807499d6aa189b07ac586a9bf\core-1.1.0\AndroidManifest.xml:24:18-86
 	android:label
-		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:13:9-30
+		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:18:9-30
 	android:icon
-		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:14:9-43
+		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:19:9-43
 	android:name
-		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:12:9-57
+		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:17:9-57
 activity#com.example.delau.MainActivity
-ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:15:9-30:20
+ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:20:9-35:20
 	android:launchMode
-		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:17:13-43
+		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:22:13-43
 	android:hardwareAccelerated
-		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:20:13-47
+		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:25:13-47
 	android:windowSoftInputMode
-		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:21:13-55
+		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:26:13-55
 	android:configChanges
-		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:19:13-163
+		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:24:13-163
 	android:theme
-		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:18:13-47
+		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:23:13-47
 	android:name
-		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:16:13-41
+		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:21:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:22:13-25:29
+ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:27:13-30:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:23:17-68
+ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:28:17-68
 	android:name
-		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:23:25-66
+		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:28:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:24:17-76
+ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:29:17-76
 	android:name
-		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:24:27-74
+		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:29:27-74
 meta-data#flutterEmbedding
-ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:33:9-36:53
+ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:38:9-41:53
 	android:resource
-		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:36:13-51
+		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:41:13-51
 	android:value
-		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:35:13-30
+		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:40:13-30
 	android:name
-		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:34:13-44
+		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:39:13-44
 uses-sdk
 INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml
@@ -109,22 +120,32 @@ MERGED from [:flutter_tts] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\fl
 MERGED from [:flutter_tts] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_tts\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:speech_recognition] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\speech_recognition\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-44
 MERGED from [:speech_recognition] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\speech_recognition\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-44
+MERGED from [:android_alarm_manager] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\android_alarm_manager\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:android_alarm_manager] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\android_alarm_manager\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:permission_handler] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\permission_handler\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:permission_handler] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\permission_handler\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:sqflite] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:sqflite] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:flutter_local_notifications] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:flutter_local_notifications] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:path_provider] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\path_provider\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:path_provider] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\path_provider\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [androidx.appcompat:appcompat:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\7c0d0722226f706374b441a1e6c17b73\appcompat-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\7c0d0722226f706374b441a1e6c17b73\appcompat-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\5142c893ecb753b292f60ea536430843\fragment-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\5142c893ecb753b292f60ea536430843\fragment-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.media:media:1.1.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\1ad3c91f1e9730b7cdb74e2f80ac52b2\media-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.media:media:1.1.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\1ad3c91f1e9730b7cdb74e2f80ac52b2\media-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\c846050d668310d169ad01b4659be153\vectordrawable-animated-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\c846050d668310d169ad01b4659be153\vectordrawable-animated-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\9989348f7380404574b9c0d4f46339fa\legacy-support-core-ui-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\9989348f7380404574b9c0d4f46339fa\legacy-support-core-ui-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\62b3080491770234c7f21acdfb7c8923\legacy-support-core-utils-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\62b3080491770234c7f21acdfb7c8923\legacy-support-core-utils-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.loader:loader:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\3f572eba56da53515282b3f662d21157\loader-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.loader:loader:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\3f572eba56da53515282b3f662d21157\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\c0eca4891f230e4f4da1ac553cb003de\vectordrawable-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\c0eca4891f230e4f4da1ac553cb003de\vectordrawable-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\2ea4fd985f33c4bd9e8bcb34cdf5dd2e\viewpager-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\2ea4fd985f33c4bd9e8bcb34cdf5dd2e\viewpager-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\a98f336aba7ce2b6c50de5eec2759cac\coordinatorlayout-1.0.0\AndroidManifest.xml:20:5-44
@@ -153,10 +174,10 @@ MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] C:\Users\FREZY\.gradl
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\406d8debce58e67c65485dcc3994c3be\lifecycle-viewmodel-2.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\c43e4b62ce4072afa5b376661949c684\versionedparcelable-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\c43e4b62ce4072afa5b376661949c684\versionedparcelable-1.1.0\AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\503e3444c15685214d2cfa3ef69ce2cd\interpolator-1.0.0\AndroidManifest.xml:20:5-44
-MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\503e3444c15685214d2cfa3ef69ce2cd\interpolator-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\613b5f932c9b6ee6c86e465f98ad3f48\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\613b5f932c9b6ee6c86e465f98ad3f48\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\503e3444c15685214d2cfa3ef69ce2cd\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\503e3444c15685214d2cfa3ef69ce2cd\interpolator-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\df7b7dda9b28b2d3a4c6011154023e19\documentfile-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\df7b7dda9b28b2d3a4c6011154023e19\documentfile-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\a34041503aa4ff89bca2169af07a45d5\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
@@ -171,7 +192,3 @@ INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\debug
 	android:minSdkVersion
 		INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\debug\AndroidManifest.xml
-uses-permission#android.permission.INTERNET
-ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\debug\AndroidManifest.xml:6:5-66
-	android:name
-		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\debug\AndroidManifest.xml:6:22-64
