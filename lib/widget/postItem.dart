@@ -58,7 +58,7 @@ class ListViewPosts extends StatelessWidget {
                   ),
                 StarDisplay(value: item[0].priority ~/ 2),
                 Text(
-                  'Дата: ${item[0].date.toString().substring(5,10)}      Время: ${item[0].time.toString().substring(0,5)}',
+                  'Дата: ${item[0].date.toString().substring(5,10)}      Время: ${item[0].time.toString().substring(10,15)}',
                   style: TextStyle(
                     fontFamily: 'Exo 2',
                     fontWeight: FontWeight.w800,

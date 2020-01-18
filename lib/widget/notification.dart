@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:delau/postPage.dart';
+import 'package:delau/pages/postPage.dart';
 import 'package:delau/pages/notification_helper.dart';
 
 

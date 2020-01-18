@@ -3,7 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'addTaskPage.dart';
 import 'widgets_helper.dart';
-import 'postPage.dart';
+import 'pages/postPage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:delau/widget/notification.dart';
@@ -12,12 +12,12 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:delau/models/dbModels.dart';
+import 'package:delau/pages/userPage.dart';
 import 'package:delau/utils/database_helper.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'dart:math' as math;
 // import 'package:speech_recognition/speech_recognition.dart';
-// import 'package:delau/pages/bottomBar.dart';
 
 void main() => runApp(MyApp());
 
@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
       '/second':(BuildContext context) => MyStatefulWidget3(),
       '/ntf':(BuildContext context) => LocalNotificationWidget(),
       '/new':(BuildContext context) => MP(),
+      '/user':(BuildContext context) => User(),
       // '/services':(BuildContext context) => Services(),
     },
     onGenerateRoute: (RouteSettings){
@@ -57,50 +58,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Post {
-  final int id;
-  final String post_header;
-  final String post_body;
-  final String time_zd;
-  final String date_zd;
-  final int marker;
-  final int paginator;
-  final bool done;
- 
-  Post({ this.id, this.post_header, this.post_body,
-   this.date_zd, this.time_zd, this.marker,
-   this.paginator, this.done,});
- 
-  factory Post.fromJson(Map<String, dynamic> json) {
-    // print(json['done'].toString());
-    return Post(
-      // userId: json['userId'] as int,
-      id: int.parse(json['id']),
-      post_header: json['post_header'] as String,
-      post_body: json['post_body'] as String,
-      time_zd: json['time-zd'] as String,
-      date_zd: json['date-zd'] as String,
-      marker: int.parse(json['marker']),
-      paginator: int.parse(json['paginator']),
-      done: (int.parse(json['done']) == 0),
-    );
-  }
-}
-
-List<Post> parsePosts(String responseBody) {
-  final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
- 
-  return parsed.map<Post>((json) => Post.fromJson(json)).toList();
-}
-
-Future<List<Post>> fetchPosts(http.Client client) async {
-  final response = await client.get('https://delau.000webhostapp.com/flutter/get.php');
-  var data = jsonDecode(response.body);
-    //print(data.toString());
-  // compute function to run parsePosts in a separate isolate
-  return parsePosts(response.body);
-}
-
 httpGet(String link) async{
     try{
       var response = await http.get('$link');
@@ -110,90 +67,6 @@ httpGet(String link) async{
       print('Ты ебловоз блять! А вот твоя ошибка: $error');
     }
   }
-
-class StarDisplay extends StatelessWidget {
-  final int value;
-  const StarDisplay({Key key, this.value = 0})
-      : assert(value != null),
-        super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: List.generate(5, (index) {
-        return Icon(
-          index < value ? Icons.star : Icons.star_border,
-          color: index < value ? Colors.yellow : Colors.black12,
-          size: 16.0,
-        );
-      }),
-    );
-  }
-}
-
-class ListViewPosts extends StatelessWidget {
-  final List<Post> posts;
-  ListViewPosts({Key key, this.posts}) : super(key: key);
- 
-  List<IconData> i_add = [
-    FontAwesome.book,
-    FontAwesome.briefcase,
-    MdiIcons.fromString('basketball'),
-    FontAwesome.users, 
-    MdiIcons.fromString('shopping'),
-    FontAwesome.spinner
-    ];
-
-    List<Client> testClients = [
-    Client(title: "Raouf", description: "Rahiche", done: false),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: ListView.builder(
-          itemCount: posts.length,
-          padding: const EdgeInsets.only(bottom: 10.0, top: 5.0, right: 15.0, left:15.0),
-          itemBuilder: (context, position) {
-            return Column(
-              children: <Widget>[
-                ListTile(
-                  // contentPadding: EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-                  leading: Icon(i_add[posts[position].marker],
-                    color: Color.fromRGBO(114, 103, 239, 1),
-                    size: 24.0,
-                  ),
-                  title: 
-                  Text('${posts[position].post_header}',
-                    style: TextStyle(fontSize: 18.0, fontFamily: 'Exo 2', fontWeight: FontWeight.w300,),
-                    overflow: TextOverflow.ellipsis,
-                    ),
-                  subtitle: get_subtitle(posts, position),
-                  trailing: Checkbox(
-                    value: posts[position].done,
-                    onChanged: (bool value) {
-
-                     httpGet("https://delau.000webhostapp.com/flutter/nodeletedone.php?id="+posts[position].id.toString()); 
-                    }
-                  ),
-                  onTap: () {
-                    _onTapItem(context, posts[position]);
-                    Navigator.pushNamed(context, '/postPage/${posts[position].id}');
-                  }
-                ),
-                // StarDisplay(value: posts[position].paginator ~/ 2),
-                Divider(height: 5.0),
-              ],
-            );
-          }),
-    );
-  }
-
-
-  void _onTapItem(BuildContext context, Post post) {
-
-  }
-}
 
 class MyStatefulWidget extends StatefulWidget {
   @override
@@ -220,32 +93,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     FontAwesome.spinner
     ];
 
-  // Widget getPreviewData(AsyncSnapshot<List<Post>> snapshot){
-  //   return snapshot.hasData
-  //             ? ListViewPosts(posts: snapshot.data) // return the ListView widget
-  //             : Center(child: CircularProgressIndicator());
-  // }
-
-  // Future<List<Post>> buildCountWidget() {
-  //   return  fetchPosts(http.Client());
-  // }
-
-  // @override
-  // void initState() {
-
-  // super.initState();
-  //   setState(() {
-  //     const oneSecond = const Duration(milliseconds: 10000);
-  //     new Timer.periodic(oneSecond, (Timer t) =>  setState((){}));
-  //   });
-  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body:
       Container(
-        // bottom: false,
-        // top: false,
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child:                         
@@ -283,8 +135,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                         borderRadius: BorderRadius.circular(12),
                   ),
                   child: getCardInfo(i, i_add, slider_titles)
-
-                  
                 );
               },
             );
@@ -293,8 +143,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           autoPlay: true,
           autoPlayCurve: Curves.elasticIn,
           autoPlayDuration: const Duration(milliseconds: 2800),
-          // border: UnderlineInputBorder(
-          // borderRadius:BorderRadius.circular(5.0)),
             ),
            ]
           ),
@@ -321,7 +169,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           child: Container(
             child: FutureBuilder<List<Client>>(
         future: DBProvider.db.getAllClients(),
-        builder: (BuildContext context, AsyncSnapshot<List<Client>> snapshot) {
+        builder:
+         (BuildContext context, AsyncSnapshot<List<Client>> snapshot) {
           if (snapshot.hasData) 
           {
             return ListView.builder(
@@ -397,8 +246,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   onDismissed: (direction) {
                     DBProvider.db.deleteClient(item.id);
                     httpGet("https://delau.000webhostapp.com/flutter/delete.php?id="+item.id.toString());
-// setState(() {});
-                    //TODO DELETE
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
                         backgroundColor: Color.fromRGBO(114, 103, 239, 1),
@@ -413,10 +260,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                       ),
                     );
                   },
-                  // onDismissed: (direction) {
-                  //   DBProvider.db.deleteClient(item.id);
-                  //   httpGet("https://delau.000webhostapp.com/flutter/delete.php?id="+item.id.toString());
-                  // },
                   child: ListTile(
                     leading: Icon(
                     i_add[item.marker],
@@ -461,107 +304,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       ), 
       ),
 
-    
-      // bottomNavigationBar:
-      //        BottomAppBar(
-      //         shape: const CircularNotchedRectangle(),
-      //         child: Container(
-      //           height: 50.0,
-      //           child: Row(
-      //             children: <Widget>[
-      //               FlatButton(
-      //                 color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
-      //                 padding: EdgeInsets.only( left: 0.0, top: 15, bottom: 15, ),
-      //                 onPressed: () {
-      //                   // if(_isAvailable && ! _isListerning)
-      //                   // {
-      //                   //   _speechRecognition.listen(locale: "ru_RU").then(
-      //                   //     (result) => print('$result')
-      //                   //   );
-      //                   // }
-      //                 },
-      //                 child: 
-      //                 Row(
-      //                   mainAxisSize: MainAxisSize.max,
-      //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                   children: <Widget>[
-      //                     // Icon(Icons.calendar_today,size: 20.0,),
-      //                     Text(
-      //                         "Старт",
-      //                         style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
-      //                       ),
-      //                   ],
-      
-      //                 ),
-      //               ),
-      
-      //               FlatButton(
-      //                 color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
-      //                 padding: EdgeInsets.only( left: 0.0, top: 15, bottom: 15),
-      //                 onPressed: () {
-      //                   Navigator.pushNamed(context, '/new');
-      //                 },
-      //                 child: 
-      //                 Row(
-      //                   mainAxisSize: MainAxisSize.max,
-      //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                   children: <Widget>[
-      //                     // Icon(Icons.perm_contact_calendar,size: 20.0,),
-      //                     Text(
-      //                         "Стоп",
-      //                         style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
-      //                       ),
-      //                   ],
-      
-      //                 ),
-      //               ),
-      
-      //               FlatButton(
-      //                 color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
-      //                 padding: EdgeInsets.only( left: 60.0, top: 15, bottom: 15),
-      //                 onPressed: () {
-      //                   Navigator.pushNamed(context, '/new');
-      //                 },
-      //                 child: 
-      //                 Row(
-      //                   mainAxisSize: MainAxisSize.max,
-      //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                   children: <Widget>[
-      //                     // Icon(Icons.perm_contact_calendar,size: 20.0,),
-      //                     Text(
-      //                         "Очистить",
-      //                         style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
-      //                       ),
-      //                   ], 
-      //                 ),
-      //               ),
-      
-      //                             FlatButton(
-      //                 color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
-      //                 padding: EdgeInsets.only(left: 0.0, top: 15, bottom: 15),
-      //                 onPressed: () {
-      //                   Navigator.pushNamed(context, '/ntf');
-      //                 },
-      //                 child: Text(
-      //                   "Поиск",
-      //                   style: TextStyle(fontSize: 13.0, fontFamily: 'Roboto', fontWeight: FontWeight.w700,),
-      //                 ),
-      //               ),
-                    
-      //             ],
-      //           ),
-      //         ),
-      //       ),
-      //       floatingActionButton: FloatingActionButton(
-      //         heroTag: "btn_num_1",
-      //         onPressed: () {
-      //           // print("Я как бы нажался");
-      //           Navigator.pushNamed(context, '/second/123');},
-      //         child: Icon(Icons.add),
-      //         backgroundColor: Color.fromRGBO(114, 103, 239, 1),
-      //       ),
-      //       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-
       bottomNavigationBar: CurvedNavigationBar(
         height: 50.0,
     backgroundColor: Colors.transparent,
@@ -569,6 +311,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     items: <Widget>[
       Icon(Icons.list, size: 30, color: Colors.black,),
       Icon(Icons.add, size: 30, color: Colors.black,),
+      Icon(FontAwesome.user_o, size: 30, color: Colors.black,),
       // Icon(Icons.compare_arrows, size: 30, color: Colors.black,),
       // Icon(Icons.add, size: 30, color: Colors.black,),
       // Icon(Icons.list, size: 30, color: Colors.black,),
@@ -579,13 +322,34 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       if(index == 1){
         Navigator.pushNamed(context, '/second/1');
       }
+      if(index == 2){
+        Navigator.pushNamed(context, '/user');
+      }
     },
   ),
           );
         }
 }
 
-
+class StarDisplay extends StatelessWidget {
+  final int value;
+  const StarDisplay({Key key, this.value = 0})
+      : assert(value != null),
+        super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: List.generate(5, (index) {
+        return Icon(
+          index < value ? Icons.star : Icons.star_border,
+          color: index < value ? Colors.yellow : Colors.black12,
+          size: 16.0,
+        );
+      }),
+    );
+  }
+}
 
 class MP extends StatefulWidget {
   @override
@@ -661,28 +425,3 @@ class _MPState extends State<MP> {
   }
 }
 
-Widget get_subtitle_of_SQLI(Client item){
-  return 
-  Align(
-    alignment: AlignmentDirectional.centerStart,
-    child:
-    Column(
-      children: <Widget>[
-      Align(
-      alignment: AlignmentDirectional.centerStart,
-      child:
-        Text(
-          'Дата: ${item.date.substring(5,10)}     Время: ${item.time.substring(10,15)}',
-              style: TextStyle(fontSize: 12.0, fontFamily: 'Exo 2', fontWeight: FontWeight.w500, color:  Color.fromRGBO(114, 103, 239, 1),
-              ),
-            ),
-          ),
-      Align(
-      alignment: AlignmentDirectional.centerStart,
-      child:
-        StarDisplay(value: item.priority ~/ 2),
-      ),
-      ],
-    ),
-  );
-}
