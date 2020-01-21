@@ -458,7 +458,8 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                       );
 
                   addAtLocalDB(now_client);
-                  httpGet("https://delau.000webhostapp.com/flutter/addTask.php?header="+_name+"&body="+_surname+"&date="+_date.toString()+"&time="+_time.toString()+"&marker="+(selected_radio-1).toString()+"&paginator="+rating.toString());  
+                  counter();
+                  // httpGet("https://delau.000webhostapp.com/flutter/addTask.php?header="+_name+"&body="+_surname+"&date="+_date.toString()+"&time="+_time.toString()+"&marker="+(selected_radio-1).toString()+"&paginator="+rating.toString());  
                 }
               }
             }, child: Text('Создать'), color: Color.fromRGBO(114, 103, 239, 1), textColor: Colors.white,),
@@ -525,6 +526,11 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                                             await DBProvider.db.newClient(
                                               nowClient
                                             );
+                                            
+                                }
+
+                                void counter() async{
+                                            await DBCountProvider.dbc.updateCount( );
                                 }
                               
                                 void updateStatus(PermissionStatus status) {

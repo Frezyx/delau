@@ -53,3 +53,37 @@ class Client {
         "done": done,
       };
 }
+
+ClientCounter clientCounterFromJson(String str) {
+  final jsonData = json.decode(str);
+  return ClientCounter.fromMap(jsonData);
+}
+
+String clientCounterToJson(ClientCounter data) {
+  final dyn = data.toMap();
+  return json.encode(dyn);
+}
+
+class ClientCounter {
+  int id;
+  int countDone;
+  int countAdd;
+
+  ClientCounter({
+		this.id,
+		this.countAdd,
+		this.countDone,
+  });
+
+  factory ClientCounter.fromMap(Map<String, dynamic> json) => new ClientCounter(
+        id: json["id"],
+        countAdd: json["countAdd"],
+        countDone: json["countDone"],
+      );
+      
+  Map<String, dynamic> toMap() => {
+        "id": id,
+        "countAdd": countDone,
+        "countDone": countDone,
+      };
+}

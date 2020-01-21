@@ -5,13 +5,16 @@ INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\
 INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:1:1-43:12
 INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:1:1-43:12
 MERGED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:1:1-43:12
-MERGED from [:flutter_tts] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_tts\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
-MERGED from [:speech_recognition] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\speech_recognition\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
-MERGED from [:android_alarm_manager] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\android_alarm_manager\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
-MERGED from [:permission_handler] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\permission_handler\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:sqflite] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
-MERGED from [:flutter_local_notifications] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:speech_recognition] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\speech_recognition\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
+MERGED from [:flutter_tts] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_tts\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
+MERGED from [:android_alarm_manager] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\android_alarm_manager\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:shared_preferences] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\shared_preferences\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:shared_preferences_web] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\shared_preferences_web\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:shared_preferences_macos] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\shared_preferences_macos\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:path_provider] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\path_provider\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:flutter_local_notifications] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:permission_handler] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\permission_handler\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.appcompat:appcompat:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\7c0d0722226f706374b441a1e6c17b73\appcompat-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\5142c893ecb753b292f60ea536430843\fragment-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.media:media:1.1.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\1ad3c91f1e9730b7cdb74e2f80ac52b2\media-1.1.0\AndroidManifest.xml:17:1-24:12
@@ -116,20 +119,26 @@ uses-sdk
 INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml
 INJECTED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml
-MERGED from [:flutter_tts] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_tts\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
-MERGED from [:flutter_tts] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_tts\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
-MERGED from [:speech_recognition] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\speech_recognition\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-44
-MERGED from [:speech_recognition] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\speech_recognition\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-44
-MERGED from [:android_alarm_manager] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\android_alarm_manager\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:android_alarm_manager] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\android_alarm_manager\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:permission_handler] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\permission_handler\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:permission_handler] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\permission_handler\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:sqflite] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:sqflite] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:flutter_local_notifications] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:flutter_local_notifications] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:speech_recognition] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\speech_recognition\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-44
+MERGED from [:speech_recognition] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\speech_recognition\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-44
+MERGED from [:flutter_tts] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_tts\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:flutter_tts] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_tts\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:android_alarm_manager] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\android_alarm_manager\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:android_alarm_manager] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\android_alarm_manager\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\shared_preferences\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\shared_preferences\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences_web] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\shared_preferences_web\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences_web] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\shared_preferences_web\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences_macos] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\shared_preferences_macos\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences_macos] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\shared_preferences_macos\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:path_provider] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\path_provider\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:path_provider] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\path_provider\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:flutter_local_notifications] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:flutter_local_notifications] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:permission_handler] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\permission_handler\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:permission_handler] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\permission_handler\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [androidx.appcompat:appcompat:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\7c0d0722226f706374b441a1e6c17b73\appcompat-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.appcompat:appcompat:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\7c0d0722226f706374b441a1e6c17b73\appcompat-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\5142c893ecb753b292f60ea536430843\fragment-1.0.0\AndroidManifest.xml:20:5-44

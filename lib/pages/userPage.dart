@@ -1,6 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:delau/utils/database_helper.dart';
+import 'package:delau/models/dbModels.dart';
+import 'package:delau/pages/userPageHelper.dart';
 
 class User extends StatefulWidget {
   @override
@@ -8,10 +11,20 @@ class User extends StatefulWidget {
 }
 
 class _UserState extends State<User> {
-  @override
+  var countAdd = "Не можем получить";
+  // var pos = all[0];
   Widget build(BuildContext context) {
     return Scaffold(
-      body:Column(
+      body: FutureBuilder<List<ClientCounter>>(
+        future: DBCountProvider.dbc.getClientCounterInList(),
+        builder: (BuildContext context, AsyncSnapshot<List<ClientCounter>> snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data.length,
+              itemBuilder: (BuildContext context, int index) {
+                ClientCounter item = snapshot.data[0];
+                return   
+                    Column(
         children: <Widget>[
           Container(
             height: MediaQuery.of(context).size.height / 1.75,
@@ -96,7 +109,8 @@ class _UserState extends State<User> {
                       Padding(
             padding: EdgeInsets.only( left: 10.0),
             child:
-            Text("Создано задач:", style: TextStyle(fontStyle: FontStyle.normal, fontFamily: "Exo 2",fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.black)),
+            Text("Создано задач: ${item.countAdd.toString()}",
+             style: TextStyle(fontStyle: FontStyle.normal, fontFamily: "Exo 2",fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.black)),
                       ),
             ],
             ),
@@ -212,10 +226,15 @@ class _UserState extends State<User> {
           ),
 
         ],
+      );
+              },
+            );
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
       ),
-      
-      
-      bottomNavigationBar: CurvedNavigationBar(
+            bottomNavigationBar: CurvedNavigationBar(
         height: 50.0,
         backgroundColor: Colors.transparent,
         animationDuration: Duration(microseconds: 2500),
@@ -239,8 +258,13 @@ class _UserState extends State<User> {
           if(index == 2){
             Navigator.pushNamed(context, '/user');
           }
-        },
+        }
       ),
       );
   }
 }
+
+// foo() async {
+//   final user = await DBCountProvider.dbc.getClientCounter(0);
+//   return user;
+// }

@@ -9,7 +9,6 @@ import 'dart:convert';
 import 'package:delau/widget/notification.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:delau/models/dbModels.dart';
 import 'package:delau/pages/userPage.dart';
@@ -17,9 +16,22 @@ import 'package:delau/utils/database_helper.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'dart:math' as math;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:delau/firstStartPages/demo.dart';
 // import 'package:speech_recognition/speech_recognition.dart';
 
-void main() => runApp(MyApp());
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized(); 
+  SharedPreferences prefs = await SharedPreferences.getInstance(); // Хранилище 
+  bool banner = (prefs.getBool('banner') ?? true);
+
+  runApp(
+    // bannerOne(prefs)
+    (banner) ? bannerOne(prefs) : MyApp(),
+    );
+}
+
+
 
 /// This Widget is the main application widget.
 class MyApp extends StatelessWidget {
