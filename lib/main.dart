@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:delau/pages/ttsHelper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'addTaskPage.dart';
 import 'widgets_helper.dart';
 import 'pages/postPage.dart';
@@ -12,12 +14,14 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:flutter/material.dart';
 import 'package:delau/models/dbModels.dart';
 import 'package:delau/pages/userPage.dart';
+import 'package:delau/addTaskPage.dart';
 import 'package:delau/utils/database_helper.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'dart:math' as math;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:delau/firstStartPages/demo.dart';
+import 'package:delau/pages/tts.dart';
 // import 'package:speech_recognition/speech_recognition.dart';
 
 void main() async{
@@ -31,9 +35,6 @@ void main() async{
     );
 }
 
-
-
-/// This Widget is the main application widget.
 class MyApp extends StatelessWidget {
   static const String _title = 'Flutter Code Sample';
 
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
       '/ntf':(BuildContext context) => LocalNotificationWidget(),
       '/new':(BuildContext context) => MP(),
       '/user':(BuildContext context) => User(),
+      '/tts':(BuildContext context) => TTS(),
       // '/services':(BuildContext context) => Services(),
     },
     onGenerateRoute: (RouteSettings){
@@ -87,7 +89,25 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
+final FlutterTts flutterTts = FlutterTts();
+
+speakTasks() async{
+    await flutterTts.setPitch(1);
+    await flutterTts.setSpeechRate(0.8);
+    await flutterTts.speak('Это тест, Миша извини, что мешаю');
+  }
+// final StreamController<int> _streamController = StreamController<int>();
+// var _counter = DBProvider.db.getContNow();
 // РОУТИННГ
+  var countTask =  DBProvider.db.getContNow();
+
+  void refreshCount() {
+    // reload
+    setState(() {
+      countTask =  DBProvider.db.getContNow();
+    });
+  }
+
   List<String> slider_titles = [
     "Учеба",
     "Работа",
@@ -176,6 +196,113 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                       tileMode: TileMode.clamp),
            ),
         ),
+        Padding(
+          
+          padding: EdgeInsets.only(right: 10.0, left: 10.0, top: 10.0, bottom: 5.0),
+
+        child: DecoratedBox(
+                  decoration: new BoxDecoration(
+                    color: Colors.white,
+                    boxShadow:<BoxShadow>[
+                      BoxShadow(
+                        color: Color.fromRGBO(0, 0, 0, 0.19),
+                        offset: Offset(0.0, 4.0),
+                        blurRadius: 20.0,
+                      ),
+                    ],
+                        border: Border.all(
+                          color: Colors.transparent,
+                          width: 0,
+                        ),
+                        borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: 
+         Container(
+           padding: EdgeInsets.only(right: 16.0, left: 16.0, top: 2.0, bottom: 2.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+          Align(
+              alignment: Alignment.centerLeft,
+              child:
+
+            new FutureBuilder<int>(
+              future: countTask,
+            // stream: _streamController.stream, // Создаем и открываем поток
+              builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+             // Наши данные из потока
+             return
+            RichText(
+              text: TextSpan(
+                style: Theme.of(context).textTheme.body1,
+                children: [
+                  WidgetSpan(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 5.0, right: 10.0, top: 2.0, bottom: 2.0),
+                      child: Icon(FontAwesome.tasks, color: Color.fromRGBO(114, 103, 239, 1),size: 24),
+                    ),
+                  ),
+                  TextSpan(text: 'Всего задач: ${snapshot.data.toString()}',
+                    style: TextStyle(fontSize: 22.0,
+                    fontFamily: 'Exo 2',
+                    fontWeight: FontWeight.w300,)),
+                ],
+              ),
+            );
+            }),
+          ),
+                Padding(
+                    padding: EdgeInsets.only(left: 30.0, right: 0.0, top: 2.0, bottom: 2.0),
+                    child: 
+                    RawMaterialButton(
+                            onPressed: () {
+                              speakTasks();
+                              // askPermision();
+                              //   if(_isAvailable && ! _isListerning)
+                              //   {
+                              //       // httpGet("https://delau.000webhostapp.com/flutter/addTask.php?header=1&body=1&date=2020-01-15&time=24:13:00&marker=1&paginator=1");
+                              //   _speechRecognition.listen(locale: "ru_RU").then((result) => print("aaaaa"));
+                                
+                              // }
+                            },
+                            child: new Icon(
+                              FontAwesome.bullhorn,
+                              size: 27,
+                              color: Color.fromRGBO(114, 103, 239, 1),
+                        ),
+                        shape: new CircleBorder(),
+                        elevation: 4,
+                        hoverElevation: 10,
+                        constraints: BoxConstraints.tight(Size(36, 36)),
+                        fillColor: Colors.white,
+                        // padding: EdgeInsets.all(2.0),
+                    ),
+                ),
+                Padding(
+                    padding: EdgeInsets.only(left: 0.0, right: 5.0, top: 2.0, bottom: 2.0),
+                    child: 
+                    RawMaterialButton(
+                            onPressed: () {
+                              
+                            },
+                            child: new Icon(
+                              Icons.record_voice_over,
+                              size: 27,
+                              color: Color.fromRGBO(114, 103, 239, 1),
+                        ),
+                        shape: new CircleBorder(),
+                        elevation: 4,
+                        hoverElevation: 10,
+                        constraints: BoxConstraints.tight(Size(36, 36)),
+                        fillColor: Colors.white,
+                        // padding: EdgeInsets.all(2.0),
+                    ),
+                ),
+          ],),
+          ),
+        ),
+        ),
         
          Expanded(
           child: Container(
@@ -257,7 +384,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   direction: DismissDirection.endToStart,
                   onDismissed: (direction) {
                     DBProvider.db.deleteClient(item.id);
-                    httpGet("https://delau.000webhostapp.com/flutter/delete.php?id="+item.id.toString());
+                    refreshCount();
+                    // httpGet("https://delau.000webhostapp.com/flutter/delete.php?id="+item.id.toString());
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
                         backgroundColor: Color.fromRGBO(114, 103, 239, 1),
@@ -285,9 +413,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     subtitle: get_subtitle_of_SQLI(item),
                     trailing: Checkbox(
                       onChanged: (bool value) {
-                         httpGet("https://delau.000webhostapp.com/flutter/nodeletedone.php?id="+item.id.toString()); 
+                        //  httpGet("https://delau.000webhostapp.com/flutter/nodeletedone.php?id="+item.id.toString()); 
                         DBProvider.db.blockOrUnblock(item);
-                        setState(() {});
+                        setState(() {
+                          
+                        });
                       },
                       value: item.done,
                     ),

@@ -41,6 +41,7 @@ class Client {
         time: json["time"],
         done: json["done"] == 1,
       );
+  
       
   Map<String, dynamic> toMap() => {
         "id": id,

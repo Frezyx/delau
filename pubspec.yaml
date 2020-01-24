@@ -30,7 +30,7 @@ dependencies:
   material_design_icons_flutter: 3.4.4795
   flutter_local_notifications: ^0.9.1
   speech_recognition: ^0.3.0
-  flutter_tts: ^0.8.5
+  flutter_tts: ^0.8.6
   sqflite: any
   path_provider: any
   curved_navigation_bar: ^0.3.1

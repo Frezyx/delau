@@ -83,6 +83,12 @@ class DBProvider {
     return res;
   }
 
+  Future<int> getContNow() async {
+    final db = await database;
+    var res = await Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM Client'));
+    return res;
+  }
+
   getClient(int id) async {
     final db = await database;
     var res = await db.query("Client", where: "id = ?", whereArgs: [id]);
