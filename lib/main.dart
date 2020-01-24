@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:delau/pages/ttsHelper.dart';
+import 'package:delau/utils/ttsHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'addTaskPage.dart';
@@ -72,15 +72,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
-httpGet(String link) async{
-    try{
-      var response = await http.get('$link');
-      print("Статус ответа: ${response.statusCode}");
-      print("Тело ответа: ${response.body}");
-    } catch (error){
-      print('Ты ебловоз блять! А вот твоя ошибка: $error');
-    }
-  }
+// httpGet(String link) async{
+//     try{
+//       var response = await http.get('$link');
+//       print("Статус ответа: ${response.statusCode}");
+//       print("Тело ответа: ${response.body}");
+//     } catch (error){
+//       print('Ты ебловоз блять! А вот твоя ошибка: $error');
+//     }
+//   }
 
 class MyStatefulWidget extends StatefulWidget {
   @override
@@ -89,18 +89,8 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
-final FlutterTts flutterTts = FlutterTts();
-
-speakTasks() async{
-    await flutterTts.setPitch(1);
-    await flutterTts.setSpeechRate(0.8);
-    await flutterTts.speak('Это тест, Миша извини, что мешаю');
-  }
-// final StreamController<int> _streamController = StreamController<int>();
-// var _counter = DBProvider.db.getContNow();
+var countTask =  DBProvider.db.getContNow();
 // РОУТИННГ
-  var countTask =  DBProvider.db.getContNow();
-
   void refreshCount() {
     // reload
     setState(() {
@@ -198,7 +188,7 @@ speakTasks() async{
         ),
         Padding(
           
-          padding: EdgeInsets.only(right: 10.0, left: 10.0, top: 10.0, bottom: 5.0),
+          padding: EdgeInsets.only(right: 10.0, left: 10.0, top: 10.0, bottom: 10.0),
 
         child: DecoratedBox(
                   decoration: new BoxDecoration(
@@ -257,7 +247,7 @@ speakTasks() async{
                     child: 
                     RawMaterialButton(
                             onPressed: () {
-                              speakTasks();
+                              getVoiceInfo();
                               // askPermision();
                               //   if(_isAvailable && ! _isListerning)
                               //   {
@@ -385,6 +375,7 @@ speakTasks() async{
                   onDismissed: (direction) {
                     DBProvider.db.deleteClient(item.id);
                     refreshCount();
+                    counterDone();
                     // httpGet("https://delau.000webhostapp.com/flutter/delete.php?id="+item.id.toString());
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
@@ -472,6 +463,10 @@ speakTasks() async{
           );
         }
 }
+
+  void counterDone() async{
+    await DBCountProvider.dbc.updateCountDone( );
+  }
 
 class StarDisplay extends StatelessWidget {
   final int value;

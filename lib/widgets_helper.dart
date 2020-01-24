@@ -281,3 +281,15 @@ Widget get_subtitle_of_SQLI(Client item){
   // Future<List<Post>> buildCountWidget() {
   //   return  fetchPosts(http.Client());
   // }
+
+// ------------------------------ HTTP ЗАПОС---------
+// --------------------------------------------------
+// httpGet(String link) async{
+//     try{
+//       var response = await http.get('$link');
+//       print("Статус ответа: ${response.statusCode}");
+//       print("Тело ответа: ${response.body}");
+//     } catch (error){
+//       print('Ты ебловоз блять! А вот твоя ошибка: $error');
+//     }
+//   }

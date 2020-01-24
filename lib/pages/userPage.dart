@@ -45,8 +45,8 @@ class _UserState extends State<User> {
                 padding: EdgeInsets.only(left: 45.0, top: 5),
                 child:
                 Column(children: <Widget>[
-                    Text("Артем    ",style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 36.0, fontWeight: FontWeight.w900, color: Colors.black)),
-                    Text("Шарпарь",style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 36.0, fontWeight: FontWeight.w900, color: Colors.black)),
+                    Text(" Пользователь       ",style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 36.0, fontWeight: FontWeight.w900, color: Colors.black)),
+                    Text("  Неопознанный",style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 36.0, fontWeight: FontWeight.w900, color: Colors.black)),
                   ],
                 )
 
@@ -164,7 +164,7 @@ class _UserState extends State<User> {
                       Padding(
             padding: EdgeInsets.only( left: 10.0),
             child:
-            Text("Выполненно задач:", style: TextStyle(fontStyle: FontStyle.normal, fontFamily: "Exo 2",fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.black)),
+            Text("Выполненно задач: ${item.countDone.toString()}", style: TextStyle(fontStyle: FontStyle.normal, fontFamily: "Exo 2",fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.black)),
                       ),
             ],
             ),
@@ -218,7 +218,7 @@ class _UserState extends State<User> {
                       Padding(
             padding: EdgeInsets.only( left: 10.0),
             child:
-            Text("Рейтинг:", style: TextStyle(fontStyle: FontStyle.normal, fontFamily: "Exo 2",fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.black)),
+            Text("Рейтинг: ${((item.countDone/item.countAdd)*100).toString()}", style: TextStyle(fontStyle: FontStyle.normal, fontFamily: "Exo 2",fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.black)),
                       ),
             ],
             ),

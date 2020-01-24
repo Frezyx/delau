@@ -168,7 +168,7 @@ class DBCountProvider {
     // if(isset == 1){
       var table = await db.rawQuery("SELECT * FROM ClientCount WHERE id = 1");
       int countAddNow = table.first["countAdd"];
-      int nextAdd = countAddNow;
+      int nextAdd = countAddNow + 1;
       int countDoneNow = table.first["countDone"]; 
         ClientCounter now_client = new ClientCounter(
           id: 1,
@@ -177,6 +177,24 @@ class DBCountProvider {
         );
         print("aaaaaaaaaa    ///     "+countAddNow.toString());
         updateClientCountRaw(now_client);
+  }
+
+  updateCountDone() async {
+    final db = await database;
+    //get the biggest id in the table
+    // var isset = await db.rawQuery('SELECT EXISTS(SELECT * FROM ClientCount WHERE id = 0)');
+    // if(isset == 1){
+      var table = await db.rawQuery("SELECT * FROM ClientCount WHERE id = 1");
+      int countAddNow = table.first["countAdd"];
+      int countDoneNow = table.first["countDone"]; 
+      int nextDone = countDoneNow + 1;
+        ClientCounter now_client = new ClientCounter(
+          id: 1,
+          countAdd: countAddNow,
+          countDone: nextDone,
+        );
+        print("Сейчас у нас столько задач Выполненно:      ///     " + nextDone.toString());
+        updateClientCountDoneRaw(now_client);
   }
 
   firstCreateTable() async{
@@ -197,12 +215,21 @@ var res = await db.update("ClientCount", newClient.toMap(),
     return res;
   }
 
-    updateClientCountRaw(ClientCounter newClient) async {
+  updateClientCountRaw(ClientCounter newClient) async {
     final db = await database;
-    int nextAdd = newClient.countAdd + 1;
+    int nextAdd = newClient.countAdd;
     int count = await db.rawUpdate(
       'UPDATE ClientCount SET countAdd = ? WHERE id = ?',
       ['$nextAdd', '1']);
+  print('updated: $count');
+  }
+
+  updateClientCountDoneRaw(ClientCounter newClient) async {
+    final db = await database;
+    int nextDone = newClient.countDone;
+    int count = await db.rawUpdate(
+      'UPDATE ClientCount SET countDone = ? WHERE id = ?',
+      ['$nextDone', '1']);
   print('updated: $count');
   }
 
