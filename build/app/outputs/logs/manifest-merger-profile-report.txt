@@ -83,7 +83,7 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\FR
 		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:19:9-43
 	android:name
 		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:17:9-57
-activity#com.example.delau.MainActivity
+activity#com.patybit.delau.MainActivity
 ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:20:9-35:20
 	android:launchMode
 		ADDED from C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:22:13-43

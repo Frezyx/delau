@@ -1,6 +1,6 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-3    package="com.example.delau"
+3    package="com.patybit.delau"
 4    android:versionCode="1"
 5    android:versionName="1.0.0" >
 6
@@ -18,75 +18,247 @@
 16    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 16-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:5:5-71
 16-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:5:22-68
-17    <!--
-18 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-19    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-20    -->
+17    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+17-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:24:5-79
+17-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:24:22-76
+18    <uses-permission android:name="android.permission.WAKE_LOCK" />
+18-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:25:5-68
+18-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:25:22-65
+19    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+19-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:26:5-110
+19-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:26:22-107
+20    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+20-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\aa12acb089743fad60dfabe768f278a6\firebase-iid-20.0.2\AndroidManifest.xml:26:5-82
+20-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\aa12acb089743fad60dfabe768f278a6\firebase-iid-20.0.2\AndroidManifest.xml:26:22-79
 21    <!--
-22 <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-23    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+22 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+23    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 24    -->
 25    <!--
-26 io.flutter.app.FlutterApplication is an android.app.Application that
-27         calls FlutterMain.startInitialization(this); in its onCreate method.
-28         In most cases you can leave this as-is, but you if you want to provide
-29         additional functionality it is fine to subclass or reimplement
-30         FlutterApplication and put your custom class here.
-31    -->
-32    <application
-32-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:16:5-42:19
-33        android:name="io.flutter.app.FlutterApplication"
-33-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:17:9-57
-34        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-34-->[androidx.core:core:1.1.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\1128c5e807499d6aa189b07ac586a9bf\core-1.1.0\AndroidManifest.xml:24:18-86
-35        android:debuggable="true"
-36        android:icon="@mipmap/ic_launcher"
-36-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:19:9-43
-37        android:label="delau" >
-37-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:18:9-30
-38        <activity
-38-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:20:9-35:20
-39            android:name="com.example.delau.MainActivity"
-39-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:21:13-41
-40            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-40-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:24:13-163
-41            android:hardwareAccelerated="true"
-41-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:25:13-47
-42            android:launchMode="singleTop"
-42-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:22:13-43
-43            android:theme="@style/LaunchTheme"
-43-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:23:13-47
-44            android:windowSoftInputMode="adjustResize" >
-44-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:26:13-55
-45            <intent-filter>
-45-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:27:13-30:29
-46                <action android:name="android.intent.action.MAIN" />
-46-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:28:17-68
-46-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:28:25-66
-47
-48                <category android:name="android.intent.category.LAUNCHER" />
-48-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:29:17-76
-48-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:29:27-74
-49            </intent-filter>
-50            <!--
-51            <intent-filter>
-52                <action android:name="FLUTTER_NOTIFICATION_CLICK" />
-53                <category android:name="android.intent.category.DEFAULT" />
-54            </intent-filter>
-55            -->
-56        </activity>
-57        <!--
-58             Don't delete the meta-data below.
-59             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
-60        -->
-61        <meta-data
-61-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:38:9-41:53
-62            android:name="flutterEmbedding"
-62-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:39:13-44
-63            android:resource="@mipmap/ic_launcher"
-63-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:41:13-51
-64            android:value="2" />
-64-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:40:13-30
-65    </application>
-66
-67</manifest>
+26 <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+27    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+28    -->
+29    <!--
+30 io.flutter.app.FlutterApplication is an android.app.Application that
+31         calls FlutterMain.startInitialization(this); in its onCreate method.
+32         In most cases you can leave this as-is, but you if you want to provide
+33         additional functionality it is fine to subclass or reimplement
+34         FlutterApplication and put your custom class here.
+35    -->
+36    <application
+36-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:16:5-50:19
+37        android:name="io.flutter.app.FlutterApplication"
+37-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:17:9-57
+38        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+38-->[androidx.core:core:1.1.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\91efda32dc67461926359ac31a4aa8ce\core-1.1.0\AndroidManifest.xml:24:18-86
+39        android:debuggable="true"
+40        android:icon="@mipmap/ic_launcher"
+40-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:19:9-43
+41        android:label="delau" >
+41-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:18:9-30
+42        <activity
+42-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:20:9-35:20
+43            android:name="com.patybit.delau.MainActivity"
+43-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:21:13-41
+44            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+44-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:24:13-163
+45            android:hardwareAccelerated="true"
+45-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:25:13-47
+46            android:launchMode="singleTop"
+46-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:22:13-43
+47            android:theme="@style/LaunchTheme"
+47-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:23:13-47
+48            android:windowSoftInputMode="adjustResize" >
+48-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:26:13-55
+49            <intent-filter>
+49-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:27:13-30:29
+50                <action android:name="android.intent.action.MAIN" />
+50-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:28:17-68
+50-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:28:25-66
+51
+52                <category android:name="android.intent.category.LAUNCHER" />
+52-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:29:17-76
+52-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:29:27-74
+53            </intent-filter>
+54            <intent-filter>
+54-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:31:13-34:29
+55                <action android:name="FLUTTER_NOTIFICATION_CLICK" />
+55-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:32:17-69
+55-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:32:25-66
+56
+57                <category android:name="android.intent.category.DEFAULT" />
+57-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:33:17-76
+57-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:33:27-73
+58            </intent-filter>
+59        </activity>
+60        <!--
+61             Don't delete the meta-data below.
+62             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+63        -->
+64        <meta-data
+64-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:38:9-41:53
+65            android:name="flutterEmbedding"
+65-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:39:13-44
+66            android:resource="@mipmap/ic_launcher"
+66-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:41:13-51
+67            android:value="2" />
+67-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:40:13-30
+68        <meta-data
+68-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:42:9-44:54
+69            android:name="com.google.firebase.messaging.default_notification_icon"
+69-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:43:13-83
+70            android:resource="@mipmap/ic_launcher" />
+70-->C:\Users\FREZY\Desktop\FlutterProjects\delau\android\app\src\main\AndroidManifest.xml:44:13-51
+71        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming notification message. -->
+72        <!--
+73             <meta-data
+74            android:name="com.google.firebase.messaging.default_notification_color"
+75            android:resource="@color/colorAccent" />
+76        -->
+77
+78        <service android:name="io.flutter.plugins.firebasemessaging.FlutterFirebaseMessagingService" >
+78-->[:firebase_messaging] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:8:9-12:19
+78-->[:firebase_messaging] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:8:18-101
+79            <intent-filter>
+79-->[:firebase_messaging] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:29
+80                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+80-->[:firebase_messaging] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-78
+80-->[:firebase_messaging] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:10:25-75
+81            </intent-filter>
+82        </service>
+83        <service
+83-->[:firebase_messaging] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:13:9-17:19
+84            android:name="com.google.firebase.components.ComponentDiscoveryService"
+84-->[:firebase_messaging] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:13:18-89
+85            android:directBootAware="true"
+85-->[com.google.firebase:firebase-common:19.3.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\5f2b2b4ddbe9979964c02f3a7a1e7e98\jetified-firebase-common-19.3.0\AndroidManifest.xml:34:13-43
+86            android:exported="false" >
+86-->[com.google.android.gms:play-services-measurement-api:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\71b1ce154dc77da267a3451d4794646b\play-services-measurement-api-17.2.2\AndroidManifest.xml:29:13-37
+87            <meta-data
+87-->[:firebase_messaging] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-16:85
+88                android:name="com.google.firebase.components:io.flutter.plugins.firebasemessaging.FlutterFirebaseAppRegistrar"
+88-->[:firebase_messaging] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:15:17-127
+89                android:value="com.google.firebase.components.ComponentRegistrar" />
+89-->[:firebase_messaging] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:16:17-82
+90            <meta-data
+90-->[com.google.android.gms:play-services-measurement-api:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\71b1ce154dc77da267a3451d4794646b\play-services-measurement-api-17.2.2\AndroidManifest.xml:30:13-32:85
+91                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+91-->[com.google.android.gms:play-services-measurement-api:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\71b1ce154dc77da267a3451d4794646b\play-services-measurement-api-17.2.2\AndroidManifest.xml:31:17-139
+92                android:value="com.google.firebase.components.ComponentRegistrar" />
+92-->[com.google.android.gms:play-services-measurement-api:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\71b1ce154dc77da267a3451d4794646b\play-services-measurement-api-17.2.2\AndroidManifest.xml:32:17-82
+93            <meta-data
+93-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\aa12acb089743fad60dfabe768f278a6\firebase-iid-20.0.2\AndroidManifest.xml:32:13-34:85
+94                android:name="com.google.firebase.components:com.google.firebase.iid.Registrar"
+94-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\aa12acb089743fad60dfabe768f278a6\firebase-iid-20.0.2\AndroidManifest.xml:33:17-96
+95                android:value="com.google.firebase.components.ComponentRegistrar" />
+95-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\aa12acb089743fad60dfabe768f278a6\firebase-iid-20.0.2\AndroidManifest.xml:34:17-82
+96        </service>
+97
+98        <receiver
+98-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:29:9-33:20
+99            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+99-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:30:13-85
+100            android:enabled="true"
+100-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:31:13-35
+101            android:exported="false" >
+101-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:32:13-37
+102        </receiver>
+103        <receiver
+103-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:34:9-42:20
+104            android:name="com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver"
+104-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:35:13-100
+105            android:enabled="true"
+105-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:36:13-35
+106            android:exported="true"
+106-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:37:13-36
+107            android:permission="android.permission.INSTALL_PACKAGES" >
+107-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:38:13-69
+108            <intent-filter>
+108-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:39:13-41:29
+109                <action android:name="com.android.vending.INSTALL_REFERRER" />
+109-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:40:17-79
+109-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:40:25-76
+110            </intent-filter>
+111        </receiver>
+112
+113        <service
+113-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:44:9-47:40
+114            android:name="com.google.android.gms.measurement.AppMeasurementService"
+114-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:45:13-84
+115            android:enabled="true"
+115-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:46:13-35
+116            android:exported="false" />
+116-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:47:13-37
+117        <service
+117-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:48:9-52:72
+118            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+118-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:49:13-87
+119            android:enabled="true"
+119-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:50:13-35
+120            android:exported="false"
+120-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:51:13-37
+121            android:permission="android.permission.BIND_JOB_SERVICE" />
+121-->[com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:52:13-69
+122        <!--
+123             FirebaseMessagingService performs security checks at runtime,
+124             but set to not exported to explicitly avoid allowing another app to call it.
+125        -->
+126        <service
+126-->[com.google.firebase:firebase-messaging:20.0.1] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\5e78b5030c0e35c9fe3bde6b074a41f7\jetified-firebase-messaging-20.0.1\AndroidManifest.xml:28:9-34:19
+127            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+127-->[com.google.firebase:firebase-messaging:20.0.1] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\5e78b5030c0e35c9fe3bde6b074a41f7\jetified-firebase-messaging-20.0.1\AndroidManifest.xml:29:13-82
+128            android:exported="false" >
+128-->[com.google.firebase:firebase-messaging:20.0.1] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\5e78b5030c0e35c9fe3bde6b074a41f7\jetified-firebase-messaging-20.0.1\AndroidManifest.xml:30:13-37
+129            <intent-filter android:priority="-500" >
+129-->[:firebase_messaging] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:29
+130                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+130-->[:firebase_messaging] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-78
+130-->[:firebase_messaging] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:10:25-75
+131            </intent-filter>
+132        </service>
+133
+134        <receiver
+134-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\aa12acb089743fad60dfabe768f278a6\firebase-iid-20.0.2\AndroidManifest.xml:37:9-44:20
+135            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+135-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\aa12acb089743fad60dfabe768f278a6\firebase-iid-20.0.2\AndroidManifest.xml:38:13-78
+136            android:exported="true"
+136-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\aa12acb089743fad60dfabe768f278a6\firebase-iid-20.0.2\AndroidManifest.xml:39:13-36
+137            android:permission="com.google.android.c2dm.permission.SEND" >
+137-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\aa12acb089743fad60dfabe768f278a6\firebase-iid-20.0.2\AndroidManifest.xml:40:13-73
+138            <intent-filter>
+138-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\aa12acb089743fad60dfabe768f278a6\firebase-iid-20.0.2\AndroidManifest.xml:41:13-43:29
+139                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+139-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\aa12acb089743fad60dfabe768f278a6\firebase-iid-20.0.2\AndroidManifest.xml:42:17-81
+139-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\aa12acb089743fad60dfabe768f278a6\firebase-iid-20.0.2\AndroidManifest.xml:42:25-78
+140            </intent-filter>
+141        </receiver>
+142
+143        <provider
+143-->[com.google.firebase:firebase-common:19.3.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\5f2b2b4ddbe9979964c02f3a7a1e7e98\jetified-firebase-common-19.3.0\AndroidManifest.xml:26:9-30:39
+144            android:name="com.google.firebase.provider.FirebaseInitProvider"
+144-->[com.google.firebase:firebase-common:19.3.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\5f2b2b4ddbe9979964c02f3a7a1e7e98\jetified-firebase-common-19.3.0\AndroidManifest.xml:27:13-77
+145            android:authorities="com.patybit.delau.firebaseinitprovider"
+145-->[com.google.firebase:firebase-common:19.3.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\5f2b2b4ddbe9979964c02f3a7a1e7e98\jetified-firebase-common-19.3.0\AndroidManifest.xml:28:13-72
+146            android:exported="false"
+146-->[com.google.firebase:firebase-common:19.3.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\5f2b2b4ddbe9979964c02f3a7a1e7e98\jetified-firebase-common-19.3.0\AndroidManifest.xml:29:13-37
+147            android:initOrder="100" />
+147-->[com.google.firebase:firebase-common:19.3.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\5f2b2b4ddbe9979964c02f3a7a1e7e98\jetified-firebase-common-19.3.0\AndroidManifest.xml:30:13-36
+148
+149        <activity
+149-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\51ae44039f7889b3a73827b9b3b5ac50\play-services-base-17.0.0\AndroidManifest.xml:23:9-26:75
+150            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+150-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\51ae44039f7889b3a73827b9b3b5ac50\play-services-base-17.0.0\AndroidManifest.xml:24:13-79
+151            android:exported="false"
+151-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\51ae44039f7889b3a73827b9b3b5ac50\play-services-base-17.0.0\AndroidManifest.xml:25:13-37
+152            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+152-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\51ae44039f7889b3a73827b9b3b5ac50\play-services-base-17.0.0\AndroidManifest.xml:26:13-72
+153
+154        <meta-data
+154-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\5e7c0801c5a3f67eb4bca813a545efaa\jetified-play-services-basement-17.0.0\AndroidManifest.xml:23:9-25:69
+155            android:name="com.google.android.gms.version"
+155-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\5e7c0801c5a3f67eb4bca813a545efaa\jetified-play-services-basement-17.0.0\AndroidManifest.xml:24:13-58
+156            android:value="@integer/google_play_services_version" />
+156-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\5e7c0801c5a3f67eb4bca813a545efaa\jetified-play-services-basement-17.0.0\AndroidManifest.xml:25:13-66
+157    </application>
+158
+159</manifest>

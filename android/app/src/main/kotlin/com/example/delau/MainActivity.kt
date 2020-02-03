@@ -1,4 +1,4 @@
-package com.example.delau
+package com.patybit.delau
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

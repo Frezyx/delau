@@ -15,14 +15,14 @@ class _UserState extends State<User> {
   // var pos = all[0];
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<ClientCounter>>(
-        future: DBCountProvider.dbc.getClientCounterInList(),
-        builder: (BuildContext context, AsyncSnapshot<List<ClientCounter>> snapshot) {
+      body: FutureBuilder<List<ClientUser>>(
+        future: DBUserProvider.dbc.getClientUserInList(),
+        builder: (BuildContext context, AsyncSnapshot<List<ClientUser>> snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
-                ClientCounter item = snapshot.data[0];
+                ClientUser item = snapshot.data[0];
                 return   
                     Column(
         children: <Widget>[
@@ -218,7 +218,7 @@ class _UserState extends State<User> {
                       Padding(
             padding: EdgeInsets.only( left: 10.0),
             child:
-            Text("Рейтинг: ${((item.countDone/item.countAdd)*100).toString()}", style: TextStyle(fontStyle: FontStyle.normal, fontFamily: "Exo 2",fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.black)),
+            Text("Рейтинг: ${item.rating.toString()}", style: TextStyle(fontStyle: FontStyle.normal, fontFamily: "Exo 2",fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.black)),
                       ),
             ],
             ),
@@ -239,23 +239,25 @@ class _UserState extends State<User> {
         backgroundColor: Colors.transparent,
         animationDuration: Duration(microseconds: 2500),
         items: <Widget>[
-          Icon(Icons.list, size: 30, color: Colors.black,),
-          Icon(Icons.add, size: 30, color: Colors.black,),
-          Icon(FontAwesome.user_o, size: 30, color: Colors.black,),
+          Icon(Icons.list, size: 30, color: Colors.black54,),
+          Icon(FontAwesome.sticky_note_o, size: 30, color: Colors.black54,),
+          Icon(Icons.add, size: 30, color: Colors.black54,),
+          Icon(Icons.pie_chart_outlined, size: 30, color: Colors.black54,),
+          Icon(FontAwesome.user_o, size: 30, color: Colors.deepPurpleAccent,),
           // Icon(Icons.compare_arrows, size: 30, color: Colors.black,),
           // Icon(Icons.add, size: 30, color: Colors.black,),
           // Icon(Icons.list, size: 30, color: Colors.black,),
         ],
-        index: 2,
+        index: 4,
         animationCurve: Curves.bounceInOut,
         onTap: (index) {
           if(index == 0){
             Navigator.pushNamed(context, '/');
           }
-          if(index == 1){
+          if(index == 2){
             Navigator.pushNamed(context, '/second/1');
           }
-          if(index == 2){
+          if(index == 4){
             Navigator.pushNamed(context, '/user');
           }
         }
@@ -265,6 +267,6 @@ class _UserState extends State<User> {
 }
 
 // foo() async {
-//   final user = await DBCountProvider.dbc.getClientCounter(0);
+//   final user = await DBUserProvider.dbc.getClientUser(0);
 //   return user;
 // }

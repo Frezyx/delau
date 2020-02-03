@@ -55,36 +55,44 @@ class Client {
       };
 }
 
-ClientCounter clientCounterFromJson(String str) {
+ClientUser ClientUserFromJson(String str) {
   final jsonData = json.decode(str);
-  return ClientCounter.fromMap(jsonData);
+  return ClientUser.fromMap(jsonData);
 }
 
-String clientCounterToJson(ClientCounter data) {
+String ClientUserToJson(ClientUser data) {
   final dyn = data.toMap();
   return json.encode(dyn);
 }
 
-class ClientCounter {
+class ClientUser {
   int id;
   int countDone;
   int countAdd;
+  int rating;
+  int reg;
 
-  ClientCounter({
+  ClientUser({
 		this.id,
 		this.countAdd,
 		this.countDone,
+    this.rating,
+    this.reg,
   });
 
-  factory ClientCounter.fromMap(Map<String, dynamic> json) => new ClientCounter(
+  factory ClientUser.fromMap(Map<String, dynamic> json) => new ClientUser(
         id: json["id"],
         countAdd: json["countAdd"],
         countDone: json["countDone"],
+        rating: json["rating"],
+        reg: json["reg"],
       );
       
   Map<String, dynamic> toMap() => {
         "id": id,
         "countAdd": countDone,
         "countDone": countDone,
+        "rating": rating,
+        "reg": reg,
       };
 }

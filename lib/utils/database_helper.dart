@@ -125,7 +125,10 @@ class DBProvider {
 
   deleteClient(int id) async {
     final db = await database;
-    return db.delete("Client", where: "id = ?", whereArgs: [id]);
+    var table = await db.rawQuery("SELECT priority FROM Client WHERE id = ?",[id]);
+    int priority = table.first["priority"];
+    db.delete("Client", where: "id = ?", whereArgs: [id]);
+    return priority;
   }
 
   deleteAll() async {
@@ -134,10 +137,10 @@ class DBProvider {
   }
 }
 
-class DBCountProvider {
-  DBCountProvider._();
+class DBUserProvider {
+  DBUserProvider._();
 
-  static final DBCountProvider dbc = DBCountProvider._();
+  static final DBUserProvider dbc = DBUserProvider._();
 
   Database _database;
 
@@ -153,10 +156,12 @@ class DBCountProvider {
     String path = join(documentsDirectory.path, "Count.db");
     return await openDatabase(path, version: 1, onOpen: (db) {},
         onCreate: (Database db, int version) async {
-      await db.execute("CREATE TABLE ClientCount ("
+      await db.execute("CREATE TABLE ClientUser ("
           "id INTEGER PRIMARY KEY,"
           "countAdd INTEGER,"
-          "countDone INTEGER"
+          "countDone INTEGER,"
+          "rating INTEGER,"
+          "reg INTEGER"
           ")");
     });
   }
@@ -164,86 +169,96 @@ class DBCountProvider {
   updateCount() async {
     final db = await database;
     //get the biggest id in the table
-    // var isset = await db.rawQuery('SELECT EXISTS(SELECT * FROM ClientCount WHERE id = 0)');
+    // var isset = await db.rawQuery('SELECT EXISTS(SELECT * FROM ClientUser WHERE id = 0)');
     // if(isset == 1){
-      var table = await db.rawQuery("SELECT * FROM ClientCount WHERE id = 1");
+      var table = await db.rawQuery("SELECT * FROM ClientUser WHERE id = 1");
       int countAddNow = table.first["countAdd"];
       int nextAdd = countAddNow + 1;
-      int countDoneNow = table.first["countDone"]; 
-        ClientCounter now_client = new ClientCounter(
+      int countDoneNow = table.first["countDone"];
+      int rating = table.first["rating"]; 
+      int reg = table.first["reg"]; 
+        ClientUser now_client = new ClientUser(
           id: 1,
           countAdd: nextAdd,
           countDone: countDoneNow,
+          rating: rating,
+          reg: reg,
         );
         print("aaaaaaaaaa    ///     "+countAddNow.toString());
-        updateClientCountRaw(now_client);
+        updateClientUserRaw(now_client);
   }
 
-  updateCountDone() async {
+  updateCountDone(int pr) async {
     final db = await database;
     //get the biggest id in the table
-    // var isset = await db.rawQuery('SELECT EXISTS(SELECT * FROM ClientCount WHERE id = 0)');
+    // var isset = await db.rawQuery('SELECT EXISTS(SELECT * FROM ClientUser WHERE id = 0)');
     // if(isset == 1){
-      var table = await db.rawQuery("SELECT * FROM ClientCount WHERE id = 1");
+      var table = await db.rawQuery("SELECT * FROM ClientUser WHERE id = 1");
       int countAddNow = table.first["countAdd"];
       int countDoneNow = table.first["countDone"]; 
       int nextDone = countDoneNow + 1;
-        ClientCounter now_client = new ClientCounter(
+      int rating = table.first["rating"]; 
+      int nextRating = rating + pr ~/ 2;
+      int reg = table.first["reg"]; 
+        ClientUser now_client = new ClientUser(
           id: 1,
           countAdd: countAddNow,
           countDone: nextDone,
+          rating: nextRating,
+          reg: reg,
         );
         print("Сейчас у нас столько задач Выполненно:      ///     " + nextDone.toString());
-        updateClientCountDoneRaw(now_client);
+        updateClientUserDoneRaw(now_client);
   }
 
   firstCreateTable() async{
     final db = await database;
     
     var raw = await db.rawInsert(
-        "INSERT Into ClientCount (id,countAdd,countDone)"
-        " VALUES (?,?,?)",
-        [1, 0, 0]
+        "INSERT Into ClientUser (id,countAdd,countDone,rating,reg)"
+        " VALUES (?,?,?,?,?)",
+        [1, 0, 0, 0, 0]
         );
 
     return raw;
   }
-  updateClientCount(ClientCounter newClient) async {
+  updateClientUser(ClientUser newClient) async {
     final db = await database;
-var res = await db.update("ClientCount", newClient.toMap(),
+var res = await db.update("ClientUser", newClient.toMap(),
     where: "id = ?", whereArgs: [newClient.id]);
     return res;
   }
 
-  updateClientCountRaw(ClientCounter newClient) async {
+  updateClientUserRaw(ClientUser newClient) async {
     final db = await database;
     int nextAdd = newClient.countAdd;
     int count = await db.rawUpdate(
-      'UPDATE ClientCount SET countAdd = ? WHERE id = ?',
+      'UPDATE ClientUser SET countAdd = ? WHERE id = ?',
       ['$nextAdd', '1']);
   print('updated: $count');
   }
 
-  updateClientCountDoneRaw(ClientCounter newClient) async {
+  updateClientUserDoneRaw(ClientUser newClient) async {
     final db = await database;
     int nextDone = newClient.countDone;
+    int nextRating = newClient.rating;
     int count = await db.rawUpdate(
-      'UPDATE ClientCount SET countDone = ? WHERE id = ?',
-      ['$nextDone', '1']);
+      'UPDATE ClientUser SET countDone = ?, rating = ? WHERE id = ?',
+      ['$nextDone', '$nextRating', '1']);
   print('updated: $count');
   }
 
-  Future<ClientCounter> getClientCounter(int id) async {
+  Future<ClientUser> getClientUser(int id) async {
     final db = await database;
-    var res = await db.query("ClientCount", where: "id = ?", whereArgs: [id]);
-    return ClientCounter.fromMap(res.first);
+    var res = await db.query("ClientUser", where: "id = ?", whereArgs: [id]);
+    return ClientUser.fromMap(res.first);
   }
 
-    Future<List<ClientCounter>> getClientCounterInList() async {
+    Future<List<ClientUser>> getClientUserInList() async {
     final db = await database;
-    var res = await db.rawQuery("SELECT * FROM ClientCount WHERE id = 1");
-    List<ClientCounter> list =
-        res.isNotEmpty ? res.map((c) => ClientCounter.fromMap(c)).toList() : [];
+    var res = await db.rawQuery("SELECT * FROM ClientUser WHERE id = 1");
+    List<ClientUser> list =
+        res.isNotEmpty ? res.map((c) => ClientUser.fromMap(c)).toList() : [];
         // if(res.isNotEmpty ){
         //   print("ХУУУЙ");
         // };

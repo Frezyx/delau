@@ -58,7 +58,7 @@ Widget getCardInfo(int i, List<IconData> i_add, List<String>slider_titles){
         Column(
             children: <Widget>[
               Padding(
-              padding: EdgeInsets.only(top: 28, left: 25.0),
+              padding: EdgeInsets.only(top: 32, left: 20.0),
               child:  
               Text(slider_titles[i-1], 
                 style: TextStyle(
@@ -68,38 +68,38 @@ Widget getCardInfo(int i, List<IconData> i_add, List<String>slider_titles){
                 color: Colors.black),
                 ),
             ),
-            Padding(
-                padding: EdgeInsets.only(top: 2, left: 15),
-                child:
-                  Text("Просрочено:",
-                    style: TextStyle(
-                    fontFamily: "Exo 2",
-                    fontSize: 14.0, 
-                    fontWeight: FontWeight.w300, 
-                    color: Color.fromRGBO(158, 158, 158, 1)),
-                  ),
-                ),
-            Padding(
-                padding: EdgeInsets.only(top: 0, left: 15),
-                child:
-                  Text("Выполненно:",
-                    style: TextStyle(
-                    fontFamily: "Exo 2",
-                    fontSize: 14.0, 
-                    fontWeight: FontWeight.w300, 
-                    color: Color.fromRGBO(158, 158, 158, 1)),
-                  ),
-                ),
-            Padding(
-                padding: EdgeInsets.only(top: 0, left: 15),
-                child:  Text("Сейчас:",
-                    style: TextStyle(
-                    fontFamily: "Exo 2",
-                    fontSize: 14.0, 
-                    fontWeight: FontWeight.w300, 
-                    color: Color.fromRGBO(158, 158, 158, 1)),
-                  ),
-            ),
+            // Padding(
+            //     padding: EdgeInsets.only(top: 2, left: 15),
+            //     child:
+            //       Text("Задач:",
+            //         style: TextStyle(
+            //         fontFamily: "Exo 2",
+            //         fontSize: 14.0, 
+            //         fontWeight: FontWeight.w300, 
+            //         color: Color.fromRGBO(158, 158, 158, 1)),
+            //       ),
+            //     ),
+            // Padding(
+            //     padding: EdgeInsets.only(top: 0, left: 15),
+            //     child:
+            //       Text("Выполненно:",
+            //         style: TextStyle(
+            //         fontFamily: "Exo 2",
+            //         fontSize: 14.0, 
+            //         fontWeight: FontWeight.w300, 
+            //         color: Color.fromRGBO(158, 158, 158, 1)),
+            //       ),
+            //     ),
+            // Padding(
+            //     padding: EdgeInsets.only(top: 0, left: 15),
+            //     child:  Text("Сейчас:",
+            //         style: TextStyle(
+            //         fontFamily: "Exo 2",
+            //         fontSize: 14.0, 
+            //         fontWeight: FontWeight.w300, 
+            //         color: Color.fromRGBO(158, 158, 158, 1)),
+            //       ),
+            // ),
         ],
         ),
       ],

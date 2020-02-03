@@ -6,7 +6,7 @@ import 'package:delau/utils/database_helper.dart';
 Widget bannerOne(SharedPreferences prefs) {
 
   prefs.setBool('banner', false); 
-  DBCountProvider.dbc.firstCreateTable();// Меняем значение на false
+  DBUserProvider.dbc.firstCreateTable();// Меняем значение на false
   return
   MaterialApp( 
     home: Scaffold(

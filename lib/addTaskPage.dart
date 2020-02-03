@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:http/http.dart' as http;
@@ -19,6 +22,7 @@ class MyStatefulWidget3 extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   PermissionStatus _status;
 
   int requestSendFlag = 0;
@@ -40,6 +44,8 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
   DateTime _date = new DateTime.now();
   TimeOfDay _time = new TimeOfDay.now();
 
+  String nToken;
+
   int selected_radio;
   double rating = 0.0;
 
@@ -47,9 +53,20 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
   void initState(){
     super.initState();
     selected_radio = 0;
+
     PermissionHandler().checkPermissionStatus(PermissionGroup.speech).then(updateStatus);
         initSpeechRecognizer();
       }
+
+  //     httpGet(String link) async{
+  //   try{
+  //     var response = await http.get('$link');
+  //     print("Статус ответа: ${response.statusCode}");
+  //     print("Тело ответа: ${response.body}");
+  //   } catch (error){
+  //     print('Ты ебловоз блять! А вот твоя ошибка: $error');
+  //   }
+  // }
     
       setSelectedRadio(int val){
         setState(() {
@@ -88,9 +105,13 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
               requestSendFlag++;
               // ВОТ ТУТ НУЖНО ДОБАВИТЬ ЕБАНУЮ ДОБАВКУ В БД БЛЯТЬ 
               perseTaskFromResponse(resultText);
+
+
               // print("FSQL://title:"+response[0]+"  subtitle:"+response[1]);
-              return httpRecognitionRequest("https://delau.000webhostapp.com/flutter/addTaskRecognition.php?request="+resultText);
-              // return _isListerning = false;
+              //var response =  httpRecognitionRequest("https://delau.000webhostapp.com/flutter/addTaskRecognition.php?request="+resultText);
+              // var data = jsonDecode(response.body);
+
+              return _isListerning = false;
             });
           },
           
@@ -203,23 +224,34 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
           );
         }
     
-    
-        httpGet(String link) async{
-        try{
+      httpGet(String link) async{
           var response = await http.get('$link');
-          print("Статус ответа: ${response.statusCode}");
-          print("Тело ответа: ${response.body}");
-            if(response.body.toString()!= "0"){
+            if(response.body.toString()!= "1"){
               _badAllert();       
+              print("Неудачно");
             }
             else{
               _neverSatisfied();
+              print("Удачно");
             }
-        } catch (error){
-          print('Ты ебловоз блять! А вот твоя ошибка: $error');
-            return "404";
-        }
+            print(response.body.toString());
       }
+      //   httpGet(String link) async{
+      //   try{
+      //     var response = await http.get('$link');
+      //     print("Статус ответа: ${response.statusCode}");
+      //     print("Тело ответа: ${response.body}");
+      //       if(response.body.toString()!= "0"){
+      //         _badAllert();       
+      //       }
+      //       else{
+      //         _neverSatisfied();
+      //       }
+      //   } catch (error){
+      //     print('Ты ебловоз блять! А вот твоя ошибка: $error');
+      //       return "404";
+      //   }
+      // }
     
     
       @override
@@ -459,13 +491,17 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
 
                   addAtLocalDB(now_client);
                   counter();
-                  // httpGet("https://delau.000webhostapp.com/flutter/addTask.php?header="+_name+"&body="+_surname+"&date="+_date.toString()+"&time="+_time.toString()+"&marker="+(selected_radio-1).toString()+"&paginator="+rating.toString());  
+                  // var link = "https://delau.000webhostapp.com/flutter/addNotif.php?token="+nToken+"&date="+_date.toString()+"&time="+_time.toString();
+                  _firebaseMessaging.getToken().then((token){
+                    httpGet("https://delau.000webhostapp.com/flutter/addNotif.php?token="+token+"&date="+_date.toString()+"&time="+_time.toString());
+                  });
+                  // print(link);
                 }
               }
             }, child: Text('Создать'), color: Color.fromRGBO(114, 103, 239, 1), textColor: Colors.white,),
-             new RaisedButton(onPressed: (){
-                DBProvider.db.deleteAll();
-            }, child: Text('Удалить все'), color: Color.fromRGBO(114, 103, 239, 1), textColor: Colors.white,),
+            //  new RaisedButton(onPressed: (){
+            //     DBProvider.db.deleteAll();
+            // }, child: Text('Удалить все'), color: Color.fromRGBO(114, 103, 239, 1), textColor: Colors.white,),
             Expanded(
               child:
               Container(
@@ -477,20 +513,18 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
           ],
          ),),),
     
-                floatingActionButton: FloatingActionButton(
-                  heroTag: "btn_num_1_12_234555",
-                  onPressed: () {
-                          askPermision();
-                                                    if(_isAvailable && ! _isListerning)
-                                                      {
-                                                        // httpGet("https://delau.000webhostapp.com/flutter/addTask.php?header=1&body=1&date=2020-01-15&time=24:13:00&marker=1&paginator=1");
-                                                        _speechRecognition.listen(locale: "ru_RU").then((result) => print("aaaaa"));
-                                                      }
-                                                      // httpRecognitionRequest("https://delau.000webhostapp.com/flutter/addTaskRecognition.php?request="+result),
-                                              },
-                                            child: Icon(Icons.record_voice_over),
-                                            backgroundColor: Color.fromRGBO(114, 103, 239, 1),
-                                          ),
+                // floatingActionButton: FloatingActionButton(
+                //   heroTag: "btn_num_1_12_234555",
+                //   onPressed: () {
+                //           askPermision();
+                //             if(_isAvailable && ! _isListerning)
+                //             {
+                //               _speechRecognition.listen(locale: "ru_RU").then((result) => print("aaaaa"));
+                //             }
+                //           },
+                                          //   child: Icon(Icons.record_voice_over),
+                                          //   backgroundColor: Color.fromRGBO(114, 103, 239, 1),
+                                          // ),
                               
                                           floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
                                                 bottomNavigationBar: CurvedNavigationBar(
@@ -498,23 +532,25 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                                           backgroundColor: Colors.transparent,
                                           animationDuration: Duration(microseconds: 2500),
                                           items: <Widget>[
-                                            Icon(Icons.list, size: 30, color: Colors.black,),
-                                            Icon(Icons.add, size: 30, color: Colors.white,),
-                                            Icon(FontAwesome.user_o, size: 30, color: Colors.black,),
+                                            Icon(Icons.list, size: 30, color: Colors.black54,),
+                                            Icon(FontAwesome.sticky_note_o, size: 30, color: Colors.black54,),
+                                            Icon(Icons.add, size: 30, color: Colors.deepPurpleAccent,),
+                                            Icon(Icons.pie_chart_outlined, size: 30, color: Colors.black54,),
+                                            Icon(FontAwesome.user_o, size: 30, color: Colors.black54,),
                                             // Icon(Icons.compare_arrows, size: 30, color: Colors.black,),
                                             // Icon(Icons.add, size: 30, color: Colors.black,),
                                             // Icon(Icons.list, size: 30, color: Colors.black,),
                                           ],
-                                          index: 1,
+                                          index: 2,
                                           animationCurve: Curves.bounceInOut,
                                           onTap: (index) {
                                             if(index == 0){
                                               Navigator.pushNamed(context, '/');
                                             }
-                                            if(index == 1){
+                                            if(index == 2){
                                               Navigator.pushNamed(context, '/second/1');
                                             }
-                                            if(index == 2){
+                                            if(index == 4){
                                               Navigator.pushNamed(context, '/user');
                                             }
                                           },
@@ -530,7 +566,7 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                                 }
 
                                 void counter() async{
-                                            await DBCountProvider.dbc.updateCount( );
+                                            await DBUserProvider.dbc.updateCount( );
                                 }
                               
                                 void updateStatus(PermissionStatus status) {

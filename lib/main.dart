@@ -22,6 +22,8 @@ import 'dart:math' as math;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:delau/firstStartPages/demo.dart';
 import 'package:delau/pages/tts.dart';
+import 'package:delau/utils/fcm.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 // import 'package:speech_recognition/speech_recognition.dart';
 
 void main() async{
@@ -53,6 +55,7 @@ class MyApp extends StatelessWidget {
       '/new':(BuildContext context) => MP(),
       '/user':(BuildContext context) => User(),
       '/tts':(BuildContext context) => TTS(),
+      '/fcm':(BuildContext context) => FCMPage(),
       // '/services':(BuildContext context) => Services(),
     },
     onGenerateRoute: (RouteSettings){
@@ -274,10 +277,10 @@ var countTask =  DBProvider.db.getContNow();
                     child: 
                     RawMaterialButton(
                             onPressed: () {
-                              
+                              Navigator.pushNamed(context, '/fcm');
                             },
                             child: new Icon(
-                              Icons.record_voice_over,
+                              Icons.add,
                               size: 27,
                               color: Color.fromRGBO(114, 103, 239, 1),
                         ),
@@ -373,9 +376,11 @@ var countTask =  DBProvider.db.getContNow();
                   // key: UniqueKey(),
                   direction: DismissDirection.endToStart,
                   onDismissed: (direction) {
-                    DBProvider.db.deleteClient(item.id);
+                    DBProvider.db.deleteClient(item.id).then((priority){
+                      int pr = priority; 
+                      counterDone(pr);
+                    });
                     refreshCount();
-                    counterDone();
                     // httpGet("https://delau.000webhostapp.com/flutter/delete.php?id="+item.id.toString());
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
@@ -442,9 +447,11 @@ var countTask =  DBProvider.db.getContNow();
     backgroundColor: Colors.transparent,
     animationDuration: Duration(microseconds: 2500),
     items: <Widget>[
-      Icon(Icons.list, size: 30, color: Colors.black,),
-      Icon(Icons.add, size: 30, color: Colors.black,),
-      Icon(FontAwesome.user_o, size: 30, color: Colors.black,),
+      Icon(Icons.list, size: 30, color: Colors.deepPurpleAccent,),
+      Icon(FontAwesome.sticky_note_o, size: 30, color: Colors.black54,),
+      Icon(Icons.add, size: 30, color: Colors.black54,),
+      Icon(Icons.pie_chart_outlined, size: 30, color: Colors.black54,),
+      Icon(FontAwesome.user_o, size: 30, color: Colors.black54,),
       // Icon(Icons.compare_arrows, size: 30, color: Colors.black,),
       // Icon(Icons.add, size: 30, color: Colors.black,),
       // Icon(Icons.list, size: 30, color: Colors.black,),
@@ -452,10 +459,13 @@ var countTask =  DBProvider.db.getContNow();
     index: 0,
     animationCurve: Curves.bounceInOut,
     onTap: (index) {
-      if(index == 1){
-        Navigator.pushNamed(context, '/second/1');
+      if(index == 0){
+        Navigator.pushNamed(context, '/');
       }
       if(index == 2){
+        Navigator.pushNamed(context, '/second/1');
+      }
+      if(index == 4){
         Navigator.pushNamed(context, '/user');
       }
     },
@@ -464,8 +474,8 @@ var countTask =  DBProvider.db.getContNow();
         }
 }
 
-  void counterDone() async{
-    await DBCountProvider.dbc.updateCountDone( );
+  void counterDone(int pr) async{
+    await DBUserProvider.dbc.updateCountDone(pr);
   }
 
 class StarDisplay extends StatelessWidget {

@@ -8,38 +8,115 @@ import 'package:delau/utils/database_helper.dart';
     'маркер', 
     'дата', 
     'время',
-    'важность'
+    'приоритет'
   ];
 
-  List<String> params_perems = [
-    '','','','','',''
-  ];
+  // List<String> params_perems = [
+  //   '','','','','',''
+  // ];
 
 bool notAWord(String word){
   // print(word);
   // print(word != params[0] && word != params[1] && word != params[2] && word != params[3] && word != params[4] && word != params[5]);
-  return (word != params[0] && word != params[1] && word != params[2] && word != params[3] && word != params[4] && word != params[5]);
+  return (word != params[0] && word != params[1] 
+  && word != params[2] && word != params[3] 
+  && word != params[4] && word != params[5]);
 }
 
 void perseTaskFromResponse(String speechResponse) {
-  List<String> words = speechResponse.split(' ');
+  print("Я начал парсить");
+  List<String> params_perems = speechResponse.split(',');
+  // for (int g = 0; g < words.length; g++){
+  //   print(words[g]);
+  // }
+  // for (int i = 0; i < words.length-1; i++){
+  //   // print("asas");
+  //   for (int j = 0; j < params.length-1; j++){
+  //     if(words[i] == params[j]){
+  //       print(words[i]);
+  //       print("Нашёл");
+  //       for(int x = i + 1; x < words.length; x++){
+  //         if(notAWord(words[x + 1])){
+  //           params_perems[j] = params_perems[j] + words[x];
+  //         }
+  //         else{
+  //           break;
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+  // runDetector();
+  var title = params_perems[0].substring( 1, params_perems[0].length);
+    var description = params_perems[1];
+    var marker = geterMarker(params_perems[2]);
+    var date = geterDate(params_perems[3]);
+    var time = params_perems[4] + ":00";
+    var paginator = geterPaginator(params_perems[5]);
+    print(title+"   "+description+ "      "+marker.toString()+"      "+date+"       "+
+    time+"      "+paginator.toString());
 
-  for (int i = 0; i < words.length-1; i++){
-    for (int j = 0; i < params.length-1; j++){
-      if(words[i] == params[j]){
-        // print("Нашёл");
-        for(int x = i + 1; x < words.length; x++){
-          if(notAWord(words[x])){
-            params_perems[j] = params_perems[j] + words[x];
-            runDetector();
-          }
-          else{
-            break;
-          }
-        }
-      }
-    }
-  }
+                Client now_client = Client(
+                    title: title,
+                    description: description,
+                    marker: marker,
+                    priority: paginator,
+                    date: date,
+                    time: time,
+                    done: false
+                  );
+                
+                    // Client now_client = Client(
+                    //   title: "Raouf",
+                    //   description: "Rahiche",
+                    //   marker: 4,
+                    //   priority: 3,
+                    //   date: "2001-12-12",
+                    //   time: "22:22",
+                    //   done: false);
+
+              addAtLocalDB(now_client);
+    print("Закончил");
+    // print("From New Module:    ${params_perems[0]}    ${params_perems[1]}    "+ params_perems[2] + "    "
+    //             + params_perems[3] + "    "
+    //             + params_perems[4] + "    "
+    //             + params_perems[5] + "    "
+    //             );
+}
+
+// void runDetector(){
+//   print("Запущен Детектор");
+//     var title = params_perems[0].substring( 1, params_perems[0].length);
+//     var description = params_perems[1];
+//     var marker = geterMarker(params_perems[2]);
+//     var date = geterDate(params_perems[3]);
+//     var time = params_perems[4] + ":00";
+//     var paginator = geterPaginator(params_perems[5]);
+
+                // Client now_client = new Client(
+                //     title: title,
+                //     description: description,
+                //     marker: marker,
+                //     priority: paginator,
+                //     date: date,
+                //     time: time,
+                //     done: false
+                //   );
+
+                    // Client now_client = Client(
+                    //   title: "Raouf",
+                    //   description: "Rahiche",
+                    //   marker: 4,
+                    //   priority: 3,
+                    //   date: "2001-12-12",
+                    //   time: "22:22",
+                    //   done: false);
+
+//               addAtLocalDB(now_client);
+// }
+
+addAtLocalDB(Client nowClient) async{
+    await DBProvider.db.newClient(nowClient); 
 }
 
 int geterMarker(String str){
@@ -59,7 +136,7 @@ int geterMarker(String str){
     if(realStr == "покупки" || realStr == "магазин"){
         return 4;
     }
-    return 5;
+    return 2;
 }
 
 String geterDate(String str){
@@ -164,42 +241,6 @@ int geterPaginator(String str){
     if(realStr == "насрать" || realStr == "похуй" || realStr == "не важно" || realStr == "2" || realStr == "1"){
         return 2;
     }
+    return 0;
 }
 
-void runDetector(){
-    String title = params_perems[0].substring( 1, params_perems[0].length);
-    String description = params_perems[1];
-    int marker = geterMarker(params_perems[2]);
-    String date = geterDate(params_perems[3]);
-    String time = params_perems[4] + ":00";
-    int paginator = geterPaginator(params_perems[5]);
-
-
-                  Client now_client = new Client(
-                    title: title,
-                    description: description,
-                    marker: marker,
-                    priority: paginator,
-                    date: date,
-                    time: time,
-                    done: false
-                  );
-
-              addAtLocalDB(now_client);
-}
-
-void addAtLocalDB(Client nowClient) async{
-              await DBProvider.db.newClient(
-                nowClient
-              );
-  }
-
-  // return params_perems;
-                // print("From New Module:    " 
-                // + params_perems[0] + "    "
-                // + params_perems[1] + "    "
-                // + params_perems[2] + "    "
-                // + params_perems[3] + "    "
-                // + params_perems[4] + "    "
-                // + params_perems[5] + "    "
-                // );

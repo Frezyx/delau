@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.delau"
+    package="com.patybit.delau"
     android:versionCode="1"
     android:versionName="1.0.0" >
 
@@ -36,7 +36,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="delau" >
         <activity
-            android:name="com.example.delau.MainActivity"
+            android:name="com.patybit.delau.MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:launchMode="singleTop"

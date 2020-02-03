@@ -6,7 +6,7 @@
 
 // class UserPageHelper extends StatelessWidget {
 
-//   final Future<ClientCounter> item;
+//   final Future<ClientUser> item;
  
 //   UserPageHelper({Key key, this.item}) : super(key: key);
 //   // var countAdd = item[0].countAdd.toString();
