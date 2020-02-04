@@ -11,6 +11,7 @@ import 'package:delau/utils/database_helper.dart';
 import 'package:delau/utils/recognize_helper.dart';
 import 'dart:async';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:delau/utils/synchroneHelper.dart';
 
 class MyStatefulWidget3 extends StatefulWidget {
   String _id;
@@ -406,7 +407,7 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
     
             new SizedBox(height: 20.0,),
     
-              new Row(
+              new Column(
                 children: <Widget>[
                   FlatButton(
                     color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
@@ -421,7 +422,7 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                       children: <Widget>[
                         Icon(Icons.date_range,size: 20.0,),
                           Text(
-                            "$print_date",
+                            "$_date",
                             style: TextStyle(fontSize: 15.0, fontFamily: 'Roboto', fontWeight: FontWeight.w500,),
                           ),    
                       ],
@@ -442,7 +443,7 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                       children: <Widget>[
                         Icon(Icons.timer,size: 20.0,),
                         Text(
-                            "$print_time",
+                            "$_time",
                             style: TextStyle(fontSize: 15.0, fontFamily: 'Roboto', fontWeight: FontWeight.w500,),
                           ),
                       ],
@@ -491,11 +492,25 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
 
                   addAtLocalDB(now_client);
                   counter();
-                  // var link = "https://delau.000webhostapp.com/flutter/addNotif.php?token="+nToken+"&date="+_date.toString()+"&time="+_time.toString();
+
+                  getSyncStatus().then((synchronise){
+                      if (synchronise){
+                        print("synchromised");
+                        httpGet("https://delau.000webhostapp.com/flutter/addTask.php?header="+_name+"1&body="+_surname+"1&date="+_date.toString()+"&time="+_time.toString()+"&marker="+(selected_radio-1).toString()+"&paginator="+rating.round().toString());
+                      }
+                    });
+
                   _firebaseMessaging.getToken().then((token){
                     httpGet("https://delau.000webhostapp.com/flutter/addNotif.php?token="+token+"&date="+_date.toString()+"&time="+_time.toString());
                   });
-                  // print(link);
+
+                  // // var link = "https://delau.000webhostapp.com/flutter/addNotif.php?token="+nToken+"&date="+_date.toString()+"&time="+_time.toString();
+
+                  // _firebaseMessaging.getToken().then((token){
+                  //   httpGet("https://delau.000webhostapp.com/flutter/addNotif.php?token="+token+"&date="+_date.toString()+"&time="+_time.toString());
+                  //   // print("https://delau.000webhostapp.com/flutter/addNotif.php?token="+token+"&date="+_date.toString()+"&time="+_time.toString());
+                  // });
+                  // // print(link);
                 }
               }
             }, child: Text('Создать'), color: Color.fromRGBO(114, 103, 239, 1), textColor: Colors.white,),

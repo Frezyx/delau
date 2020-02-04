@@ -1,4 +1,4 @@
-#Mon Feb 03 20:41:20 MSK 2020
+#Tue Feb 04 21:03:11 MSK 2020
 base.2=C\:\\Users\\FREZY\\Desktop\\FlutterProjects\\delau\\build\\app\\intermediates\\dex\\debug\\mergeLibDexDebug\\out\\classes_0.dex
 base.1=C\:\\Users\\FREZY\\Desktop\\FlutterProjects\\delau\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\out\\classes.dex
 base.0=C\:\\Users\\FREZY\\Desktop\\FlutterProjects\\delau\\build\\app\\intermediates\\dex\\debug\\mergeExtDexDebug\\out\\classes.dex

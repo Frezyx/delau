@@ -1,9 +1,13 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:delau/utils/synchroneHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:delau/utils/database_helper.dart';
+import 'package:delau/utils/RaisedGradienButton.dart';
 import 'package:delau/models/dbModels.dart';
 import 'package:delau/pages/userPageHelper.dart';
+
+import '../main.dart';
 
 class User extends StatefulWidget {
   @override
@@ -12,8 +16,37 @@ class User extends StatefulWidget {
 
 class _UserState extends State<User> {
   var countAdd = "Не можем получить";
+  bool synchrone = false;
+  var name = "Пользователь";
+  var surname = "Неопознанный";
+  var imgSrc = "assets/profile.jpg";
+  Widget userWidget;
+
+  @override
+  void initState() {
+    super.initState();
+
+      getSyncStatus().then((synchronise){
+        synchrone = synchronise; 
+      });
+    
+    // if(synchrone){
+    //   surname = "Опознанный";
+    //   name = "Польз";
+    //   userWidget = userData(name, surname);
+    // }
+  }
   // var pos = all[0];
+  @override
   Widget build(BuildContext context) {
+
+    userWidget = getLoginButton(context);
+    if(synchrone){
+      surname = "Опознанный";
+      name = "Польз";
+      userWidget = userData(name, surname);
+    }
+
     return Scaffold(
       body: FutureBuilder<List<ClientUser>>(
         future: DBUserProvider.dbc.getClientUserInList(),
@@ -30,7 +63,7 @@ class _UserState extends State<User> {
             height: MediaQuery.of(context).size.height / 1.75,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assets/profile.jpg"), fit: BoxFit.cover)),
+                    image: AssetImage("$imgSrc"), fit: BoxFit.cover)),
                     child:Container(
 
                 decoration: BoxDecoration(
@@ -39,28 +72,7 @@ class _UserState extends State<User> {
                         image: AssetImage("assets/ramk.png"), fit: BoxFit.fitWidth)),
                         ),
           ),
-          Align(
-            alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.only(left: 45.0, top: 5),
-                child:
-                Column(children: <Widget>[
-                    Text(" Пользователь       ",style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 36.0, fontWeight: FontWeight.w900, color: Colors.black)),
-                    Text("  Неопознанный",style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 36.0, fontWeight: FontWeight.w900, color: Colors.black)),
-                  ],
-                )
-
-         
-                //  Text("Артем", 
-                //   style: TextStyle(
-                //   fontStyle: FontStyle.italic,
-                //   fontFamily: "Exo 2",
-                //   fontSize: 36.0, 
-                //   fontWeight: FontWeight.w900, 
-                //   color: Colors.black),
-                //   ),
-                ),
-              ),
+          userWidget,
               Divider(height: 15),
           Align(
             alignment: Alignment.centerLeft,
@@ -266,7 +278,126 @@ class _UserState extends State<User> {
   }
 }
 
+Widget userData(String name, String surname){
+  return Align(
+            alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 45.0, top: 5),
+                child:
+                Column(children: <Widget>[
+                    Text(" $name       ",style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 36.0, fontWeight: FontWeight.w900, color: Colors.black)),
+                    Text("  $surname",style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 36.0, fontWeight: FontWeight.w900, color: Colors.black)),
+                  ],
+                ),
+                ),
+              );
+}
+
+Widget getLoginButton(context){
+  return  
+  // RaisedButton(
+  //                 child:
+  //             Container(
+  //               decoration:  new BoxDecoration(
+  //               boxShadow:<BoxShadow>[
+  //                     BoxShadow(
+  //                       color: Color.fromRGBO(71, 9, 150, 0.17),
+  //                       offset: Offset(0.0, 4.0),
+  //                       blurRadius: 15.0,
+  //                     ),
+  //                   ],
+  //               gradient: new LinearGradient(
+  //                     colors: [
+  //                     Color.fromRGBO(162, 122, 246, 1),
+  //                     Color.fromRGBO(114, 103, 239, 1),
+  //                     // Color.fromRGBO(81, 20, 219, 1),
+  //                     // Color.fromRGBO(31, 248, 169, 1),
+  //                     ],
+  //                   begin: Alignment.topRight,
+  //                   end: Alignment.bottomLeft,
+  //                   stops: [0.0,1.0],
+  //                   tileMode: TileMode.clamp
+  //                   ),
+  //                   // border: Border.all(
+  //                   //       color: Colors.transparent,
+  //                   //       width: 0,
+  //                   //     ),
+  //                   //     borderRadius: BorderRadius.circular(50),
+
+  //               ),
+  //               child: 
+  //                 Text('Зарегистрироваться', style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 24.0, fontWeight: FontWeight.w900,),),
+  //             ), 
+  //           // child: Text('Зарегистрироваться', style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 24.0, fontWeight: FontWeight.w900,),),
+  //           color: Color.fromRGBO(114, 103, 239, 1), textColor: Colors.white,
+  //           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+  //           onPressed: () {},
+  //         );
+  // Center(
+  //   child:
+  // RaisedGradientButton(
+  // child: Text(
+  //   'Button',
+  //   style: TextStyle(color: Colors.white),
+  // ),
+  // gradient: LinearGradient(
+  //   colors: <Color>[Colors.green, Colors.black],
+  // ),
+  // onPressed: (){
+  //   print('button clicked');
+  // }
+  // ),
+  // ); 
+
+  Padding(
+    padding: EdgeInsets.only(right: 45.0, left: 45.0),
+    child:
+Container(
+      decoration: const BoxDecoration(
+      boxShadow:<BoxShadow>[
+                      BoxShadow(
+                        color: Color.fromRGBO(71, 9, 150, 0.2),
+                        offset: Offset(0.0, 4.0),
+                        blurRadius: 7.0,
+                      ),
+                    ],
+      ),
+                    child:
+  RaisedButton(
+  onPressed: () {
+    Navigator.pushNamed(context, '/reg');
+   },
+  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+  padding: const EdgeInsets.all(0.0),
+  child: Ink(
+    decoration: const BoxDecoration(
+      gradient: LinearGradient(
+                      colors: [
+                      Color.fromRGBO(162, 122, 246, 1),
+                      Color.fromRGBO(114, 103, 239, 1),
+                      // Color.fromRGBO(81, 20, 219, 1),
+                      // Color.fromRGBO(31, 248, 169, 1),
+                      ],
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    stops: [0.0,1.0],
+                    tileMode: TileMode.clamp
+      ),
+      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+    ),
+    child: Container(
+      constraints: const BoxConstraints(minWidth: 0.0, minHeight: 40.0), // min sizes for Material buttons
+      alignment: Alignment.center,
+      child: Text('Зарегистрироваться', textAlign: TextAlign.center, style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 24.0, fontWeight: FontWeight.w900, color: Colors.white),),
+      ),
+    ),
+  ),
+  ),
+);
+}
+
 // foo() async {
 //   final user = await DBUserProvider.dbc.getClientUser(0);
 //   return user;
 // }
+

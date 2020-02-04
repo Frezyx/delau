@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:delau/utils/ttsHelper.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:delau/firstStartPages/demo.dart';
 import 'package:delau/pages/tts.dart';
 import 'package:delau/utils/fcm.dart';
+import 'package:delau/reg.dart';
+import 'package:delau/autoriz.dart';
+import 'package:delau/utils/synchroneHelper.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 // import 'package:speech_recognition/speech_recognition.dart';
 
@@ -56,6 +60,8 @@ class MyApp extends StatelessWidget {
       '/user':(BuildContext context) => User(),
       '/tts':(BuildContext context) => TTS(),
       '/fcm':(BuildContext context) => FCMPage(),
+      '/reg':(BuildContext context) => RegistrationPage(),
+      '/autoriz':(BuildContext context) => AutorizationPage(),
       // '/services':(BuildContext context) => Services(),
     },
     onGenerateRoute: (RouteSettings){
@@ -75,15 +81,31 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// httpGet(String link) async{
-//     try{
-//       var response = await http.get('$link');
-//       print("Статус ответа: ${response.statusCode}");
-//       print("Тело ответа: ${response.body}");
-//     } catch (error){
-//       print('Ты ебловоз блять! А вот твоя ошибка: $error');
-//     }
+httpGet(String link) async{
+    try{
+      var response = await http.get('$link');
+      print("Статус ответа: ${response.statusCode}");
+      print("Тело ответа: ${response.body}");
+    } catch (error){
+      print('Ты ебловоз блять! А вот твоя ошибка: $error');
+    }
+  }
+
+// Future<bool> getSyncStatus() async{
+
+//   bool reg = false;
+//   DBUserProvider.dbc.getClientUser(1).then((res){
+//     print(res.reg);
+//     reg = (res.reg == 1); //Если 1 -> зареган -> True -> делаем синхронизацию;
+//   });
+
+//   try {
+//   final result = await InternetAddress.lookup('google.com');
+//     return result.isNotEmpty && result[0].rawAddress.isNotEmpty && reg;
+//   } on SocketException catch (_) {
+//     return false;
 //   }
+// }
 
 class MyStatefulWidget extends StatefulWidget {
   @override
@@ -381,7 +403,12 @@ var countTask =  DBProvider.db.getContNow();
                       counterDone(pr);
                     });
                     refreshCount();
-                    // httpGet("https://delau.000webhostapp.com/flutter/delete.php?id="+item.id.toString());
+                    getSyncStatus().then((synchronise){
+                      if (synchronise){
+                        print("synchromised");
+                        httpGet("https://delau.000webhostapp.com/flutter/delete.php?id="+item.id.toString());
+                      }
+                    });
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
                         backgroundColor: Color.fromRGBO(114, 103, 239, 1),
@@ -473,6 +500,7 @@ var countTask =  DBProvider.db.getContNow();
           );
         }
 }
+
 
   void counterDone(int pr) async{
     await DBUserProvider.dbc.updateCountDone(pr);
