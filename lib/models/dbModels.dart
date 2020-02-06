@@ -18,6 +18,7 @@ class Client {
   String time;
   int priority;
   int marker;
+  int passed;
   bool done;
 
   Client({
@@ -28,6 +29,7 @@ class Client {
     this.marker,
 		this.date,
     this.time,
+    this.passed,
     this.done,
   });
 
@@ -39,6 +41,7 @@ class Client {
         marker: json["marker"],
         date: json["date"],
         time: json["time"],
+        passed: json["passed"],
         done: json["done"] == 1,
       );
   
@@ -51,6 +54,7 @@ class Client {
         "marker": marker,
         "date": date,
         "time": time,
+        "passed": passed,
         "done": done,
       };
 }
@@ -67,6 +71,9 @@ String ClientUserToJson(ClientUser data) {
 
 class ClientUser {
   int id;
+  int userIdServer;
+  String name;
+  String surname;
   int countDone;
   int countAdd;
   int rating;
@@ -74,6 +81,9 @@ class ClientUser {
 
   ClientUser({
 		this.id,
+    this.userIdServer,
+    this.name,
+    this.surname,
 		this.countAdd,
 		this.countDone,
     this.rating,
@@ -82,6 +92,9 @@ class ClientUser {
 
   factory ClientUser.fromMap(Map<String, dynamic> json) => new ClientUser(
         id: json["id"],
+        userIdServer: json["userIdServer"],
+        name: json["name"],
+        surname: json["surname"],
         countAdd: json["countAdd"],
         countDone: json["countDone"],
         rating: json["rating"],
@@ -90,6 +103,9 @@ class ClientUser {
       
   Map<String, dynamic> toMap() => {
         "id": id,
+        "userIdServer": userIdServer,
+        "name": name,
+        "surname" : surname,
         "countAdd": countDone,
         "countDone": countDone,
         "rating": rating,

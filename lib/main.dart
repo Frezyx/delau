@@ -14,7 +14,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:delau/models/dbModels.dart';
-import 'package:delau/pages/userPage.dart';
+import 'package:delau/userPage.dart';
 import 'package:delau/addTaskPage.dart';
 import 'package:delau/utils/database_helper.dart';
 import 'package:sqflite/sqflite.dart';
@@ -23,6 +23,7 @@ import 'dart:math' as math;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:delau/firstStartPages/demo.dart';
 import 'package:delau/pages/tts.dart';
+import 'package:delau/pages/addMarker.dart';
 import 'package:delau/utils/fcm.dart';
 import 'package:delau/reg.dart';
 import 'package:delau/autoriz.dart';
@@ -62,14 +63,15 @@ class MyApp extends StatelessWidget {
       '/fcm':(BuildContext context) => FCMPage(),
       '/reg':(BuildContext context) => RegistrationPage(),
       '/autoriz':(BuildContext context) => AutorizationPage(),
+      '/addMark':(BuildContext context) => AddMarkerPage(),
       // '/services':(BuildContext context) => Services(),
     },
     onGenerateRoute: (RouteSettings){
       var path = RouteSettings.name.split('/');
-      if(path[1] == 'second'){
-        return new MaterialPageRoute(builder: (context) => new MyStatefulWidget3(id:path[2]),
-        settings: RouteSettings);
-        }
+      // if(path[1] == 'second'){
+      //   return new MaterialPageRoute(builder: (context) => new MyStatefulWidget3(id:path[2]),
+      //   settings: RouteSettings);
+      //   }
       
       if(path[1] == 'postPage'){
         return new MaterialPageRoute(builder: (context) => new PostPage(id:path[2]),
@@ -115,6 +117,7 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
 var countTask =  DBProvider.db.getContNow();
+bool registration = false;
 // РОУТИННГ
   void refreshCount() {
     // reload
@@ -122,6 +125,16 @@ var countTask =  DBProvider.db.getContNow();
       countTask =  DBProvider.db.getContNow();
     });
   }
+
+    @override
+    void initState(){
+      super.initState();
+
+      DBUserProvider.dbc.getClientUser(1).then((res){
+        registration = (res.reg == 1);
+        print(registration);
+      });
+    }
 
   List<String> slider_titles = [
     "Учеба",
@@ -186,7 +199,7 @@ var countTask =  DBProvider.db.getContNow();
               },
             );
           }).toList(),
-          height: 280.0,
+          height: 260.0,
           autoPlay: true,
           autoPlayCurve: Curves.elasticIn,
           autoPlayDuration: const Duration(milliseconds: 2800),
@@ -268,7 +281,7 @@ var countTask =  DBProvider.db.getContNow();
             }),
           ),
                 Padding(
-                    padding: EdgeInsets.only(left: 30.0, right: 0.0, top: 2.0, bottom: 2.0),
+                    padding: EdgeInsets.only(left: 0.0, right: 0.0, top: 2.0, bottom: 2.0),
                     child: 
                     RawMaterialButton(
                             onPressed: () {
@@ -294,26 +307,26 @@ var countTask =  DBProvider.db.getContNow();
                         // padding: EdgeInsets.all(2.0),
                     ),
                 ),
-                Padding(
-                    padding: EdgeInsets.only(left: 0.0, right: 5.0, top: 2.0, bottom: 2.0),
-                    child: 
-                    RawMaterialButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/fcm');
-                            },
-                            child: new Icon(
-                              Icons.add,
-                              size: 27,
-                              color: Color.fromRGBO(114, 103, 239, 1),
-                        ),
-                        shape: new CircleBorder(),
-                        elevation: 4,
-                        hoverElevation: 10,
-                        constraints: BoxConstraints.tight(Size(36, 36)),
-                        fillColor: Colors.white,
-                        // padding: EdgeInsets.all(2.0),
-                    ),
-                ),
+                // Padding(
+                //     padding: EdgeInsets.only(left: 0.0, right: 5.0, top: 2.0, bottom: 2.0),
+                //     child: 
+                //     RawMaterialButton(
+                //             onPressed: () {
+                //               Navigator.pushNamed(context, '/fcm');
+                //             },
+                //             child: new Icon(
+                //               Icons.add,
+                //               size: 27,
+                //               color: Color.fromRGBO(114, 103, 239, 1),
+                //         ),
+                //         shape: new CircleBorder(),
+                //         elevation: 4,
+                //         hoverElevation: 10,
+                //         constraints: BoxConstraints.tight(Size(36, 36)),
+                //         fillColor: Colors.white,
+                //         // padding: EdgeInsets.all(2.0),
+                //     ),
+                // ),
           ],),
           ),
         ),
@@ -403,8 +416,8 @@ var countTask =  DBProvider.db.getContNow();
                       counterDone(pr);
                     });
                     refreshCount();
-                    getSyncStatus().then((synchronise){
-                      if (synchronise){
+                    check().then((intenet) {
+                      if (intenet != null && intenet && registration) {
                         print("synchromised");
                         httpGet("https://delau.000webhostapp.com/flutter/delete.php?id="+item.id.toString());
                       }
@@ -490,7 +503,7 @@ var countTask =  DBProvider.db.getContNow();
         Navigator.pushNamed(context, '/');
       }
       if(index == 2){
-        Navigator.pushNamed(context, '/second/1');
+        Navigator.pushNamed(context, '/second');
       }
       if(index == 4){
         Navigator.pushNamed(context, '/user');

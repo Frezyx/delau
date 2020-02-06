@@ -1,4 +1,4 @@
-#Tue Feb 04 21:03:11 MSK 2020
+#Thu Feb 06 20:38:39 MSK 2020
 base.2=C\:\\Users\\FREZY\\Desktop\\FlutterProjects\\delau\\build\\app\\intermediates\\dex\\debug\\mergeLibDexDebug\\out\\classes_0.dex
 base.1=C\:\\Users\\FREZY\\Desktop\\FlutterProjects\\delau\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\out\\classes.dex
 base.0=C\:\\Users\\FREZY\\Desktop\\FlutterProjects\\delau\\build\\app\\intermediates\\dex\\debug\\mergeExtDexDebug\\out\\classes.dex
@@ -22,10 +22,13 @@ renamed.2=classes3.dex
 path.0=classes.dex
 renamed.1=classes2.dex
 renamed.0=classes.dex
+renamed.14=classes15.dex
 renamed.13=classes14.dex
 renamed.12=classes13.dex
 renamed.11=classes12.dex
 renamed.10=classes11.dex
+path.14=classes_12.dex
+base.14=C\:\\Users\\FREZY\\Desktop\\FlutterProjects\\delau\\build\\app\\intermediates\\dex\\debug\\mergeLibDexDebug\\out\\classes_12.dex
 path.13=classes_11.dex
 base.13=C\:\\Users\\FREZY\\Desktop\\FlutterProjects\\delau\\build\\app\\intermediates\\dex\\debug\\mergeLibDexDebug\\out\\classes_11.dex
 path.12=classes_10.dex

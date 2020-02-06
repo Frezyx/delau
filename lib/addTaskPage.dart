@@ -1,22 +1,33 @@
 import 'dart:convert';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:http/http.dart' as http;
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:speech_recognition/speech_recognition.dart';
 import 'package:delau/models/dbModels.dart';
 import 'package:delau/utils/database_helper.dart';
 import 'package:delau/utils/recognize_helper.dart';
+import 'package:delau/widget/customRadio.dart';
 import 'dart:async';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:delau/utils/synchroneHelper.dart';
 
+class RadioModel {
+  int index;
+  bool isSelected;
+  final IconData icon;
+  final String text;
+
+  RadioModel(this.index, this.isSelected, this.icon, this.text);
+}
+
 class MyStatefulWidget3 extends StatefulWidget {
-  String _id;
   
-  MyStatefulWidget3({String id}): _id = id;
+  // MyStatefulWidget3({String id}): _id = id;
 
   @override
   _MyStatefulWidgetState3 createState() => _MyStatefulWidgetState3();
@@ -24,18 +35,15 @@ class MyStatefulWidget3 extends StatefulWidget {
 
 class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-  PermissionStatus _status;
+
 
   int requestSendFlag = 0;
 
-  //Распознование голоса
-  SpeechRecognition _speechRecognition;
-  bool _isAvailable = false;
-  bool _isListerning = false;
-  String resultText = "";
-
 
   final _formKey = GlobalKey<FormState>();
+  List<RadioModel> sampleData = new List<RadioModel>();
+  bool registration = false;
+
   String _name;
   String _surname;
 
@@ -54,88 +62,25 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
   void initState(){
     super.initState();
     selected_radio = 0;
+    sampleData.add(new RadioModel(0, true, FontAwesome.book, 'Учеба'));
+    sampleData.add(new RadioModel(1, false, FontAwesome.briefcase, 'Работа'));
+    sampleData.add(new RadioModel(2, false, MdiIcons.fromString('basketball'), 'Спорт'));
+    sampleData.add(new RadioModel(3, false, FontAwesome.users, 'Встречи'));
+    sampleData.add(new RadioModel(4, false, MdiIcons.fromString('shopping'), 'Покупки'));
+    sampleData.add(new RadioModel(5, false, FontAwesome.spinner, 'Другое'));
+    sampleData.add(new RadioModel(6, false, Icons.add, 'Добавить'));
 
-    PermissionHandler().checkPermissionStatus(PermissionGroup.speech).then(updateStatus);
-        initSpeechRecognizer();
-      }
+    DBUserProvider.dbc.getClientUser(1).then((res){
+      registration = (res.reg == 1);
+      print(registration);
+    });
+  }
 
-  //     httpGet(String link) async{
-  //   try{
-  //     var response = await http.get('$link');
-  //     print("Статус ответа: ${response.statusCode}");
-  //     print("Тело ответа: ${response.body}");
-  //   } catch (error){
-  //     print('Ты ебловоз блять! А вот твоя ошибка: $error');
-  //   }
-  // }
-    
-      setSelectedRadio(int val){
-        setState(() {
-          selected_radio = val;
-        });
-      }
-    
-      void initSpeechRecognizer(){
-        _speechRecognition = SpeechRecognition();
-    
-        _speechRecognition.setAvailabilityHandler(
-          (bool result) {
-            setState(() {
-            return _isAvailable = result;
-          });
-          },
-          );
-    
-        _speechRecognition.setRecognitionStartedHandler(
-          () => setState(() {
-            return _isListerning = true;
-          }),
-          );
-    
-        _speechRecognition.setRecognitionResultHandler(
-          (String speech) {
-            setState(() {
-              return resultText = speech;
-            });
-          },
-          );
-        
-        _speechRecognition.setRecognitionCompleteHandler(
-          () {
-            setState(() {
-              requestSendFlag++;
-              // ВОТ ТУТ НУЖНО ДОБАВИТЬ ЕБАНУЮ ДОБАВКУ В БД БЛЯТЬ 
-              perseTaskFromResponse(resultText);
-
-
-              // print("FSQL://title:"+response[0]+"  subtitle:"+response[1]);
-              //var response =  httpRecognitionRequest("https://delau.000webhostapp.com/flutter/addTaskRecognition.php?request="+resultText);
-              // var data = jsonDecode(response.body);
-
-              return _isListerning = false;
-            });
-          },
-          
-          );
-        
-        _speechRecognition.activate().then(
-          (result) {
-            setState((){
-              return _isAvailable = result;
-            });
-          },
-          );
-      }
-    
-          httpRecognitionRequest(String link) async{
-            if(requestSendFlag == 1){
-              var response = await http.get('$link');
-              print('${response.body}');
-              requestSendFlag = 0;
-            }
-          return _isListerning = false;
-          // return "Обращение было";
-      }
+  setSelectedRadio(int val){
+    setState(() {
+      selected_radio = val;
+    });
+  }
       
     
       Future<void> _selectDate(BuildContext context) async {
@@ -225,14 +170,24 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
           );
         }
     
-      httpGet(String link) async{
+      httpGetWithAllert(String link) async{
           var response = await http.get('$link');
             if(response.body.toString()!= "1"){
               _badAllert();       
-              print("Неудачно");
+              print("Неудачно        " + response.body.toString());
             }
             else{
               _neverSatisfied();
+              print("Удачно        " + response.body.toString());
+            }
+            print(response.body.toString());
+      }
+      httpGet(String link) async{
+          var response = await http.get('$link');
+            if(response.body.toString()!= "1"){      
+              print("Неудачно");
+            }
+            else{
               print("Удачно");
             }
             print(response.body.toString());
@@ -265,10 +220,10 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
           //     ),
           body:
            new Container(
-              padding: EdgeInsets.only(left: 40.0, right: 40.0, top:140,),// color: Colors.transparent,
+              padding: EdgeInsets.only(left: 40.0, right: 40.0, top:90,),// color: Colors.transparent,
               child: new Form(key: _formKey, child: new Column(children: <Widget>[
     
-            new SizedBox(height: 20.0,),
+            
     
             // new Text('Название', style: TextStyle(fontSize: 20.0)),
             new TextFormField(
@@ -290,7 +245,7 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
               }
             },),
     
-            new SizedBox(height: 20.0,),
+            new SizedBox(height: 10.0,),
     
             // new Text('Приоритет', style: TextStyle(fontSize: 20.0)),
             // new TextFormField(
@@ -335,77 +290,115 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
           //   // color: Color.fromRGBO(114, 103, 239, 1),
           //   ),     
           // ),
-          new SizedBox(height: 20.0,),
-            Row(
-            children: <Widget>[
-              Radio(
-                value: 1,
-                groupValue: selected_radio,
-                activeColor: Color.fromRGBO(114, 103, 239, 1),
-                onChanged: (val){
-                  print("$val");
-                  setSelectedRadio(val);
+        // new SizedBox(height: 20.0,),
+
+        // ListView.builder(
+        //   itemCount: 4,
+        //   itemBuilder: (context, i) {
+        //     return ListTile(
+                  
+        //         );
+        //   },
+        // ),
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 20.0),
+          height: 100.0,
+          child:
+            ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: sampleData.length,
+              itemBuilder: (context, i) {
+                return 
+                InkWell(
+                onTap: () {
+                  if(i == sampleData.length - 1){
+                    Navigator.pushNamed(context, '/addMark');
+                  }
+                  setSelectedRadio(i+1);
+                  setState(() {
+                    sampleData.forEach((element) => element.isSelected = false);
+                    sampleData[i].isSelected = true;
+                  });
                 },
-              ),
-              Text("Учеба"),
-              Radio(
-                value: 2,
-                groupValue: selected_radio,
-                activeColor: Color.fromRGBO(114, 103, 239, 1),
-                onChanged: (val){
-                  print("$val");
-                  setSelectedRadio(val);
-                },
-              ),
-              Text("Работа"),
-              Radio(
-                value: 3,
-                groupValue: selected_radio,
-                activeColor: Color.fromRGBO(114, 103, 239, 1),
-                onChanged: (val){
-                  print("$val");
-                  setSelectedRadio(val);
-                },
-              ),
-              Text("Cпорт"),
-            ]
+                splashColor: Color.fromRGBO(114, 103, 239, 1),
+                child: getCustomRadio(sampleData[i], sampleData.length-1),
+                );
+              }
+            ),
           ),
-          Row(
-            children: <Widget>[
-              Radio(
-                value: 4,
-                groupValue: selected_radio,
-                activeColor: Color.fromRGBO(114, 103, 239, 1),
-                onChanged: (val){
-                  print("$val");
-                  setSelectedRadio(val);
-                },
-              ),
-              Text("Встерча"),
-              Radio(
-                value: 5,
-                groupValue: selected_radio,
-                activeColor: Color.fromRGBO(114, 103, 239, 1),
-                onChanged: (val){
-                  print("$val");
-                  setSelectedRadio(val);
-                },
-              ),
-              Text("Покупки"),
-              Radio(
-                value: 6,
-                groupValue: selected_radio,
-                activeColor: Color.fromRGBO(114, 103, 239, 1),
-                onChanged: (val){
-                  print("$val");
-                  setSelectedRadio(val);
-                },
-              ),
-              Text("Другое"),
-            ],
-          ),
+
+          new SizedBox(height: 0.0),
+
+          //   Row(
+          //   children: <Widget>[
+          //     Radio(
+          //       value: 1,
+          //       groupValue: selected_radio,
+          //       activeColor: Color.fromRGBO(114, 103, 239, 1),
+          //       onChanged: (val){
+          //         print("$val");
+          //         setSelectedRadio(val);
+          //       },
+          //     ),
+          //     Text("Учеба"),
+          //     Radio(
+          //       value: 2,
+          //       groupValue: selected_radio,
+          //       activeColor: Color.fromRGBO(114, 103, 239, 1),
+          //       onChanged: (val){
+          //         print("$val");
+          //         setSelectedRadio(val);
+          //       },
+          //     ),
+          //     Text("Работа"),
+          //     Radio(
+          //       value: 3,
+          //       groupValue: selected_radio,
+          //       activeColor: Color.fromRGBO(114, 103, 239, 1),
+          //       onChanged: (val){
+          //         print("$val");
+          //         setSelectedRadio(val);
+          //       },
+          //     ),
+          //     Text("Cпорт"),
+          //   ]
+          // ),
+          // Row(
+          //   children: <Widget>[
+          //     Radio(
+          //       value: 4,
+          //       groupValue: selected_radio,
+          //       activeColor: Color.fromRGBO(114, 103, 239, 1),
+          //       onChanged: (val){
+          //         print("$val");
+          //         setSelectedRadio(val);
+          //       },
+          //     ),
+          //     Text("Встерча"),
+          //     Radio(
+          //       value: 5,
+          //       groupValue: selected_radio,
+          //       activeColor: Color.fromRGBO(114, 103, 239, 1),
+          //       onChanged: (val){
+          //         print("$val");
+          //         setSelectedRadio(val);
+          //       },
+          //     ),
+          //     Text("Покупки"),
+          //     Radio(
+          //       value: 6,
+          //       groupValue: selected_radio,
+          //       activeColor: Color.fromRGBO(114, 103, 239, 1),
+          //       onChanged: (val){
+          //         print("$val");
+          //         setSelectedRadio(val);
+          //       },
+          //     ),
+          //     Text("Другое"),
+          //   ],
+          // ),
     
-            new SizedBox(height: 20.0,),
+          //   new SizedBox(height: 20.0,),
     
               new Column(
                 children: <Widget>[
@@ -493,13 +486,19 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                   addAtLocalDB(now_client);
                   counter();
 
-                  getSyncStatus().then((synchronise){
-                      if (synchronise){
-                        print("synchromised");
-                        httpGet("https://delau.000webhostapp.com/flutter/addTask.php?header="+_name+"1&body="+_surname+"1&date="+_date.toString()+"&time="+_time.toString()+"&marker="+(selected_radio-1).toString()+"&paginator="+rating.round().toString());
-                      }
-                    });
-
+                        check().then((intenet) {
+                          if (intenet != null && intenet && registration) {
+                            DBUserProvider.dbc.getUserId().then((userIdServer){
+                              httpGetWithAllert("https://delau.000webhostapp.com/flutter/addTask.php?header="+
+                              _name+"&body="+_surname+"&date="+_date.toString()+"&time="+
+                              _time.toString()+"&marker="+(selected_radio-1).toString()+"&paginator="+
+                              rating.round().toString()+"&user_id="+userIdServer.toString());
+                            });
+                            // Internet Present Case
+                          }
+                          // No-Internet Case
+                        });
+                        
                   _firebaseMessaging.getToken().then((token){
                     httpGet("https://delau.000webhostapp.com/flutter/addNotif.php?token="+token+"&date="+_date.toString()+"&time="+_time.toString());
                   });
@@ -517,13 +516,6 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
             //  new RaisedButton(onPressed: (){
             //     DBProvider.db.deleteAll();
             // }, child: Text('Удалить все'), color: Color.fromRGBO(114, 103, 239, 1), textColor: Colors.white,),
-            Expanded(
-              child:
-              Container(
-                padding: EdgeInsets.only( left: 0.0, top: 15, bottom: 15, ),
-                child: Text(resultText),
-              )
-            ),
     
           ],
          ),),),
@@ -563,7 +555,7 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                                               Navigator.pushNamed(context, '/');
                                             }
                                             if(index == 2){
-                                              Navigator.pushNamed(context, '/second/1');
+                                              Navigator.pushNamed(context, '/second');
                                             }
                                             if(index == 4){
                                               Navigator.pushNamed(context, '/user');
@@ -584,21 +576,4 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                                             await DBUserProvider.dbc.updateCount( );
                                 }
                               
-                                void updateStatus(PermissionStatus status) {
-                                  if(status != _status){
-                                    setState(() {
-                                      _status = status;
-                                    });
-                                  }
-                            }
-                          
-                            void askPermision() {
-                              PermissionHandler().requestPermissions([PermissionGroup.speech])
-                              .then(onstatusRequest);
-                                                          }
-                              
-                                void onstatusRequest(Map<PermissionGroup, PermissionStatus> statuses) {
-                                  final status = statuses[PermissionGroup.speech];
-                                  updateStatus(status);
-                                }
 }

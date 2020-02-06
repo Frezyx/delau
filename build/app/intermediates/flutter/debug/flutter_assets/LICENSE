@@ -53,6 +53,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 android_alarm_manager
+connectivity
 
 // Copyright 2017 The Chromium Authors. All rights reserved.
 //

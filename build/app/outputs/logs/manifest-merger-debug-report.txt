@@ -16,6 +16,7 @@ MERGED from [:android_alarm_manager] C:\Users\FREZY\Desktop\FlutterProjects\dela
 MERGED from [:shared_preferences_macos] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\shared_preferences_macos\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:flutter_local_notifications] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:path_provider] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\path_provider\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:connectivity] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\connectivity\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-10:12
 MERGED from [:permission_handler] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\permission_handler\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.firebase:firebase-analytics:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\7cd5238ab452740f09e60369a203f14b\firebase-analytics-17.2.2\AndroidManifest.xml:2:1-9:12
 MERGED from [androidx.appcompat:appcompat:1.0.0] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\2a627a2e34e73445e3f2a19a5ecddece\appcompat-1.0.0\AndroidManifest.xml:17:1-22:12
@@ -221,6 +222,8 @@ MERGED from [:flutter_local_notifications] C:\Users\FREZY\Desktop\FlutterProject
 MERGED from [:flutter_local_notifications] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:path_provider] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\path_provider\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:path_provider] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\path_provider\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:connectivity] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\connectivity\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:connectivity] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\connectivity\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:permission_handler] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\permission_handler\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:permission_handler] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\permission_handler\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [com.google.firebase:firebase-analytics:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\7cd5238ab452740f09e60369a203f14b\firebase-analytics-17.2.2\AndroidManifest.xml:5:5-44
@@ -354,7 +357,9 @@ ADDED from [:firebase_messaging] C:\Users\FREZY\Desktop\FlutterProjects\delau\bu
 	android:name
 		ADDED from [:firebase_messaging] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:15:17-127
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from [com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:24:5-79
+ADDED from [:connectivity] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\connectivity\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-79
+MERGED from [com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:24:5-79
 MERGED from [com.google.android.gms:play-services-measurement-api:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\71b1ce154dc77da267a3451d4794646b\play-services-measurement-api-17.2.2\AndroidManifest.xml:23:5-79
 MERGED from [com.google.android.gms:play-services-measurement-api:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\71b1ce154dc77da267a3451d4794646b\play-services-measurement-api-17.2.2\AndroidManifest.xml:23:5-79
 MERGED from [com.google.android.gms:play-services-measurement-impl:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\247eeb797d0c9bce4e7f45cb62f9b312\play-services-measurement-impl-17.2.2\AndroidManifest.xml:24:5-79
@@ -364,7 +369,11 @@ MERGED from [com.google.android.gms:play-services-measurement-sdk-api:17.2.2] C:
 MERGED from [com.google.firebase:firebase-iid:20.0.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\aa12acb089743fad60dfabe768f278a6\firebase-iid-20.0.2\AndroidManifest.xml:22:5-79
 MERGED from [com.google.firebase:firebase-iid:20.0.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\aa12acb089743fad60dfabe768f278a6\firebase-iid-20.0.2\AndroidManifest.xml:22:5-79
 	android:name
-		ADDED from [com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:24:22-76
+		ADDED from [:connectivity] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\connectivity\intermediates\library_manifest\debug\AndroidManifest.xml:7:22-76
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from [:connectivity] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\connectivity\intermediates\library_manifest\debug\AndroidManifest.xml:8:5-76
+	android:name
+		ADDED from [:connectivity] C:\Users\FREZY\Desktop\FlutterProjects\delau\build\connectivity\intermediates\library_manifest\debug\AndroidManifest.xml:8:22-73
 uses-permission#android.permission.WAKE_LOCK
 ADDED from [com.google.android.gms:play-services-measurement:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\37ff8e427a3afdab494355a483348d09\play-services-measurement-17.2.2\AndroidManifest.xml:25:5-68
 MERGED from [com.google.android.gms:play-services-measurement-api:17.2.2] C:\Users\FREZY\.gradle\caches\transforms-2\files-2.1\71b1ce154dc77da267a3451d4794646b\play-services-measurement-api-17.2.2\AndroidManifest.xml:24:5-68

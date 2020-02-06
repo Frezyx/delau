@@ -6,8 +6,7 @@ import 'package:delau/utils/database_helper.dart';
 import 'package:delau/utils/RaisedGradienButton.dart';
 import 'package:delau/models/dbModels.dart';
 import 'package:delau/pages/userPageHelper.dart';
-
-import '../main.dart';
+import 'main.dart';
 
 class User extends StatefulWidget {
   @override
@@ -16,19 +15,23 @@ class User extends StatefulWidget {
 
 class _UserState extends State<User> {
   var countAdd = "Не можем получить";
-  bool synchrone = false;
+  bool registration = false;
   var name = "Пользователь";
   var surname = "Неопознанный";
   var imgSrc = "assets/profile.jpg";
-  Widget userWidget;
+  // Widget userWidget;
 
   @override
   void initState() {
     super.initState();
 
-      getSyncStatus().then((synchronise){
-        synchrone = synchronise; 
-      });
+    DBUserProvider.dbc.getClientUser(1).then((res){
+      registration = (res.reg == 1);
+      print(registration);
+    });
+      // getSyncStatus().then((synchronise){
+      //   synchrone = synchronise; 
+      // });
     
     // if(synchrone){
     //   surname = "Опознанный";
@@ -39,13 +42,6 @@ class _UserState extends State<User> {
   // var pos = all[0];
   @override
   Widget build(BuildContext context) {
-
-    userWidget = getLoginButton(context);
-    if(synchrone){
-      surname = "Опознанный";
-      name = "Польз";
-      userWidget = userData(name, surname);
-    }
 
     return Scaffold(
       body: FutureBuilder<List<ClientUser>>(
@@ -72,7 +68,9 @@ class _UserState extends State<User> {
                         image: AssetImage("assets/ramk.png"), fit: BoxFit.fitWidth)),
                         ),
           ),
-          userWidget,
+
+          registration ? userData(item.name, item.surname) : getLoginButton(context),
+
               Divider(height: 15),
           Align(
             alignment: Alignment.centerLeft,
@@ -267,7 +265,7 @@ class _UserState extends State<User> {
             Navigator.pushNamed(context, '/');
           }
           if(index == 2){
-            Navigator.pushNamed(context, '/second/1');
+            Navigator.pushNamed(context, '/second');
           }
           if(index == 4){
             Navigator.pushNamed(context, '/user');

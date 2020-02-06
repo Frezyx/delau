@@ -10,7 +10,7 @@ Widget getCardInfo(int i, List<IconData> i_add, List<String>slider_titles){
       children: <Widget>[
         Container(
           child: Padding(
-            padding: EdgeInsets.only(bottom: 65.0, left: 25.0),
+            padding: EdgeInsets.only(bottom: 25.0, left: 25.0),
             child:  new FloatingActionButton(
               heroTag: "btn_inslider_number"+i.toString(),
               child:
@@ -58,7 +58,7 @@ Widget getCardInfo(int i, List<IconData> i_add, List<String>slider_titles){
         Column(
             children: <Widget>[
               Padding(
-              padding: EdgeInsets.only(top: 32, left: 20.0),
+              padding: EdgeInsets.only(top: 25, left: 20.0),
               child:  
               Text(slider_titles[i-1], 
                 style: TextStyle(

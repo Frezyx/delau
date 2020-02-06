@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:delau/models/dbModels.dart';
@@ -33,6 +33,7 @@ class DBProvider {
           "time TEXT,"
           "priority INTEGER,"
           "marker INTEGER,"
+          "passed INTEGER,"
           "done BIT"
           ")");
     });
@@ -45,8 +46,8 @@ class DBProvider {
     int id = table.first["id"];
     //insert to the table using the new id
     var raw = await db.rawInsert(
-        "INSERT Into Client (id,title,description,date,time,priority,marker,done)"
-        " VALUES (?,?,?,?,?,?,?,?)",
+        "INSERT Into Client (id,title,description,date,time,priority,marker,passed,done)"
+        " VALUES (?,?,?,?,?,?,?,?,?)",
         [id, 
         newClient.title,
         newClient.description,
@@ -54,6 +55,7 @@ class DBProvider {
         newClient.time,
         newClient.priority,
         newClient.marker,
+        newClient.passed,
         newClient.done
         ]);
     return raw;
@@ -69,6 +71,7 @@ class DBProvider {
         time: client.time,
         priority: client.priority,
         marker: client.marker,
+        passed: client.passed,
         done: !client.done);
 
     var res = await db.update("Client", blocked.toMap(),
@@ -93,6 +96,15 @@ class DBProvider {
     final db = await database;
     var res = await db.query("Client", where: "id = ?", whereArgs: [id]);
     return res.isNotEmpty ? Client.fromMap(res.first) : null;
+  }
+
+  passDate(int id) async {
+    final db = await database;
+    var s = 1;
+    int count = await db.rawUpdate(
+      'UPDATE Client SET passed = ? WHERE id = ?',
+      ['$s', '$id']);
+    print('updated: $count');
   }
 
     Future<List<Client>> getClientInList(int id) async {
@@ -158,6 +170,9 @@ class DBUserProvider {
         onCreate: (Database db, int version) async {
       await db.execute("CREATE TABLE ClientUser ("
           "id INTEGER PRIMARY KEY,"
+          "userIdServer INTEGER,"
+          "name TEXT,"
+          "surname TEXT,"
           "countAdd INTEGER,"
           "countDone INTEGER,"
           "rating INTEGER,"
@@ -166,12 +181,36 @@ class DBUserProvider {
     });
   }
 
+    registrationClient(_name, _surname, userId) async {
+    final db = await database;
+      var table = await db.rawQuery("SELECT * FROM ClientUser WHERE id = 1");
+      int countAddNow = table.first["countAdd"];
+      int countDoneNow = table.first["countDone"];
+      int rating = table.first["rating"]; 
+      int registration = 1;
+        ClientUser now_client = new ClientUser(
+          id: 1,
+          userIdServer: userId,
+          name: _name,
+          surname: _surname,
+          countAdd: countAddNow,
+          countDone: countDoneNow,
+          rating: rating,
+          reg: registration,
+        );
+        print("Регистрация прошла успешно "+now_client.reg.toString()+"Id на сервере: "+now_client.userIdServer.toString());
+        regUserRaw(now_client);
+  }
+
   updateCount() async {
     final db = await database;
     //get the biggest id in the table
     // var isset = await db.rawQuery('SELECT EXISTS(SELECT * FROM ClientUser WHERE id = 0)');
     // if(isset == 1){
       var table = await db.rawQuery("SELECT * FROM ClientUser WHERE id = 1");
+      int userIdServer = table.first["userIdServer"];
+      String name = table.first["name"];
+      String surname = table.first["surname"];
       int countAddNow = table.first["countAdd"];
       int nextAdd = countAddNow + 1;
       int countDoneNow = table.first["countDone"];
@@ -179,6 +218,9 @@ class DBUserProvider {
       int reg = table.first["reg"]; 
         ClientUser now_client = new ClientUser(
           id: 1,
+          userIdServer:userIdServer,
+          name: name,
+          surname: surname,
           countAdd: nextAdd,
           countDone: countDoneNow,
           rating: rating,
@@ -194,6 +236,9 @@ class DBUserProvider {
     // var isset = await db.rawQuery('SELECT EXISTS(SELECT * FROM ClientUser WHERE id = 0)');
     // if(isset == 1){
       var table = await db.rawQuery("SELECT * FROM ClientUser WHERE id = 1");
+      int userIdServer = table.first["userIdServer"];
+      String name = table.first["name"];
+      String surname = table.first["surname"];
       int countAddNow = table.first["countAdd"];
       int countDoneNow = table.first["countDone"]; 
       int nextDone = countDoneNow + 1;
@@ -202,6 +247,9 @@ class DBUserProvider {
       int reg = table.first["reg"]; 
         ClientUser now_client = new ClientUser(
           id: 1,
+          userIdServer:userIdServer,
+          name: name,
+          surname: surname,
           countAdd: countAddNow,
           countDone: nextDone,
           rating: nextRating,
@@ -213,11 +261,10 @@ class DBUserProvider {
 
   firstCreateTable() async{
     final db = await database;
-    
     var raw = await db.rawInsert(
-        "INSERT Into ClientUser (id,countAdd,countDone,rating,reg)"
-        " VALUES (?,?,?,?,?)",
-        [1, 0, 0, 0, 0]
+        "INSERT Into ClientUser (id, userIdServer, name, surname, countAdd, countDone, rating, reg)"
+        " VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+        [1, 1, "", "", 0, 0, 0, 0]
         );
 
     return raw;
@@ -238,6 +285,19 @@ var res = await db.update("ClientUser", newClient.toMap(),
   print('updated: $count');
   }
 
+    regUserRaw(ClientUser newClient) async {
+      print("regUserRaw принял ID:"+newClient.userIdServer.toString());
+      final db = await database;
+      String name = newClient.name;
+      String surname = newClient.surname;
+      var reg = newClient.reg.toString();
+      var userIdServer = newClient.userIdServer.toString();
+      int count = await db.rawUpdate(
+        'UPDATE ClientUser SET name = ?, surname = ?, reg = ? WHERE id = ?',
+        ['$name', '$surname', '$reg', '1']);
+  print('updated: $count ---> результат');
+  }
+
   updateClientUserDoneRaw(ClientUser newClient) async {
     final db = await database;
     int nextDone = newClient.countDone;
@@ -253,6 +313,27 @@ var res = await db.update("ClientUser", newClient.toMap(),
     var res = await db.query("ClientUser", where: "id = ?", whereArgs: [id]);
     return ClientUser.fromMap(res.first);
   }
+  //// ????????????
+  Future<int> getUserId() async {
+    // final db = await database;
+    // var res = await db.rawQuery("SELECT userIdServer FROM ClientUser WHERE id = 1");
+    // var row = res[0];
+    // print("Id юзера на сервере ->"+res[0]['userIdServer'].toString());
+    // return row['userIdServer'];
+    final db = await database;
+    var res = await db.rawQuery("SELECT userIdServer FROM ClientUser WHERE id = 1");
+    var item = res.first;
+    var resourceId = item['userIdServer'];
+    print(resourceId);
+    return resourceId;
+  }
+
+  // getAllClients() async {
+  //   final db = await database;
+  //   var res = await db.query("ClientUser");
+  //   List<ClientUser> list =
+  //       res.isNotEmpty ? res.map((c) => Client.fromMap(c)).toList() : [];
+  //   return list[0].userIdServer;
 
     Future<List<ClientUser>> getClientUserInList() async {
     final db = await database;
@@ -295,50 +376,3 @@ var res = await db.update("ClientUser", newClient.toMap(),
     db.rawDelete("Delete * from Client");
   }
 }
-
-
-      // Column(
-      //   children: [
-      //     DecoratedBox(  // add this
-      //       child: new Column(
-      //   children: <Widget>[
-      //    CarouselSlider(
-      //     items: [
-      //       1,
-      //       2,
-      //       3,
-      //       4,
-      //       5,
-      //       6].map((i) {
-      //       return new Builder(
-      //         builder: (BuildContext context) {
-      //           return new Container(
-      //             width: MediaQuery.of(context).size.width,
-      //             margin: new EdgeInsets.only(left: 15.0, right: 15.0, top: 70.0, bottom: 50.0),
-      //             decoration: new BoxDecoration(
-      //               color: Colors.white,
-      //               boxShadow:<BoxShadow>[
-      //                 BoxShadow(
-      //                   color: Color.fromRGBO(71, 9, 150, 0.37),
-      //                   offset: Offset(0.0, 4.0),
-      //                   blurRadius: 15.0,
-      //                 ),
-      //               ],
-      //                   border: Border.all(
-      //                     color: Colors.transparent,
-      //                     width: 0,
-      //                   ),
-      //                   borderRadius: BorderRadius.circular(12),
-      //             ),
-      //             child: getCardInfo(i, i_add, slider_titles)
-      //           );
-      //         },
-      //       );
-      //     }).toList(),
-      //     height: 280.0,
-      //     autoPlay: true,
-      //     autoPlayCurve: Curves.elasticIn,
-      //     autoPlayDuration: const Duration(milliseconds: 2800),
-      //       ),
-      //      ]
-      //     ),
