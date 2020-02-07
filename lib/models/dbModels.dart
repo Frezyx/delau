@@ -19,6 +19,7 @@ class Client {
   int priority;
   int marker;
   int passed;
+  int deleted;
   bool done;
 
   Client({
@@ -30,6 +31,7 @@ class Client {
 		this.date,
     this.time,
     this.passed,
+    this.deleted,
     this.done,
   });
 
@@ -42,6 +44,7 @@ class Client {
         date: json["date"],
         time: json["time"],
         passed: json["passed"],
+        deleted: json["deleted"],
         done: json["done"] == 1,
       );
   
@@ -55,6 +58,7 @@ class Client {
         "date": date,
         "time": time,
         "passed": passed,
+        "deleted": deleted,
         "done": done,
       };
 }

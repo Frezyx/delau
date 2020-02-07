@@ -175,6 +175,7 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
             if(response.body.toString()!= "1"){
               _badAllert();       
               print("Неудачно        " + response.body.toString());
+              print(link);
             }
             else{
               _neverSatisfied();
@@ -480,24 +481,26 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                         priority: rating.round(),
                         date: _date.toString(),
                         time: _time.toString(),
+                        deleted: 0,
+                        passed: 1,
                         done: false
                       );
-
-                  addAtLocalDB(now_client);
-                  counter();
-
+                  DBProvider.db.newClient(now_client).then((id){
                         check().then((intenet) {
                           if (intenet != null && intenet && registration) {
                             DBUserProvider.dbc.getUserId().then((userIdServer){
                               httpGetWithAllert("https://delau.000webhostapp.com/flutter/addTask.php?header="+
                               _name+"&body="+_surname+"&date="+_date.toString()+"&time="+
                               _time.toString()+"&marker="+(selected_radio-1).toString()+"&paginator="+
-                              rating.round().toString()+"&user_id="+userIdServer.toString());
+                              rating.round().toString()+"&user_id="+userIdServer.toString()+
+                              "&fromMobile=1&mobile_id="+id.toString());
                             });
                             // Internet Present Case
                           }
                           // No-Internet Case
                         });
+                  });
+                  counter();
                         
                   _firebaseMessaging.getToken().then((token){
                     httpGet("https://delau.000webhostapp.com/flutter/addNotif.php?token="+token+"&date="+_date.toString()+"&time="+_time.toString());
@@ -565,11 +568,10 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                                           );
                                 }
                                 
-                                void addAtLocalDB(Client nowClient) async{
-                                            await DBProvider.db.newClient(
-                                              nowClient
-                                            );
-                                            
+                                Future<int> addAtLocalDB(Client nowClient) async{
+                                            DBProvider.db.newClient(nowClient).then((id){
+                                              return id;
+                                            });
                                 }
 
                                 void counter() async{

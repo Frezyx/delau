@@ -78,6 +78,43 @@ class _UpdatePageState extends State<UpdatePage> {
       });
     }
 
+            Future<void> _allert() async {
+          return showDialog<void>(
+            context: context,
+            barrierDismissible: false, // user must tap button!
+            builder: (BuildContext context) {
+              return 
+                AlertDialog(
+                title: Text('При выходе все задачи, добавленные в дальнейшем не будут синхронизированы с Сервером и будут потеряны при входе! Продолжить?'),
+                // content: SingleChildScrollView(
+                //   child: ListBody(
+                //     children: <Widget>[
+                //       Text('Теперь она появится в таблице с задачами.'),
+                //     ],
+                //   ),
+                // ),
+                actions: <Widget>[
+                      FlatButton(
+                        child: Text('Отменить'), textColor: Color.fromRGBO(114, 103, 239, 1),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+    
+                      FlatButton(
+                        child: Text('Принять'), textColor: Colors.white, color: Color.fromRGBO(114, 103, 239, 1),
+                        onPressed: () {
+    
+                          exitUser();
+                          Navigator.pushNamed(context, '/user');
+                        },
+                      ),
+                    ]
+              );
+            },
+          );
+        }
+
  @override
  build(BuildContext context) {
 
@@ -236,7 +273,7 @@ class _UpdatePageState extends State<UpdatePage> {
                 splashColor:  Color.fromRGBO(114, 103, 239, 1),
                 onPressed: (){
                   print("exit with id = " + userId.toString());
-                  exitUser();
+                  _allert();
                 },
                 color: Colors.white,
                 textColor: Color.fromRGBO(114, 103, 239, 1),

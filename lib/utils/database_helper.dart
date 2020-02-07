@@ -35,6 +35,7 @@ class DBProvider {
           "priority INTEGER,"
           "marker INTEGER,"
           "passed INTEGER,"
+          "deleted INTEGER,"
           "done BIT"
           ")");
     });
@@ -47,8 +48,8 @@ class DBProvider {
     int id = table.first["id"];
     //insert to the table using the new id
     var raw = await db.rawInsert(
-        "INSERT Into Client (id,title,description,date,time,priority,marker,passed,done)"
-        " VALUES (?,?,?,?,?,?,?,?,?)",
+        "INSERT Into Client (id,title,description,date,time,priority,marker,passed,deleted,done)"
+        " VALUES (?,?,?,?,?,?,?,?,?,?)",
         [id, 
         newClient.title,
         newClient.description,
@@ -57,9 +58,12 @@ class DBProvider {
         newClient.priority,
         newClient.marker,
         newClient.passed,
+        newClient.deleted,
         newClient.done
         ]);
-    return raw;
+    // return raw;
+    print(id.toString() + " ID отправлено");
+    return id;
   }
 
   blockOrUnblock(Client client) async {
@@ -73,6 +77,7 @@ class DBProvider {
         priority: client.priority,
         marker: client.marker,
         passed: client.passed,
+        deleted: client.deleted,
         done: !client.done);
 
     var res = await db.update("Client", blocked.toMap(),
@@ -89,7 +94,7 @@ class DBProvider {
 
   Future<int> getContNow() async {
     final db = await database;
-    var res = await Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM Client'));
+    var res = await Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM Client WHERE deleted = 0'));
     return res;
   }
 
@@ -127,26 +132,35 @@ class DBProvider {
         res.isNotEmpty ? res.map((c) => Client.fromMap(c)).toList() : [];
     return list;
   }
-
-  Future<List<Client>> getAllClients() async {
+/// Может быть не сработает...
+  Future<List<Client>> getAllTasks() async {
     final db = await database;
-    var res = await db.query("Client", orderBy: "done ASC, priority DESC, date DESC, time DESC ");
+    var res = await db.query("Client",where: "deleted = 0", orderBy: "done ASC, priority DESC, date DESC, time DESC ");
     List<Client> list =
         res.isNotEmpty ? res.map((c) => Client.fromMap(c)).toList() : [];
     return list;
   }
-
+//Изменяю сейчас
   deleteClient(int id) async {
     final db = await database;
     var table = await db.rawQuery("SELECT priority FROM Client WHERE id = ?",[id]);
     int priority = table.first["priority"];
-    db.delete("Client", where: "id = ?", whereArgs: [id]);
+    // db.delete("Client", where: "id = ?", whereArgs: [id]);
+
+    int count = await db.rawUpdate(
+      'UPDATE Client SET deleted = 1 WHERE id = ?',
+        ['$id']);
+    print('Удаление updated: $count');
     return priority;
   }
 
   deleteAll() async {
     final db = await database;
-    db.rawDelete("Delete * from Client");
+    // db.rawQuery("DELETE * FROM Client");
+    int count = await db.rawUpdate(
+      'UPDATE Client SET deleted = ? WHERE id = *',
+        ['1']);
+    print('Удаление updated: $count');
   }
 }
 
@@ -223,8 +237,9 @@ class DBUserProvider {
         ['$reg', '$name', '$surname', '1']);
       print('updated: $count');
       //Вот это блять нужно поменять !!!!!!
-      runSync(id);
+      runSyncLogin(id);
     }
+
 
   updateCount() async {
     final db = await database;
@@ -362,7 +377,7 @@ var res = await db.update("ClientUser", newClient.toMap(),
     return resourceId;
   }
 
-  // getAllClients() async {
+  // getAllTasks() async {
   //   final db = await database;
   //   var res = await db.query("ClientUser");
   //   List<ClientUser> list =
@@ -392,7 +407,7 @@ var res = await db.update("ClientUser", newClient.toMap(),
     return list;
   }
 
-  Future<List<Client>> getAllClients() async {
+  Future<List<Client>> getAllTasks() async {
     final db = await database;
     var res = await db.query("Client", orderBy: "done ASC, priority DESC, date DESC, time DESC ");
     List<Client> list =

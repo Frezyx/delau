@@ -10,7 +10,7 @@ var countTask =  DBProvider.db.getContNow();
 getVoiceInfo() {
   DBProvider.db.getContNow().then((res) {
     print(res);
-    DBProvider.db.getAllClients().then((secondRes){
+    DBProvider.db.getAllTasks().then((secondRes){
       var bigRes = "";
       for(int i = 0; i < secondRes.length; i++){
         var item = secondRes[i];

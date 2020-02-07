@@ -337,7 +337,7 @@ bool registration = false;
          Expanded(
           child: Container(
             child: FutureBuilder<List<Client>>(
-        future: DBProvider.db.getAllClients(),
+        future: DBProvider.db.getAllTasks(),
         builder:
          (BuildContext context, AsyncSnapshot<List<Client>> snapshot) {
           if (snapshot.hasData) 
@@ -414,10 +414,10 @@ bool registration = false;
                   direction: DismissDirection.endToStart,
                   onDismissed: (direction) {
                     DBProvider.db.deleteClient(item.id).then((priority){
+                      refreshCount();
                       int pr = priority; 
                       counterDone(pr);
                     });
-                    refreshCount();
                     check().then((intenet) {
                       if (intenet != null && intenet && registration) {
                         print("synchromised");
@@ -571,7 +571,7 @@ class _MPState extends State<MP> {
     return Scaffold(
       appBar: AppBar(title: Text("Flutter SQLite")),
       body: FutureBuilder<List<Client>>(
-        future: DBProvider.db.getAllClients(),
+        future: DBProvider.db.getAllTasks(),
         builder: (BuildContext context, AsyncSnapshot<List<Client>> snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
