@@ -17,7 +17,7 @@ import 'database_helper.dart';
 
   httpGet(String link) async{
           var response = await http.get('$link');
-            if(response.body.toString()== "0"){
+            if(response.body.toString()== "1"){
               print("Удачно");
             }
             else{   
@@ -37,7 +37,7 @@ import 'database_helper.dart';
         "&user_id="+addId.toString());
 
         DBProvider.db.passDate(i);
-        print("Задача #$i загружена");
+          print("Задача #$i загружена");
       }
     });
   }

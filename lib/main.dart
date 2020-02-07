@@ -24,6 +24,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:delau/firstStartPages/demo.dart';
 import 'package:delau/pages/tts.dart';
 import 'package:delau/pages/addMarker.dart';
+import 'package:delau/pages/userSettings.dart';
 import 'package:delau/utils/fcm.dart';
 import 'package:delau/reg.dart';
 import 'package:delau/autoriz.dart';
@@ -64,6 +65,7 @@ class MyApp extends StatelessWidget {
       '/reg':(BuildContext context) => RegistrationPage(),
       '/autoriz':(BuildContext context) => AutorizationPage(),
       '/addMark':(BuildContext context) => AddMarkerPage(),
+      '/update':(BuildContext context) => UpdatePage(),
       // '/services':(BuildContext context) => Services(),
     },
     onGenerateRoute: (RouteSettings){

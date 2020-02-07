@@ -39,7 +39,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             builder: (BuildContext context) {
               return 
                 AlertDialog(
-                title: Text('Ваша задача добавлена'),
+                title: Text('Ваш аккаунт создан'),
                 // content: SingleChildScrollView(
                 //   child: ListBody(
                 //     children: <Widget>[
@@ -75,7 +75,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             builder: (BuildContext context) {
               return 
                 AlertDialog(
-                title: Text('Ошибка при создании задачи! Попробуйте ещё раз...'),
+                title: Text('Ошибка при создании аккаунта! Попробуйте ещё раз...'),
                 actions: <Widget>[
                       FlatButton(
                         child: Text('Попробовать ещё раз'), textColor: Color.fromRGBO(114, 103, 239, 1),

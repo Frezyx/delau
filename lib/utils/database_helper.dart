@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:delau/utils/synchroneHelper.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -198,9 +199,32 @@ class DBUserProvider {
           rating: rating,
           reg: registration,
         );
-        print("Регистрация прошла успешно "+now_client.reg.toString()+"Id на сервере: "+now_client.userIdServer.toString());
+        print("Регистрация прошла успешно код:"+now_client.reg.toString()+"  Id на сервере: "+now_client.userIdServer.toString());
         regUserRaw(now_client);
   }
+
+    exitClient() async {
+      final db = await database;
+      int reg = 0;
+      int count = await db.rawUpdate(
+        'UPDATE ClientUser SET reg = ? WHERE id = ?',
+        ['$reg', '1']);
+      print('updated: $count');
+    }
+
+    loginClient(row) async {
+      final db = await database;
+      var name = row[1];
+      var surname = row[2];
+      var id = row[3];
+      int reg = 1;
+      int count = await db.rawUpdate(
+        'UPDATE ClientUser SET reg = ?, name = ?, surname = ? WHERE id = ?',
+        ['$reg', '$name', '$surname', '1']);
+      print('updated: $count');
+      //Вот это блять нужно поменять !!!!!!
+      runSync(id);
+    }
 
   updateCount() async {
     final db = await database;
@@ -293,9 +317,19 @@ var res = await db.update("ClientUser", newClient.toMap(),
       var reg = newClient.reg.toString();
       var userIdServer = newClient.userIdServer.toString();
       int count = await db.rawUpdate(
-        'UPDATE ClientUser SET name = ?, surname = ?, reg = ? WHERE id = ?',
-        ['$name', '$surname', '$reg', '1']);
-  print('updated: $count ---> результат');
+        'UPDATE ClientUser SET name = ?, surname = ?, reg = ?, userIdServer = ? WHERE id = ?',
+        ['$name', '$surname', '$reg', '$userIdServer', '1']);
+  print('updated: $count ---> результат c UserId ---> $userIdServer');
+  }
+
+    updateClient( name , surname, email, login, userId)async {
+      final db = await database;
+      var idUser = userId;
+      int count = await db.rawUpdate(
+        'UPDATE ClientUser SET name = ?, surname = ? WHERE userIdServer = ?',
+        ['$name', '$surname', '$idUser']);
+
+      print('updated: $count ---> результат c UserId ---> $idUser');
   }
 
   updateClientUserDoneRaw(ClientUser newClient) async {
@@ -321,10 +355,10 @@ var res = await db.update("ClientUser", newClient.toMap(),
     // print("Id юзера на сервере ->"+res[0]['userIdServer'].toString());
     // return row['userIdServer'];
     final db = await database;
-    var res = await db.rawQuery("SELECT userIdServer FROM ClientUser WHERE id = 1");
-    var item = res.first;
-    var resourceId = item['userIdServer'];
-    print(resourceId);
+      var res = await db.rawQuery("SELECT * FROM ClientUser WHERE id = 1");
+      var item = res.first;
+      var resourceId = item['userIdServer'];
+      print("id:"+item['id'].toString()+"UserId:"+resourceId.toString()+"name:"+item['name']);
     return resourceId;
   }
 

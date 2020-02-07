@@ -20,6 +20,10 @@ class _UserState extends State<User> {
   var surname = "Неопознанный";
   var imgSrc = "assets/profile.jpg";
   // Widget userWidget;
+  final Shader linearGradient = LinearGradient(
+    colors: <Color>[Color.fromRGBO(114, 103, 239, 1),  
+                    Color.fromRGBO(162, 122, 246, 1)],
+  ).createShader(Rect.fromLTWH(100.0, 0.0, 200.0, 50.0));
 
   @override
   void initState() {
@@ -69,7 +73,7 @@ class _UserState extends State<User> {
                         ),
           ),
 
-          registration ? userData(item.name, item.surname) : getLoginButton(context),
+          registration ? userData(item.name, item.surname, context) : getLoginButton(context, linearGradient),
 
               Divider(height: 15),
           Align(
@@ -276,22 +280,32 @@ class _UserState extends State<User> {
   }
 }
 
-Widget userData(String name, String surname){
+Widget userData(String name, String surname, context){
   return Align(
             alignment: Alignment.centerLeft,
               child: Padding(
-                padding: EdgeInsets.only(left: 45.0, top: 5),
+                padding: EdgeInsets.only(left: 45.0, top: 13),
                 child:
-                Column(children: <Widget>[
-                    Text(" $name       ",style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 36.0, fontWeight: FontWeight.w900, color: Colors.black)),
-                    Text("  $surname",style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 36.0, fontWeight: FontWeight.w900, color: Colors.black)),
+                Row(
+                  children: <Widget>[
+                          Text("$name $surname",style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 36.0, fontWeight: FontWeight.w900, color: Colors.black)),
+                                    IconButton(
+                                      iconSize: 32,
+                                      icon: Icon(Icons.settings),
+                                      color: Color.fromRGBO(114, 103, 239, 1),
+                                      splashColor: Color.fromRGBO(114, 103, 239, 1),
+                                      onPressed: (){
+                                        Navigator.pushNamed(context, '/update');
+                                      },
+                                    ),
+                          // Text("$surname",style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 36.0, fontWeight: FontWeight.w900, color: Colors.black))
                   ],
                 ),
                 ),
               );
 }
 
-Widget getLoginButton(context){
+Widget getLoginButton(context, linearGradient){
   return  
   // RaisedButton(
   //                 child:
@@ -346,21 +360,22 @@ Widget getLoginButton(context){
   // }
   // ),
   // ); 
-
-  Padding(
+  Column(
+    children: <Widget>[
+      Padding(
     padding: EdgeInsets.only(right: 45.0, left: 45.0),
     child:
 Container(
-      decoration: const BoxDecoration(
-      boxShadow:<BoxShadow>[
-                      BoxShadow(
-                        color: Color.fromRGBO(71, 9, 150, 0.2),
-                        offset: Offset(0.0, 4.0),
-                        blurRadius: 7.0,
-                      ),
-                    ],
-      ),
-                    child:
+      // decoration: const BoxDecoration(
+      // boxShadow:<BoxShadow>[
+      //                 BoxShadow(
+      //                   color: Color.fromRGBO(71, 9, 150, 0.2),
+      //                   offset: Offset(0.0, 4.0),
+      //                   blurRadius: 7.0,
+      //                 ),
+      //               ],
+      // ),
+  child:
   RaisedButton(
   onPressed: () {
     Navigator.pushNamed(context, '/reg');
@@ -391,7 +406,36 @@ Container(
     ),
   ),
   ),
-);
+),
+ Padding(
+    padding: EdgeInsets.only(right: 45.0, left: 45.0),
+    child:
+  RaisedButton(
+  onPressed: () {
+    Navigator.pushNamed(context, '/autoriz');
+   },
+  highlightColor : Colors.white,
+  splashColor:  Color.fromRGBO(114, 103, 239, 1),
+  shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(20.0),
+                  side: BorderSide(color: Color.fromRGBO(114, 103, 239, 1))
+                ),
+  color: Colors.white,
+  // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+  padding: const EdgeInsets.all(0.0),
+    child: Container(
+      constraints: const BoxConstraints(minWidth: 0.0, minHeight: 40.0), // min sizes for Material buttons
+      alignment: Alignment.center,
+      child: Text('Войти', textAlign: TextAlign.center, style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 24.0, fontWeight: FontWeight.w900,
+      //  color: Color.fromRGBO(114, 103, 239, 1)
+      foreground: Paint()..shader = linearGradient,
+       ),),
+      ),
+  ),
+),
+
+    ]
+  );
 }
 
 // foo() async {

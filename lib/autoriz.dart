@@ -1,6 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:delau/main.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:delau/utils/database_helper.dart';
 
 class AutorizationPage extends StatefulWidget{
   @override
@@ -13,6 +16,19 @@ class _AutorizationPageState extends State<AutorizationPage> {
   String _email;
   String _login;
   String _password;
+
+    Future<String> httploginGet(String link) async{
+          var response = await http.get('$link');
+            if(response.body.toString().substring(0,1)== "1"){
+              var body = response.body;
+              print("Удачно" + body.split(";")[1] +"   "+ body.split(";")[2]);
+            }
+            else{      
+              print("Неудачно");
+            }
+            print(response.body.toString());
+            return response.body.toString();
+      }
 
   @override
   Widget build(BuildContext context) {
@@ -180,8 +196,12 @@ class _AutorizationPageState extends State<AutorizationPage> {
 
               onPressed: (){
                 if(_formKey.currentState.validate()){
-                  if(_name != null && _email != null && _login != null && _password != null){
-
+                  if( _login != null && _password != null){
+                    httploginGet('https://delau.000webhostapp.com/flutter/loginCheckFlutter.php?login='+_login+'&pass='+_password)
+                    .then((res){
+                      var row = res.split(";");
+                      DBUserProvider.dbc.loginClient(row);
+                    });
                   }  
                 }
               },
