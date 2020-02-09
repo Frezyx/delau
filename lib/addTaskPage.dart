@@ -62,13 +62,22 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
   void initState(){
     super.initState();
     selected_radio = 0;
-    sampleData.add(new RadioModel(0, true, FontAwesome.book, 'Учеба'));
-    sampleData.add(new RadioModel(1, false, FontAwesome.briefcase, 'Работа'));
-    sampleData.add(new RadioModel(2, false, MdiIcons.fromString('basketball'), 'Спорт'));
-    sampleData.add(new RadioModel(3, false, FontAwesome.users, 'Встречи'));
-    sampleData.add(new RadioModel(4, false, MdiIcons.fromString('shopping'), 'Покупки'));
-    sampleData.add(new RadioModel(5, false, FontAwesome.spinner, 'Другое'));
-    sampleData.add(new RadioModel(6, false, Icons.add, 'Добавить'));
+
+      sampleData.add(new RadioModel(0, true, FontAwesome.book, 'Учеба'));
+      sampleData.add(new RadioModel(1, false, FontAwesome.briefcase, 'Работа'));
+      sampleData.add(new RadioModel(2, false, MdiIcons.fromString('basketball'), 'Спорт'));
+      sampleData.add(new RadioModel(3, false, FontAwesome.users, 'Встречи'));
+      sampleData.add(new RadioModel(4, false, MdiIcons.fromString('shopping'), 'Покупки'));
+      sampleData.add(new RadioModel(5, false, FontAwesome.spinner, 'Другое'));
+      sampleData.add(new RadioModel(sampleData.length-1, false, Icons.add, 'Ещё'));
+
+    DBMarkerProvider.db.getAllMarks().then((list){
+      for(int i = 0; i < list.length; i++){
+        sampleData.add(new RadioModel(sampleData.length-1, false, MdiIcons.fromString(list[i].icon), list[i].name));
+        print("icon: "+list[i].icon +"     name: "+list[i].name );
+      }
+      // sampleData.add(new RadioModel(sampleData.length-1, false, Icons.add, 'Добавить'));
+    });
 
     DBUserProvider.dbc.getClientUser(1).then((res){
       registration = (res.reg == 1);
@@ -312,7 +321,8 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                 return 
                 InkWell(
                 onTap: () {
-                  if(i == sampleData.length - 1){
+                  if(i == 7){
+                    sampleData.removeAt(sampleData.length-1);
                     Navigator.pushNamed(context, '/addMark');
                   }
                   setSelectedRadio(i+1);
@@ -322,85 +332,13 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                   });
                 },
                 splashColor: Color.fromRGBO(114, 103, 239, 1),
-                child: getCustomRadio(sampleData[i], sampleData.length-1),
+                child: getCustomRadio(sampleData[i], sampleData.length),
                 );
               }
             ),
           ),
 
           new SizedBox(height: 0.0),
-
-          //   Row(
-          //   children: <Widget>[
-          //     Radio(
-          //       value: 1,
-          //       groupValue: selected_radio,
-          //       activeColor: Color.fromRGBO(114, 103, 239, 1),
-          //       onChanged: (val){
-          //         print("$val");
-          //         setSelectedRadio(val);
-          //       },
-          //     ),
-          //     Text("Учеба"),
-          //     Radio(
-          //       value: 2,
-          //       groupValue: selected_radio,
-          //       activeColor: Color.fromRGBO(114, 103, 239, 1),
-          //       onChanged: (val){
-          //         print("$val");
-          //         setSelectedRadio(val);
-          //       },
-          //     ),
-          //     Text("Работа"),
-          //     Radio(
-          //       value: 3,
-          //       groupValue: selected_radio,
-          //       activeColor: Color.fromRGBO(114, 103, 239, 1),
-          //       onChanged: (val){
-          //         print("$val");
-          //         setSelectedRadio(val);
-          //       },
-          //     ),
-          //     Text("Cпорт"),
-          //   ]
-          // ),
-          // Row(
-          //   children: <Widget>[
-          //     Radio(
-          //       value: 4,
-          //       groupValue: selected_radio,
-          //       activeColor: Color.fromRGBO(114, 103, 239, 1),
-          //       onChanged: (val){
-          //         print("$val");
-          //         setSelectedRadio(val);
-          //       },
-          //     ),
-          //     Text("Встерча"),
-          //     Radio(
-          //       value: 5,
-          //       groupValue: selected_radio,
-          //       activeColor: Color.fromRGBO(114, 103, 239, 1),
-          //       onChanged: (val){
-          //         print("$val");
-          //         setSelectedRadio(val);
-          //       },
-          //     ),
-          //     Text("Покупки"),
-          //     Radio(
-          //       value: 6,
-          //       groupValue: selected_radio,
-          //       activeColor: Color.fromRGBO(114, 103, 239, 1),
-          //       onChanged: (val){
-          //         print("$val");
-          //         setSelectedRadio(val);
-          //       },
-          //     ),
-          //     Text("Другое"),
-          //   ],
-          // ),
-    
-          //   new SizedBox(height: 20.0,),
-    
               new Column(
                 children: <Widget>[
                   FlatButton(
@@ -477,7 +415,7 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                   Client now_client = new Client(
                         title: _name,
                         description: _surname,
-                        marker: selected_radio-1,
+                        marker: selected_radio,
                         priority: rating.round(),
                         date: _date.toString(),
                         time: _time.toString(),
@@ -491,7 +429,7 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                             DBUserProvider.dbc.getUserId().then((userIdServer){
                               httpGetWithAllert("https://delau.000webhostapp.com/flutter/addTask.php?header="+
                               _name+"&body="+_surname+"&date="+_date.toString()+"&time="+
-                              _time.toString()+"&marker="+(selected_radio-1).toString()+"&paginator="+
+                              _time.toString()+"&marker="+(selected_radio).toString()+"&paginator="+
                               rating.round().toString()+"&user_id="+userIdServer.toString()+
                               "&fromMobile=1&mobile_id="+id.toString());
                             });
@@ -559,6 +497,9 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                                             }
                                             if(index == 2){
                                               Navigator.pushNamed(context, '/second');
+                                            }
+                                            if(index == 3){
+                                              Navigator.pushNamed(context, '/rating');
                                             }
                                             if(index == 4){
                                               Navigator.pushNamed(context, '/user');

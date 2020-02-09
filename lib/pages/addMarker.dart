@@ -1,73 +1,94 @@
+import 'dart:math';
+
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:delau/utils/database_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:delau/models/dbModels.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:delau/utils/allIconsList.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class AddMarkerPage extends StatefulWidget{
+  String _id;
+  String _icon;
+
+  AddMarkerPage({String id, String icon}): _id = id, _icon = icon;
+
   @override
-  _AddMarkerPageState createState() => _AddMarkerPageState();
+  _AddMarkerPageState createState() => _AddMarkerPageState(_id, _icon);
 }
 
 class _AddMarkerPageState extends State<AddMarkerPage> {
+  String id;
+  String icon;
+
+  _AddMarkerPageState(this.id, this.icon);
+
   final _formKey = GlobalKey<FormState>();
   String _name;
-  String _email;
-  String _login;
-  String _password;
+  // String _icon;
+
+  var rng = new Random();
+
+  getCustomRadio(String icon){
+    return
+      InkWell(
+    onTap:() {
+       Navigator.pushNamed(context, '/icon');
+    },
+    // splashColor: Color.fromRGBO(114, 103, 239, 1),
+    child: 
+    new Container(
+        margin: new EdgeInsets.all(15.0),
+        child: new Column(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            new Container(
+              height: MediaQuery.of(context).size.width/2.3,
+              width: MediaQuery.of(context).size.width/2.3,
+              child: new Center(
+                child: Icon( MdiIcons.fromString( icon ?? "flagPlus"),
+                color: Color.fromRGBO(114, 103, 239, 1),
+                size: MediaQuery.of(context).size.width/3.3,),
+                        //fontWeight: FontWeight.bold,
+              ),
+               decoration: new BoxDecoration(
+              color: Colors.transparent,
+              border: new Border.all(
+                  width: 1.0,
+                  color: Color.fromRGBO(114, 103, 239, 1)),
+              borderRadius: const BorderRadius.all(const Radius.circular(2.0)),
+            ),
+            ),
+            new Container(
+              margin: new EdgeInsets.only(left: 0.0, top: 4.0),
+              child: 
+                new Text(
+                  icon ?? "Иконка не выбрана",
+                  style: TextStyle(color: Color.fromRGBO(114, 103, 239, 1)),
+
+                  ),
+            )
+          ],
+        ),
+    ),
+      );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body:Container(
         padding: EdgeInsets.only(left: 40.0, right: 40.0, top:MediaQuery.of(context).size.height/5, bottom: MediaQuery.of(context).size.height/10),// color: Colors.transparent,
-              child: new Form(key: _formKey, child: new Column(children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only( top: 2.0, bottom: 2.0, left :MediaQuery.of(context).size.width/30, right :MediaQuery.of(context).size.width/30,),
-              child:                 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,   
-
-                  children: <Widget>[
-                    FlatButton(
-                      onPressed: () {
-                          /*...*/
-                        },
-                        splashColor: Colors.transparent,  
-                        highlightColor: Colors.transparent,
-
-                        child: Text(
-                          "Вход",
-                          style: TextStyle(
-                            color: Color.fromRGBO(114, 103, 239, 1),
-                            fontSize: 18.0,
-                          ),
-                          
-                        ),
-                      ),
-                    FlatButton(
-                      onPressed: () {
-                          Navigator.pushNamed(context, '/reg');
-                        },
-                        splashColor: Colors.transparent,  
-                        highlightColor: Colors.transparent,
-                        
-                        child: Text(
-                          "Регистрация",
-                          style: TextStyle(
-                            color: Colors.black54,
-                            // decoration: TextDecoration.underline,
-                            fontSize: 18.0,
-                            ),
-                        ),
-                      ),
-                  ],  
-                ),
-              ),
+              child: new Form(key: _formKey, child: Column(children: <Widget>[ 
+              
+                getCustomRadio(icon),
+                SizedBox(height: 20,),
 
               new TextFormField(
                   cursorColor: Color.fromRGBO(114, 103, 239, 1),
                   decoration: InputDecoration(   
-                  labelText: 'Ваш логин или e-mail',  
+                  labelText: 'Название маркера',  
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),     
@@ -77,101 +98,15 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
                   ),    
                 ),
                 validator: (value){
-                  if (value.isEmpty) return 'Введите ваш логин';
+                  if (value.isEmpty) return 'Дайте название своему маркеру';
                   else {
-                    _login = value.toString();
+                    // _login = value.toString();
+                    _name = value.toString();
                   }
                 },
               ),
-              new SizedBox(height: 10.0,),
-
-               TextFormField(
-                  cursorColor: Color.fromRGBO(114, 103, 239, 1),
-                  decoration: InputDecoration(   
-                  labelText: 'Ваш пароль',  
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                    
-                  ),     
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                    borderSide: BorderSide(color: Color.fromRGBO(114, 103, 239, 1)),
-                  ),    
-                ),
-                validator: (value){
-                  if (value.isEmpty) return 'Введите ваш пароль';
-                  else {
-                    _password = value.toString();
-                  }
-                },
-                obscureText: true,
-              ),
-              new SizedBox(height: 20.0,),
-
-            // Padding(
-            //   padding: EdgeInsets.only( left :MediaQuery.of(context).size.width/30, right :MediaQuery.of(context).size.width/30,),
-            //   child: 
-            //   Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-
-            //     children: <Widget>[
-                //   RaisedButton(onPressed: (){
-                //   if(_formKey.currentState.validate()){
-                //     if(_name != null && _email != null && _login != null && _password != null){
-        
-                //       // Client now_client = new Client(
-                //       //       title: _name,
-                //       //       description: _surname,
-                //       //       marker: selected_radio-1,
-                //       //       priority: rating.round(),
-                //       //       date: _date.toString(),
-                //       //       time: _time.toString(),
-                //       //       done: false
-                //       //     );
-
-                //       // addAtLocalDB(now_client);
-                //       // counter();
-
-                //       // getSyncStatus().then((synchronise){
-                //       //     if (synchronise){
-                //       //       print("synchromised");
-                //       //       httpGet("https://delau.000webhostapp.com/flutter/addTask.php?header="+_name+"1&body="+_surname+"1&date="+_date.toString()+"&time="+_time.toString()+"&marker="+(selected_radio-1).toString()+"&paginator="+rating.round().toString());
-                //       //     }
-                //       //   });
-                //     }
-                //   }
-                // }, child: Text('Вход'), color: Colors.white, textColor: Color.fromRGBO(114, 103, 239, 1),),
-
-                //   RaisedButton(onPressed: (){
-                //   if(_formKey.currentState.validate()){
-                //     if(_name != null && _email != null && _login != null && _password != null){
-        
-                //       // Client now_client = new Client(
-                //       //       title: _name,
-                //       //       description: _surname,
-                //       //       marker: selected_radio-1,
-                //       //       priority: rating.round(),
-                //       //       date: _date.toString(),
-                //       //       time: _time.toString(),
-                //       //       done: false
-                //       //     );
-
-                //       // addAtLocalDB(now_client);
-                //       // counter();
-
-                //       // getSyncStatus().then((synchronise){
-                //       //     if (synchronise){
-                //       //       print("synchromised");
-                //       //       httpGet("https://delau.000webhostapp.com/flutter/addTask.php?header="+_name+"1&body="+_surname+"1&date="+_date.toString()+"&time="+_time.toString()+"&marker="+(selected_radio-1).toString()+"&paginator="+rating.round().toString());
-                //       //     }
-                //       //   });
-                //     }
-                //   }
-                // }, child: Text('Зарегистрироваться'), color: Color.fromRGBO(114, 103, 239, 1), textColor: Colors.white,),
-      //           ],
-      //         ),
-      //       ),
+              SizedBox(height: 10,),
+            
             RaisedButton(
               shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(5.0),
@@ -180,22 +115,27 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
 
               onPressed: (){
                 if(_formKey.currentState.validate()){
-                  if(_name != null && _email != null && _login != null && _password != null){
-
-                  }  
+                  if(_name != null){
+                    print("Пробую создать");
+                    Marker mark = new Marker(
+                          name : _name,
+                          icon: icon
+                        );
+                        DBMarkerProvider.db.addMarker(mark).then((res){
+                          print(res);
+                        }); 
+                  }
                 }
               },
               color: Color.fromRGBO(114, 103, 239, 1),
               textColor: Colors.white,
-              
-              
               child: 
               Padding(
-                child: Text('Вход',
+                child: Text('Создать',
                 textAlign: TextAlign.center, style: TextStyle(fontStyle: FontStyle.normal, fontFamily: "Exo 2",fontSize: 18.0, fontWeight: FontWeight.w900, color: Colors.white),),
                 padding: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.width/3.3,
-                  right: MediaQuery.of(context).size.width/3.3,
+                  left: MediaQuery.of(context).size.width/3.8,
+                  right: MediaQuery.of(context).size.width/3.8,
                   top: MediaQuery.of(context).size.width/25,
                   bottom: MediaQuery.of(context).size.width/25,
                 ),
@@ -205,7 +145,7 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
             new SizedBox(height: 2.0,),
             FlatButton(
                       onPressed: () {
-                          Navigator.pushNamed(context, '/user');
+                          Navigator.pushNamed(context, '/second');
                         },
                         splashColor: Colors.transparent,  
                         highlightColor: Colors.transparent,

@@ -116,3 +116,28 @@ class ClientUser {
         "reg": reg,
       };
 }
+
+class Marker {
+  int id;
+  String name;
+  String icon;
+
+  Marker({
+		this.id,
+    this.name,
+    this.icon
+  });
+
+  factory Marker.fromMap(Map<String, dynamic> json) => new Marker(
+        id: json["id"],
+        name: json["name"],
+        icon: json["icon"],
+      );
+      
+  Map<String, dynamic> toMap() => {
+        "id": id,
+        "name": name,
+        "icon": icon,
+      };
+}
+

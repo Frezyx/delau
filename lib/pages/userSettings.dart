@@ -85,7 +85,7 @@ class _UpdatePageState extends State<UpdatePage> {
             builder: (BuildContext context) {
               return 
                 AlertDialog(
-                title: Text('При выходе все задачи, добавленные в дальнейшем не будут синхронизированы с Сервером и будут потеряны при входе! Продолжить?'),
+                title: Text('Задачи, добавленные в дальнейшем будут удалены при следующем входе. Продолжить?'),
                 // content: SingleChildScrollView(
                 //   child: ListBody(
                 //     children: <Widget>[

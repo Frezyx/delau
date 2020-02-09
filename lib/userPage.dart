@@ -271,6 +271,9 @@ class _UserState extends State<User> {
           if(index == 2){
             Navigator.pushNamed(context, '/second');
           }
+          if(index == 3){
+            Navigator.pushNamed(context, '/rating');
+          }
           if(index == 4){
             Navigator.pushNamed(context, '/user');
           }

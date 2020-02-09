@@ -141,7 +141,7 @@ class DBProvider {
     return list;
   }
 //Изменяю сейчас
-  deleteClient(int id) async {
+  Future<int> deleteClient(int id) async {
     final db = await database;
     var table = await db.rawQuery("SELECT priority FROM Client WHERE id = ?",[id]);
     int priority = table.first["priority"];
@@ -231,10 +231,13 @@ class DBUserProvider {
       var name = row[1];
       var surname = row[2];
       var id = row[3];
+      var rating = row[4];
+      var countDone = row[5];
+      var countAdd = row[6];
       int reg = 1;
       int count = await db.rawUpdate(
-        'UPDATE ClientUser SET reg = ?, name = ?, surname = ? WHERE id = ?',
-        ['$reg', '$name', '$surname', '1']);
+        'UPDATE ClientUser SET reg = ?, name = ?, surname = ?, rating = ?, countDone = ?, countAdd = ? WHERE id = ?',
+        ['$reg', '$name', '$surname', '$rating', '$countDone', '$countAdd', '1']);
       print('updated: $count');
       //Вот это блять нужно поменять !!!!!!
       runSyncLogin(id);
@@ -425,3 +428,79 @@ var res = await db.update("ClientUser", newClient.toMap(),
     db.rawDelete("Delete * from Client");
   }
 }
+
+
+class DBMarkerProvider {
+  DBMarkerProvider._();
+
+  static final DBMarkerProvider db = DBMarkerProvider._();
+
+  Database _database;
+
+  Future<Database> get database async {
+    if (_database != null) return _database;
+    // if _database is null we instantiate it
+    _database = await initDB();
+    return _database;
+  }
+
+  initDB() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path, "Markers.db");
+    return await openDatabase(path, version: 1, onOpen: (db) {},
+        onCreate: (Database db, int version) async {
+      await db.execute("CREATE TABLE Markers ("
+          "id INTEGER PRIMARY KEY,"
+          "name TEXT,"
+          "icon TEXT"
+          ")");
+    });
+  }
+
+  firstCreateTable() async{
+    final db = await database;
+    var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Markers");
+    int id = table.first["id"];
+    var raw = await db.rawInsert(
+        "INSERT Into Markers (id, name, icon)"
+        " VALUES (?, ?, ?)",
+        [id,'Добавить', 'plus']
+        );
+
+    return(raw);
+  }
+
+  Future<int>addMarker(Marker mark) async{
+    final db = await database;
+    var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Markers");
+    int id = table.first["id"];
+    var raw = await db.rawInsert(
+        "INSERT Into Markers (id, name, icon)"
+        " VALUES (?,?,?)",
+        [id, 
+        mark.name,
+        mark.icon,
+        ]);
+      print(raw);
+    return raw;
+  }
+
+  Future<List<Marker>> getAllMarks() async {
+    final db = await database;
+    var res = await db.query("Markers");
+    List<Marker> list =
+        res.isNotEmpty ? res.map((c) => Marker.fromMap(c)).toList() : [];
+    return list;
+  }
+
+  Future<String> getMarkById(int i) async {
+    final db = await database;
+    var res = await db.rawQuery("SELECT * FROM Markers WHERE id = $i");
+      var item = res.first;
+      var icon = item['icon'];
+      print(icon);
+    return icon;
+  }
+
+}
+

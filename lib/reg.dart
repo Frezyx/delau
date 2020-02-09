@@ -17,6 +17,20 @@ class _RegistrationPageState extends State<RegistrationPage> {
   String _email;
   String _login;
   String _password;
+  int _countDone;
+  int _countAdd;
+  int _rating;
+
+  @override
+    void initState(){
+      super.initState();
+
+      DBUserProvider.dbc.getClientUser(1).then((res){
+        _countDone = res.countDone;
+        _countAdd = res.countAdd;
+        _rating = res.rating;
+      });
+    }
 
   Future<String> httpGet(String link) async{
           var response = await http.get('$link');
@@ -319,7 +333,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             // Internet Present Case
                             httpGet("https://delau.000webhostapp.com/flutter/addUser.php?name="+
                             surAndName[0]+"&surname="+surAndName[1]+"&email="+_email+
-                            "&login="+_login+"&pass="+_password).then((res){
+                            "&login="+_login+"&pass="+_password+"&countAdd="+_countAdd.toString()+
+                            "&countDone="+_countDone.toString()+"&rating="+_rating.toString()).then((res){
 
                               var addId = int.parse(res.split(";")[1]);
                               print("Получил Id: "+addId.toString()+"  from DB");

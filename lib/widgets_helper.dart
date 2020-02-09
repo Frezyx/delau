@@ -125,7 +125,7 @@ Widget get_subtitle_of_SQLI(Client item){
       Align(
       alignment: AlignmentDirectional.centerStart,
       child:
-        StarDisplay(value: item.priority ~/ 2),
+        StarDisplay(value: (item.priority == 0) ? 0 : item.priority ~/ 2),
       ),
       ],
     ),
@@ -293,3 +293,53 @@ Widget get_subtitle_of_SQLI(Client item){
 //       print('Ты ебловоз блять! А вот твоя ошибка: $error');
 //     }
 //   }
+
+
+
+
+
+
+
+
+
+        // Container(
+        //   margin: EdgeInsets.symmetric(vertical: 20.0),
+        //   height: 100.0,
+        //   child:
+        //   FutureBuilder<List<RadioModel>>(
+        // future: getRadioList(),
+        // builder:
+        //  (BuildContext context, AsyncSnapshot<List<RadioModel>> snapshot) {
+        //   if (snapshot.hasData) 
+        //   {
+        //    return ListView.builder(
+        //       scrollDirection: Axis.horizontal,
+        //       itemCount: snapshot.data.length,
+        //       itemBuilder: (context, i) {
+        //         RadioModel sampleData = snapshot.data[i];
+        //         return 
+        //         InkWell(
+        //         onTap: () {
+        //           if(i == snapshot.data.length - 1){
+        //             Navigator.pushNamed(context, '/addMark');
+        //           }
+        //           setSelectedRadio(i+1);
+        //           setState(() {
+        //             snapshot.data.forEach((element) => element.isSelected = false);
+        //             sampleData.isSelected = true;
+
+        //           });
+        //         },
+        //         splashColor: Color.fromRGBO(114, 103, 239, 1),
+        //         child: getCustomRadio(sampleData, snapshot.data.length),
+        //         );
+        //       }
+        //     );
+        //   }
+        //   else 
+        //     {
+        //       return Center(child: CircularProgressIndicator());
+        //     }
+        //   }
+        //   ),
+        //   ),

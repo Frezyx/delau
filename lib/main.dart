@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:delau/pages/iconDrag.dart';
+import 'package:delau/ratingPage.dart';
 import 'package:delau/utils/ttsHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -66,6 +68,8 @@ class MyApp extends StatelessWidget {
       '/autoriz':(BuildContext context) => AutorizationPage(),
       '/addMark':(BuildContext context) => AddMarkerPage(),
       '/update':(BuildContext context) => UpdatePage(),
+      '/rating':(BuildContext context) => RatingPage(),
+      '/icon':(BuildContext context) => IconDrag(),
       // '/services':(BuildContext context) => Services(),
     },
     onGenerateRoute: (RouteSettings){
@@ -78,6 +82,11 @@ class MyApp extends StatelessWidget {
       if(path[1] == 'postPage'){
         return new MaterialPageRoute(builder: (context) => new PostPage(id:path[2]),
         settings: RouteSettings);
+        }
+      
+        if(path[1] == 'addMark'){
+          return new MaterialPageRoute(builder: (context) => new AddMarkerPage(id:path[2], icon:path[3]),
+          settings: RouteSettings);
         }
 
       },
@@ -120,6 +129,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
 var countTask =  DBProvider.db.getContNow();
 bool registration = false;
+int userIdServer;
 // РОУТИННГ
   void refreshCount() {
     // reload
@@ -134,7 +144,8 @@ bool registration = false;
 
       DBUserProvider.dbc.getClientUser(1).then((res){
         registration = (res.reg == 1);
-        print(registration);
+        userIdServer = res.userIdServer;
+        print(registration.toString() + "UserServerId--->" + userIdServer.toString());
       });
     }
 
@@ -154,6 +165,13 @@ bool registration = false;
     MdiIcons.fromString('shopping'),
     FontAwesome.spinner
     ];
+
+    // getIcon(int i){
+    //   print((i-7).toString() + " Чет говно");
+    //   DBMarkerProvider.db.getMarkById(i-7).then((icon){
+    //     return MdiIcons.fromString('$icon');
+    //   });
+    // }
 
   @override
   Widget build(BuildContext context) {
@@ -413,17 +431,20 @@ bool registration = false;
                   // key: UniqueKey(),
                   direction: DismissDirection.endToStart,
                   onDismissed: (direction) {
+                    int pr;
                     DBProvider.db.deleteClient(item.id).then((priority){
+                      var pr = priority;
                       refreshCount();
-                      int pr = priority; 
                       counterDone(pr);
-                    });
-                    check().then((intenet) {
+
+                      check().then((intenet) {
                       if (intenet != null && intenet && registration) {
-                        print("synchromised");
-                        httpGet("https://delau.000webhostapp.com/flutter/delete.php?id="+item.id.toString());
+                        print("synchromised And Pr --->" + pr.toString() + "Id user Server --->" + userIdServer.toString());
+                        // rating + pr ~/ 2;
+                        httpGet("https://delau.000webhostapp.com/flutter/delete.php?id="+item.id.toString()+"&priority="+(pr~/ 2).toString()+"&user_id="+userIdServer.toString());
                       }
                     });
+                  });
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
                         backgroundColor: Color.fromRGBO(114, 103, 239, 1),
@@ -440,7 +461,7 @@ bool registration = false;
                   },
                   child: ListTile(
                     leading: Icon(
-                    i_add[item.marker],
+                    (item.marker <= 5) ? i_add[item.marker] : MdiIcons.fromString('plus'),
                     color: Color.fromRGBO(114, 103, 239, 1),
                     size: 28.0,
                   ),
@@ -506,6 +527,9 @@ bool registration = false;
       }
       if(index == 2){
         Navigator.pushNamed(context, '/second');
+      }
+      if(index == 3){
+        Navigator.pushNamed(context, '/rating');
       }
       if(index == 4){
         Navigator.pushNamed(context, '/user');
