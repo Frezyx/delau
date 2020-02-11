@@ -61,30 +61,55 @@ bool registration = false;
               itemBuilder: (BuildContext context, int index) {
                 UserModel item = snapshot.data[index];
                 return ListTile(
-                    leading: Icon(
-                    Icons.people,
-                    color: Color.fromRGBO(114, 103, 239, 1),
-                    size: 28.0,
-                  ),
+                    leading:
+                    Container(
+                      margin: new EdgeInsets.all(5.0),
+                      child: new Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          new Container(
+                            height: 37.0,
+                            width: 37.0,
+                            child: new Center(
+                              child: new Text(
+                                "${index + 1}",
+                                style: TextStyle(
+                                  color: Color.fromRGBO(114, 103, 239, 1)
+                                ),
+                                ),
+                                      //fontWeight: FontWeight.bold,
+                            ),
+                            decoration: new BoxDecoration(
+                              color: Colors.transparent,
+                              border: new Border.all(
+                                  width: 1.0,
+                                  color: Color.fromRGBO(114, 103, 239, 1)),
+                              borderRadius: const BorderRadius.all(const Radius.circular(20.0)),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.all(4),
+                    //   child: Text(
+                    //   (index + 1).toString()
+                    // ),
+                    // ),
+                  //    Icon(
+                  //   Icons.people,
+                  //   color: Color.fromRGBO(114, 103, 239, 1),
+                  //   size: 28.0,
+                  // ),
                     title: Text('${item.name} ${item.surname}',
                     style: TextStyle(fontSize: 18.0, fontFamily: 'Exo 2', fontWeight: FontWeight.w300,),
                     overflow: TextOverflow.ellipsis,
                     ),
                     subtitle: get_subtitle_ratingPage(item),
-                    // trailing: Checkbox(
-                    //   onChanged: (bool value) {
-                        
-                    //     DBProvider.db.blockOrUnblock(item);
-                    //     setState(() {
-                          
-                    //     });
-                    //   },
-                    //   value: item.done,
-                    // ),
-                    onTap: () {
-                    // _onTapItem(context, item);
-                    // Navigator.pushNamed(context, '/postPage/${item.id}');
-                  }
+                    trailing: Text(
+                      "${item.rating} / ${item.countDone} / ${item.countAdd}",
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   );
               },
             );
@@ -147,9 +172,13 @@ class UserModel {
   final String login;
   final String email;
   final String password;
+  final int countDone;
+  final int countAdd;
+  final int rating;
  
   UserModel({ this.id, this.name, this.surname,
-   this.login, this.email, this.password });
+   this.login, this.email, this.password,
+   this.countDone, this.countAdd, this.rating });
  
   factory UserModel.fromJson(Map<String, dynamic> json) {
     // print(json['done'].toString());
@@ -161,6 +190,9 @@ class UserModel {
       login: json['login'] as String,
       email: json['email'] as String,
       password: json['password'] as String,
+      countAdd: int.parse(json['countAdd']),
+      countDone: int.parse(json['countDone']),
+      rating: int.parse(json['rating']),
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'dart:ui';
+
 Client clientFromJson(String str) {
   final jsonData = json.decode(str);
   return Client.fromMap(jsonData);
@@ -18,6 +20,7 @@ class Client {
   String time;
   int priority;
   int marker;
+  String icon;
   int passed;
   int deleted;
   bool done;
@@ -28,6 +31,7 @@ class Client {
 		this.description,
 		this.priority,
     this.marker,
+    this.icon,
 		this.date,
     this.time,
     this.passed,
@@ -41,6 +45,7 @@ class Client {
         description: json["description"],
         priority: json["priority"],
         marker: json["marker"],
+        icon: json["icon"],
         date: json["date"],
         time: json["time"],
         passed: json["passed"],
@@ -55,6 +60,7 @@ class Client {
         "description": description,
         "priority": priority,
         "marker": marker,
+        "icon": icon,
         "date": date,
         "time": time,
         "passed": passed,
@@ -141,3 +147,61 @@ class Marker {
       };
 }
 
+// class Note {
+//   int id;
+//   String content;
+//   DateTime date_last_edited;
+//   int is_archived = 0;
+
+
+//   Note({ this.id, this.content, this.is_archived, this.date_last_edited });
+
+//   Map<String, dynamic> toMap() => {
+//         "id": id,
+//         'content': utf8.encode( content ),
+//         'is_archived': is_archived,
+//         'date_last_edited': epochFromDate( date_last_edited ),
+//         'is_archived': is_archived
+//       };
+
+// // Преобразование даты и времени в секунды типа int
+//     epochFromDate(DateTime dt) {  
+//         return dt.millisecondsSinceEpoch ~/ 1000;
+//          }
+// }
+
+class Note {
+  int id;
+  String content;
+  DateTime date_last_edited;
+  int is_archived;
+  int color;
+
+  Note({
+    this.id, 
+    this.content, 
+    this.is_archived, 
+    this.date_last_edited,
+    this.color
+  });
+
+  factory Note.fromMap(Map<String, dynamic> json) => new Note(
+        id: json["id"],
+        content: json["content"],
+        is_archived: json["is_archived"],
+        date_last_edited: DateTime.fromMillisecondsSinceEpoch(json["date_last_edited"]),
+        color: json["color"],
+      );
+      
+  Map<String, dynamic> toMap() => {
+        "id": id,
+        'content': content,
+        'is_archived': is_archived,
+        'date_last_edited': epochFromDate( date_last_edited ),
+        'color': color,
+      };
+
+      epochFromDate(DateTime dt) {  
+        return dt.millisecondsSinceEpoch ~/ 1000;
+         }
+}

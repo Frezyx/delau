@@ -7,6 +7,9 @@ Widget bannerOne(SharedPreferences prefs) {
 
   prefs.setBool('banner', false); 
   DBUserProvider.dbc.firstCreateTable();// Меняем значение на false
+  DBNoteProvider.db.firstCreateTable().then((res){
+    print(res.toString()+"Это id из Заметок");
+  });
   DBMarkerProvider.db.firstCreateTable().then((res){
     print(res.toString()+"Это из Маркера");
   });

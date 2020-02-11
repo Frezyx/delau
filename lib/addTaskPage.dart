@@ -411,11 +411,13 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
             new RaisedButton(onPressed: (){
               if(_formKey.currentState.validate()){
                 if(_name != null && _surname != null){
-    
+
+              if(selected_radio <= 7){
                   Client now_client = new Client(
                         title: _name,
                         description: _surname,
                         marker: selected_radio,
+                        icon:  "none",
                         priority: rating.round(),
                         date: _date.toString(),
                         time: _time.toString(),
@@ -423,6 +425,7 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                         passed: 1,
                         done: false
                       );
+
                   DBProvider.db.newClient(now_client).then((id){
                         check().then((intenet) {
                           if (intenet != null && intenet && registration) {
@@ -438,8 +441,41 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                           // No-Internet Case
                         });
                   });
+                }
+                else{
+                  DBMarkerProvider.db.getMarkById(selected_radio-7).then((iconData){
+                  Client now_client = new Client(
+                        title: _name,
+                        description: _surname,
+                        marker: selected_radio,
+                        icon:  iconData,
+                        priority: rating.round(),
+                        date: _date.toString(),
+                        time: _time.toString(),
+                        deleted: 0,
+                        passed: 1,
+                        done: false
+                      );
+
+                  DBProvider.db.newClient(now_client).then((id){
+                        check().then((intenet) {
+                          if (intenet != null && intenet && registration) {
+                            DBUserProvider.dbc.getUserId().then((userIdServer){
+                              httpGetWithAllert("https://delau.000webhostapp.com/flutter/addTask.php?header="+
+                              _name+"&body="+_surname+"&date="+_date.toString()+"&time="+
+                              _time.toString()+"&marker="+(selected_radio).toString()+"&paginator="+
+                              rating.round().toString()+"&user_id="+userIdServer.toString()+
+                              "&fromMobile=1&mobile_id="+id.toString());
+                            });
+                            // Internet Present Case
+                          }
+                          // No-Internet Case
+                        });
+                  });
+                });
+              }
+
                   counter();
-                        
                   _firebaseMessaging.getToken().then((token){
                     httpGet("https://delau.000webhostapp.com/flutter/addNotif.php?token="+token+"&date="+_date.toString()+"&time="+_time.toString());
                   });
@@ -518,5 +554,13 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                                 void counter() async{
                                             await DBUserProvider.dbc.updateCount( );
                                 }
+      getIcon(int i){
+        IconData iconData;
+        print((i-7).toString() + " Чет говно");
+        DBMarkerProvider.db.getMarkById(i-7).then((icon){
+           iconData = MdiIcons.fromString('$icon');
+        });
+        return iconData;
+    }
                               
 }

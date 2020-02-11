@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:delau/oneNote.dart';
 import 'package:delau/pages/iconDrag.dart';
 import 'package:delau/ratingPage.dart';
 import 'package:delau/utils/ttsHelper.dart';
@@ -28,6 +29,7 @@ import 'package:delau/pages/tts.dart';
 import 'package:delau/pages/addMarker.dart';
 import 'package:delau/pages/userSettings.dart';
 import 'package:delau/utils/fcm.dart';
+import 'package:delau/notes.dart';
 import 'package:delau/reg.dart';
 import 'package:delau/autoriz.dart';
 import 'package:delau/utils/synchroneHelper.dart';
@@ -70,6 +72,8 @@ class MyApp extends StatelessWidget {
       '/update':(BuildContext context) => UpdatePage(),
       '/rating':(BuildContext context) => RatingPage(),
       '/icon':(BuildContext context) => IconDrag(),
+      '/notes':(BuildContext context) => Example01(),
+      '/note':(BuildContext context) => NotePage(),
       // '/services':(BuildContext context) => Services(),
     },
     onGenerateRoute: (RouteSettings){
@@ -86,6 +90,11 @@ class MyApp extends StatelessWidget {
       
         if(path[1] == 'addMark'){
           return new MaterialPageRoute(builder: (context) => new AddMarkerPage(id:path[2], icon:path[3]),
+          settings: RouteSettings);
+        }
+
+        if(path[1] == 'note'){
+          return new MaterialPageRoute(builder: (context) => new NotePage(id:path[2]),
           settings: RouteSettings);
         }
 
@@ -461,7 +470,7 @@ int userIdServer;
                   },
                   child: ListTile(
                     leading: Icon(
-                    (item.marker <= 5) ? i_add[item.marker] : MdiIcons.fromString('plus'),
+                    (item.marker <= 5) ? i_add[item.marker] : MdiIcons.fromString('${item.icon}'),
                     color: Color.fromRGBO(114, 103, 239, 1),
                     size: 28.0,
                   ),
@@ -524,6 +533,9 @@ int userIdServer;
     onTap: (index) {
       if(index == 0){
         Navigator.pushNamed(context, '/');
+      }
+      if(index == 1){
+        Navigator.pushNamed(context, '/notes');
       }
       if(index == 2){
         Navigator.pushNamed(context, '/second');

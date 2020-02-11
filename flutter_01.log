@@ -1,0 +1,66 @@
+Flutter crash report; please file at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter run --machine --target lib\main.dart -d dauoor6t5sugswrc --track-widget-creation --start-paused
+
+## exception
+
+StateError: Bad state: Stream is already closed
+
+```
+#0      _SinkTransformerStreamSubscription._add (dart:async/stream_transformers.dart:68:7)
+#1      _EventSinkWrapper.add (dart:async/stream_transformers.dart:17:11)
+#2      _throttle.<anonymous closure>.<anonymous closure> (package:flutter_tools/src/protocol_discovery.dart:232:18)
+#3      _rootRun (dart:async/zone.dart:1122:38)
+#4      _CustomZone.run (dart:async/zone.dart:1023:19)
+#5      _FutureListener.handleWhenComplete (dart:async/future_impl.dart:163:18)
+#6      Future._propagateToListeners.handleWhenCompleteCallback (dart:async/future_impl.dart:650:39)
+#7      Future._propagateToListeners (dart:async/future_impl.dart:706:37)
+#8      Future._complete (dart:async/future_impl.dart:514:7)
+#9      new Future.delayed.<anonymous closure> (dart:async/future.dart:313:16)
+#10     _rootRun (dart:async/zone.dart:1122:38)
+#11     _CustomZone.run (dart:async/zone.dart:1023:19)
+#12     _CustomZone.runGuarded (dart:async/zone.dart:925:7)
+#13     _CustomZone.bindCallbackGuarded.<anonymous closure> (dart:async/zone.dart:965:23)
+#14     _rootRun (dart:async/zone.dart:1126:13)
+#15     _CustomZone.run (dart:async/zone.dart:1023:19)
+#16     _CustomZone.bindCallback.<anonymous closure> (dart:async/zone.dart:949:23)
+#17     Timer._createTimer.<anonymous closure> (dart:async-patch/timer_patch.dart:23:15)
+#18     _Timer._runTimers (dart:isolate-patch/timer_impl.dart:384:19)
+#19     _Timer._handleMessage (dart:isolate-patch/timer_impl.dart:418:5)
+#20     _RawReceivePortImpl._handleMessage (dart:isolate-patch/isolate_patch.dart:174:12)
+```
+
+## flutter doctor
+
+```
+[✓] Flutter (Channel stable, v1.12.13+hotfix.7, on Microsoft Windows [Version 10.0.18363.592], locale ru-RU)
+    • Flutter version 1.12.13+hotfix.7 at C:\Users\FREZY\Desktop\flutter
+    • Framework revision 9f5ff2306b (2 weeks ago), 2020-01-26 22:38:26 -0800
+    • Engine revision a67792536c
+    • Dart version 2.7.0
+
+[✓] Android toolchain - develop for Android devices (Android SDK version 29.0.2)
+    • Android SDK at C:\Users\FREZY\AppData\Local\Android\sdk
+    • Android NDK location not configured (optional; useful for native profiling support)
+    • Platform android-29, build-tools 29.0.2
+    • Java binary at: C:\Program Files\Android\Android Studio\jre\bin\java
+    • Java version OpenJDK Runtime Environment (build 1.8.0_202-release-1483-b03)
+    • All Android licenses accepted.
+
+[✓] Android Studio (version 3.5)
+    • Android Studio at C:\Program Files\Android\Android Studio
+    • Flutter plugin version 42.1.1
+    • Dart plugin version 191.8593
+    • Java version OpenJDK Runtime Environment (build 1.8.0_202-release-1483-b03)
+
+[✓] VS Code (version 1.42.0)
+    • VS Code at C:\Users\FREZY\AppData\Local\Programs\Microsoft VS Code
+    • Flutter extension version 3.8.1
+
+[✓] Connected device (1 available)
+    • Redmi Note 8 Pro • dauoor6t5sugswrc • android-arm64 • Android 9 (API 28)
+
+• No issues found!
+```
