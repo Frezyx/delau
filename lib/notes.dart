@@ -7,17 +7,94 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flushbar/flushbar.dart';
+import 'package:speech_recognition/speech_recognition.dart';
 
 class Example01 extends StatefulWidget {
+  
   @override
   _Example01State createState() => _Example01State();
 }
 
 class _Example01State extends State<Example01> {
   ScrollController scrollController;
+  String searchText;
   bool dialVisible = true;
+  bool isSaerching = false;
+  SpeechRecognition _speechRecognition;
+  bool _isAvailable = false;
+  bool _isListening = false;
+  bool sender = true;
+  String id;
+  
+  String resultText = "";
+  // bool isNewRouteSameAsCurrent = false;
+  
+  //   exitPage(){
+  //   Navigator.popUntil(context, (route) {
+  //     if (route.settings.name == "/notes") {
+  //       isNewRouteSameAsCurrent = true;
+  //     }
+  //     // return true;
+  //   });
+  // }
+  postNote(text){
+                  if(!sender){
+                    print("First text field: $text");
+                    DBNoteProvider.db.updateNote(text, int.parse(id)).then((res){
+                      print(res.toString() + "Обновил");
+                    });
+                  }
+                  if(sender){
+                    DBNoteProvider.db.addNote(text).then((res){
+                      setSender();
+                      id = res.toString();
+                      print(res.toString() + "Добавил");
+                    });
+                  }
+                  else{
+                    print("Дурак");
+                  }
+  }
 
-                bool lastStatus = true;
+    void setSender() {
+      setState(() {
+        sender = false;
+      });
+    }
+
+    startRecognition(){
+      _speechRecognition.listen(locale: "ru_RU")
+        .then((result){ 
+          print('$result');
+          postNote(result);
+        });
+      _isListening = true;
+    }
+
+    void initSpeechRecognizer() {
+    _speechRecognition = SpeechRecognition();
+
+    _speechRecognition.setAvailabilityHandler(
+      (bool result) => setState(() => _isAvailable = result),
+    );
+
+    _speechRecognition.setRecognitionStartedHandler(
+      () => setState(() => _isListening = true),
+    );
+
+    _speechRecognition.setRecognitionResultHandler(
+      (String speech) => setState(() => resultText = speech),
+    );
+
+    _speechRecognition.setRecognitionCompleteHandler(
+      () => setState(() => _isListening = false),
+    );
+
+    _speechRecognition.activate().then(
+          (result) => setState(() => _isAvailable = result),
+        );
+  }
+              bool lastStatus = true;
 
               scrollListener() {
                 if (isShrink != lastStatus) {
@@ -31,17 +108,27 @@ class _Example01State extends State<Example01> {
                 return scrollController.hasClients &&
                     scrollController.offset > (200 - kToolbarHeight);
               }
-
+  void startSearch(String text){
+    setState(() {
+      isSaerching = true;
+      searchText = text;
+      print("Слушатель ответил:"+isSaerching.toString()+"Выслушал текст:"+searchText);
+    });
+  }
 
   @override
     void initState(){
-      super.initState();
-
+    super.initState();
+    initSpeechRecognizer();
     scrollController = ScrollController()
       ..addListener(() {
         setDialVisible(scrollController.position.userScrollDirection ==
             ScrollDirection.forward);
       });
+      DBNoteProvider.db.recoverNotes();
+      // exitPage().then((){
+      //   print(isNewRouteSameAsCurrent.toString()+" Я на странице route ?");
+      // });
     }
 
   void setDialVisible(bool value) {
@@ -50,6 +137,7 @@ class _Example01State extends State<Example01> {
         print("$value");
       });
     }
+    
 
   // getGrid(){
   //   return new _Example01Tile(Colors.brown, 'Icons.map');
@@ -86,7 +174,9 @@ class _Example01State extends State<Example01> {
                 ),
                 child: 
                 TextFormField(
-                        
+                        onChanged: (text) {
+                          startSearch(text);
+                        },
                           style: TextStyle(
                             fontFamily: 'WorkSans',
                             fontWeight: FontWeight.bold,
@@ -146,7 +236,7 @@ class _Example01State extends State<Example01> {
               padding: EdgeInsets.only(right: 20, left: 20,),
               child:
                 FutureBuilder<List<Note>>(
-                future: DBNoteProvider.db.getAllNotes(),
+                future: isSaerching ? DBNoteProvider.db.getAllNotesSearch(searchText) : DBNoteProvider.db.getAllNotes(),
                 builder:
                 (BuildContext context, AsyncSnapshot<List<Note>> snapshot) {
                 if (snapshot.hasData) 
@@ -329,9 +419,22 @@ class _Example01State extends State<Example01> {
                   // label: 'Third',
                   // labelStyle: TextStyle(fontSize: 18.0),
                   onTap: (){
-                    DBNoteProvider.db.addNoteInit().then((y){
-                      setState(() {});
-                    });
+                    if (_isAvailable && !_isListening){
+                        startRecognition();
+                      }
+                      else{
+                        print("Говно");
+                        _speechRecognition.cancel().then(
+                            (result) => setState(() {
+                                  _isListening = result;
+                                  resultText = "";
+                                  startRecognition();
+                                }),
+                          );
+                      }
+                    // DBNoteProvider.db.addNoteInit().then((y){
+                    //   setState(() {});
+                    // });
                     //  setState(() {});
                     // Navigator.pushNamed(context, '/notes');
                   },
@@ -342,30 +445,9 @@ class _Example01State extends State<Example01> {
                   // label: 'Third',
                   // labelStyle: TextStyle(fontSize: 18.0),
                   onTap: (){
-                  Flushbar(
-                    // title:  "Hey Ninja",
-                    // shape: ContinuousRectangleBorder(
-                    // borderRadius: BorderRadius.only(
-                    //     bottomRight: Radius.circular(100),
-                    //     // bottomRight: Radius.circular(30)
-                    //     ),
-                    // ),
-                    backgroundColor: Color.fromRGBO(114, 103, 239, 1),
-                    // margin: EdgeInsets.all(8),
-                    // borderRadius: 8,
-                    flushbarPosition: FlushbarPosition.TOP,
-                    message:  "Чтоб удалить выбранные заметки нажмите на иконку в всплывшем окне",
-                    mainButton: FlatButton(
-                      onPressed: () {
-
-                      },
-                      child: Icon(
-                        Icons.delete,
-                        color: Colors.white,
-                      )
-                    ),
-                    // duration:  Duration(seconds: 3),              
-                  )..show(context);
+                    DBNoteProvider.db.addNoteInit().then((y){
+                      setState(() {});
+                    });
                   },
                 ),
               ],
@@ -386,7 +468,7 @@ class _Example01State extends State<Example01> {
   int getGridWidth(String content){
     var width = 1;
     var charCount = content.length;
-    if (charCount > 15 ) { width = 2; }
+    if (charCount > 3 ) { width = 2; }
     else if (charCount > 80) {  width = 2;  }
     else if (charCount > 50) {  width = 1;  }
     else if (charCount > 20) {  width = 1;  }

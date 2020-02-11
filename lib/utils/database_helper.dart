@@ -650,9 +650,21 @@ class DBNoteProvider {
     List<Note> list =
         res.isNotEmpty ? res.map((c) => Note.fromMap(c)).toList() : [];
         for (int i = 0; i <list.length; i++){
-          print(i.toString() + list[i].is_archived.toString());
+          // print(i.toString() + list[i].is_archived.toString());
         }
     // print(list.length.toString() + "Кол-во ссаных заметок");
+    return list;
+  }
+
+    Future<List<Note>> getAllNotesSearch(String text) async {
+    final db = await database;
+    var res = await db.query("Notes", where: "is_archived = ? AND content LIKE ?", whereArgs: [0, "%$text%"], orderBy: "date_last_edited DESC");
+    List<Note> list =
+        res.isNotEmpty ? res.map((c) => Note.fromMap(c)).toList() : [];
+        for (int i = 0; i <list.length; i++){
+          // print(i.toString() + list[i].is_archived.toString());
+        }
+    print(list.length.toString() + "Кол-во ссаных заметок");
     return list;
   }
 
