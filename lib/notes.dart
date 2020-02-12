@@ -66,7 +66,7 @@ class _Example01State extends State<Example01> {
       _speechRecognition.listen(locale: "ru_RU")
         .then((result){ 
           print('$result');
-          postNote(result);
+            // postNote(resultText);
         });
       _isListening = true;
     }
@@ -83,7 +83,7 @@ class _Example01State extends State<Example01> {
     );
 
     _speechRecognition.setRecognitionResultHandler(
-      (String speech) => setState(() => resultText = speech),
+      (String speech) => setState(() => postNote(speech)),
     );
 
     _speechRecognition.setRecognitionCompleteHandler(
@@ -233,7 +233,7 @@ class _Example01State extends State<Example01> {
           SliverFillRemaining(
             child: 
               Padding(
-              padding: EdgeInsets.only(right: 20, left: 20,),
+              padding: EdgeInsets.only(right: 0, left: 0,),
               child:
                 FutureBuilder<List<Note>>(
                 future: isSaerching ? DBNoteProvider.db.getAllNotesSearch(searchText) : DBNoteProvider.db.getAllNotes(),
@@ -243,7 +243,9 @@ class _Example01State extends State<Example01> {
                   {
                     return StaggeredGridView.countBuilder(
                       controller: scrollController,
-                      padding: const EdgeInsets.all(4.0),
+                      padding: const EdgeInsets.all(7.0),
+                      mainAxisSpacing: 7,
+                      crossAxisSpacing: 7,
                       crossAxisCount: 4,
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, i){
@@ -459,29 +461,40 @@ class _Example01State extends State<Example01> {
   int getGridHeigth(String content){
     var height = 1;
     var charCount = content.length;
-    if (charCount > 110 ) { height = 2; }
-    else if (charCount > 80) {  height = 2;  }
-    else if (charCount > 50) {  height = 1;  }
-    else if (charCount > 20) {  height = 1;  }
+    if (charCount > 80) {  height = 2;  }
+    else if (charCount <= 80) {  height = 1;  }
     return height;
   }
   int getGridWidth(String content){
     var width = 1;
     var charCount = content.length;
     if (charCount > 3 ) { width = 2; }
-    else if (charCount > 80) {  width = 2;  }
-    else if (charCount > 50) {  width = 1;  }
-    else if (charCount > 20) {  width = 1;  }
+    // else if (charCount > 600) {  width = 3;  }
+    // else if (charCount > 50) {  width = 1;  }
+    // else if (charCount > 20) {  width = 1;  }
     return width;
+  }
+
+  _cropText(String text){
+    // var textSize = _determineFontSizeForContent(text);
+    int charCount = text.length ;
+    String resText = text;
+    if(charCount > 170){resText = text.substring(0, 170)+"...";}
+    else if(charCount > 130){resText = text.substring(0, 130)+"...";}
+    else if(charCount > 70){resText = text.substring(0, 70)+"...";}
+    else if(charCount > 50){resText = text.substring(0, 50)+"...";}
+    else if(charCount > 25){resText = text.substring(0, 25)+"...";}
+    // else if(charCount > 30){resText = text.substring(0, 30);}
+    return resText;
   }
 
   double _determineFontSizeForContent(content) {
     int charCount = content.length ;
     double fontSize = 20 ;
     if (charCount > 150 ) { fontSize = 12; }
-    else if (charCount > 80) {  fontSize = 14;  }
+    else if (charCount > 70) {  fontSize = 14;  }
     else if (charCount > 50) {  fontSize = 16;  }
-    else if (charCount > 20) {  fontSize = 18;  }
+    else if (charCount > 10) {  fontSize = 18;  }
     return fontSize;
   }
 
@@ -599,7 +612,8 @@ class __Example01TileState extends State<_Example01Tile> {
           child: new Padding(
             padding: const EdgeInsets.all(15.0),
             child: Text(
-              widget.content,
+              _cropText(widget.content),
+              
               // widget.content,
               style: TextStyle(
                 color: cliced? Colors.black : Colors.black54,

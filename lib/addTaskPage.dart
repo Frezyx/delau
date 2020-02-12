@@ -496,19 +496,6 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
     
           ],
          ),),),
-    
-                // floatingActionButton: FloatingActionButton(
-                //   heroTag: "btn_num_1_12_234555",
-                //   onPressed: () {
-                //           askPermision();
-                //             if(_isAvailable && ! _isListerning)
-                //             {
-                //               _speechRecognition.listen(locale: "ru_RU").then((result) => print("aaaaa"));
-                //             }
-                //           },
-                                          //   child: Icon(Icons.record_voice_over),
-                                          //   backgroundColor: Color.fromRGBO(114, 103, 239, 1),
-                                          // ),
                               
                                           floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
                                                 bottomNavigationBar: CurvedNavigationBar(
