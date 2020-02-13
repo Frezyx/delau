@@ -416,7 +416,7 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                   Client now_client = new Client(
                         title: _name,
                         description: _surname,
-                        marker: selected_radio,
+                        marker: selected_radio - 1,
                         icon:  "none",
                         priority: rating.round(),
                         date: _date.toString(),
@@ -517,6 +517,9 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                                           onTap: (index) {
                                             if(index == 0){
                                               Navigator.pushNamed(context, '/');
+                                            }
+                                            if(index == 1){
+                                              Navigator.pushNamed(context, '/notes');
                                             }
                                             if(index == 2){
                                               Navigator.pushNamed(context, '/second');

@@ -3,6 +3,25 @@ import 'package:flutter/material.dart';
 import 'main.dart';
 import 'models/dbModels.dart';
 
+class StarDisplayWidget extends StatelessWidget {
+  final int value;
+  const StarDisplayWidget({Key key, this.value = 0})
+      : assert(value != null),
+        super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: List.generate(5, (index) {
+        return Icon(
+          index < value ? Icons.star : Icons.star_border,
+          color: index < value ? Colors.yellow : Colors.black12,
+          size: 20.0,
+        );
+      }),
+    );
+  }
+}
 
 //КАРТОЧКА НА ГЛАВНОЙ СТРАНИЦЕ
 Widget getCardInfo(int i, List<IconData> i_add, List<String>slider_titles){

@@ -1,18 +1,14 @@
+import 'dart:async';
 import 'dart:convert';
 
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:delau/utils/ttsHelper.dart';
-import 'package:flutter/material.dart';
-import 'widgets_helper.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:flutter/material.dart';
-import 'package:delau/models/dbModels.dart';
-import 'package:delau/utils/database_helper.dart';
-import 'package:delau/pages/userSettings.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'dart:math' as math;
+import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:delau/utils/database_helper.dart';
+import 'package:delau/widget/noRegister.dart';
 
 
 class RatingPage extends StatefulWidget {
@@ -21,6 +17,33 @@ class RatingPage extends StatefulWidget {
 }
 
 class _RatingPageState extends State<RatingPage> {
+
+Timer _timer;
+int _start = 12;
+bool killPreload = false;
+
+// void startTimer() {
+//   const oneSec = const Duration(seconds: 1);
+//   _timer = new Timer.periodic(
+//     oneSec,
+//     (Timer timer) => setState(
+//       () {
+//         if (_start < 1) {
+//           killPreload = true;
+//           timer.cancel();
+//         } else {
+//           _start = _start - 1;
+//         }
+//       },
+//     ),
+//   );
+// }
+
+@override
+void dispose() {
+  _timer.cancel();
+  super.dispose();
+}
 
 var countTask =  DBProvider.db.getContNow();
 bool registration = false;
@@ -34,6 +57,7 @@ bool registration = false;
         registration = (res.reg == 1);
         print(registration);
       });
+      // startTimer();
     }
 
   @override
@@ -53,54 +77,46 @@ bool registration = false;
           future: fetchPosts(http.Client(), "https://delau.000webhostapp.com/flutter/getAllUsers.php"),
           builder:
           (BuildContext context, AsyncSnapshot<List<UserModel>> snapshot) {
+            switch (snapshot.connectionState) {
+                        case ConnectionState.waiting: return new Center(child: CircularProgressIndicator());
+                        default:
             if (registration && snapshot.hasData) 
             {
-            return ListView.builder(
-              padding: const EdgeInsets.only(bottom: 0.0, top: 10.0, right: 0.0, left:0.0),
-              itemCount: snapshot.data.length,
-              itemBuilder: (BuildContext context, int index) {
-                UserModel item = snapshot.data[index];
-                return ListTile(
-                    leading:
-                    Container(
-                      margin: new EdgeInsets.all(5.0),
-                      child: new Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          new Container(
-                            height: 37.0,
-                            width: 37.0,
-                            child: new Center(
-                              child: new Text(
-                                "${index + 1}",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(114, 103, 239, 1)
-                                ),
-                                ),
-                                      //fontWeight: FontWeight.bold,
+              return ListView.builder(
+                padding: const EdgeInsets.only(bottom: 0.0, top: 10.0, right: 0.0, left:0.0),
+                itemCount: snapshot.data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  UserModel item = snapshot.data[index];
+                  return ListTile(
+                      leading:
+                      Container(
+                        margin: new EdgeInsets.all(5.0),
+                        child: new Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            new Container(
+                              height: 37.0,
+                              width: 37.0,
+                              child: new Center(
+                                child: new Text(
+                                  "${index + 1}",
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(114, 103, 239, 1)
+                                  ),
+                                  ),
+                                        //fontWeight: FontWeight.bold,
+                              ),
+                              decoration: new BoxDecoration(
+                                color: Colors.transparent,
+                                border: new Border.all(
+                                    width: 1.0,
+                                    color: Color.fromRGBO(114, 103, 239, 1)),
+                                borderRadius: const BorderRadius.all(const Radius.circular(20.0)),
+                              ),
                             ),
-                            decoration: new BoxDecoration(
-                              color: Colors.transparent,
-                              border: new Border.all(
-                                  width: 1.0,
-                                  color: Color.fromRGBO(114, 103, 239, 1)),
-                              borderRadius: const BorderRadius.all(const Radius.circular(20.0)),
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    // Padding(
-                    //   padding: EdgeInsets.all(4),
-                    //   child: Text(
-                    //   (index + 1).toString()
-                    // ),
-                    // ),
-                  //    Icon(
-                  //   Icons.people,
-                  //   color: Color.fromRGBO(114, 103, 239, 1),
-                  //   size: 28.0,
-                  // ),
                     title: Text('${item.name} ${item.surname}',
                     style: TextStyle(fontSize: 18.0, fontFamily: 'Exo 2', fontWeight: FontWeight.w300,),
                     overflow: TextOverflow.ellipsis,
@@ -113,15 +129,17 @@ bool registration = false;
                   );
               },
             );
-
           } 
-          
           else 
-          {
-            return Center(child: CircularProgressIndicator());
-          }
+              return NoRegister();
+            
+          // else if(!registration)
+          // {
+          //   return NoRegister();
+          // }
 
-        },
+        }
+      },
       ),
       ), 
         ),
@@ -149,6 +167,9 @@ bool registration = false;
     onTap: (index) {
       if(index == 0){
         Navigator.pushNamed(context, '/');
+      }
+      if(index == 1){
+        Navigator.pushNamed(context, '/notes');
       }
       if(index == 2){
         Navigator.pushNamed(context, '/second');

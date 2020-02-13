@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:delau/oneNote.dart';
 import 'package:delau/pages/iconDrag.dart';
 import 'package:delau/ratingPage.dart';
+import 'package:delau/tryUserPage.dart';
 import 'package:delau/utils/ttsHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -63,7 +64,7 @@ class MyApp extends StatelessWidget {
       '/second':(BuildContext context) => MyStatefulWidget3(),
       '/ntf':(BuildContext context) => LocalNotificationWidget(),
       '/new':(BuildContext context) => MP(),
-      '/user':(BuildContext context) => User(),
+      '/user':(BuildContext context) => UPN(),
       '/tts':(BuildContext context) => TTS(),
       '/fcm':(BuildContext context) => FCMPage(),
       '/reg':(BuildContext context) => RegistrationPage(),
@@ -74,6 +75,7 @@ class MyApp extends StatelessWidget {
       '/icon':(BuildContext context) => IconDrag(),
       '/notes':(BuildContext context) => Example01(),
       '/note':(BuildContext context) => NotePage(),
+      // '/try':(BuildContext context) => UPN(),
       // '/services':(BuildContext context) => Services(),
     },
     onGenerateRoute: (RouteSettings){

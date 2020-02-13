@@ -75,13 +75,13 @@ class _UserState extends State<User> {
 
           registration ? userData(item.name, item.surname, context) : getLoginButton(context, linearGradient),
 
-              Divider(height: 15),
           Align(
             alignment: Alignment.centerLeft,
             child:              
           Padding(
             padding: EdgeInsets.only( left: 45.0),
-            child: Row(children: <Widget>[
+            child:
+             Row(children: <Widget>[
              new FloatingActionButton(
               mini: true,
               heroTag: "btn_inslider_numberlsldsdlskdlsd",
@@ -118,7 +118,7 @@ class _UserState extends State<User> {
                   child: Icon(Icons.add,
                   size: 20,),
                 ),
-              ), 
+              ), onPressed: () {}, 
             ),
                       Padding(
             padding: EdgeInsets.only( left: 10.0),
@@ -173,7 +173,7 @@ class _UserState extends State<User> {
                   child: Icon(FontAwesome.check,
                   size: 20,),
                 ),
-              ), 
+              ), onPressed: () {}, 
             ),
                       Padding(
             padding: EdgeInsets.only( left: 10.0),
@@ -227,7 +227,7 @@ class _UserState extends State<User> {
                   child: Icon(FontAwesome.thumbs_up,
                   size: 20,),
                 ),
-              ), 
+              ), onPressed: () {}, 
             ),
                       Padding(
             padding: EdgeInsets.only( left: 10.0),
@@ -265,18 +265,21 @@ class _UserState extends State<User> {
         index: 4,
         animationCurve: Curves.bounceInOut,
         onTap: (index) {
-          if(index == 0){
-            Navigator.pushNamed(context, '/');
-          }
-          if(index == 2){
-            Navigator.pushNamed(context, '/second');
-          }
-          if(index == 3){
-            Navigator.pushNamed(context, '/rating');
-          }
-          if(index == 4){
-            Navigator.pushNamed(context, '/user');
-          }
+            if(index == 0){
+              Navigator.pushNamed(context, '/');
+            }
+            if(index == 1){
+              Navigator.pushNamed(context, '/notes');
+            }
+            if(index == 2){
+              Navigator.pushNamed(context, '/second');
+            }
+            if(index == 3){
+              Navigator.pushNamed(context, '/rating');
+            }
+            if(index == 4){
+              Navigator.pushNamed(context, '/user');
+            }
         }
       ),
       );
@@ -310,74 +313,12 @@ Widget userData(String name, String surname, context){
 
 Widget getLoginButton(context, linearGradient){
   return  
-  // RaisedButton(
-  //                 child:
-  //             Container(
-  //               decoration:  new BoxDecoration(
-  //               boxShadow:<BoxShadow>[
-  //                     BoxShadow(
-  //                       color: Color.fromRGBO(71, 9, 150, 0.17),
-  //                       offset: Offset(0.0, 4.0),
-  //                       blurRadius: 15.0,
-  //                     ),
-  //                   ],
-  //               gradient: new LinearGradient(
-  //                     colors: [
-  //                     Color.fromRGBO(162, 122, 246, 1),
-  //                     Color.fromRGBO(114, 103, 239, 1),
-  //                     // Color.fromRGBO(81, 20, 219, 1),
-  //                     // Color.fromRGBO(31, 248, 169, 1),
-  //                     ],
-  //                   begin: Alignment.topRight,
-  //                   end: Alignment.bottomLeft,
-  //                   stops: [0.0,1.0],
-  //                   tileMode: TileMode.clamp
-  //                   ),
-  //                   // border: Border.all(
-  //                   //       color: Colors.transparent,
-  //                   //       width: 0,
-  //                   //     ),
-  //                   //     borderRadius: BorderRadius.circular(50),
-
-  //               ),
-  //               child: 
-  //                 Text('Зарегистрироваться', style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 24.0, fontWeight: FontWeight.w900,),),
-  //             ), 
-  //           // child: Text('Зарегистрироваться', style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 24.0, fontWeight: FontWeight.w900,),),
-  //           color: Color.fromRGBO(114, 103, 239, 1), textColor: Colors.white,
-  //           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-  //           onPressed: () {},
-  //         );
-  // Center(
-  //   child:
-  // RaisedGradientButton(
-  // child: Text(
-  //   'Button',
-  //   style: TextStyle(color: Colors.white),
-  // ),
-  // gradient: LinearGradient(
-  //   colors: <Color>[Colors.green, Colors.black],
-  // ),
-  // onPressed: (){
-  //   print('button clicked');
-  // }
-  // ),
-  // ); 
   Column(
     children: <Widget>[
       Padding(
     padding: EdgeInsets.only(right: 45.0, left: 45.0),
     child:
 Container(
-      // decoration: const BoxDecoration(
-      // boxShadow:<BoxShadow>[
-      //                 BoxShadow(
-      //                   color: Color.fromRGBO(71, 9, 150, 0.2),
-      //                   offset: Offset(0.0, 4.0),
-      //                   blurRadius: 7.0,
-      //                 ),
-      //               ],
-      // ),
   child:
   RaisedButton(
   onPressed: () {

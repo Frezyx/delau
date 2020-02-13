@@ -7,6 +7,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flushbar/flushbar.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:speech_recognition/speech_recognition.dart';
 
 class Example01 extends StatefulWidget {
@@ -16,6 +17,7 @@ class Example01 extends StatefulWidget {
 }
 
 class _Example01State extends State<Example01> {
+  PermissionStatus _permissionStatus;
   ScrollController scrollController;
   String searchText;
   bool dialVisible = true;
@@ -83,7 +85,7 @@ class _Example01State extends State<Example01> {
     );
 
     _speechRecognition.setRecognitionResultHandler(
-      (String speech) => setState(() => postNote(speech)),
+      (String speech) => setState(() => speech != "" ? postNote(speech) : resultText = speech),
     );
 
     _speechRecognition.setRecognitionCompleteHandler(
@@ -119,6 +121,7 @@ class _Example01State extends State<Example01> {
   @override
     void initState(){
     super.initState();
+    PermissionHandler().checkPermissionStatus(PermissionGroup.microphone).then(_updateStatus);
     initSpeechRecognizer();
     scrollController = ScrollController()
       ..addListener(() {
@@ -131,12 +134,29 @@ class _Example01State extends State<Example01> {
       // });
     }
 
+    void _updateStatus(PermissionStatus status){
+      if(_permissionStatus != status){
+        setState(() {
+          _permissionStatus = status;
+        });
+      }
+    }
+
   void setDialVisible(bool value) {
       setState(() {
         dialVisible = value;
         print("$value");
       });
     }
+
+  void askPermision(){
+    PermissionHandler().requestPermissions([PermissionGroup.microphone]).then(_onStatusRequested);
+  }
+
+  void _onStatusRequested(Map<PermissionGroup, PermissionStatus> statuses){
+    final status = statuses[PermissionGroup.microphone];
+    _updateStatus(status);
+  }
     
 
   // getGrid(){
@@ -146,24 +166,11 @@ class _Example01State extends State<Example01> {
   Widget build(BuildContext context) {
       // DBNoteProvider.db.getAllNotes().then((note){
         return new Scaffold(
-
-        body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            pinned:true,
-            // shape: ContinuousRectangleBorder(
-            // borderRadius: BorderRadius.only(
-            //     bottomRight: Radius.circular(100),
-            //     // bottomRight: Radius.circular(30)
-            //     ),
-            // ),
-            
-            title: 
-            // Text("text sample",
-            //                     style: TextStyle(
-            //                       color: isShrink ? Colors.black : Colors.black,
-            //                       fontSize: 16.0,
-            //                     )),
+        appBar: AppBar(
+          backgroundColor: isShrink? Colors.white: Colors.transparent,
+          elevation: isShrink? 10:0,
+          automaticallyImplyLeading: false,
+          title: 
           Padding(
             padding: EdgeInsets.only(left: 20,right: 20),
             child: 
@@ -214,24 +221,8 @@ class _Example01State extends State<Example01> {
                         ),
               ),
           ),
-
-            backgroundColor: isShrink ? Colors.white : Colors.transparent,
-            automaticallyImplyLeading: false,
-            // pinned: false,
-            snap: false,
-            floating: false,
-            expandedHeight: 58.0,
-            flexibleSpace: FlexibleSpaceBar(
-              // title: Text("FlexibleSpace title"),
-              // background: Image.asset(
-              //   'res/images/material_design_3.png',
-              //   fit: BoxFit.fill,
-              // ),
-            ),
-          ),
-          // If the main content is a list, use SliverList instead.
-          SliverFillRemaining(
-            child: 
+        ),
+          body:
               Padding(
               padding: EdgeInsets.only(right: 0, left: 0,),
               child:
@@ -258,80 +249,9 @@ class _Example01State extends State<Example01> {
                 {
                   return Center(child: CircularProgressIndicator());
                 }
-                // }
-                // else{
-                //   return CircularProgressIndicator();
-                // }
                 }
               ),
             ),
-          ),
-        ],
-      ),
-      //         appBar: AppBar(
-      //           automaticallyImplyLeading: false,
-      //           backgroundColor: Colors.white,
-      //           // title: const Text('Заметки'),
-      //           actions: <Widget>[
-      //             IconButton(
-      //               icon: const Icon(
-      //                 Icons.delete,
-      //                 color: Color.fromRGBO(114, 103, 239, 1),
-      //               ),
-      //               tooltip: 'Show Snackbar',
-      //               onPressed: () {
-                      
-      //               },
-      //             ),
-      //             IconButton(
-      //               icon: const Icon(
-      //                 Icons.close,
-      //                 color: Color.fromRGBO(114, 103, 239, 1),
-      //                 ),
-      //               tooltip: 'Next page',
-      //               onPressed: () {
-      //       },
-      //     ),
-      //   ],
-      // ),
-        // body:
-        // Padding(padding: EdgeInsets.only(top:105),
-        // child:
-        //   FutureBuilder<List<Note>>(
-        //     future: DBNoteProvider.db.getAllNotes(),
-        //     builder:
-        //     (BuildContext context, AsyncSnapshot<List<Note>> snapshot) {
-        //     if (snapshot.hasData) 
-        //       {
-        //  return StaggeredGridView.countBuilder(
-        //       padding: const EdgeInsets.all(4.0),
-        //       crossAxisCount: 4,
-        //       itemCount: snapshot.data.length,
-        //       itemBuilder: (context, i){
-        //          return _Example01Tile(snapshot.data[i].color, snapshot.data[i].content, i);
-        //        },
-        //       staggeredTileBuilder: (int i) => 
-        //         StaggeredTile.count(getGridWidth(snapshot.data[i].content), getGridHeigth(snapshot.data[i].content)));
-        //       // child: new StaggeredGridView.count(
-        //       //   crossAxisCount: 4,
-        //       //   staggeredTiles: _staggeredTiles,
-        //       //   children: _tiles,
-        //       //   mainAxisSpacing: 4.0,
-        //       //   crossAxisSpacing: 4.0,
-        //       //   padding: const EdgeInsets.all(4.0),
-        //       // )            
-        //     }
-        //   else 
-        //   {
-        //     return Center(child: CircularProgressIndicator());
-        //   }
-        //     // }
-        //     // else{
-        //     //   return CircularProgressIndicator();
-        //     // }
-        //     }
-        //   ),
-        // ),
 
              bottomNavigationBar: CurvedNavigationBar(
               height: 50.0,
@@ -369,15 +289,6 @@ class _Example01State extends State<Example01> {
             ),
 
             floatingActionButton:
-            //  FloatingActionButton(
-            //   onPressed: () {
-            //     DBNoteProvider.db.addNoteInit().then((res){
-            //       print(res);
-            //     });
-            //   },
-            //   child: Icon(Icons.add),
-            //   backgroundColor: Color.fromRGBO(114, 103, 239, 1),
-            // ),
             SpeedDial(
               // both default to 16
               marginRight: 18,
@@ -421,6 +332,7 @@ class _Example01State extends State<Example01> {
                   // label: 'Third',
                   // labelStyle: TextStyle(fontSize: 18.0),
                   onTap: (){
+                    askPermision();
                     if (_isAvailable && !_isListening){
                         startRecognition();
                       }
@@ -602,10 +514,11 @@ class __Example01TileState extends State<_Example01Tile> {
           setClick();
         },
         onTap: () {
-          setFalseClick();
-          DBNoteProvider.db.updateColorFalse(widget.id, 0).then((res){
-            print(" Пробовал -->"+widget.id.toString()+" Получил ---> "+res.toString()+" На белый");
-          });
+          Navigator.pushNamed(context, '/note/${widget.id}');
+          // setFalseClick();
+          // DBNoteProvider.db.updateColorFalse(widget.id, 0).then((res){
+          //   print(" Пробовал -->"+widget.id.toString()+" Получил ---> "+res.toString()+" На белый");
+          // });
         },
         child: new Align(
           alignment: Alignment.topCenter,

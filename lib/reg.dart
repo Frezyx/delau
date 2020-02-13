@@ -1,10 +1,12 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:delau/models/dbModels.dart';
 import 'package:delau/utils/database_helper.dart';
 import 'package:delau/utils/synchroneHelper.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:http/http.dart' as http;
+
+const String testDevice = 'C6293A6928D85AF1';
+
 
 class RegistrationPage extends StatefulWidget{
   @override
@@ -21,8 +23,45 @@ class _RegistrationPageState extends State<RegistrationPage> {
   int _countAdd;
   int _rating;
 
+   MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+    testDevices: testDevice != null ? <String>[testDevice] : null,
+    nonPersonalizedAds: true,
+    keywords: <String>['Game', 'Mario'],
+  );
+
+  BannerAd _bannerAd;
+  InterstitialAd _interstitialAd;
+
+  BannerAd createBannerAd() {
+    return BannerAd(
+        adUnitId: "ca-app-pub-6210480653379985/8698745693",
+      //Change BannerAd adUnitId with Admob ID
+        size: AdSize.banner,
+        targetingInfo: targetingInfo,
+        listener: (MobileAdEvent event) {
+          print("BannerAd $event");
+        });
+  }
+
+  InterstitialAd createInterstitialAd() {
+    return InterstitialAd(
+        adUnitId: InterstitialAd.testAdUnitId,
+      //Change Interstitial AdUnitId with Admob ID
+        targetingInfo: targetingInfo,
+        listener: (MobileAdEvent event) {
+          print("IntersttialAd $event");
+        });
+  }
+
   @override
     void initState(){
+      
+          FirebaseAdMob.instance.initialize(appId: "ca-app-pub-6210480653379985~3641025980");
+    //Change appId With Admob Id
+    _bannerAd = createBannerAd()
+      ..load()
+      ..show();
+
       super.initState();
 
       DBUserProvider.dbc.getClientUser(1).then((res){
@@ -38,9 +77,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
               _neverSatisfied();
               print("Удачно");
             }
+            else if(response.body.toString().substring(0,1)== "3"){
+              _loginNotFree();
+              print("Удачно");
+            }
             else{
               _badAllert();       
-              print("Неудачно");
+              print("Неудачно"+response.body);
             }
             print(response.body.toString());
             return response.body.toString();
@@ -73,7 +116,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         child: Text('Принять'), textColor: Colors.white, color: Color.fromRGBO(114, 103, 239, 1),
                         onPressed: () {
     
-                          Navigator.of(context).pop();
+                          Navigator.pushNamed(context, '/user');
                         },
                       ),
                     ]
@@ -103,8 +146,32 @@ class _RegistrationPageState extends State<RegistrationPage> {
           );
         }
 
+        Future<void> _loginNotFree() async {
+          return showDialog<void>(
+            context: context,
+            barrierDismissible: false, // user must tap button!
+            builder: (BuildContext context) {
+              return 
+                AlertDialog(
+                title: Text('Данный логин занят! Выбирите другой'),
+                actions: <Widget>[
+                      FlatButton(
+                        child: Text('Принять'), textColor: Color.fromRGBO(114, 103, 239, 1),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                ]
+              );
+            },
+          );
+        }
+
   @override
   Widget build(BuildContext context) {
+    //     FirebaseAdMob.instance.initialize(appId: "ca-app-pub-6210480653379985~3641025980").then((response){
+    //   myBanner..load()..show();
+    // });
     return Scaffold(
       body:Container(
         padding: EdgeInsets.only(left: 40.0, right: 40.0, top:MediaQuery.of(context).size.height/5, bottom: MediaQuery.of(context).size.height/10),// color: Colors.transparent,
@@ -335,12 +402,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             surAndName[0]+"&surname="+surAndName[1]+"&email="+_email+
                             "&login="+_login+"&pass="+_password+"&countAdd="+_countAdd.toString()+
                             "&countDone="+_countDone.toString()+"&rating="+_rating.toString()).then((res){
-
-                              var addId = int.parse(res.split(";")[1]);
-                              print("Получил Id: "+addId.toString()+"  from DB");
-                              registrationAtLocalDB(now_client, addId);
-                              synchronize(addId);
-
+                              if(res.length > 1){
+                                var addId = int.parse(res.split(";")[1]);
+                                print("Получил Id: "+addId.toString()+"  from DB");
+                                registrationAtLocalDB(now_client, addId);
+                                synchronize(addId);
+                              }
                             });
                           }
                           // No-Internet Case

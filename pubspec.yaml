@@ -45,6 +45,8 @@ dependencies:
   auto_size_text: ^1.1.2
   flutter_speed_dial: ^1.2.5
   flushbar: ^1.9.1
+  firebase_admob: ^0.9.0+10
+  flutter_native_admob: ^1.0.0
   # background_fetch:
   #   git:
   #     url: https://github.com/transistorsoft/flutter_background_fetch
@@ -84,6 +86,8 @@ flutter:
    - assets/background/sport.jpg
    - assets/profile.jpg
    - assets/ramk.png
+   - assets/ufo.png
+   - assets/demoPage/demoBG.jpg
    - assets/alarm.mp3
   #  - images/a_dot_ham.jpeg
 

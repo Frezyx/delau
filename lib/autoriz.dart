@@ -1,8 +1,7 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:delau/main.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
+import 'package:delau/widget/adMob.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:delau/utils/database_helper.dart';
 
 class AutorizationPage extends StatefulWidget{
@@ -32,6 +31,9 @@ class _AutorizationPageState extends State<AutorizationPage> {
 
   @override
   Widget build(BuildContext context) {
+    //         FirebaseAdMob.instance.initialize(appId: "ca-app-pub-6210480653379985~3641025980").then((response){
+    //   myBanner..load()..show();
+    // });
     return Scaffold(
       body:Container(
         padding: EdgeInsets.only(left: 40.0, right: 40.0, top:MediaQuery.of(context).size.height/5, bottom: MediaQuery.of(context).size.height/10),// color: Colors.transparent,
@@ -200,7 +202,9 @@ class _AutorizationPageState extends State<AutorizationPage> {
                     httploginGet('https://delau.000webhostapp.com/flutter/loginCheckFlutter.php?login='+_login+'&pass='+_password)
                     .then((res){
                       var row = res.split(";");
-                      DBUserProvider.dbc.loginClient(row);
+                      DBUserProvider.dbc.loginClient(row).then((res){
+                        Navigator.pushNamed(context, '/user');
+                      });
                     });
                   }  
                 }
