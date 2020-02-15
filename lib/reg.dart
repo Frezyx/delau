@@ -1,7 +1,6 @@
 import 'package:delau/models/dbModels.dart';
 import 'package:delau/utils/database_helper.dart';
 import 'package:delau/utils/synchroneHelper.dart';
-import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,44 +22,44 @@ class _RegistrationPageState extends State<RegistrationPage> {
   int _countAdd;
   int _rating;
 
-   MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-    testDevices: testDevice != null ? <String>[testDevice] : null,
-    nonPersonalizedAds: true,
-    keywords: <String>['Game', 'Mario'],
-  );
+  //  MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+  //   testDevices: testDevice != null ? <String>[testDevice] : null,
+  //   nonPersonalizedAds: true,
+  //   keywords: <String>['Game', 'Mario'],
+  // );
 
-  BannerAd _bannerAd;
-  InterstitialAd _interstitialAd;
+  // BannerAd _bannerAd;
+  // InterstitialAd _interstitialAd;
 
-  BannerAd createBannerAd() {
-    return BannerAd(
-        adUnitId: "ca-app-pub-6210480653379985/8698745693",
-      //Change BannerAd adUnitId with Admob ID
-        size: AdSize.banner,
-        targetingInfo: targetingInfo,
-        listener: (MobileAdEvent event) {
-          print("BannerAd $event");
-        });
-  }
+  // BannerAd createBannerAd() {
+  //   return BannerAd(
+  //       adUnitId: "ca-app-pub-6210480653379985/8698745693",
+  //     //Change BannerAd adUnitId with Admob ID
+  //       size: AdSize.banner,
+  //       targetingInfo: targetingInfo,
+  //       listener: (MobileAdEvent event) {
+  //         print("BannerAd $event");
+  //       });
+  // }
 
-  InterstitialAd createInterstitialAd() {
-    return InterstitialAd(
-        adUnitId: InterstitialAd.testAdUnitId,
-      //Change Interstitial AdUnitId with Admob ID
-        targetingInfo: targetingInfo,
-        listener: (MobileAdEvent event) {
-          print("IntersttialAd $event");
-        });
-  }
+  // InterstitialAd createInterstitialAd() {
+  //   return InterstitialAd(
+  //       adUnitId: InterstitialAd.testAdUnitId,
+  //     //Change Interstitial AdUnitId with Admob ID
+  //       targetingInfo: targetingInfo,
+  //       listener: (MobileAdEvent event) {
+  //         print("IntersttialAd $event");
+  //       });
+  // }
 
   @override
     void initState(){
       
-          FirebaseAdMob.instance.initialize(appId: "ca-app-pub-6210480653379985~3641025980");
-    //Change appId With Admob Id
-    _bannerAd = createBannerAd()
-      ..load()
-      ..show();
+    //       FirebaseAdMob.instance.initialize(appId: "ca-app-pub-6210480653379985~3641025980");
+    // //Change appId With Admob Id
+    // _bannerAd = createBannerAd()
+    //   ..load()
+    //   ..show();
 
       super.initState();
 

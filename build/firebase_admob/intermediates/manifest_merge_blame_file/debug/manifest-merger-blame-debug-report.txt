@@ -1,0 +1,20 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="io.flutter.plugins.firebaseadmob" >
+4
+5    <uses-sdk android:minSdkVersion="16" />
+5-->C:\Users\FREZY\Desktop\flutter\.pub-cache\hosted\pub.dartlang.org\firebase_admob-0.9.0+10\android\src\main\AndroidManifest.xml
+6
+7    <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
+8    <meta-data
+8-->C:\Users\FREZY\Desktop\flutter\.pub-cache\hosted\pub.dartlang.org\firebase_admob-0.9.0+10\android\src\main\AndroidManifest.xml:5:3-7:39
+9        android:name="com.google.android.gms.ads.APPLICATION_ID"
+9-->C:\Users\FREZY\Desktop\flutter\.pub-cache\hosted\pub.dartlang.org\firebase_admob-0.9.0+10\android\src\main\AndroidManifest.xml:6:7-63
+10        android:value="[ADMOB_APP_ID]" />
+10-->C:\Users\FREZY\Desktop\flutter\.pub-cache\hosted\pub.dartlang.org\firebase_admob-0.9.0+10\android\src\main\AndroidManifest.xml:7:7-37
+11
+12    <uses-permission android:name="android.permission.INTERNET" />
+12-->C:\Users\FREZY\Desktop\flutter\.pub-cache\hosted\pub.dartlang.org\firebase_admob-0.9.0+10\android\src\main\AndroidManifest.xml:8:3-65
+12-->C:\Users\FREZY\Desktop\flutter\.pub-cache\hosted\pub.dartlang.org\firebase_admob-0.9.0+10\android\src\main\AndroidManifest.xml:8:20-62
+13
+14</manifest>

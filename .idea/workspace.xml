@@ -2,9 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6aee2bb5-a1e5-4484-8a26-838144ffe9ab" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/java/delau/MainActivist.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/google-services.json" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/google-services.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/addTaskPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/addTaskPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/autoriz.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/autoriz.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/firstStartPages/demo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/firstStartPages/demo.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/reg.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/reg.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/tryUserPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/tryUserPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/widget/adMob.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/widgets_helper.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets_helper.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -19,14 +29,14 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_2_API_29" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="dauoor6t5sugswrc" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/main.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="38" selection-start-line="38" selection-end-line="38" />
+            <state relative-caret-position="816">
+              <caret line="49" selection-start-line="49" selection-end-line="49" />
             </state>
           </provider>
         </entry>
@@ -66,20 +76,20 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-1892" />
-    <option name="y" value="-318" />
-    <option name="width" value="1936" />
-    <option name="height" value="1096" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="170" />
+    <option name="y" value="92" />
+    <option name="width" value="1026" />
+    <option name="height" value="554" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
       <pane id="PackagesPane" />
       <pane id="Scope" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -161,7 +171,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/android/app/src/main/java" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
@@ -195,9 +205,9 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1892" y="-318" width="1936" height="1096" extended-state="0" />
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17590618" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17549168" />
       <window_info id="Captures" order="1" side_tool="true" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
@@ -213,7 +223,7 @@
       <window_info anchor="bottom" id="Logcat" order="4" />
       <window_info anchor="bottom" id="Debug" order="5" />
       <window_info anchor="bottom" id="Terminal" order="6" sideWeight="0.49924356" weight="0.32850242" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.24432677" side_tool="true" visible="true" weight="0.211838" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.24432677" side_tool="true" visible="true" weight="0.21095008" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
@@ -246,8 +256,8 @@
     <entry file="file://$PROJECT_DIR$/android/app/src/main/java/com.patybit.delau/MainActivist.java" />
     <entry file="file://$PROJECT_DIR$/lib/main.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="38" selection-start-line="38" selection-end-line="38" />
+        <state relative-caret-position="816">
+          <caret line="49" selection-start-line="49" selection-end-line="49" />
         </state>
       </provider>
     </entry>

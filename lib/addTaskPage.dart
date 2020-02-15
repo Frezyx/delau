@@ -15,6 +15,7 @@ import 'package:delau/widget/customRadio.dart';
 import 'dart:async';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:delau/utils/synchroneHelper.dart';
+import 'package:delau/utils/timeHelper.dart';
 
 class RadioModel {
   int index;
@@ -38,6 +39,7 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
 
 
   int requestSendFlag = 0;
+
 
 
   final _formKey = GlobalKey<FormState>();
@@ -88,9 +90,10 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
   setSelectedRadio(int val){
     setState(() {
       selected_radio = val;
+      print(val);
     });
   }
-      
+
     
       Future<void> _selectDate(BuildContext context) async {
         final DateTime picked = await showDatePicker(
@@ -103,8 +106,7 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
           print('Select Date: ${_date.toString()}' );
           setState(() {
             _date = picked;
-            // print_date = _date.toString();
-            print_date = "Выбрана дата";
+            print_date = determinateTextToDate(_date);
           });
       }
     
@@ -117,7 +119,7 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
           print('Select Date: ${_time.toString()}' );
           setState(() {
             _time = picked;
-            print_time = "Выбрано вр";
+            print_time = determinateTextToTime(_time);
             // print_time = _time.toString();
           });
       }
@@ -202,40 +204,18 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
             }
             print(response.body.toString());
       }
-      //   httpGet(String link) async{
-      //   try{
-      //     var response = await http.get('$link');
-      //     print("Статус ответа: ${response.statusCode}");
-      //     print("Тело ответа: ${response.body}");
-      //       if(response.body.toString()!= "0"){
-      //         _badAllert();       
-      //       }
-      //       else{
-      //         _neverSatisfied();
-      //       }
-      //   } catch (error){
-      //     print('Ты ебловоз блять! А вот твоя ошибка: $error');
-      //       return "404";
-      //   }
-      // }
-    
     
       @override
       Widget build(BuildContext context) {
          return Scaffold(
-          // appBar: AppBar(
-          //         // backgroundColor: Color.fromRGBO(76, 175, 80, 100),
-          //         backgroundColor: Color.fromRGBO(114, 103, 239, 1),
-          //         title: const Text('DELAU'),
-          //     ),
           body:
            new Container(
-              padding: EdgeInsets.only(left: 40.0, right: 40.0, top:90,),// color: Colors.transparent,
+              padding: EdgeInsets.only(top:90,),// color: Colors.transparent,
               child: new Form(key: _formKey, child: new Column(children: <Widget>[
-    
-            
-    
-            // new Text('Название', style: TextStyle(fontSize: 20.0)),
+
+            Padding(
+              padding: EdgeInsets.only(left: 40.0, right: 40.0), 
+              child:
             new TextFormField(
               cursorColor: Color.fromRGBO(114, 103, 239, 1),
               decoration: InputDecoration(   
@@ -253,25 +233,14 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
               else {
                 _name = value.toString();
               }
-            },),
+            },),),
     
             new SizedBox(height: 10.0,),
     
-            // new Text('Приоритет', style: TextStyle(fontSize: 20.0)),
-            // new TextFormField(
-            //   cursorColor: Color.fromRGBO(114, 103, 239, 1),
-            //   decoration: InputDecoration(        
-            //   focusedBorder: UnderlineInputBorder(      
-            //     borderSide: BorderSide(color: Color.fromRGBO(114, 103, 239, 1)),   
-            //   ),    
-            // ),
-            //   validator: (value){
-            //   if (value.isEmpty) return 'Выберете приоритет';
-            //   // else
-            // },),
-    
-            // new Text('Пояснение', style: TextStyle(fontSize: 20.0)),
-            new TextFormField(
+        Padding(
+          padding: EdgeInsets.only(left: 40.0, right: 40.0), 
+          child:
+            TextFormField(
               cursorColor: Color.fromRGBO(114, 103, 239, 1),
               decoration: InputDecoration(        
               labelText: 'Пояснение задачи',  
@@ -289,7 +258,7 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
               else{
                 _surname = value.toString();
               }
-            },),
+            },),),
     
             // new SizedBox(height: 20.0,),
           //   Text("Маркер задачи",
@@ -338,8 +307,15 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
             ),
           ),
 
+//TODO : заменить на иконочный сборщик с звездами
+
           new SizedBox(height: 0.0),
-              new Column(
+          Padding(
+            padding: EdgeInsets.only(left: 40.0, right: 40.0), 
+            child:
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   FlatButton(
                     color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
@@ -348,13 +324,13 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                       _selectDate(context);
                     },
                     child: 
-                    Row(
+                    Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Icon(Icons.date_range,size: 20.0,),
+                        Icon(Icons.date_range,size: 50.0,),
                           Text(
-                            "$_date",
+                            "$print_date",
                             style: TextStyle(fontSize: 15.0, fontFamily: 'Roboto', fontWeight: FontWeight.w500,),
                           ),    
                       ],
@@ -369,24 +345,28 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                       _selectTime(context);
                     },
                     child: 
-                    Row(
+                    Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Icon(Icons.timer,size: 20.0,),
+                        Icon(Icons.timer,size: 50.0,),
                         Text(
-                            "$_time",
+                            "$print_time",
                             style: TextStyle(fontSize: 15.0, fontFamily: 'Roboto', fontWeight: FontWeight.w500,),
                           ),
                       ],
                     ),
                   ),
                 ]
-                ),
+              ),
+            ),
     
             new SizedBox(height: 20.0,),
     
-          // new SizedBox(height: 15.0,),
+        Padding(
+          padding: EdgeInsets.only(left: 40.0, right: 40.0), 
+          child:Column(
+            children: <Widget>[
           Text("Важность задачи",
           style: TextStyle(
             fontSize: 18.0,
@@ -402,11 +382,14 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
             },
             min: 0.0,
             max: 10.0,
-            divisions: 10,
+            // divisions: 10,
             label: "$rating",
             activeColor: Color.fromRGBO(114, 103, 239, 1),
             inactiveColor: Colors.black12,
           ),
+        ]
+      ),
+    ),
             new SizedBox(height: 10.0,),
             new RaisedButton(onPressed: (){
               if(_formKey.currentState.validate()){
@@ -443,11 +426,11 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
                   });
                 }
                 else{
-                  DBMarkerProvider.db.getMarkById(selected_radio-7).then((iconData){
+                  DBMarkerProvider.db.getMarkById(selected_radio-8).then((iconData){
                   Client now_client = new Client(
                         title: _name,
                         description: _surname,
-                        marker: selected_radio,
+                        marker: selected_radio-1,
                         icon:  iconData,
                         priority: rating.round(),
                         date: _date.toString(),

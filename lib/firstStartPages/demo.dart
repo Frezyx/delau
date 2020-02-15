@@ -14,19 +14,26 @@ Widget bannerOne(SharedPreferences prefs) {
     print(res.toString()+"Это из Маркера");
   });
 
-  const kIcons = <Icon>[
-    Icon(Icons.event),
-    Icon(Icons.home),
-    Icon(Icons.android),
-    Icon(Icons.alarm),
-    Icon(Icons.face),
-    Icon(Icons.language),
-  ];
+  return FirstPage();
+}
 
+class FirstPage extends StatefulWidget{
+  @override
+  _FirstPageState createState() => _FirstPageState();
+}
+
+class _FirstPageState extends State<FirstPage> {
   String imgSrc = "assets/demoPage/demoBG.jpg";
+  
 
-  return
-  MaterialApp( 
+  @override
+  void initState() {
+
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp( 
     home: Scaffold(
     body:  
         DefaultTabController(
@@ -75,16 +82,16 @@ Widget bannerOne(SharedPreferences prefs) {
                   ),
                 ),
               ),
-              RaisedButton(
-                child: Text('SKIP'),
-                onPressed: () {
-                  final TabController controller =
-                      DefaultTabController.of(context);
-                  if (!controller.indexIsChanging) {
-                    controller.animateTo(kIcons.length - 1);
-                  }
-                },
-              ),
+              // RaisedButton(
+              //   child: Text('SKIP'),
+              //   onPressed: () {
+              //     final TabController controller =
+              //         DefaultTabController.of(context);
+              //     if (!controller.indexIsChanging) {
+              //       controller.animateTo(kIcons.length - 1);
+              //     }
+              //   },
+              // ),
               TabPageSelector(),
             ],
           ),
@@ -93,4 +100,5 @@ Widget bannerOne(SharedPreferences prefs) {
     )
   ),
   );
+  }
 }

@@ -29,19 +29,19 @@ Widget getCardInfo(int i, List<IconData> i_add, List<String>slider_titles){
       children: <Widget>[
         Container(
           child: Padding(
-            padding: EdgeInsets.only(bottom: 25.0, left: 25.0),
+            padding: EdgeInsets.only(bottom: 45.0, left: 15.0),
             child:  new FloatingActionButton(
               heroTag: "btn_inslider_number"+i.toString(),
               child:
               new Container(
                 decoration:  new BoxDecoration(
-                boxShadow:<BoxShadow>[
-                      BoxShadow(
-                        color: Color.fromRGBO(71, 9, 150, 0.37),
-                        offset: Offset(0.0, 4.0),
-                        blurRadius: 15.0,
-                      ),
-                    ],
+                // boxShadow:<BoxShadow>[
+                //       // BoxShadow(
+                //       //   color: Color.fromRGBO(71, 9, 150, 0.37),
+                //       //   offset: Offset(0.0, 4.0),
+                //       //   blurRadius: 15.0,
+                //       // ),
+                //     ],
                 gradient: new LinearGradient(
                       colors: [
                       Color.fromRGBO(162, 122, 246, 1),
@@ -62,7 +62,7 @@ Widget getCardInfo(int i, List<IconData> i_add, List<String>slider_titles){
 
                 ),
                 child: Center(
-                  child: Icon(i_add[i-1]),
+                  child: Icon(i_add[i-1],size: 30,),
                 ),
               ), 
                 onPressed: () => {

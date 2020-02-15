@@ -126,7 +126,7 @@ class _UPNState extends State<UPN> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(registration ? name.isEmpty ? "..." : name : "Неопозннанный", 
+                              Text(registration ? name.isEmpty ? "..." : name : "Неопознанный", 
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 24.0,
@@ -298,7 +298,7 @@ class _UPNState extends State<UPN> {
             padding: EdgeInsets.only( left: 10.0),
             child:
             Text("Создано задач: ${countAdd.toString()}",
-             style: TextStyle(fontStyle: FontStyle.normal, fontFamily: "Exo 2",fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.black)),
+             style: TextStyle(fontStyle: FontStyle.normal, fontFamily: "Exo 2",fontSize: 18.0, fontWeight: FontWeight.w300, color: Colors.black)),
                       ),
             ],
             ),
@@ -354,7 +354,8 @@ class _UPNState extends State<UPN> {
                       Padding(
             padding: EdgeInsets.only( left: 10.0),
             child:
-            Text("Выполненно задач: ${countDone.toString()}", style: TextStyle(fontStyle: FontStyle.normal, fontFamily: "Exo 2",fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.black)),
+            Text("Выполненно задач: ${countDone.toString()}", style: 
+            TextStyle(fontStyle: FontStyle.normal, fontFamily: "Exo 2",fontSize: 18.0, fontWeight: FontWeight.w300, color: Colors.black)),
                       ),
             ],
             ),
@@ -416,7 +417,7 @@ class _UPNState extends State<UPN> {
                    style: TextStyle(
                       fontStyle: FontStyle.normal,
                       fontFamily: "Exo 2",fontSize: 18.0,
-                      fontWeight: FontWeight.w600, color: Colors.black)
+                      fontWeight: FontWeight.w300, color: Colors.black)
                     ),
                     
                   ),
@@ -426,12 +427,24 @@ class _UPNState extends State<UPN> {
         ],
       ),
     ),
-    getLoginButtonCard(context, linearGradient),
-
+    registration ? SizedBox(height: 10) : getLoginButtonCard(context, linearGradient),
           ],
         ),
       ),
-                        bottomNavigationBar: CurvedNavigationBar(
+    //   floatingActionButton: registration ?
+    // Padding(
+    //   padding: EdgeInsets.only(bottom:10),
+    //   child:  
+    // FloatingActionButton(
+      
+    //   onPressed: () {
+    //     // Add your onPressed code here!
+    //   },
+    //   child: Icon(Icons.settings),
+    //   backgroundColor: Colors.deepPurpleAccent,
+    // )) : SizedBox(height: 0,),
+
+    bottomNavigationBar: CurvedNavigationBar(
         height: 50.0,
         backgroundColor: Colors.transparent,
         animationDuration: Duration(microseconds: 2500),
@@ -524,7 +537,8 @@ class _UPNState extends State<UPN> {
         child: Container(
           constraints: const BoxConstraints(minWidth: 0.0, minHeight: 40.0), // min sizes for Material buttons
           alignment: Alignment.center,
-          child: Text('Зарегистрироваться', textAlign: TextAlign.center, style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 24.0, fontWeight: FontWeight.w900, color: Colors.white),),
+          child: Text('Зарегистрироваться', textAlign: TextAlign.center, 
+          style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 24.0, fontWeight: FontWeight.w900, color: Colors.white),),
           ),
         ),
       ),

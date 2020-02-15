@@ -1,6 +1,4 @@
-import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
-import 'package:delau/widget/adMob.dart';
 import 'package:http/http.dart' as http;
 import 'package:delau/utils/database_helper.dart';
 
