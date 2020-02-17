@@ -88,7 +88,6 @@ flutter:
    - assets/ufo.png
    - assets/pageComing.png
    - assets/demoPage/demoBG.jpg
-   - assets/alarm.mp3
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
