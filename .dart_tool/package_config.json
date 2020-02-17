@@ -158,6 +158,12 @@
       "languageVersion": "1.19"
     },
     {
+      "name": "flutter_star_rating",
+      "rootUri": "file:///C:/Users/FREZY/Desktop/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_star_rating-0.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///C:/Users/FREZY/Desktop/flutter/packages/flutter_test",
       "packageUri": "lib/",
@@ -386,7 +392,7 @@
       "languageVersion": "2.2"
     }
   ],
-  "generated": "2020-02-15T12:18:54.779064Z",
+  "generated": "2020-02-17T11:44:38.058240Z",
   "generator": "pub",
   "generatorVersion": "2.7.0"
 }

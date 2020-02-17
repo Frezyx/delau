@@ -16,6 +16,7 @@ import 'dart:async';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:delau/utils/synchroneHelper.dart';
 import 'package:delau/utils/timeHelper.dart';
+import 'package:flutter_star_rating/flutter_star_rating.dart';
 
 class RadioModel {
   int index;
@@ -51,6 +52,7 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
 
   String print_time = "Введите время ";
   String print_date = "Введите дату ";
+  bool print_priority = false;
 
   DateTime _date = new DateTime.now();
   TimeOfDay _time = new TimeOfDay.now();
@@ -94,6 +96,12 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
     });
   }
 
+  setPriority(){
+    setState(() {
+      print_priority = true;
+    });
+  }
+
     
       Future<void> _selectDate(BuildContext context) async {
         final DateTime picked = await showDatePicker(
@@ -123,6 +131,59 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
             // print_time = _time.toString();
           });
       }
+
+      refreshPriorityPrint(){
+        setState(() {
+          print_priority = true;
+        });
+      }
+
+_selectPriority(context){
+  return
+  showDialog(
+    context: context,
+    builder: (context) {
+      var print_rating = this.rating;
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return AlertDialog(
+                title: Text('Выберете приоритет задачи.', style: TextStyle(fontSize: 20),),
+                actions: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top: 0.0), 
+                        child:
+                            StarRating(
+                            starConfig:
+                              StarConfig(
+                                size: 28,
+                                strokeColor: Color.fromRGBO(114, 103, 239, 1),
+                                fillColor: Color.fromRGBO(114, 103, 239, 1),
+                                // emptyColor: Colors.white,
+                            ),
+                            rating: print_rating / 2,
+                            onChangeRating: (int rating) {
+                              setState(() {
+                                this.rating = rating.toDouble() * 2;
+                                print_rating = rating.toDouble() * 2;
+                              });
+                            },
+                          ),
+                      ),
+                      FlatButton(
+                        child: Text('Выбрать'), textColor: Color.fromRGBO(114, 103, 239, 1),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          refreshPriorityPrint();
+                        },
+                      ),
+                ]
+              );
+        },
+      );
+    },
+  );
+}
+
     
         Future<void> _neverSatisfied() async {
           return showDialog<void>(
@@ -213,6 +274,8 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
               padding: EdgeInsets.only(top:90,),// color: Colors.transparent,
               child: new Form(key: _formKey, child: new Column(children: <Widget>[
 
+
+
             Padding(
               padding: EdgeInsets.only(left: 40.0, right: 40.0), 
               child:
@@ -254,33 +317,92 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
               
               ),
               validator: (value){
-              if (value.isEmpty) return 'Введите пояснение для задания';
+              if (value.isEmpty) {
+                 _surname = "Вы не выбрали пояснение для задачи";
+              }
               else{
                 _surname = value.toString();
               }
             },),),
-    
-            // new SizedBox(height: 20.0,),
-          //   Text("Маркер задачи",
-          // style: TextStyle(
-          //   fontSize: 18.0,
-          //   fontFamily: 'Exo 2',
-          //   fontWeight: FontWeight.w300,
-          //   // color: Color.fromRGBO(114, 103, 239, 1),
-          //   ),     
-          // ),
-        // new SizedBox(height: 20.0,),
 
-        // ListView.builder(
-        //   itemCount: 4,
-        //   itemBuilder: (context, i) {
-        //     return ListTile(
-                  
-        //         );
-        //   },
-        // ),
+//TODO : заменить на иконочный сборщик с звездами
+
+          new SizedBox(height: 0.0),
+          Padding(
+            padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 15, bottom: 5), 
+            child:
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  FlatButton(
+                    color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
+                    padding: EdgeInsets.only( left: 5.0, right: 5.0, top: 15, bottom: 15, ),
+                    onPressed: () {
+                      _selectDate(context);
+                    },
+                    child: 
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Icon(Icons.date_range,size: 35.0,),
+                          Text(
+                            "$print_date",
+                            style: TextStyle(fontSize: 12.0, fontFamily: 'Roboto', fontWeight: FontWeight.w500,),
+                          ),    
+                      ],
+    
+                    ),
+                  ),
+    
+                  FlatButton(
+                    color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
+                    padding: EdgeInsets.only( left: 5.0, top: 15,right: 5.0, bottom: 15),
+                    onPressed: () {
+                      _selectTime(context);
+                    },
+                    child: 
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Icon(Icons.timer,size: 35.0,),
+                        Text(
+                            "$print_time",
+                            style: TextStyle(fontSize: 12.0, fontFamily: 'Roboto', fontWeight: FontWeight.w500,),
+                          ),
+                      ],
+                    ),
+                  ),
+
+                  FlatButton(
+                    color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
+                    padding: EdgeInsets.only( left: 5.0, right: 5.0, top: 15, bottom: 15, ),
+                    onPressed: () {
+                      _selectPriority(context);
+                    },
+                    child: 
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Icon(Icons.star,size: 35.0,),
+                          Text(
+                            print_priority ? rating.toString() : "Приоритет",
+                            style: TextStyle(fontSize: 12.0, fontFamily: 'Roboto', fontWeight: FontWeight.w500,),
+                          ),    
+                      ],
+    
+                    ),
+                  ),
+
+                ]
+              ),
+            ),
+
         Container(
-          margin: EdgeInsets.symmetric(vertical: 20.0),
+          margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 20),
           height: 100.0,
           child:
             ListView.builder(
@@ -306,91 +428,9 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
               }
             ),
           ),
+    
 
-//TODO : заменить на иконочный сборщик с звездами
-
-          new SizedBox(height: 0.0),
-          Padding(
-            padding: EdgeInsets.only(left: 40.0, right: 40.0), 
-            child:
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  FlatButton(
-                    color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
-                    padding: EdgeInsets.only( left: 15.0, right: 15.0, top: 15, bottom: 15, ),
-                    onPressed: () {
-                      _selectDate(context);
-                    },
-                    child: 
-                    Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Icon(Icons.date_range,size: 50.0,),
-                          Text(
-                            "$print_date",
-                            style: TextStyle(fontSize: 15.0, fontFamily: 'Roboto', fontWeight: FontWeight.w500,),
-                          ),    
-                      ],
-    
-                    ),
-                  ),
-    
-                  FlatButton(
-                    color: Colors.transparent, textColor: Color.fromRGBO(114, 103, 239, 1),
-                    padding: EdgeInsets.only( left: 15.0, top: 15,right: 15.0, bottom: 15),
-                    onPressed: () {
-                      _selectTime(context);
-                    },
-                    child: 
-                    Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Icon(Icons.timer,size: 50.0,),
-                        Text(
-                            "$print_time",
-                            style: TextStyle(fontSize: 15.0, fontFamily: 'Roboto', fontWeight: FontWeight.w500,),
-                          ),
-                      ],
-                    ),
-                  ),
-                ]
-              ),
-            ),
-    
-            new SizedBox(height: 20.0,),
-    
-        Padding(
-          padding: EdgeInsets.only(left: 40.0, right: 40.0), 
-          child:Column(
-            children: <Widget>[
-          Text("Важность задачи",
-          style: TextStyle(
-            fontSize: 18.0,
-            fontFamily: 'Exo 2',
-            fontWeight: FontWeight.w300,
-            ),     
-          ),
-    
-          Slider(
-            value: rating,
-            onChanged: (double newRating) {
-              setState(()=> rating = newRating);
-            },
-            min: 0.0,
-            max: 10.0,
-            // divisions: 10,
-            label: "$rating",
-            activeColor: Color.fromRGBO(114, 103, 239, 1),
-            inactiveColor: Colors.black12,
-          ),
-        ]
-      ),
-    ),
-            new SizedBox(height: 10.0,),
+            // new SizedBox(height: 10.0,),
             new RaisedButton(onPressed: (){
               if(_formKey.currentState.validate()){
                 if(_name != null && _surname != null){

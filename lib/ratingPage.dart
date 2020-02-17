@@ -47,6 +47,7 @@ void dispose() {
 
 var countTask =  DBProvider.db.getContNow();
 bool registration = false;
+int userId = 0;
 // РОУТИННГ
 
     @override
@@ -55,6 +56,8 @@ bool registration = false;
 
       DBUserProvider.dbc.getClientUser(1).then((res){
         registration = (res.reg == 1);
+        userId = res.userIdServer;
+        print("$userId Пользователя id" );
         print(registration);
       });
       // startTimer();
@@ -87,7 +90,11 @@ bool registration = false;
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
                   UserModel item = snapshot.data[index];
-                  return ListTile(
+                  return 
+              Ink(
+                color: userId == item.id ? Color.fromRGBO(114, 103, 239, 1): Colors.white,
+                child:
+                  ListTile(
                       leading:
                       Container(
                         margin: new EdgeInsets.all(5.0),
@@ -107,10 +114,17 @@ bool registration = false;
                                         //fontWeight: FontWeight.bold,
                               ),
                               decoration: new BoxDecoration(
-                                color: Colors.transparent,
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                  color: userId == item.id ? Color.fromRGBO(0, 0, 0, 0.6) : Colors.transparent,
+                                  offset: Offset(0.0, 1.0),
+                                  blurRadius: 2,
+                                ),] ,
+                                
+                                color: userId == item.id ? Colors.white : Colors.transparent,
                                 border: new Border.all(
                                     width: 1.0,
-                                    color: Color.fromRGBO(114, 103, 239, 1)),
+                                    color: userId == item.id ? Colors.white : Color.fromRGBO(114, 103, 239, 1)),
                                 borderRadius: const BorderRadius.all(const Radius.circular(20.0)),
                               ),
                             ),
@@ -118,14 +132,21 @@ bool registration = false;
                         ),
                       ),
                     title: Text('${item.name} ${item.surname}',
-                    style: TextStyle(fontSize: 18.0, fontFamily: 'Exo 2', fontWeight: FontWeight.w300,),
+                    style: TextStyle(
+                      fontSize: 18.0, fontFamily: 'Exo 2', fontWeight: FontWeight.w300,
+                      color: userId == item.id ? Colors.white : Colors.black,
+                      ),
                     overflow: TextOverflow.ellipsis,
                     ),
-                    subtitle: get_subtitle_ratingPage(item),
+                    subtitle: get_subtitle_ratingPage(item, userId),
                     trailing: Text(
                       "${item.rating} / ${item.countDone} / ${item.countAdd}",
+                      style: TextStyle(
+                        color: userId == item.id ? Colors.white : Colors.black,
+                      ),
                       overflow: TextOverflow.ellipsis,
                     ),
+                  ),
                   );
               },
             );
@@ -233,7 +254,7 @@ Future<List<UserModel>> fetchPosts(http.Client client, String link) async {
   return parsePosts(response.body);
 }
 
-Widget get_subtitle_ratingPage(UserModel item){
+Widget get_subtitle_ratingPage(UserModel item, userId){
   return 
   Align(
     alignment: AlignmentDirectional.centerStart,
@@ -245,7 +266,7 @@ Widget get_subtitle_ratingPage(UserModel item){
       child:
         Text(
           '${item.login}',
-              style: TextStyle(fontSize: 12.0, fontFamily: 'Exo 2', fontWeight: FontWeight.w500, color:  Color.fromRGBO(114, 103, 239, 1),
+              style: TextStyle(fontSize: 12.0, fontFamily: 'Exo 2', fontWeight: FontWeight.w500, color: userId == item.id ? Colors.white : Color.fromRGBO(114, 103, 239, 1),
               ),
             ),
           ),
@@ -281,7 +302,7 @@ Widget getNoRegist(){
     Text("Вы не зарегистрированы")
   ]);
 }
-Widget returnRatingList(registration){
+Widget returnRatingList(registration, userId){
   return 
   FutureBuilder<List<UserModel>>(
           future: fetchPosts(http.Client(), "https://delau.000webhostapp.com/flutter/getAllUsers.php"),
@@ -346,7 +367,7 @@ Widget returnRatingList(registration){
                     style: TextStyle(fontSize: 18.0, fontFamily: 'Exo 2', fontWeight: FontWeight.w300,),
                     overflow: TextOverflow.ellipsis,
                     ),
-                    subtitle: get_subtitle_ratingPage(item),
+                    subtitle: get_subtitle_ratingPage(item, userId),
                     // trailing: Checkbox(
                     //   onChanged: (bool value) {
                         

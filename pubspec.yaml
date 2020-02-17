@@ -45,6 +45,7 @@ dependencies:
   auto_size_text: ^1.1.2
   flutter_speed_dial: ^1.2.5
   flushbar: ^1.9.1
+  flutter_star_rating: ^0.0.2
   # background_fetch:
   #   git:
   #     url: https://github.com/transistorsoft/flutter_background_fetch
