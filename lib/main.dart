@@ -1,41 +1,36 @@
-import 'dart:async';
-import 'dart:io';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:delau/oneNote.dart';
-import 'package:delau/pages/iconDrag.dart';
-import 'package:delau/ratingPage.dart';
-import 'package:delau/tryUserPage.dart';
-import 'package:delau/utils/ttsHelper.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
-import 'addTaskPage.dart';
-import 'widgets_helper.dart';
-import 'pages/postPage.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:delau/widget/notification.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:flutter/material.dart';
-import 'package:delau/models/dbModels.dart';
-import 'package:delau/userPage.dart';
-import 'package:delau/addTaskPage.dart';
-import 'package:delau/utils/database_helper.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'dart:math' as math;
+
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:http/http.dart' as http;
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:delau/firstStartPages/demo.dart';
-import 'package:delau/pages/tts.dart';
-import 'package:delau/pages/addMarker.dart';
-import 'package:delau/pages/userSettings.dart';
-import 'package:delau/utils/fcm.dart';
-import 'package:delau/notes.dart';
-import 'package:delau/reg.dart';
+
+import 'package:delau/addTaskPage.dart';
+import 'package:delau/pages/updateTask.dart';
 import 'package:delau/autoriz.dart';
+import 'package:delau/firstStartPages/demo.dart';
+import 'package:delau/models/dbModels.dart';
+import 'package:delau/notes.dart';
+import 'package:delau/oneNote.dart';
+import 'package:delau/pages/addMarker.dart';
+import 'package:delau/pages/iconDrag.dart';
+import 'package:delau/pages/tts.dart';
+import 'package:delau/pages/userSettings.dart';
+import 'package:delau/ratingPage.dart';
+import 'package:delau/reg.dart';
+import 'package:delau/tryUserPage.dart';
+import 'package:delau/utils/database_helper.dart';
+import 'package:delau/utils/fcm.dart';
 import 'package:delau/utils/synchroneHelper.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-// import 'package:speech_recognition/speech_recognition.dart';
+import 'package:delau/utils/ttsHelper.dart';
+import 'package:delau/widget/notification.dart';
+
+import 'addTaskPage.dart';
+import 'pages/postPage.dart';
+import 'widgets_helper.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized(); 
@@ -75,6 +70,7 @@ class MyApp extends StatelessWidget {
       '/icon':(BuildContext context) => IconDrag(),
       '/notes':(BuildContext context) => Example01(),
       '/note':(BuildContext context) => NotePage(),
+      '/updateTask':(BuildContext context) => UpdateTask(),
       // '/try':(BuildContext context) => UPN(),
       // '/services':(BuildContext context) => Services(),
     },
@@ -97,6 +93,10 @@ class MyApp extends StatelessWidget {
 
         if(path[1] == 'note'){
           return new MaterialPageRoute(builder: (context) => new NotePage(id:path[2]),
+          settings: RouteSettings);
+        }
+        if(path[1] == 'updateTask'){
+          return new MaterialPageRoute(builder: (context) => new UpdateTask(id:path[2]),
           settings: RouteSettings);
         }
 
@@ -140,12 +140,19 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
 var countTask =  DBProvider.db.getContNow();
 bool registration = false;
+List<int> countTasksByMarker = [0,0,0,0,0,0];
 int userIdServer;
 // РОУТИННГ
   void refreshCount() {
     // reload
     setState(() {
       countTask =  DBProvider.db.getContNow();
+    });
+  }
+
+  void refreshCountCard(id){
+    setState(() {
+      countTasksByMarker[id]++;
     });
   }
 
@@ -157,6 +164,32 @@ int userIdServer;
         registration = (res.reg == 1);
         userIdServer = res.userIdServer;
         print(registration.toString() + "UserServerId--->" + userIdServer.toString());
+      });
+
+      DBProvider.db.getAllTasks().then((res){
+        for(var item in res){
+          switch (item.marker) {
+            case 0:
+              refreshCountCard(0);
+              break;
+            case 1:
+              refreshCountCard(1);
+              break;
+            case 2:
+              refreshCountCard(2);
+              break;
+            case 3:
+              refreshCountCard(3);
+              break;
+            case 4:
+              refreshCountCard(4);
+              break;
+            case 5:
+              refreshCountCard(5);
+              break;            
+            default:
+          }
+        }
       });
     }
 
@@ -209,7 +242,7 @@ int userIdServer;
               builder: (BuildContext context) {
                 return new Container(
                   width: MediaQuery.of(context).size.width,
-                  margin: new EdgeInsets.only(left: 15.0, right: 15.0, top: 70.0, bottom: 50.0),
+                  margin: new EdgeInsets.only(left: 15.0, right: 15.0, top: 40.0, bottom: 20.0),
                   decoration: new BoxDecoration(
                     color: Colors.white,
                     boxShadow:<BoxShadow>[
@@ -225,12 +258,12 @@ int userIdServer;
                         ),
                         borderRadius: BorderRadius.circular(12),
                   ),
-                  child: getCardInfo(i, i_add, slider_titles)
+                  child: getCardInfo(i, i_add, slider_titles, countTasksByMarker[i-1])
                 );
               },
             );
           }).toList(),
-          height: 260.0,
+          height: 140.0,
           autoPlay: true,
           autoPlayCurve: Curves.elasticIn,
           autoPlayDuration: const Duration(milliseconds: 2800),

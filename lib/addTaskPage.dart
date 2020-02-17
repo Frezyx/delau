@@ -439,7 +439,7 @@ _selectPriority(context){
                   Client now_client = new Client(
                         title: _name,
                         description: _surname,
-                        marker: selected_radio - 1,
+                        marker: selected_radio == 0 ? 0 : selected_radio - 1,
                         icon:  "none",
                         priority: rating.round(),
                         date: _date.toString(),
@@ -470,7 +470,7 @@ _selectPriority(context){
                   Client now_client = new Client(
                         title: _name,
                         description: _surname,
-                        marker: selected_radio-1,
+                        marker: selected_radio == 0 ? 0 : selected_radio - 1,
                         icon:  iconData,
                         priority: rating.round(),
                         date: _date.toString(),

@@ -24,12 +24,12 @@ class StarDisplayWidget extends StatelessWidget {
 }
 
 //КАРТОЧКА НА ГЛАВНОЙ СТРАНИЦЕ
-Widget getCardInfo(int i, List<IconData> i_add, List<String>slider_titles){
+Widget getCardInfo(int i, List<IconData> i_add, List<String>slider_titles, countTasks){
     return Row(
       children: <Widget>[
         Container(
           child: Padding(
-            padding: EdgeInsets.only(bottom: 45.0, left: 15.0),
+            padding: EdgeInsets.only(bottom: 0.0, left: 15.0),
             child:  new FloatingActionButton(
               heroTag: "btn_inslider_number"+i.toString(),
               child:
@@ -77,7 +77,7 @@ Widget getCardInfo(int i, List<IconData> i_add, List<String>slider_titles){
         Column(
             children: <Widget>[
               Padding(
-              padding: EdgeInsets.only(top: 25, left: 20.0),
+              padding: EdgeInsets.only(top: 15, left: 25.0),
               child:  
               Text(slider_titles[i-1], 
                 style: TextStyle(
@@ -87,17 +87,17 @@ Widget getCardInfo(int i, List<IconData> i_add, List<String>slider_titles){
                 color: Colors.black),
                 ),
             ),
-            // Padding(
-            //     padding: EdgeInsets.only(top: 2, left: 15),
-            //     child:
-            //       Text("Задач:",
-            //         style: TextStyle(
-            //         fontFamily: "Exo 2",
-            //         fontSize: 14.0, 
-            //         fontWeight: FontWeight.w300, 
-            //         color: Color.fromRGBO(158, 158, 158, 1)),
-            //       ),
-            //     ),
+            Padding(
+                padding: EdgeInsets.only(top: 2, left: 15),
+                child:
+                  Text("Задач: ${countTasks}",
+                    style: TextStyle(
+                    fontFamily: "Exo 2",
+                    fontSize: 14.0, 
+                    fontWeight: FontWeight.w300, 
+                    color: Color.fromRGBO(158, 158, 158, 1)),
+                  ),
+                ),
             // Padding(
             //     padding: EdgeInsets.only(top: 0, left: 15),
             //     child:

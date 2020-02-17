@@ -600,7 +600,7 @@ class _UPNState extends State<UPN> {
               RoundIcon(item: task,),
               Padding(
                   child: Text(
-                  task.title,
+                  task.title.length > 20 ? task.title.substring(0, 20)+"..." : task.title,
                   style: jobCardTitileStyleBlue,
                 ), padding: EdgeInsets.only(left: 5),
               )

@@ -353,17 +353,6 @@ class _Example01State extends State<Example01> {
                     // Navigator.pushNamed(context, '/notes');
                   },
                 ),
-                SpeedDialChild(
-                  child: Icon(Icons.dashboard),
-                  backgroundColor: Color.fromRGBO(114, 103, 239, 1),
-                  // label: 'Third',
-                  // labelStyle: TextStyle(fontSize: 18.0),
-                  onTap: (){
-                    DBNoteProvider.db.addNoteInit().then((y){
-                      setState(() {});
-                    });
-                  },
-                ),
               ],
             ),
           );
@@ -381,14 +370,10 @@ class _Example01State extends State<Example01> {
     var width = 1;
     var charCount = content.length;
     if (charCount > 3 ) { width = 2; }
-    // else if (charCount > 600) {  width = 3;  }
-    // else if (charCount > 50) {  width = 1;  }
-    // else if (charCount > 20) {  width = 1;  }
     return width;
   }
 
   _cropText(String text){
-    // var textSize = _determineFontSizeForContent(text);
     int charCount = text.length ;
     String resText = text;
     if(charCount > 170){resText = text.substring(0, 170)+"...";}
