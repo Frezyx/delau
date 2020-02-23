@@ -1,5 +1,4 @@
-import 'dart:math' as math;
-
+// -------------------> ВНЕШНИЕ БИБЛИОТЕКИ
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -7,11 +6,10 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:http/http.dart' as http;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+// -------------------> ВНУТРЕННИЕ ПРОГРАММЫ
 import 'package:delau/addTaskPage.dart';
 import 'package:delau/pages/updateTask.dart';
 import 'package:delau/autoriz.dart';
-import 'package:delau/firstStartPages/demo.dart';
 import 'package:delau/models/dbModels.dart';
 import 'package:delau/notes.dart';
 import 'package:delau/oneNote.dart';
@@ -27,19 +25,33 @@ import 'package:delau/utils/fcm.dart';
 import 'package:delau/utils/synchroneHelper.dart';
 import 'package:delau/utils/ttsHelper.dart';
 import 'package:delau/widget/notification.dart';
-
 import 'addTaskPage.dart';
 import 'pages/postPage.dart';
 import 'widgets_helper.dart';
 
+StatelessWidget getBaner(SharedPreferences prefs){
+  prefs.setBool('banner', false); 
+    DBUserProvider.dbc.firstCreateTable();// Меняем значение на false
+    DBNoteProvider.db.firstCreateTable().then((res){
+      print(res.toString()+"Это id из Заметок");
+    });
+    DBMarkerProvider.db.firstCreateTable().then((res){
+      print(res.toString()+"Это из Маркера");
+    });
+
+  return MyApp();
+}
+
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized(); 
-  SharedPreferences prefs = await SharedPreferences.getInstance(); // Хранилище 
+  // -------------------> Проверяем в какой раз входит пользователь и создаем/не создаем таблицы в базе данных
+  // -------------------> В runApp();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
   bool banner = (prefs.getBool('banner') ?? true);
 
   runApp(
-    // bannerOne(prefs)
-    (banner) ? bannerOne(prefs) : MyApp(),
+       banner? getBaner(prefs) : MyApp(),
     );
 }
 
@@ -49,16 +61,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
+
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
     routes: {
       '/':(BuildContext context) => MyStatefulWidget(),
       '/second':(BuildContext context) => MyStatefulWidget3(),
       '/ntf':(BuildContext context) => LocalNotificationWidget(),
-      '/new':(BuildContext context) => MP(),
       '/user':(BuildContext context) => UPN(),
       '/tts':(BuildContext context) => TTS(),
       '/fcm':(BuildContext context) => FCMPage(),
@@ -71,15 +84,9 @@ class MyApp extends StatelessWidget {
       '/notes':(BuildContext context) => Example01(),
       '/note':(BuildContext context) => NotePage(),
       '/updateTask':(BuildContext context) => UpdateTask(),
-      // '/try':(BuildContext context) => UPN(),
-      // '/services':(BuildContext context) => Services(),
     },
     onGenerateRoute: (RouteSettings){
       var path = RouteSettings.name.split('/');
-      // if(path[1] == 'second'){
-      //   return new MaterialPageRoute(builder: (context) => new MyStatefulWidget3(id:path[2]),
-      //   settings: RouteSettings);
-      //   }
       
       if(path[1] == 'postPage'){
         return new MaterialPageRoute(builder: (context) => new PostPage(id:path[2]),
@@ -99,13 +106,12 @@ class MyApp extends StatelessWidget {
           return new MaterialPageRoute(builder: (context) => new UpdateTask(id:path[2]),
           settings: RouteSettings);
         }
-
       },
     );
   }
 }
 
-httpGet(String link) async{
+  httpGet(String link) async{
     try{
       var response = await http.get('$link');
       print("Статус ответа: ${response.statusCode}");
@@ -115,22 +121,6 @@ httpGet(String link) async{
     }
   }
 
-// Future<bool> getSyncStatus() async{
-
-//   bool reg = false;
-//   DBUserProvider.dbc.getClientUser(1).then((res){
-//     print(res.reg);
-//     reg = (res.reg == 1); //Если 1 -> зареган -> True -> делаем синхронизацию;
-//   });
-
-//   try {
-//   final result = await InternetAddress.lookup('google.com');
-//     return result.isNotEmpty && result[0].rawAddress.isNotEmpty && reg;
-//   } on SocketException catch (_) {
-//     return false;
-//   }
-// }
-
 class MyStatefulWidget extends StatefulWidget {
   @override
   _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
@@ -138,13 +128,16 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
+// ---- Для Future Builder ---- 
+
 var countTask =  DBProvider.db.getContNow();
+
 bool registration = false;
 List<int> countTasksByMarker = [0,0,0,0,0,0];
-int userIdServer;
-// РОУТИННГ
+
+  int userIdServer;
+
   void refreshCount() {
-    // reload
     setState(() {
       countTask =  DBProvider.db.getContNow();
     });
@@ -160,12 +153,14 @@ int userIdServer;
     void initState(){
       super.initState();
 
+// ---- Достаем данные пользователя из Локальной БД ---- 
       DBUserProvider.dbc.getClientUser(1).then((res){
         registration = (res.reg == 1);
         userIdServer = res.userIdServer;
-        print(registration.toString() + "UserServerId--->" + userIdServer.toString());
+        // print(registration.toString() + "UserServerId--->" + userIdServer.toString());
       });
 
+// ---- Заполняем количество задач по маркерам ---- 
       DBProvider.db.getAllTasks().then((res){
         for(var item in res){
           switch (item.marker) {
@@ -191,25 +186,19 @@ int userIdServer;
           }
         }
       });
+
     }
+// ---- Название маркеров старотовой страницы ---- 
+  List<String> slider_titles = ["Учеба", "Работа", "Спорт", "Встречи", "Покупки", "Другое" ];
 
-  List<String> slider_titles = [
-    "Учеба",
-    "Работа",
-    "Спорт",
-    "Встречи",
-    "Покупки",
-    "Другое"];
-
+// ---- Иконки маркеров старотовой страницы ---- 
   List<IconData> i_add = [
-    FontAwesome.book,
-    FontAwesome.briefcase,
-    MdiIcons.fromString('basketball'),
-    FontAwesome.users, 
-    MdiIcons.fromString('shopping'),
-    FontAwesome.spinner
+    FontAwesome.book, FontAwesome.briefcase,
+    MdiIcons.fromString('basketball'), FontAwesome.users, 
+    MdiIcons.fromString('shopping'), FontAwesome.spinner
     ];
 
+// ---- Недоработанный метод получения иконок для карточек слайдера ---- 
     // getIcon(int i){
     //   print((i-7).toString() + " Чет говно");
     //   DBMarkerProvider.db.getMarkById(i-7).then((icon){
@@ -227,17 +216,15 @@ int userIdServer;
         child:                         
       Column(
         children: [
-          DecoratedBox(  // add this
+
+// -------------------> Карусель
+
+          DecoratedBox(
             child: new Column(
         children: <Widget>[
          CarouselSlider(
-          items: [
-            1,
-            2,
-            3,
-            4,
-            5,
-            6].map((i) {
+           // ---- Знаю такая-себе реализация ---- 
+          items: [1,2,3,4,5,6].map((i) {
             return new Builder(
               builder: (BuildContext context) {
                 return new Container(
@@ -272,27 +259,24 @@ int userIdServer;
           ),
 
            decoration: BoxDecoration(
-            //  color: Color.fromRGBO(114, 103, 239, 0.4),
             gradient: new LinearGradient(
-                      colors: [
+                    colors: [
                       Color.fromRGBO(162, 122, 246, 1),
                       Color.fromRGBO(114, 103, 239, 1),
-                      // Color.fromRGBO(81, 20, 219, 1),
-                      // Color.fromRGBO(31, 248, 169, 1),
                       ],
 
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
                     stops: [0.0,1.0],
-
-                      tileMode: TileMode.clamp),
+                    tileMode: TileMode.clamp),
            ),
         ),
-        Padding(
-          
-          padding: EdgeInsets.only(right: 10.0, left: 10.0, top: 10.0, bottom: 10.0),
 
-        child: DecoratedBox(
+// -------------------> Блок с тенью и громофоном
+
+        Padding(
+          padding: EdgeInsets.only(right: 10.0, left: 10.0, top: 10.0, bottom: 10.0),
+          child: DecoratedBox(
                   decoration: new BoxDecoration(
                     color: Colors.white,
                     boxShadow:<BoxShadow>[
@@ -315,15 +299,11 @@ int userIdServer;
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-          Align(
-              alignment: Alignment.centerLeft,
-              child:
-
-            new FutureBuilder<int>(
+            Align(
+                alignment: Alignment.centerLeft,
+                child: new FutureBuilder<int>(// ----- ToDo Лист
               future: countTask,
-            // stream: _streamController.stream, // Создаем и открываем поток
               builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-             // Наши данные из потока
              return
             RichText(
               text: TextSpan(
@@ -350,13 +330,6 @@ int userIdServer;
                     RawMaterialButton(
                             onPressed: () {
                               getVoiceInfo();
-                              // askPermision();
-                              //   if(_isAvailable && ! _isListerning)
-                              //   {
-                              //       // httpGet("https://delau.000webhostapp.com/flutter/addTask.php?header=1&body=1&date=2020-01-15&time=24:13:00&marker=1&paginator=1");
-                              //   _speechRecognition.listen(locale: "ru_RU").then((result) => print("aaaaa"));
-                                
-                              // }
                             },
                             child: new Icon(
                               FontAwesome.bullhorn,
@@ -368,33 +341,14 @@ int userIdServer;
                         hoverElevation: 10,
                         constraints: BoxConstraints.tight(Size(36, 36)),
                         fillColor: Colors.white,
-                        // padding: EdgeInsets.all(2.0),
                     ),
                 ),
-                // Padding(
-                //     padding: EdgeInsets.only(left: 0.0, right: 5.0, top: 2.0, bottom: 2.0),
-                //     child: 
-                //     RawMaterialButton(
-                //             onPressed: () {
-                //               Navigator.pushNamed(context, '/fcm');
-                //             },
-                //             child: new Icon(
-                //               Icons.add,
-                //               size: 27,
-                //               color: Color.fromRGBO(114, 103, 239, 1),
-                //         ),
-                //         shape: new CircleBorder(),
-                //         elevation: 4,
-                //         hoverElevation: 10,
-                //         constraints: BoxConstraints.tight(Size(36, 36)),
-                //         fillColor: Colors.white,
-                //         // padding: EdgeInsets.all(2.0),
-                //     ),
-                // ),
           ],),
           ),
         ),
         ),
+
+        // -------------------> Листвью с задачами
         
          Expanded(
           child: Container(
@@ -417,78 +371,61 @@ int userIdServer;
                     color: Colors.green[300],
                     alignment: Alignment.centerLeft,
                       child: Column(
-                  children: <Widget>[
-                        Icon(
-                        FontAwesome.check,
-                        color: Colors.white,
-                  ),
-                  Text("Выполнил", 
-                  style: TextStyle(
-                    color: Colors.white,
-                     fontSize: 14.0,
-                      fontFamily: 'Exo 2',
-                       fontWeight: FontWeight.w600,),),
-                  ],
-                  ),
-                  ),
-                  secondaryBackground:
-                   Container(
-                    padding: EdgeInsets.only( top: 6.0, right: 5.0),
-                    color: Colors.red[300],
-                    alignment: Alignment.centerRight,
-                      child: Column(
-                  children: <Widget>[
-                        Icon(
-                        FontAwesome.close,
-                        color: Colors.white,
-                  ),
-                  Text("Удалить", 
-                  style: TextStyle(
-                    color: Colors.white,
-                     fontSize: 14.0,
-                      fontFamily: 'Exo 2',
-                       fontWeight: FontWeight.w600,),),
-                  ],
-                  ),
-                  ),
-                  // confirmDismiss: (DismissDirection direction) async {
-                  //   final bool res = await showDialog(
-                  //     context: context,
-                  //     builder: (BuildContext context) {
-                  //       return AlertDialog(
-                  //         title: const Text("Подтвердите действие"),
-                  //         content: const Text("Are you sure you wish to delete this item?"),
-                  //         actions: <Widget>[
-                  //           FlatButton(
-                  //             onPressed: () => Navigator.of(context).pop(true),
-                  //             child: const Text("DELETE")
-                  //           ),
-                  //           FlatButton(
-                  //             onPressed: () => Navigator.of(context).pop(false),
-                  //             child: const Text("CANCEL"),
-                  //           ),
-                  //         ],
-                  //       );
-                  //     },
-                  //   );
-                  // },
-                  // key: UniqueKey(),
+                        children: <Widget>[
+                              Icon(
+                              FontAwesome.check,
+                              color: Colors.white,
+                            ),
+                            Text("Выполнил", 
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14.0,
+                                fontFamily: 'Exo 2',
+                                fontWeight: FontWeight.w600,),),
+                            ],
+                          ),
+                        ),
+                        secondaryBackground:
+                        Container(
+                          padding: EdgeInsets.only( top: 6.0, right: 5.0),
+                          color: Colors.red[300],
+                          alignment: Alignment.centerRight,
+                            child: Column(
+                        children: <Widget>[
+                              Icon(
+                              FontAwesome.close,
+                              color: Colors.white,
+                          ),
+                        Text("Удалить", 
+                          style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14.0,
+                            fontFamily: 'Exo 2',
+                            fontWeight: FontWeight.w600,),),
+                        ],
+                      ),
+                    ),
                   direction: DismissDirection.endToStart,
+
+// -------------------> Обработчик смахивания в бок
+
                   onDismissed: (direction) {
                     int pr;
                     DBProvider.db.deleteClient(item.id).then((priority){
                       var pr = priority;
+                      // -------------------> Обновляем стейт со значением
                       refreshCount();
+                      // -------------------> Обновляем значение в локальной бд по значению id
                       counterDone(pr);
-
                       check().then((intenet) {
+                      // -------------------> Если пользователь зарегистрирован и есть интернет Обновляем значение на сервере в бд по значению id
                       if (intenet != null && intenet && registration) {
                         print("synchromised And Pr --->" + pr.toString() + "Id user Server --->" + userIdServer.toString());
-                        // rating + pr ~/ 2;
                         httpGet("https://delau.000webhostapp.com/flutter/delete.php?id="+item.id.toString()+"&priority="+(pr~/ 2).toString()+"&user_id="+userIdServer.toString());
                       }
                     });
                   });
+// -------------------> Показываем снакбар о выполнении
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
                         backgroundColor: Color.fromRGBO(114, 103, 239, 1),
@@ -501,6 +438,7 @@ int userIdServer;
                           ),
                         ),
                       ),
+
                     );
                   },
                   child: ListTile(
@@ -516,7 +454,6 @@ int userIdServer;
                     subtitle: get_subtitle_of_SQLI(item),
                     trailing: Checkbox(
                       onChanged: (bool value) {
-                        //  httpGet("https://delau.000webhostapp.com/flutter/nodeletedone.php?id="+item.id.toString()); 
                         DBProvider.db.blockOrUnblock(item);
                         setState(() {
                           
@@ -532,14 +469,11 @@ int userIdServer;
                 );
               },
             );
-
           } 
-          
           else 
           {
             return Center(child: CircularProgressIndicator());
           }
-
         },
       ),
       ),
@@ -548,6 +482,8 @@ int userIdServer;
       ],
       ), 
       ),
+
+// -------------------> Navbar
 
       bottomNavigationBar: CurvedNavigationBar(
         height: 50.0,
@@ -559,9 +495,6 @@ int userIdServer;
       Icon(Icons.add, size: 30, color: Colors.black54,),
       Icon(Icons.pie_chart_outlined, size: 30, color: Colors.black54,),
       Icon(FontAwesome.user_o, size: 30, color: Colors.black54,),
-      // Icon(Icons.compare_arrows, size: 30, color: Colors.black,),
-      // Icon(Icons.add, size: 30, color: Colors.black,),
-      // Icon(Icons.list, size: 30, color: Colors.black,),
     ],
     index: 0,
     animationCurve: Curves.bounceInOut,
@@ -587,10 +520,11 @@ int userIdServer;
         }
 }
 
-
   void counterDone(int pr) async{
     await DBUserProvider.dbc.updateCountDone(pr);
   }
+
+// -------------------> Создаем звездочки по ptriority
 
 class StarDisplay extends StatelessWidget {
   final int value;
@@ -611,78 +545,3 @@ class StarDisplay extends StatelessWidget {
     );
   }
 }
-
-class MP extends StatefulWidget {
-  @override
-  _MPState createState() => _MPState();
-}
-
-class _MPState extends State<MP> {
-  // data for testing
-  List<Client> testClients = [
-    Client(title: "Raouf",
-    description: "Rahiche",
-    marker: 4,
-    priority: 3,
-    date: "2001-12-12",
-    time: "22:22",
-    done: false),
-  ];
-  List<IconData> i_add = [
-    FontAwesome.book,
-    FontAwesome.briefcase,
-    MdiIcons.fromString('basketball'),
-    FontAwesome.users, 
-    MdiIcons.fromString('shopping'),
-    FontAwesome.spinner
-    ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Flutter SQLite")),
-      body: FutureBuilder<List<Client>>(
-        future: DBProvider.db.getAllTasks(),
-        builder: (BuildContext context, AsyncSnapshot<List<Client>> snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (BuildContext context, int index) {
-                Client item = snapshot.data[index];
-                return Dismissible(
-                  key: UniqueKey(),
-                  background: Container(color: Colors.red),
-                  onDismissed: (direction) {
-                    DBProvider.db.deleteClient(item.id);
-                  },
-                  child: ListTile(
-                    title: Text(item.title),
-                    leading: Text(item.id.toString()),
-                    trailing: Checkbox(
-                      onChanged: (bool value) {
-                        DBProvider.db.blockOrUnblock(item);
-                        setState(() {});
-                      },
-                      value: item.done,
-                    ),
-                  ),
-                );
-              },
-            );
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () async {
-          Client rnd = testClients[math.Random().nextInt(testClients.length)];
-          await DBProvider.db.newClient(rnd);
-          setState(() {});
-        },
-      ),
-    );
-  }
-}
-

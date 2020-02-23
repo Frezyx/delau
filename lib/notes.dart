@@ -323,7 +323,7 @@ class _Example01State extends State<Example01> {
                   // label: '',
                   // labelStyle: TextStyle(fontSize: 18.0),
                   onTap: () {
-                    Navigator.pushNamed(context, '/note');
+                    Navigator.pushNamed(context, '/note/none');
                   }
                 ),
                 SpeedDialChild(

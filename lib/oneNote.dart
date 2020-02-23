@@ -31,9 +31,11 @@ class _NotePageState extends State<NotePage> {
     @override
     void initState(){
       super.initState();
-      DBNoteProvider.db.getNoteById(int.parse(id)).then((note){
+      if(id != "none"){
+        DBNoteProvider.db.getNoteById(int.parse(id)).then((note){
           _inputController.text = note;
-      });
+        });
+      }
     }
 
   _NotePageState(this.id);
