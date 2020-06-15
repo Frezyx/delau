@@ -85,6 +85,7 @@ class MyApp extends StatelessWidget {
       '/note':(BuildContext context) => NotePage(),
       '/updateTask':(BuildContext context) => UpdateTask(),
     },
+    
     onGenerateRoute: (RouteSettings){
       var path = RouteSettings.name.split('/');
       

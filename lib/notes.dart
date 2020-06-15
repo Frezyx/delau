@@ -121,7 +121,9 @@ class _Example01State extends State<Example01> {
   @override
     void initState(){
     super.initState();
+
     PermissionHandler().checkPermissionStatus(PermissionGroup.microphone).then(_updateStatus);
+    
     initSpeechRecognizer();
     scrollController = ScrollController()
       ..addListener(() {
@@ -226,7 +228,7 @@ class _Example01State extends State<Example01> {
               Padding(
               padding: EdgeInsets.only(right: 0, left: 0,),
               child:
-                FutureBuilder<List<Note>>(
+              FutureBuilder<List<Note>>(
                 future: isSaerching ? DBNoteProvider.db.getAllNotesSearch(searchText) : DBNoteProvider.db.getAllNotes(),
                 builder:
                 (BuildContext context, AsyncSnapshot<List<Note>> snapshot) {
