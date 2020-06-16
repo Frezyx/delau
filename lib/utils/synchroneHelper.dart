@@ -59,49 +59,9 @@ import 'database_helper.dart';
                   DBProvider.db.passDate(i);
                     print("Задача #$i загружена на сервер");
                 }
-                // for (int y = 0; y < dataSqerver.length; y++){
-                //   if(dataSqerver[y].fromMobile == 1 && dataSqerver[y].mobile_id == data[i].id){
-                //     if(data[i].deleted != 1){
-                //         Client now_client = new Client(
-                //                 id: data[i].id,
-                //                 title: dataSqerver[y].post_header,
-                //                 description: dataSqerver[y].post_body,
-                //                 marker: dataSqerver[y].marker,
-                //                 priority: dataSqerver[y].paginator,
-                //                 date: dataSqerver[y].date_zd,
-                //                 time: dataSqerver[y].time_zd,
-                //                 deleted: 0,
-                //                 passed: 1,
-                //                 done: false
-                //               );
-                //         DBProvider.db.updateClient(now_client);
-                //       }
-                //       else{
-                //         httpGet("https://delau.000webhostapp.com/flutter/deleteByMobileId.php?mobile_id="+data[i].id.toString()+"user_id="+id.toString());
-                //       }
-                //     }
-                    // else if(dataSqerver[y].fromMobile == 0){
-                    //           Client now_client = new Client(
-                    //             title: dataSqerver[y].post_header,
-                    //             description: dataSqerver[y].post_body,
-                    //             marker: dataSqerver[y].marker,
-                    //             priority: dataSqerver[y].paginator,
-                    //             date: dataSqerver[y].date_zd,
-                    //             time: dataSqerver[y].time_zd,
-                    //             deleted: 0,
-                    //             passed: 1,
-                    //             done: false
-                    //           );
-                    //   DBProvider.db.newClient(now_client);
-                    // }
-                    // print("Отправил локально #"+y.toString()+dataSqerver[y].post_header+"/"+dataSqerver[y].post_body+"/"+dataSqerver[y].marker.toString()+"/"+
-                    // dataSqerver[y].paginator.toString()+"/"+dataSqerver[y].date_zd.toString()+"/"+dataSqerver[y].time_zd.toString()
-                    // );
-                // }
               }
             });
         });
-    // });
   }
 
 class TaskModel {
@@ -122,9 +82,7 @@ class TaskModel {
    this.paginator, this.done, this.user_id, this.fromMobile, this.mobile_id});
  
   factory TaskModel.fromJson(Map<String, dynamic> json) {
-    // print(json['done'].toString());
     return TaskModel(
-      // userId: json['userId'] as int,
       id: int.parse(json['id']),
       user_id: int.parse(json['user_id']),
       fromMobile: int.parse(json['fromMobile']),
@@ -150,7 +108,5 @@ List<TaskModel> parsePosts(String responseBody) {
 Future<List<TaskModel>> fetchPosts(http.Client client, String link) async {
   final response = await client.get(link);
   var data = jsonDecode(response.body);
-    //print(data.toString());
-  // compute function to run parsePosts in a separate isolate
   return parsePosts(response.body);
 }

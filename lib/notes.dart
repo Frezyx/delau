@@ -29,16 +29,7 @@ class _Example01State extends State<Example01> {
   String id;
   
   String resultText = "";
-  // bool isNewRouteSameAsCurrent = false;
-  
-  //   exitPage(){
-  //   Navigator.popUntil(context, (route) {
-  //     if (route.settings.name == "/notes") {
-  //       isNewRouteSameAsCurrent = true;
-  //     }
-  //     // return true;
-  //   });
-  // }
+
   postNote(text){
                   if(!sender){
                     print("First text field: $text");
@@ -68,7 +59,7 @@ class _Example01State extends State<Example01> {
       _speechRecognition.listen(locale: "ru_RU")
         .then((result){ 
           print('$result');
-            // postNote(resultText);
+
         });
       _isListening = true;
     }
@@ -131,9 +122,6 @@ class _Example01State extends State<Example01> {
             ScrollDirection.forward);
       });
       DBNoteProvider.db.recoverNotes();
-      // exitPage().then((){
-      //   print(isNewRouteSameAsCurrent.toString()+" Я на странице route ?");
-      // });
     }
 
     void _updateStatus(PermissionStatus status){
@@ -161,12 +149,8 @@ class _Example01State extends State<Example01> {
   }
     
 
-  // getGrid(){
-  //   return new _Example01Tile(Colors.brown, 'Icons.map');
-  // }
   @override
   Widget build(BuildContext context) {
-      // DBNoteProvider.db.getAllNotes().then((note){
         return new Scaffold(
         appBar: AppBar(
           backgroundColor: isShrink? Colors.white: Colors.transparent,
@@ -201,9 +185,6 @@ class _Example01State extends State<Example01> {
                               Icon(Icons.search),
                               ),
                             contentPadding: new EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
-                            // fillColor: Color.fromRGBO(114, 103, 239, 1),
-                            // focusColor: Color.fromRGBO(114, 103, 239, 1),
-                            // hoverColor: Color.fromRGBO(114, 103, 239, 1),
                             labelText: 'Поиск по заметкам...',
                             border: InputBorder.none,
                             helperStyle: TextStyle(
@@ -265,9 +246,6 @@ class _Example01State extends State<Example01> {
                 Icon(Icons.add, size: 30, color: Colors.black54,),
                 Icon(Icons.pie_chart_outlined, size: 30, color: Colors.black54,),
                 Icon(FontAwesome.user_o, size: 30, color: Colors.black54,),
-                // Icon(Icons.compare_arrows, size: 30, color: Colors.black,),
-                // Icon(Icons.add, size: 30, color: Colors.black,),
-                // Icon(Icons.list, size: 30, color: Colors.black,),
               ],
               index: 1,
               animationCurve: Curves.bounceInOut,
@@ -292,7 +270,6 @@ class _Example01State extends State<Example01> {
 
             floatingActionButton:
             SpeedDial(
-              // both default to 16
               marginRight: 18,
               marginBottom: 20,
               
@@ -301,11 +278,7 @@ class _Example01State extends State<Example01> {
                 color: Colors.white,
                 size: 22.0,
                 ),
-              // this is ignored if animatedIcon is non null
-              // child: Icon(Icons.add),
               visible: dialVisible,
-              // If true user is forced to close dial manually 
-              // by tapping main button and overlay is not rendered.
               closeManually: false,
               curve: Curves.bounceIn,
               overlayColor: Colors.black,
@@ -322,8 +295,6 @@ class _Example01State extends State<Example01> {
                 SpeedDialChild(
                   child: Icon(Icons.add),
                   backgroundColor: Color.fromRGBO(114, 103, 239, 1),
-                  // label: '',
-                  // labelStyle: TextStyle(fontSize: 18.0),
                   onTap: () {
                     Navigator.pushNamed(context, '/note/none');
                   }
@@ -331,8 +302,6 @@ class _Example01State extends State<Example01> {
                 SpeedDialChild(
                   child: Icon(Icons.keyboard_voice),
                   backgroundColor: Color.fromRGBO(114, 103, 239, 1),
-                  // label: 'Third',
-                  // labelStyle: TextStyle(fontSize: 18.0),
                   onTap: (){
                     askPermision();
                     if (_isAvailable && !_isListening){
@@ -348,17 +317,11 @@ class _Example01State extends State<Example01> {
                                 }),
                           );
                       }
-                    // DBNoteProvider.db.addNoteInit().then((y){
-                    //   setState(() {});
-                    // });
-                    //  setState(() {});
-                    // Navigator.pushNamed(context, '/notes');
                   },
                 ),
               ],
             ),
           );
-      // });
   }
 }
   int getGridHeigth(String content){
@@ -383,7 +346,6 @@ class _Example01State extends State<Example01> {
     else if(charCount > 70){resText = text.substring(0, 70)+"...";}
     else if(charCount > 50){resText = text.substring(0, 50)+"...";}
     else if(charCount > 25){resText = text.substring(0, 25)+"...";}
-    // else if(charCount > 30){resText = text.substring(0, 30);}
     return resText;
   }
 
@@ -409,7 +371,6 @@ class _Example01Tile extends StatefulWidget {
 }
 
 class __Example01TileState extends State<_Example01Tile> {
-    // var bc = widget.backgroundColor;
     var cliced = true;
     bool showSnack = false;
     int countLongPress = 0;
@@ -429,8 +390,6 @@ class __Example01TileState extends State<_Example01Tile> {
   @override
   Widget build(BuildContext context) {
     return new Card(
-      // color: cliced ? Colors.white : Color.fromRGBO(114, 103, 239, 1),
-      
       color: cliced ? Colors.white : Color.fromRGBO(200, 200, 200, 1),
       child: new InkWell(
         onLongPress: (){
@@ -452,10 +411,7 @@ class __Example01TileState extends State<_Example01Tile> {
             if(showSnack && archivedCount == 1){
               showSnack = false;
               Flushbar(
-                    // title:  "Hey Ninja",
                     backgroundColor: Color.fromRGBO(114, 103, 239, 1),
-                    // margin: EdgeInsets.all(8),
-                    // borderRadius: 8,
                     flushbarPosition: FlushbarPosition.TOP,
                     message:  "Если вы хотите удалить выбранные заметки нажмите на иконку в всплывшем окне",
                     mainButton: FlatButton(
@@ -469,8 +425,7 @@ class __Example01TileState extends State<_Example01Tile> {
                         Icons.delete,
                         color: Colors.white,
                       )
-                    ),
-                    // duration:  Duration(seconds: 3),              
+                    ),             
                   )..onStatusChanged = (FlushbarStatus status) {
                 switch (status) {
                   case FlushbarStatus.SHOWING:
@@ -496,16 +451,11 @@ class __Example01TileState extends State<_Example01Tile> {
               }..show(context);
             }
             });
-            // print(" Пробовал -->"+widget.id.toString()+" Получил ---> "+res.toString()+" На фиалку");
           });
           setClick();
         },
         onTap: () {
           Navigator.pushNamed(context, '/note/${widget.id}');
-          // setFalseClick();
-          // DBNoteProvider.db.updateColorFalse(widget.id, 0).then((res){
-          //   print(" Пробовал -->"+widget.id.toString()+" Получил ---> "+res.toString()+" На белый");
-          // });
         },
         child: new Align(
           alignment: Alignment.topCenter,
@@ -513,17 +463,11 @@ class __Example01TileState extends State<_Example01Tile> {
             padding: const EdgeInsets.all(15.0),
             child: Text(
               _cropText(widget.content),
-              
-              // widget.content,
               style: TextStyle(
                 color: cliced? Colors.black : Colors.black54,
                 fontSize: _determineFontSizeForContent(widget.content),
               ),
             ),
-            // child: new Icon(
-            //   iconData,
-            //   color: Colors.white,
-            // ),
           ),
         ),
       ),

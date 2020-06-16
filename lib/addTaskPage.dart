@@ -28,8 +28,7 @@ class RadioModel {
 }
 
 class MyStatefulWidget3 extends StatefulWidget {
-  
-  // MyStatefulWidget3({String id}): _id = id;
+
 
   @override
   _MyStatefulWidgetState3 createState() => _MyStatefulWidgetState3();
@@ -80,7 +79,6 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
         sampleData.add(new RadioModel(sampleData.length-1, false, MdiIcons.fromString(list[i].icon), list[i].name));
         print("icon: "+list[i].icon +"     name: "+list[i].name );
       }
-      // sampleData.add(new RadioModel(sampleData.length-1, false, Icons.add, 'Добавить'));
     });
 
     DBUserProvider.dbc.getClientUser(1).then((res){
@@ -128,7 +126,6 @@ class _MyStatefulWidgetState3 extends State<MyStatefulWidget3> {
           setState(() {
             _time = picked;
             print_time = determinateTextToTime(_time);
-            // print_time = _time.toString();
           });
       }
 
@@ -158,7 +155,6 @@ _selectPriority(context){
                                 size: 28,
                                 strokeColor: Color.fromRGBO(114, 103, 239, 1),
                                 fillColor: Color.fromRGBO(114, 103, 239, 1),
-                                // emptyColor: Colors.white,
                             ),
                             rating: print_rating / 2,
                             onChangeRating: (int rating) {
@@ -188,18 +184,11 @@ _selectPriority(context){
         Future<void> _neverSatisfied() async {
           return showDialog<void>(
             context: context,
-            barrierDismissible: false, // user must tap button!
+            barrierDismissible: false,
             builder: (BuildContext context) {
               return 
                 AlertDialog(
                 title: Text('Ваша задача добавлена'),
-                // content: SingleChildScrollView(
-                //   child: ListBody(
-                //     children: <Widget>[
-                //       Text('Теперь она появится в таблице с задачами.'),
-                //     ],
-                //   ),
-                // ),
                 actions: <Widget>[
                       FlatButton(
                         child: Text('Отменить'), textColor: Color.fromRGBO(114, 103, 239, 1),
@@ -224,7 +213,7 @@ _selectPriority(context){
         Future<void> _badAllert() async {
           return showDialog<void>(
             context: context,
-            barrierDismissible: false, // user must tap button!
+            barrierDismissible: false,
             builder: (BuildContext context) {
               return 
                 AlertDialog(
@@ -272,7 +261,7 @@ _selectPriority(context){
          return Scaffold(
           body:
            new Container(
-              padding: EdgeInsets.only(top:90,),// color: Colors.transparent,
+              padding: EdgeInsets.only(top:90,),
               child: new Form(key: _formKey, child: new Column(children: <Widget>[
 
 
@@ -325,8 +314,6 @@ _selectPriority(context){
                 _surname = value.toString();
               }
             },),),
-
-//TODO : заменить на иконочный сборщик с звездами
 
           new SizedBox(height: 0.0),
           Padding(
@@ -430,14 +417,12 @@ _selectPriority(context){
             ),
           ),
     
-
-            // new SizedBox(height: 10.0,),
             new RaisedButton(onPressed: (){
               if(_formKey.currentState.validate()){
                 if(_name != null && _surname != null){
 
               if(selected_radio <= 7){
-                  Client now_client = new Client(
+                  Task now_client = new Task(
                         title: _name,
                         description: _surname,
                         marker: selected_radio == 0 ? 0 : selected_radio - 1,
@@ -468,7 +453,7 @@ _selectPriority(context){
                 }
                 else{
                   DBMarkerProvider.db.getMarkById(selected_radio-8).then((iconData){
-                  Client now_client = new Client(
+                  Task now_client = new Task(
                         title: _name,
                         description: _surname,
                         marker: selected_radio == 0 ? 0 : selected_radio - 1,
@@ -503,21 +488,9 @@ _selectPriority(context){
                   _firebaseMessaging.getToken().then((token){
                     httpGet("https://delau.000webhostapp.com/flutter/addNotif.php?token="+token+"&date="+_date.toString()+"&time="+_time.toString());
                   });
-
-                  // // var link = "https://delau.000webhostapp.com/flutter/addNotif.php?token="+nToken+"&date="+_date.toString()+"&time="+_time.toString();
-
-                  // _firebaseMessaging.getToken().then((token){
-                  //   httpGet("https://delau.000webhostapp.com/flutter/addNotif.php?token="+token+"&date="+_date.toString()+"&time="+_time.toString());
-                  //   // print("https://delau.000webhostapp.com/flutter/addNotif.php?token="+token+"&date="+_date.toString()+"&time="+_time.toString());
-                  // });
-                  // // print(link);
                 }
               }
             }, child: Text('Создать'), color: Color.fromRGBO(114, 103, 239, 1), textColor: Colors.white,),
-            //  new RaisedButton(onPressed: (){
-            //     DBProvider.db.deleteAll();
-            // }, child: Text('Удалить все'), color: Color.fromRGBO(114, 103, 239, 1), textColor: Colors.white,),
-    
           ],
          ),),),
                               
@@ -532,9 +505,6 @@ _selectPriority(context){
                                             Icon(Icons.add, size: 30, color: Colors.deepPurpleAccent,),
                                             Icon(Icons.pie_chart_outlined, size: 30, color: Colors.black54,),
                                             Icon(FontAwesome.user_o, size: 30, color: Colors.black54,),
-                                            // Icon(Icons.compare_arrows, size: 30, color: Colors.black,),
-                                            // Icon(Icons.add, size: 30, color: Colors.black,),
-                                            // Icon(Icons.list, size: 30, color: Colors.black,),
                                           ],
                                           index: 2,
                                           animationCurve: Curves.bounceInOut,
@@ -559,7 +529,7 @@ _selectPriority(context){
                                           );
                                 }
                                 
-                                Future<int> addAtLocalDB(Client nowClient) async{
+                                Future<int> addAtLocalDB(Task nowClient) async{
                                             DBProvider.db.newClient(nowClient).then((id){
                                               return id;
                                             });
@@ -576,5 +546,4 @@ _selectPriority(context){
         });
         return iconData;
     }
-                              
 }

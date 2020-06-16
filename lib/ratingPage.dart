@@ -22,23 +22,6 @@ Timer _timer;
 int _start = 12;
 bool killPreload = false;
 
-// void startTimer() {
-//   const oneSec = const Duration(seconds: 1);
-//   _timer = new Timer.periodic(
-//     oneSec,
-//     (Timer timer) => setState(
-//       () {
-//         if (_start < 1) {
-//           killPreload = true;
-//           timer.cancel();
-//         } else {
-//           _start = _start - 1;
-//         }
-//       },
-//     ),
-//   );
-// }
-
 @override
 void dispose() {
   _timer.cancel();
@@ -48,7 +31,6 @@ void dispose() {
 var countTask =  DBProvider.db.getContNow();
 bool registration = false;
 int userId = 0;
-// РОУТИННГ
 
     @override
     void initState(){
@@ -60,7 +42,6 @@ int userId = 0;
         print("$userId Пользователя id" );
         print(registration);
       });
-      // startTimer();
     }
 
   @override
@@ -111,7 +92,6 @@ int userId = 0;
                                     color: Color.fromRGBO(114, 103, 239, 1)
                                   ),
                                   ),
-                                        //fontWeight: FontWeight.bold,
                               ),
                               decoration: new BoxDecoration(
                               boxShadow: <BoxShadow>[
@@ -153,19 +133,13 @@ int userId = 0;
           } 
           else 
               return NoRegister();
-            
-          // else if(!registration)
-          // {
-          //   return NoRegister();
-          // }
-
         }
       },
       ),
       ), 
         ),
       ],
-      ),                       
+      ),
 
       ),
 
@@ -179,9 +153,6 @@ int userId = 0;
       Icon(Icons.add, size: 30, color: Colors.black54,),
       Icon(Icons.pie_chart_outlined, size: 30, color: Colors.deepPurpleAccent,),
       Icon(FontAwesome.user_o, size: 30, color: Colors.black54,),
-      // Icon(Icons.compare_arrows, size: 30, color: Colors.black,),
-      // Icon(Icons.add, size: 30, color: Colors.black,),
-      // Icon(Icons.list, size: 30, color: Colors.black,),
     ],
     index: 3,
     animationCurve: Curves.bounceInOut,
@@ -223,9 +194,7 @@ class UserModel {
    this.countDone, this.countAdd, this.rating });
  
   factory UserModel.fromJson(Map<String, dynamic> json) {
-    // print(json['done'].toString());
     return UserModel(
-      // userId: json['userId'] as int,
       id: int.parse(json['id']),
       name: json['name'] as String,
       surname: json['surname'] as String,
@@ -247,10 +216,6 @@ List<UserModel> parsePosts(String responseBody) {
 
 Future<List<UserModel>> fetchPosts(http.Client client, String link) async {
   final response = await client.get(link);
-  // var data = jsonDecode(response.body);
-    //print(data.toString());
-  // compute function to run parsePosts in a separate isolate
-  // print(" Вернул -->"+ response.body);
   return parsePosts(response.body);
 }
 
@@ -270,29 +235,10 @@ Widget get_subtitle_ratingPage(UserModel item, userId){
               ),
             ),
           ),
-      // Align(
-      // alignment: AlignmentDirectional.centerStart,
-      // child:
-      //   StarDisplay(value: item.priority ~/ 2),
-      // ),
       ],
     ),
   );
 }
-
-// Widget getRatingList(){
-//   DBUserProvider.dbc.getClientUser(1).then((res){
-//     var registration = (res.reg == 1);
-
-
-//   if(registration){
-//     print("Зареган");
-//     returnRatingList();
-//   }else{
-//       getNoRegist();
-//   }
-//   });
-// }
 
 Widget getNoRegist(){
   return Column(
@@ -368,19 +314,7 @@ Widget returnRatingList(registration, userId){
                     overflow: TextOverflow.ellipsis,
                     ),
                     subtitle: get_subtitle_ratingPage(item, userId),
-                    // trailing: Checkbox(
-                    //   onChanged: (bool value) {
-                        
-                    //     DBProvider.db.blockOrUnblock(item);
-                    //     setState(() {
-                          
-                    //     });
-                    //   },
-                    //   value: item.done,
-                    // ),
                     onTap: () {
-                    // _onTapItem(context, item);
-                    // Navigator.pushNamed(context, '/postPage/${item.id}');
                   }
                   ),
                 );

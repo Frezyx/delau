@@ -18,9 +18,7 @@ class UserModel {
    this.login, this.email, this.password });
  
   factory UserModel.fromJson(Map<String, dynamic> json) {
-    // print(json['done'].toString());
     return UserModel(
-      // userId: json['userId'] as int,
       id: int.parse(json['id']),
       name: json['name'] as String,
       surname: json['surname'] as String,
@@ -39,9 +37,6 @@ List<UserModel> parsePosts(String responseBody) {
 
 Future<List<UserModel>> fetchPosts(http.Client client, int id) async {
   final response = await client.get('https://delau.000webhostapp.com/flutter/getUserById.php?id='+id.toString());
-  // var data = jsonDecode(response.body);
-    //print(data.toString());
-  // compute function to run parsePosts in a separate isolate
   print("Запрос с id --> "+id.toString()+" Вернул -->"+ response.body);
   return parsePosts(response.body);
 }
@@ -81,18 +76,11 @@ class _UpdatePageState extends State<UpdatePage> {
             Future<void> _allert() async {
           return showDialog<void>(
             context: context,
-            barrierDismissible: false, // user must tap button!
+            barrierDismissible: false,
             builder: (BuildContext context) {
               return 
                 AlertDialog(
                 title: Text('Задачи, добавленные в дальнейшем будут удалены при следующем входе. Продолжить?'),
-                // content: SingleChildScrollView(
-                //   child: ListBody(
-                //     children: <Widget>[
-                //       Text('Теперь она появится в таблице с задачами.'),
-                //     ],
-                //   ),
-                // ),
                 actions: <Widget>[
                       FlatButton(
                         child: Text('Отменить'), textColor: Color.fromRGBO(114, 103, 239, 1),
@@ -131,7 +119,7 @@ class _UpdatePageState extends State<UpdatePage> {
 
  return new Scaffold(
       body: Container(
-        padding: EdgeInsets.only(left: 40.0, right: 40.0, top:90,),// color: Colors.transparent,
+        padding: EdgeInsets.only(left: 40.0, right: 40.0, top:90,),
         child: new Form(key: _formKey, child: new Column(children: <Widget>[ 
 
               TextField(
@@ -141,7 +129,7 @@ class _UpdatePageState extends State<UpdatePage> {
                   suffixIcon: CircleIconButton(
                     onPressed: () {
                       this.setState(() {
-                        _nameController.clear();  //Clear value
+                        _nameController.clear();
                       });
                     },
                   )
@@ -157,7 +145,7 @@ class _UpdatePageState extends State<UpdatePage> {
                   suffixIcon: CircleIconButton(
                     onPressed: () {
                       this.setState(() {
-                        _surnameController.clear();  //Clear value
+                        _surnameController.clear();
                       });
                     },
                   )
@@ -173,7 +161,7 @@ class _UpdatePageState extends State<UpdatePage> {
                   suffixIcon: CircleIconButton(
                     onPressed: () {
                       this.setState(() {
-                        _loginController.clear();  //Clear value
+                        _loginController.clear();
                       });
                     },
                   )
@@ -189,7 +177,7 @@ class _UpdatePageState extends State<UpdatePage> {
                   suffixIcon: CircleIconButton(
                     onPressed: () {
                       this.setState(() {
-                        _emailController.clear();  //Clear value
+                        _emailController.clear();
                       });
                     },
                   )
@@ -208,7 +196,6 @@ class _UpdatePageState extends State<UpdatePage> {
                         check().then((intenet) {
                           if (intenet != null && intenet) {
                             print("connected");
-                            // Internet Present Case
                             httpGet("https://delau.000webhostapp.com/flutter/updateUser.php?name="+
                             _nameController.text+"&surname="+_surnameController.text+"&email="+_emailController.text+
                             "&login="+_loginController.text+"&userIdServer="+userId.toString()).then((res){
@@ -216,7 +203,6 @@ class _UpdatePageState extends State<UpdatePage> {
                               updateAtLocalDB(_nameController.text, _surnameController.text, _emailController.text, _loginController.text, userId);
                             });
                           }
-                          // No-Internet Case
                         });
                 },
               color: Color.fromRGBO(114, 103, 239, 1),
@@ -304,7 +290,6 @@ class _UpdatePageState extends State<UpdatePage> {
                           style: TextStyle(
                             color:  Color.fromRGBO(114, 103, 239, 1),
                             fontWeight: FontWeight.w400,
-                            // decoration: TextDecoration.underline,
                             fontSize: 16.0,
                             ),
                         ),
@@ -319,12 +304,8 @@ class _UpdatePageState extends State<UpdatePage> {
 }
 
   void updateAtLocalDB(String name, String surname, String email, String login, int userId) async{
-    // httpGetLastId('https://delau.000webhostapp.com/flutter/getLastId.php').then((res){
-    //   var userId = int.parse(res) + 1;
       print("try to add user with Server id = " + userId.toString());
       updateLocal(name, surname, email, login, userId);
-    // });
-    // var userId = int.parse(httpGetLastId('https://delau.000webhostapp.com/flutter/getLastId.php'))+1;
   }
 
   void updateLocal(name, surname, email, login, userId) async{
@@ -351,7 +332,7 @@ class CircleIconButton extends StatelessWidget {
       width: size,
       height: size,
       child: Stack(
-      alignment: Alignment( 0.0, 0.0 ),  // all centered
+      alignment: Alignment( 0.0, 0.0 ),
       children: <Widget>[
                       Container(
       width: size,

@@ -26,7 +26,6 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
 
   final _formKey = GlobalKey<FormState>();
   String _name;
-  // String _icon;
 
   var rng = new Random();
 
@@ -36,7 +35,6 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
     onTap:() {
        Navigator.pushNamed(context, '/icon');
     },
-    // splashColor: Color.fromRGBO(114, 103, 239, 1),
     child: 
     new Container(
         margin: new EdgeInsets.all(15.0),
@@ -50,7 +48,6 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
                 child: Icon( MdiIcons.fromString( icon ?? "flagPlus"),
                 color: Color.fromRGBO(114, 103, 239, 1),
                 size: MediaQuery.of(context).size.width/3.3,),
-                        //fontWeight: FontWeight.bold,
               ),
                decoration: new BoxDecoration(
               color: Colors.transparent,
@@ -79,7 +76,7 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body:Container(
-        padding: EdgeInsets.only(left: 40.0, right: 40.0, top:MediaQuery.of(context).size.height/5, bottom: MediaQuery.of(context).size.height/10),// color: Colors.transparent,
+        padding: EdgeInsets.only(left: 40.0, right: 40.0, top:MediaQuery.of(context).size.height/5, bottom: MediaQuery.of(context).size.height/10),
               child: new Form(key: _formKey, child: Column(children: <Widget>[ 
               
                 getCustomRadio(icon),
@@ -100,7 +97,6 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
                 validator: (value){
                   if (value.isEmpty) return 'Дайте название своему маркеру';
                   else {
-                    // _login = value.toString();
                     _name = value.toString();
                   }
                 },
@@ -155,7 +151,6 @@ class _AddMarkerPageState extends State<AddMarkerPage> {
                           style: TextStyle(
                             color:  Color.fromRGBO(114, 103, 239, 1),
                             fontWeight: FontWeight.w400,
-                            // decoration: TextDecoration.underline,
                             fontSize: 16.0,
                             ),
                         ),

@@ -22,47 +22,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
   int _countAdd;
   int _rating;
 
-  //  MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-  //   testDevices: testDevice != null ? <String>[testDevice] : null,
-  //   nonPersonalizedAds: true,
-  //   keywords: <String>['Game', 'Mario'],
-  // );
-
-  // BannerAd _bannerAd;
-  // InterstitialAd _interstitialAd;
-
-  // BannerAd createBannerAd() {
-  //   return BannerAd(
-  //       adUnitId: "ca-app-pub-6210480653379985/8698745693",
-  //     //Change BannerAd adUnitId with Admob ID
-  //       size: AdSize.banner,
-  //       targetingInfo: targetingInfo,
-  //       listener: (MobileAdEvent event) {
-  //         print("BannerAd $event");
-  //       });
-  // }
-
-  // InterstitialAd createInterstitialAd() {
-  //   return InterstitialAd(
-  //       adUnitId: InterstitialAd.testAdUnitId,
-  //     //Change Interstitial AdUnitId with Admob ID
-  //       targetingInfo: targetingInfo,
-  //       listener: (MobileAdEvent event) {
-  //         print("IntersttialAd $event");
-  //       });
-  // }
-
   @override
     void initState(){
-      
-    //       FirebaseAdMob.instance.initialize(appId: "ca-app-pub-6210480653379985~3641025980");
-    // //Change appId With Admob Id
-    // _bannerAd = createBannerAd()
-    //   ..load()
-    //   ..show();
 
       super.initState();
-
       DBUserProvider.dbc.getClientUser(1).then((res){
         _countDone = res.countDone;
         _countAdd = res.countAdd;
@@ -91,18 +54,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
           Future<void> _neverSatisfied() async {
           return showDialog<void>(
             context: context,
-            barrierDismissible: false, // user must tap button!
+            barrierDismissible: false,
             builder: (BuildContext context) {
               return 
                 AlertDialog(
                 title: Text('Ваш аккаунт создан'),
-                // content: SingleChildScrollView(
-                //   child: ListBody(
-                //     children: <Widget>[
-                //       Text('Теперь она появится в таблице с задачами.'),
-                //     ],
-                //   ),
-                // ),
                 actions: <Widget>[
                       FlatButton(
                         child: Text('Отменить'), textColor: Color.fromRGBO(114, 103, 239, 1),
@@ -127,7 +83,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         Future<void> _badAllert() async {
           return showDialog<void>(
             context: context,
-            barrierDismissible: false, // user must tap button!
+            barrierDismissible: false,
             builder: (BuildContext context) {
               return 
                 AlertDialog(
@@ -148,7 +104,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         Future<void> _loginNotFree() async {
           return showDialog<void>(
             context: context,
-            barrierDismissible: false, // user must tap button!
+            barrierDismissible: false, 
             builder: (BuildContext context) {
               return 
                 AlertDialog(
@@ -168,12 +124,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
-    //     FirebaseAdMob.instance.initialize(appId: "ca-app-pub-6210480653379985~3641025980").then((response){
-    //   myBanner..load()..show();
-    // });
     return Scaffold(
       body:Container(
-        padding: EdgeInsets.only(left: 40.0, right: 40.0, top:MediaQuery.of(context).size.height/5, bottom: MediaQuery.of(context).size.height/10),// color: Colors.transparent,
+        padding: EdgeInsets.only(left: 40.0, right: 40.0, top:MediaQuery.of(context).size.height/5, bottom: MediaQuery.of(context).size.height/10),
               child: new Form(key: _formKey, child: new Column(children: <Widget>[
             Padding(
               padding: EdgeInsets.only( left :MediaQuery.of(context).size.width/30, right :MediaQuery.of(context).size.width/30,),
@@ -201,7 +154,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       ),
                     FlatButton(
                       onPressed: () {
-                          /*...*/
                         },
                         splashColor: Colors.transparent,  
                         highlightColor: Colors.transparent,
@@ -210,7 +162,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           "Регистрация",
                           style: TextStyle(
                             color: Color.fromRGBO(114, 103, 239, 1),
-                            // decoration: TextDecoration.underline,
                             fontSize: 18.0,
                             ),
                         ),
@@ -306,70 +257,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
               ),
               new SizedBox(height: 20.0,),
 
-            // Padding(
-            //   padding: EdgeInsets.only( left :MediaQuery.of(context).size.width/30, right :MediaQuery.of(context).size.width/30,),
-            //   child: 
-            //   Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-
-            //     children: <Widget>[
-                //   RaisedButton(onPressed: (){
-                //   if(_formKey.currentState.validate()){
-                //     if(_name != null && _email != null && _login != null && _password != null){
-        
-                //       // Client now_client = new Client(
-                //       //       title: _name,
-                //       //       description: _surname,
-                //       //       marker: selected_radio-1,
-                //       //       priority: rating.round(),
-                //       //       date: _date.toString(),
-                //       //       time: _time.toString(),
-                //       //       done: false
-                //       //     );
-
-                //       // addAtLocalDB(now_client);
-                //       // counter();
-
-                //       // getSyncStatus().then((synchronise){
-                //       //     if (synchronise){
-                //       //       print("synchromised");
-                //       //       httpGet("https://delau.000webhostapp.com/flutter/addTask.php?header="+_name+"1&body="+_surname+"1&date="+_date.toString()+"&time="+_time.toString()+"&marker="+(selected_radio-1).toString()+"&paginator="+rating.round().toString());
-                //       //     }
-                //       //   });
-                //     }
-                //   }
-                // }, child: Text('Вход'), color: Colors.white, textColor: Color.fromRGBO(114, 103, 239, 1),),
-
-                //   RaisedButton(onPressed: (){
-                //   if(_formKey.currentState.validate()){
-                //     if(_name != null && _email != null && _login != null && _password != null){
-        
-                //       // Client now_client = new Client(
-                //       //       title: _name,
-                //       //       description: _surname,
-                //       //       marker: selected_radio-1,
-                //       //       priority: rating.round(),
-                //       //       date: _date.toString(),
-                //       //       time: _time.toString(),
-                //       //       done: false
-                //       //     );
-
-                //       // addAtLocalDB(now_client);
-                //       // counter();
-
-                //       // getSyncStatus().then((synchronise){
-                //       //     if (synchronise){
-                //       //       print("synchromised");
-                //       //       httpGet("https://delau.000webhostapp.com/flutter/addTask.php?header="+_name+"1&body="+_surname+"1&date="+_date.toString()+"&time="+_time.toString()+"&marker="+(selected_radio-1).toString()+"&paginator="+rating.round().toString());
-                //       //     }
-                //       //   });
-                //     }
-                //   }
-                // }, child: Text('Зарегистрироваться'), color: Color.fromRGBO(114, 103, 239, 1), textColor: Colors.white,),
-      //           ],
-      //         ),
-      //       ),
             RaisedButton(
               shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(5.0),
@@ -396,7 +283,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     check().then((intenet) {
                           if (intenet != null && intenet) {
                             print("connected");
-                            // Internet Present Case
                             httpGet("https://delau.000webhostapp.com/flutter/addUser.php?name="+
                             surAndName[0]+"&surname="+surAndName[1]+"&email="+_email+
                             "&login="+_login+"&pass="+_password+"&countAdd="+_countAdd.toString()+
@@ -409,7 +295,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               }
                             });
                           }
-                          // No-Internet Case
                         });
                   }  
                 }
@@ -444,7 +329,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           style: TextStyle(
                             color:  Color.fromRGBO(114, 103, 239, 1),
                             fontWeight: FontWeight.w400,
-                            // decoration: TextDecoration.underline,
                             fontSize: 16.0,
                             ),
                         ),
@@ -460,12 +344,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
 }
       
   void registrationAtLocalDB(ClientUser nowClient, int userId) async{
-    // httpGetLastId('https://delau.000webhostapp.com/flutter/getLastId.php').then((res){
-    //   var userId = int.parse(res) + 1;
       print("try to add user with Server id = " + userId.toString());
       regLocal(nowClient, userId);
-    // });
-    // var userId = int.parse(httpGetLastId('https://delau.000webhostapp.com/flutter/getLastId.php'))+1;
   }
 
   void regLocal(nowClient, userId) async{

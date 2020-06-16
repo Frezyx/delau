@@ -4834,7 +4834,6 @@ class _IconDragState extends State<IconDrag> {
                 MdiIcons.fromString(iconsMaterial[i]),
                 color: Color.fromRGBO(114, 103, 239, 1)
                 ),
-                      //fontWeight: FontWeight.bold,
             ),
             decoration: new BoxDecoration(
               color: Colors.transparent,
@@ -4868,7 +4867,6 @@ class _IconDragState extends State<IconDrag> {
                 MdiIcons.fromString(iconsMaterial[i+1]),
                 color: Color.fromRGBO(114, 103, 239, 1)
                 ),
-                      //fontWeight: FontWeight.bold,
             ),
             decoration: new BoxDecoration(
               color: Colors.transparent,
@@ -4902,7 +4900,6 @@ class _IconDragState extends State<IconDrag> {
                 MdiIcons.fromString(iconsMaterial[i+2]),
                 color: Color.fromRGBO(114, 103, 239, 1)
                 ),
-                      //fontWeight: FontWeight.bold,
             ),
             decoration: new BoxDecoration(
               color: Colors.transparent,
@@ -4936,7 +4933,6 @@ class _IconDragState extends State<IconDrag> {
                 MdiIcons.fromString(iconsMaterial[i+3]),
                 color: Color.fromRGBO(114, 103, 239, 1)
                 ),
-                      //fontWeight: FontWeight.bold,
             ),
             decoration: new BoxDecoration(
               color: Colors.transparent,
@@ -4970,7 +4966,6 @@ class _IconDragState extends State<IconDrag> {
                 MdiIcons.fromString(iconsMaterial[i+4]),
                 color: Color.fromRGBO(114, 103, 239, 1)
                 ),
-                      //fontWeight: FontWeight.bold,
             ),
             decoration: new BoxDecoration(
               color: Colors.transparent,

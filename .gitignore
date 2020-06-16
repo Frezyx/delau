@@ -81,7 +81,7 @@ lib/generated_plugin_registrant.dart
 
 lib/config/
 android/key.properties
-android/app/calory_calc.jks
+android/app/delau.jks
 android/app/google-services.json
 .env
 local.properties

@@ -37,10 +37,8 @@ class __OnWorkState extends State<OnWork> {
             style: TextStyle(
               fontSize: 22.0, fontFamily: 'Exo 2', fontWeight: FontWeight.w300,
               fontStyle: FontStyle.italic,
-              // color: Color.fromRGBO(114, 103, 239, 1),
             ), 
           ),
-          // SizedBox(height: 20,),
           Padding(
     padding: EdgeInsets.only(right: 80.0, left: 80.0),
     child:
@@ -58,9 +56,6 @@ Container(
                       colors: [
                       Color.fromRGBO(114, 103, 239, 1),
                       Color.fromRGBO(162, 122, 246, 1),
-                      
-                      // Color.fromRGBO(81, 20, 219, 1),
-                      // Color.fromRGBO(31, 248, 169, 1),
                       ],
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
@@ -70,7 +65,7 @@ Container(
       borderRadius: BorderRadius.all(Radius.circular(20.0)),
     ),
     child: Container(
-      constraints: const BoxConstraints(minWidth: 0.0, minHeight: 40.0), // min sizes for Material buttons
+      constraints: const BoxConstraints(minWidth: 0.0, minHeight: 40.0),
       alignment: Alignment.center,
       child: Text('Незад', textAlign: TextAlign.center, style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 24.0, fontWeight: FontWeight.w900, color: Colors.white),),
       ),
@@ -78,12 +73,6 @@ Container(
   ),
   ),
 ),
-            // decoration: BoxDecoration(
-            //   image: DecorationImage(
-            //     image: AssetImage("$imgSrc"), fit: BoxFit.cover)),
-            //       // child:Container(
-            //       //   ),
-            //       ),
       ]
     );
   }

@@ -5,7 +5,6 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:delau/utils/database_helper.dart';
 import 'package:delau/utils/RaisedGradienButton.dart';
 import 'package:delau/models/dbModels.dart';
-import 'package:delau/pages/userPageHelper.dart';
 import 'main.dart';
 
 class User extends StatefulWidget {
@@ -19,7 +18,6 @@ class _UserState extends State<User> {
   var name = "Пользователь";
   var surname = "Неопознанный";
   var imgSrc = "assets/profile.jpg";
-  // Widget userWidget;
   final Shader linearGradient = LinearGradient(
     colors: <Color>[Color.fromRGBO(114, 103, 239, 1),  
                     Color.fromRGBO(162, 122, 246, 1)],
@@ -33,17 +31,7 @@ class _UserState extends State<User> {
       registration = (res.reg == 1);
       print(registration);
     });
-      // getSyncStatus().then((synchronise){
-      //   synchrone = synchronise; 
-      // });
-    
-    // if(synchrone){
-    //   surname = "Опознанный";
-    //   name = "Польз";
-    //   userWidget = userData(name, surname);
-    // }
   }
-  // var pos = all[0];
   @override
   Widget build(BuildContext context) {
 
@@ -99,8 +87,6 @@ class _UserState extends State<User> {
                       colors: [
                       Color.fromRGBO(162, 122, 246, 1),
                       Color.fromRGBO(114, 103, 239, 1),
-                      // Color.fromRGBO(81, 20, 219, 1),
-                      // Color.fromRGBO(31, 248, 169, 1),
                       ],
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
@@ -154,8 +140,6 @@ class _UserState extends State<User> {
                       colors: [
                       Color.fromRGBO(162, 122, 246, 1),
                       Color.fromRGBO(114, 103, 239, 1),
-                      // Color.fromRGBO(81, 20, 219, 1),
-                      // Color.fromRGBO(31, 248, 169, 1),
                       ],
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
@@ -208,8 +192,6 @@ class _UserState extends State<User> {
                       colors: [
                       Color.fromRGBO(162, 122, 246, 1),
                       Color.fromRGBO(114, 103, 239, 1),
-                      // Color.fromRGBO(81, 20, 219, 1),
-                      // Color.fromRGBO(31, 248, 169, 1),
                       ],
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
@@ -258,9 +240,6 @@ class _UserState extends State<User> {
           Icon(Icons.add, size: 30, color: Colors.black54,),
           Icon(Icons.pie_chart_outlined, size: 30, color: Colors.black54,),
           Icon(FontAwesome.user_o, size: 30, color: Colors.deepPurpleAccent,),
-          // Icon(Icons.compare_arrows, size: 30, color: Colors.black,),
-          // Icon(Icons.add, size: 30, color: Colors.black,),
-          // Icon(Icons.list, size: 30, color: Colors.black,),
         ],
         index: 4,
         animationCurve: Curves.bounceInOut,
@@ -304,7 +283,6 @@ Widget userData(String name, String surname, context){
                                         Navigator.pushNamed(context, '/update');
                                       },
                                     ),
-                          // Text("$surname",style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 36.0, fontWeight: FontWeight.w900, color: Colors.black))
                   ],
                 ),
                 ),
@@ -332,8 +310,6 @@ Container(
                       colors: [
                       Color.fromRGBO(162, 122, 246, 1),
                       Color.fromRGBO(114, 103, 239, 1),
-                      // Color.fromRGBO(81, 20, 219, 1),
-                      // Color.fromRGBO(31, 248, 169, 1),
                       ],
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
@@ -343,7 +319,7 @@ Container(
       borderRadius: BorderRadius.all(Radius.circular(20.0)),
     ),
     child: Container(
-      constraints: const BoxConstraints(minWidth: 0.0, minHeight: 40.0), // min sizes for Material buttons
+      constraints: const BoxConstraints(minWidth: 0.0, minHeight: 40.0),
       alignment: Alignment.center,
       child: Text('Зарегистрироваться', textAlign: TextAlign.center, style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 24.0, fontWeight: FontWeight.w900, color: Colors.white),),
       ),
@@ -365,13 +341,11 @@ Container(
                   side: BorderSide(color: Color.fromRGBO(114, 103, 239, 1))
                 ),
   color: Colors.white,
-  // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
   padding: const EdgeInsets.all(0.0),
     child: Container(
-      constraints: const BoxConstraints(minWidth: 0.0, minHeight: 40.0), // min sizes for Material buttons
+      constraints: const BoxConstraints(minWidth: 0.0, minHeight: 40.0),
       alignment: Alignment.center,
       child: Text('Войти', textAlign: TextAlign.center, style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 24.0, fontWeight: FontWeight.w900,
-      //  color: Color.fromRGBO(114, 103, 239, 1)
       foreground: Paint()..shader = linearGradient,
        ),),
       ),
@@ -381,9 +355,3 @@ Container(
     ]
   );
 }
-
-// foo() async {
-//   final user = await DBUserProvider.dbc.getClientUser(0);
-//   return user;
-// }
-

@@ -6,7 +6,7 @@ import 'package:delau/utils/database_helper.dart';
 Widget bannerOne(SharedPreferences prefs) {
 
   prefs.setBool('banner', false); 
-  DBUserProvider.dbc.firstCreateTable();// Меняем значение на false
+  DBUserProvider.dbc.firstCreateTable();
   DBNoteProvider.db.firstCreateTable().then((res){
     print(res.toString()+"Это id из Заметок");
   });
@@ -38,8 +38,6 @@ class _FirstPageState extends State<FirstPage> {
     body:  
         DefaultTabController(
       length: 2,
-      // Use a Builder here, otherwise DefaultTabController.of(context) below
-      // returns null.
       child: Builder(
         builder: (BuildContext context) => Padding(
           padding: const EdgeInsets.only(bottom: 20),
@@ -82,16 +80,6 @@ class _FirstPageState extends State<FirstPage> {
                   ),
                 ),
               ),
-              // RaisedButton(
-              //   child: Text('SKIP'),
-              //   onPressed: () {
-              //     final TabController controller =
-              //         DefaultTabController.of(context);
-              //     if (!controller.indexIsChanging) {
-              //       controller.animateTo(kIcons.length - 1);
-              //     }
-              //   },
-              // ),
               TabPageSelector(),
             ],
           ),

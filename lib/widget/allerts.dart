@@ -5,7 +5,7 @@ class Alert{
 Future<void> badAllert(context) async {
           return showDialog<void>(
             context: context,
-            barrierDismissible: false, // user must tap button!
+            barrierDismissible: false,
             builder: (BuildContext context) {
               return 
                 AlertDialog(
@@ -26,7 +26,7 @@ Future<void> badAllert(context) async {
         Future<void> loginNotFree(context) async {
           return showDialog<void>(
             context: context,
-            barrierDismissible: false, // user must tap button!
+            barrierDismissible: false,
             builder: (BuildContext context) {
               return 
                 AlertDialog(

@@ -18,7 +18,6 @@ class DBProvider {
 
   Future<Database> get database async {
     if (_database != null) return _database;
-    // if _database is null we instantiate it
     _database = await initDB();
     return _database;
   }
@@ -28,7 +27,7 @@ class DBProvider {
     String path = join(documentsDirectory.path, "TestDB.db");
     return await openDatabase(path, version: 1, onOpen: (db) {},
         onCreate: (Database db, int version) async {
-      await db.execute("CREATE TABLE Client ("
+      await db.execute("CREATE TABLE Task ("
           "id INTEGER PRIMARY KEY,"
           "title TEXT,"
           "description TEXT,"
@@ -44,14 +43,12 @@ class DBProvider {
     });
   }
 
-  newClient(Client newClient) async {
+  newClient(Task newClient) async {
     final db = await database;
-    //get the biggest id in the table
-    var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Client");
+    var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Task");
     int id = table.first["id"];
-    //insert to the table using the new id
     var raw = await db.rawInsert(
-        "INSERT Into Client (id,title,description,date,time,priority,marker,icon,passed,deleted,done)"
+        "INSERT Into Task (id,title,description,date,time,priority,marker,icon,passed,deleted,done)"
         " VALUES (?,?,?,?,?,?,?,?,?,?,?)",
         [id, 
         newClient.title,
@@ -65,14 +62,13 @@ class DBProvider {
         newClient.deleted,
         newClient.done
         ]);
-    // return raw;
     print(id.toString() + " ID отправлено с icon == "+ newClient.icon.toString());
     return id;
   }
 
-  blockOrUnblock(Client client) async {
+  blockOrUnblock(Task client) async {
     final db = await database;
-    Client blocked = Client(
+    Task blocked = Task(
         id: client.id,
         title: client.title,
         description: client.description,
@@ -85,75 +81,71 @@ class DBProvider {
         deleted: client.deleted,
         done: !client.done);
 
-    var res = await db.update("Client", blocked.toMap(),
+    var res = await db.update("Task", blocked.toMap(),
         where: "id = ?", whereArgs: [client.id]);
     return res;
   }
 
-  updateClient(Client newClient) async {
+  updateClient(Task newClient) async {
     final db = await database;
-    var res = await db.update("Client", newClient.toMap(),
+    var res = await db.update("Task", newClient.toMap(),
         where: "id = ?", whereArgs: [newClient.id]);
     return res;
   }
 
   Future<int> getContNow() async {
     final db = await database;
-    var res = await Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM Client WHERE deleted = 0'));
+    var res = await Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM Task WHERE deleted = 0'));
     return res;
   }
 
   getClient(int id) async {
     final db = await database;
-    var res = await db.query("Client", where: "id = ?", whereArgs: [id]);
-    return res.isNotEmpty ? Client.fromMap(res.first) : null;
+    var res = await db.query("Task", where: "id = ?", whereArgs: [id]);
+    return res.isNotEmpty ? Task.fromMap(res.first) : null;
   }
 
   passDate(int id) async {
     final db = await database;
     var s = 1;
     int count = await db.rawUpdate(
-      'UPDATE Client SET passed = ? WHERE id = ?',
+      'UPDATE Task SET passed = ? WHERE id = ?',
       ['$s', '$id']);
     print('updated: $count');
   }
 
-    Future<List<Client>> getClientInList(int id) async {
+    Future<List<Task>> getClientInList(int id) async {
     final db = await database;
-    var res = await db.query("Client", where: "id = ?", whereArgs: [id]);
-    List<Client> list =
-        res.isNotEmpty ? res.map((c) => Client.fromMap(c)).toList() : [];
+    var res = await db.query("Task", where: "id = ?", whereArgs: [id]);
+    List<Task> list =
+        res.isNotEmpty ? res.map((c) => Task.fromMap(c)).toList() : [];
     return list;
   }
 
-  Future<List<Client>> getBlockedClients() async {
+  Future<List<Task>> getBlockedClients() async {
     final db = await database;
 
     print("works");
-    // var res = await db.rawQuery("SELECT * FROM Client WHERE blocked=1");
-    var res = await db.query("Client", where: "blocked = ? ", whereArgs: [1]);
+    var res = await db.query("Task", where: "blocked = ? ", whereArgs: [1]);
 
-    List<Client> list =
-        res.isNotEmpty ? res.map((c) => Client.fromMap(c)).toList() : [];
+    List<Task> list =
+        res.isNotEmpty ? res.map((c) => Task.fromMap(c)).toList() : [];
     return list;
   }
-/// Может быть не сработает...
-  Future<List<Client>> getAllTasks() async {
+  Future<List<Task>> getAllTasks() async {
     final db = await database;
-    var res = await db.query("Client",where: "deleted = 0", orderBy: "done ASC, priority DESC, date DESC, time DESC ");
-    List<Client> list =
-        res.isNotEmpty ? res.map((c) => Client.fromMap(c)).toList() : [];
+    var res = await db.query("Task",where: "deleted = 0", orderBy: "done ASC, priority DESC, date DESC, time DESC ");
+    List<Task> list =
+        res.isNotEmpty ? res.map((c) => Task.fromMap(c)).toList() : [];
     return list;
   }
-//Изменяю сейчас
   Future<int> deleteClient(int id) async {
     final db = await database;
-    var table = await db.rawQuery("SELECT priority FROM Client WHERE id = ?",[id]);
+    var table = await db.rawQuery("SELECT priority FROM Task WHERE id = ?",[id]);
     int priority = table.first["priority"];
-    // db.delete("Client", where: "id = ?", whereArgs: [id]);
 
     int count = await db.rawUpdate(
-      'UPDATE Client SET deleted = 1 WHERE id = ?',
+      'UPDATE Task SET deleted = 1 WHERE id = ?',
         ['$id']);
     print('Удаление updated: $count');
     return priority;
@@ -161,9 +153,8 @@ class DBProvider {
 
   deleteAll() async {
     final db = await database;
-    // db.rawQuery("DELETE * FROM Client");
     int count = await db.rawUpdate(
-      'UPDATE Client SET deleted = ? WHERE id = *',
+      'UPDATE Task SET deleted = ? WHERE id = *',
         ['1']);
     print('Удаление updated: $count');
   }
@@ -178,7 +169,6 @@ class DBUserProvider {
 
   Future<Database> get database async {
     if (_database != null) return _database;
-    // if _database is null we instantiate it
     _database = await initDB();
     return _database;
   }
@@ -244,16 +234,12 @@ class DBUserProvider {
         'UPDATE ClientUser SET reg = ?, name = ?, surname = ?, rating = ?, countDone = ?, countAdd = ? WHERE id = ?',
         ['$reg', '$name', '$surname', '$rating', '$countDone', '$countAdd', '1']);
       print('updated: $count');
-      //Вот это блять нужно поменять !!!!!!
+      //TODO: Change this func
       runSyncLogin(id);
     }
 
-
   updateCount() async {
     final db = await database;
-    //get the biggest id in the table
-    // var isset = await db.rawQuery('SELECT EXISTS(SELECT * FROM ClientUser WHERE id = 0)');
-    // if(isset == 1){
       var table = await db.rawQuery("SELECT * FROM ClientUser WHERE id = 1");
       int userIdServer = table.first["userIdServer"];
       String name = table.first["name"];
@@ -273,15 +259,11 @@ class DBUserProvider {
           rating: rating,
           reg: reg,
         );
-        print("aaaaaaaaaa    ///     "+countAddNow.toString());
         updateClientUserRaw(now_client);
   }
 
   updateCountDone(int pr) async {
     final db = await database;
-    //get the biggest id in the table
-    // var isset = await db.rawQuery('SELECT EXISTS(SELECT * FROM ClientUser WHERE id = 0)');
-    // if(isset == 1){
       var table = await db.rawQuery("SELECT * FROM ClientUser WHERE id = 1");
       int userIdServer = table.first["userIdServer"];
       String name = table.first["name"];
@@ -302,7 +284,6 @@ class DBUserProvider {
           rating: nextRating,
           reg: reg,
         );
-        print("Сейчас у нас столько задач Выполненно:      ///     " + nextDone.toString());
         updateClientUserDoneRaw(now_client);
   }
 
@@ -370,13 +351,7 @@ var res = await db.update("ClientUser", newClient.toMap(),
     var res = await db.query("ClientUser", where: "id = ?", whereArgs: [id]);
     return ClientUser.fromMap(res.first);
   }
-  //// ????????????
   Future<int> getUserId() async {
-    // final db = await database;
-    // var res = await db.rawQuery("SELECT userIdServer FROM ClientUser WHERE id = 1");
-    // var row = res[0];
-    // print("Id юзера на сервере ->"+res[0]['userIdServer'].toString());
-    // return row['userIdServer'];
     final db = await database;
       var res = await db.rawQuery("SELECT * FROM ClientUser WHERE id = 1");
       var item = res.first;
@@ -385,52 +360,41 @@ var res = await db.update("ClientUser", newClient.toMap(),
     return resourceId;
   }
 
-  // getAllTasks() async {
-  //   final db = await database;
-  //   var res = await db.query("ClientUser");
-  //   List<ClientUser> list =
-  //       res.isNotEmpty ? res.map((c) => Client.fromMap(c)).toList() : [];
-  //   return list[0].userIdServer;
-
     Future<List<ClientUser>> getClientUserInList() async {
     final db = await database;
     var res = await db.rawQuery("SELECT * FROM ClientUser WHERE id = 1");
     List<ClientUser> list =
         res.isNotEmpty ? res.map((c) => ClientUser.fromMap(c)).toList() : [];
-        // if(res.isNotEmpty ){
-        //   print("ХУУУЙ");
-        // };
     return list;
   }
 
-  Future<List<Client>> getBlockedClients() async {
+  Future<List<Task>> getBlockedClients() async {
     final db = await database;
 
     print("works");
-    // var res = await db.rawQuery("SELECT * FROM Client WHERE blocked=1");
-    var res = await db.query("Client", where: "blocked = ? ", whereArgs: [1]);
+    var res = await db.query("Task", where: "blocked = ? ", whereArgs: [1]);
 
-    List<Client> list =
-        res.isNotEmpty ? res.map((c) => Client.fromMap(c)).toList() : [];
+    List<Task> list =
+        res.isNotEmpty ? res.map((c) => Task.fromMap(c)).toList() : [];
     return list;
   }
 
-  Future<List<Client>> getAllTasks() async {
+  Future<List<Task>> getAllTasks() async {
     final db = await database;
-    var res = await db.query("Client", orderBy: "done ASC, priority DESC, date DESC, time DESC ");
-    List<Client> list =
-        res.isNotEmpty ? res.map((c) => Client.fromMap(c)).toList() : [];
+    var res = await db.query("Task", orderBy: "done ASC, priority DESC, date DESC, time DESC ");
+    List<Task> list =
+        res.isNotEmpty ? res.map((c) => Task.fromMap(c)).toList() : [];
     return list;
   }
 
   deleteClient(int id) async {
     final db = await database;
-    return db.delete("Client", where: "id = ?", whereArgs: [id]);
+    return db.delete("Task", where: "id = ?", whereArgs: [id]);
   }
 
   deleteAll() async {
     final db = await database;
-    db.rawDelete("Delete * from Client");
+    db.rawDelete("Delete * from Task");
   }
 }
 
@@ -444,7 +408,6 @@ class DBMarkerProvider {
 
   Future<Database> get database async {
     if (_database != null) return _database;
-    // if _database is null we instantiate it
     _database = await initDB();
     return _database;
   }
@@ -517,7 +480,6 @@ class DBNoteProvider {
 
   Future<Database> get database async {
     if (_database != null) return _database;
-    // if _database is null we instantiate it
     _database = await initDB();
     return _database;
   }
@@ -582,7 +544,6 @@ class DBNoteProvider {
     var res = await db.rawQuery("SELECT * FROM Notes WHERE id = $id");
     var item = res.first;
     var colorSQL = item['color'];
-    //implumunt count func
 
     int color;
     if(colorSQL == 0){color = 1;}
@@ -627,7 +588,6 @@ class DBNoteProvider {
     final db = await database;
     var res = await db.query("Notes", where: "color = 1");
     print(res.toString()+" Количество заметок с измененным цветом");
-    // List<int> response;
     List<Note> list = res.isNotEmpty ? res.map((c) => Note.fromMap(c)).toList() : [];
     for (int i = 0; i <list.length; i++){
       await db.rawUpdate('UPDATE Notes SET is_archived = ?, color = ? WHERE id = ?', [1,0,'${list[i].id}'])
@@ -642,7 +602,6 @@ class DBNoteProvider {
     final db = await database;
     var res = await db.query("Notes", where: "color = 1");
     print(res.toString()+" Количество заметок с измененным цветом");
-    // List<int> response;
     List<Note> list = res.isNotEmpty ? res.map((c) => Note.fromMap(c)).toList() : [];
     for (int i = 0; i <list.length; i++){
       await db.rawUpdate('UPDATE Notes SET color = ? WHERE id = ?', [0,'${list[i].id}'])
@@ -659,9 +618,7 @@ class DBNoteProvider {
     List<Note> list =
         res.isNotEmpty ? res.map((c) => Note.fromMap(c)).toList() : [];
         for (int i = 0; i <list.length; i++){
-          // print(i.toString() + list[i].is_archived.toString());
         }
-    // print(list.length.toString() + "Кол-во ссаных заметок");
     return list;
   }
 
@@ -671,7 +628,6 @@ class DBNoteProvider {
     List<Note> list =
         res.isNotEmpty ? res.map((c) => Note.fromMap(c)).toList() : [];
         for (int i = 0; i <list.length; i++){
-          // print(i.toString() + list[i].is_archived.toString());
         }
     print(list.length.toString() + "Кол-во ссаных заметок");
     return list;

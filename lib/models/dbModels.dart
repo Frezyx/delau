@@ -1,18 +1,16 @@
 import 'dart:convert';
 
-import 'dart:ui';
-
-Client clientFromJson(String str) {
+Task clientFromJson(String str) {
   final jsonData = json.decode(str);
-  return Client.fromMap(jsonData);
+  return Task.fromMap(jsonData);
 }
 
-String clientToJson(Client data) {
+String clientToJson(Task data) {
   final dyn = data.toMap();
   return json.encode(dyn);
 }
 
-class Client {
+class Task {
   int id;
   String title;
   String description;
@@ -25,7 +23,7 @@ class Client {
   int deleted;
   bool done;
 
-  Client({
+  Task({
 		this.id,
 		this.title,
 		this.description,
@@ -39,7 +37,7 @@ class Client {
     this.done,
   });
 
-  factory Client.fromMap(Map<String, dynamic> json) => new Client(
+  factory Task.fromMap(Map<String, dynamic> json) => new Task(
         id: json["id"],
         title: json["title"],
         description: json["description"],
@@ -147,28 +145,6 @@ class Marker {
       };
 }
 
-// class Note {
-//   int id;
-//   String content;
-//   DateTime date_last_edited;
-//   int is_archived = 0;
-
-
-//   Note({ this.id, this.content, this.is_archived, this.date_last_edited });
-
-//   Map<String, dynamic> toMap() => {
-//         "id": id,
-//         'content': utf8.encode( content ),
-//         'is_archived': is_archived,
-//         'date_last_edited': epochFromDate( date_last_edited ),
-//         'is_archived': is_archived
-//       };
-
-// // Преобразование даты и времени в секунды типа int
-//     epochFromDate(DateTime dt) {  
-//         return dt.millisecondsSinceEpoch ~/ 1000;
-//          }
-// }
 
 class Note {
   int id;

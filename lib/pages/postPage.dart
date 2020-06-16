@@ -21,9 +21,9 @@ class _PostPageState extends State<PostPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: FutureBuilder<List<Client>>(
+      body: FutureBuilder<List<Task>>(
         future: DBProvider.db.getClientInList(int.parse(id)),
-        builder: (BuildContext context, AsyncSnapshot<List<Client>> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
           if (snapshot.hasData) 
           {
             return ListViewPosts(item: snapshot.data);

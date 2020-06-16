@@ -4,7 +4,7 @@ import 'package:delau/models/dbModels.dart';
 
 class ListViewPosts extends StatefulWidget {
 
-  final List<Client> item;
+  final List<Task> item;
 
 
   ListViewPosts({Key key, this.item}) : super(key: key);
@@ -39,7 +39,6 @@ class _ListViewPostsState extends State<ListViewPosts> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                  // margin: new EdgeInsets.only(left: 50.0, right: 50.0, top: MediaQuery.of(context).size.height-550, bottom: MediaQuery.of(context).size.height-550),
                   decoration: new BoxDecoration(
                     color: Colors.white,
                     boxShadow:<BoxShadow>[
@@ -109,7 +108,6 @@ class _ListViewPostsState extends State<ListViewPosts> {
                           style: TextStyle(
                             color:  Color.fromRGBO(114, 103, 239, 1),
                             fontWeight: FontWeight.w400,
-                            // decoration: TextDecoration.underline,
                             fontSize: 16.0,
                             ),
                         ),
@@ -126,7 +124,6 @@ class _ListViewPostsState extends State<ListViewPosts> {
                           style: TextStyle(
                             color:  Color.fromRGBO(114, 103, 239, 1),
                             fontWeight: FontWeight.w400,
-                            // decoration: TextDecoration.underline,
                             fontSize: 16.0,
                             ),
                         ),

@@ -35,9 +35,6 @@ class _LocalNotificationWidgetState extends State<LocalNotificationWidget> {
     MaterialPageRoute(builder: (context) => new PostPage(id: _id)),
     
   );
-  // final int id = 88;
-  // Future onSelectNotification(String payload) async => 
-  // await Navigator.pushNamed(context, '/postPage/$id');
 
   @override
   Widget build(BuildContext context) {

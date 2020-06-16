@@ -29,12 +29,9 @@ class _AutorizationPageState extends State<AutorizationPage> {
 
   @override
   Widget build(BuildContext context) {
-    //         FirebaseAdMob.instance.initialize(appId: "ca-app-pub-6210480653379985~3641025980").then((response){
-    //   myBanner..load()..show();
-    // });
     return Scaffold(
       body:Container(
-        padding: EdgeInsets.only(left: 40.0, right: 40.0, top:MediaQuery.of(context).size.height/5, bottom: MediaQuery.of(context).size.height/10),// color: Colors.transparent,
+        padding: EdgeInsets.only(left: 40.0, right: 40.0, top:MediaQuery.of(context).size.height/5, bottom: MediaQuery.of(context).size.height/10),
               child: new Form(key: _formKey, child: new Column(children: <Widget>[
             Padding(
               padding: EdgeInsets.only( top: 2.0, bottom: 2.0, left :MediaQuery.of(context).size.width/30, right :MediaQuery.of(context).size.width/30,),
@@ -71,7 +68,6 @@ class _AutorizationPageState extends State<AutorizationPage> {
                           "Регистрация",
                           style: TextStyle(
                             color: Colors.black54,
-                            // decoration: TextDecoration.underline,
                             fontSize: 18.0,
                             ),
                         ),
@@ -123,71 +119,6 @@ class _AutorizationPageState extends State<AutorizationPage> {
                 obscureText: true,
               ),
               new SizedBox(height: 20.0,),
-
-            // Padding(
-            //   padding: EdgeInsets.only( left :MediaQuery.of(context).size.width/30, right :MediaQuery.of(context).size.width/30,),
-            //   child: 
-            //   Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-
-            //     children: <Widget>[
-                //   RaisedButton(onPressed: (){
-                //   if(_formKey.currentState.validate()){
-                //     if(_name != null && _email != null && _login != null && _password != null){
-        
-                //       // Client now_client = new Client(
-                //       //       title: _name,
-                //       //       description: _surname,
-                //       //       marker: selected_radio-1,
-                //       //       priority: rating.round(),
-                //       //       date: _date.toString(),
-                //       //       time: _time.toString(),
-                //       //       done: false
-                //       //     );
-
-                //       // addAtLocalDB(now_client);
-                //       // counter();
-
-                //       // getSyncStatus().then((synchronise){
-                //       //     if (synchronise){
-                //       //       print("synchromised");
-                //       //       httpGet("https://delau.000webhostapp.com/flutter/addTask.php?header="+_name+"1&body="+_surname+"1&date="+_date.toString()+"&time="+_time.toString()+"&marker="+(selected_radio-1).toString()+"&paginator="+rating.round().toString());
-                //       //     }
-                //       //   });
-                //     }
-                //   }
-                // }, child: Text('Вход'), color: Colors.white, textColor: Color.fromRGBO(114, 103, 239, 1),),
-
-                //   RaisedButton(onPressed: (){
-                //   if(_formKey.currentState.validate()){
-                //     if(_name != null && _email != null && _login != null && _password != null){
-        
-                //       // Client now_client = new Client(
-                //       //       title: _name,
-                //       //       description: _surname,
-                //       //       marker: selected_radio-1,
-                //       //       priority: rating.round(),
-                //       //       date: _date.toString(),
-                //       //       time: _time.toString(),
-                //       //       done: false
-                //       //     );
-
-                //       // addAtLocalDB(now_client);
-                //       // counter();
-
-                //       // getSyncStatus().then((synchronise){
-                //       //     if (synchronise){
-                //       //       print("synchromised");
-                //       //       httpGet("https://delau.000webhostapp.com/flutter/addTask.php?header="+_name+"1&body="+_surname+"1&date="+_date.toString()+"&time="+_time.toString()+"&marker="+(selected_radio-1).toString()+"&paginator="+rating.round().toString());
-                //       //     }
-                //       //   });
-                //     }
-                //   }
-                // }, child: Text('Зарегистрироваться'), color: Color.fromRGBO(114, 103, 239, 1), textColor: Colors.white,),
-      //           ],
-      //         ),
-      //       ),
             RaisedButton(
               shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(5.0),
@@ -237,7 +168,6 @@ class _AutorizationPageState extends State<AutorizationPage> {
                           style: TextStyle(
                             color:  Color.fromRGBO(114, 103, 239, 1),
                             fontWeight: FontWeight.w400,
-                            // decoration: TextDecoration.underline,
                             fontSize: 16.0,
                             ),
                         ),

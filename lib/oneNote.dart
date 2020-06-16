@@ -49,7 +49,7 @@ class _NotePageState extends State<NotePage> {
       Column(
         children: <Widget>[
       Container(
-        padding: EdgeInsets.only(left: 40.0, right: 40.0, top:MediaQuery.of(context).size.height/5, bottom: 10),// color: Colors.transparent,
+        padding: EdgeInsets.only(left: 40.0, right: 40.0, top:MediaQuery.of(context).size.height/5, bottom: 10),
               child: new Form(key: _formKey, child: Column(children: <Widget>[ 
               TextField(
                 controller: _inputController,
@@ -81,8 +81,6 @@ Container(
                       colors: [
                       Color.fromRGBO(162, 122, 246, 1),
                       Color.fromRGBO(114, 103, 239, 1),
-                      // Color.fromRGBO(81, 20, 219, 1),
-                      // Color.fromRGBO(31, 248, 169, 1),
                       ],
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
@@ -92,7 +90,7 @@ Container(
       borderRadius: BorderRadius.all(Radius.circular(20.0)),
     ),
     child: Container(
-      constraints: const BoxConstraints(minWidth: 0.0, minHeight: 40.0), // min sizes for Material buttons
+      constraints: const BoxConstraints(minWidth: 0.0, minHeight: 40.0),
       alignment: Alignment.center,
       child: Text('Назад', textAlign: TextAlign.center, style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 24.0, fontWeight: FontWeight.w900, color: Colors.white),),
       ),

@@ -14,14 +14,12 @@ getVoiceInfo() {
       var bigRes = "";
       for(int i = 0; i < secondRes.length; i++){
         var item = secondRes[i];
-        //Задаем поля записи
         var titleS = " " + item.title;
         var dateS = "";
         var timeS = " Время: ${item.time.substring(10,15)}";
         var formatedDateFromSQL = formatDate(DateTime.parse(item.date), [yyyy, '-', mm, '-', dd]);;
         var nowDateFormate = formatDate(DateTime.now(), [yyyy, '-', mm, '-', dd]);
 
-        //Самописная конструкция для красивого вывода даты
         if(nowDateFormate == formatedDateFromSQL){
           dateS = " Сегодня ";
         }
@@ -75,8 +73,6 @@ getVoiceInfo() {
     });
   });
 }
-//Конструируем нашего говорителя 
-//Задаем параметры и текст для вывода
 speakTasks(String res, String bigRes) async{
     await flutterTts.setPitch(1);
     await flutterTts.setSpeechRate(0.49);

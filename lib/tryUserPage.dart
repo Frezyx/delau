@@ -1,5 +1,3 @@
-//  registration ? Container() : getLoginButton(context, linearGradient),
-
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:delau/models/dbModels.dart';
 import 'package:delau/utils/database_helper.dart';
@@ -8,8 +6,6 @@ import 'package:delau/widgets_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:http/http.dart' as http;
-// import 'package:firebase_admob/firebase_admob.dart';
-// import 'package:flutter_native_admob/flutter_native_admob.dart';
 
 import 'models/global.dart';
 
@@ -20,8 +16,6 @@ class UPN extends StatefulWidget {
 }
 
 class _UPNState extends State<UPN> {
-  // static const adUnitID = "ca-app-pub-6210480653379985/8081181481";
-  // final _nativeAdmob = NativeAdmob();
 
   bool registration = false;
   String name ="";
@@ -48,24 +42,12 @@ class _UPNState extends State<UPN> {
   @override
   void initState() {
     super.initState();
-    // _nativeAdmob.initialize(
-    //   appID: "ca-app-pub-6210480653379985~3641025980"
-    // );
 
     DBUserProvider.dbc.getClientUser(1).then((res){
       registration = (res.reg == 1);
         setData(res);
       print(registration);
     });
-      // getSyncStatus().then((synchronise){
-      //   synchrone = synchronise; 
-      // });
-    
-    // if(synchrone){
-    //   surname = "Опознанный";
-    //   name = "Польз";
-    //   userWidget = userData(name, surname);
-    // }
   }
   Future<String> httpGetTry(String link) async{
     String responses;
@@ -82,15 +64,7 @@ class _UPNState extends State<UPN> {
 
   @override
   Widget build(BuildContext context) {
-    // FirebaseAdMob.instance.initialize(appId: "ca-app-pub-6210480653379985~3641025980").then((response){
-    //   myBanner..load()..show();
-    // });
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //   elevation: 0.0,
-      //   automaticallyImplyLeading: false,
-      // ),
       body: Container(
         child: Column(
           children: <Widget>[
@@ -141,62 +115,19 @@ class _UPNState extends State<UPN> {
                                 )
                               ),
                               registration? getSettingsIcon() : SizedBox(height: 0,),
-                              // FlatButton(
-                              //   onPressed: () {
-                              //       Navigator.pushNamed(context, '/user');
-                              //     },
-                              //     splashColor: Colors.transparent,  
-                              //     highlightColor: Colors.transparent,
-                                  
-                              //     child: Text(
-                              //       "Настройки",
-                              //       style: TextStyle(
-                              //         color:  Colors.white,
-                              //         fontWeight: FontWeight.w300,
-                              //         // decoration: TextDecoration.underline,
-                              //         fontSize: 16.0,
-                              //         ),
-                              //     ),
-                              //   ),
                             ],
                           ),
                         ),
-                        // Padding(
-                        //   padding: EdgeInsets.only(top: 20, left: 5),
-                        //   child:
-                        //   Column(
-                        //     children: <Widget>[
-                        //       IconButton(
-                        //               iconSize: 34,
-                        //               icon: Icon(Icons.settings),
-                        //               color: Colors.white,
-                        //               splashColor: Colors.white,
-                        //               onPressed: (){
-                        //                 Navigator.pushNamed(context, '/update');
-                        //               },
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),
                 ),
-                // Container(
-                //   margin: EdgeInsets.only(top: 220),
-                //   constraints: BoxConstraints.expand(height:200),
-                //   child: ListView(
-                //     padding: EdgeInsets.only(left: 40),
-                //     scrollDirection: Axis.horizontal,
-                //     children: getRecentJobs()
-                //   ),
-                // ),
                 Container(
                   margin: EdgeInsets.only(top:220),
                   constraints: BoxConstraints.expand(height:200),
-                  child: new FutureBuilder<List<Client>>(
-                    future: DBProvider.db.getAllTasks(), // async work
-                    builder: (BuildContext context, AsyncSnapshot<List<Client>> snapshot) {
+                  child: new FutureBuilder<List<Task>>(
+                    future: DBProvider.db.getAllTasks(),
+                    builder: (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting: return new Center(child: CircularProgressIndicator());
                         default:
@@ -209,7 +140,7 @@ class _UPNState extends State<UPN> {
                             scrollDirection: Axis.horizontal,
                             itemCount: snapshot.data.length,
                             itemBuilder: (BuildContext context, int index) {
-                              Client item = snapshot.data[index];
+                              Task item = snapshot.data[index];
                               return getTaskCard(item);
                             }
                           );
@@ -219,15 +150,6 @@ class _UPNState extends State<UPN> {
                 ),
               ],
             ),
-          // registration ? Container() : getLoginButton(context, linearGradient),
-
-              // Divider(height: 15),
-          // Align(
-          //   alignment: Alignment.centerLeft,
-          //   child:              
-          // Padding(
-          //   padding: EdgeInsets.only( left: 45.0),
-          //   child:
     Container(
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.only( bottom: 5, top: 5),
@@ -267,8 +189,6 @@ class _UPNState extends State<UPN> {
                       colors: [
                       Color.fromRGBO(162, 122, 246, 1),
                       Color.fromRGBO(114, 103, 239, 1),
-                      // Color.fromRGBO(81, 20, 219, 1),
-                      // Color.fromRGBO(31, 248, 169, 1),
                       ],
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
@@ -324,8 +244,6 @@ class _UPNState extends State<UPN> {
                       colors: [
                       Color.fromRGBO(162, 122, 246, 1),
                       Color.fromRGBO(114, 103, 239, 1),
-                      // Color.fromRGBO(81, 20, 219, 1),
-                      // Color.fromRGBO(31, 248, 169, 1),
                       ],
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
@@ -381,8 +299,6 @@ class _UPNState extends State<UPN> {
                       colors: [
                       Color.fromRGBO(162, 122, 246, 1),
                       Color.fromRGBO(114, 103, 239, 1),
-                      // Color.fromRGBO(81, 20, 219, 1),
-                      // Color.fromRGBO(31, 248, 169, 1),
                       ],
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
@@ -408,7 +324,6 @@ class _UPNState extends State<UPN> {
                 ),
                 ),
               ),
-              //  onPressed: () {}, 
               Padding(
                 padding: EdgeInsets.only( left: 10.0),
                 child:
@@ -431,18 +346,6 @@ class _UPNState extends State<UPN> {
           ],
         ),
       ),
-    //   floatingActionButton: registration ?
-    // Padding(
-    //   padding: EdgeInsets.only(bottom:10),
-    //   child:  
-    // FloatingActionButton(
-      
-    //   onPressed: () {
-    //     // Add your onPressed code here!
-    //   },
-    //   child: Icon(Icons.settings),
-    //   backgroundColor: Colors.deepPurpleAccent,
-    // )) : SizedBox(height: 0,),
 
     bottomNavigationBar: CurvedNavigationBar(
         height: 50.0,
@@ -454,9 +357,6 @@ class _UPNState extends State<UPN> {
           Icon(Icons.add, size: 30, color: Colors.black54,),
           Icon(Icons.pie_chart_outlined, size: 30, color: Colors.black54,),
           Icon(FontAwesome.user_o, size: 30, color: Colors.deepPurpleAccent,),
-          // Icon(Icons.compare_arrows, size: 30, color: Colors.black,),
-          // Icon(Icons.add, size: 30, color: Colors.black,),
-          // Icon(Icons.list, size: 30, color: Colors.black,),
         ],
         index: 4,
         animationCurve: Curves.bounceInOut,
@@ -485,7 +385,6 @@ class _UPNState extends State<UPN> {
   return  
   Container(
       padding: EdgeInsets.all(10),
-      // margin: EdgeInsets.only(right: 20, bottom: 30, top: 30),
       height: 118,
       width: 340,
       decoration: BoxDecoration(
@@ -524,8 +423,6 @@ class _UPNState extends State<UPN> {
                           colors: [
                           Color.fromRGBO(162, 122, 246, 1),
                           Color.fromRGBO(114, 103, 239, 1),
-                          // Color.fromRGBO(81, 20, 219, 1),
-                          // Color.fromRGBO(31, 248, 169, 1),
                           ],
                         begin: Alignment.topRight,
                         end: Alignment.bottomLeft,
@@ -535,7 +432,7 @@ class _UPNState extends State<UPN> {
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
         ),
         child: Container(
-          constraints: const BoxConstraints(minWidth: 0.0, minHeight: 40.0), // min sizes for Material buttons
+          constraints: const BoxConstraints(minWidth: 0.0, minHeight: 40.0),
           alignment: Alignment.center,
           child: Text('Зарегистрироваться', textAlign: TextAlign.center, 
           style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 24.0, fontWeight: FontWeight.w900, color: Colors.white),),
@@ -558,13 +455,11 @@ class _UPNState extends State<UPN> {
                       side: BorderSide(color: Color.fromRGBO(114, 103, 239, 1))
                     ),
       color: Colors.white,
-      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       padding: const EdgeInsets.all(0.0),
         child: Container(
-          constraints: const BoxConstraints(minWidth: 0.0, minHeight: 40.0), // min sizes for Material buttons
+          constraints: const BoxConstraints(minWidth: 0.0, minHeight: 40.0),
           alignment: Alignment.center,
           child: Text('Войти', textAlign: TextAlign.center, style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 24.0, fontWeight: FontWeight.w900,
-          //  color: Color.fromRGBO(114, 103, 239, 1)
           foreground: Paint()..shader = linearGradient,
           ),),
           ),
@@ -575,7 +470,7 @@ class _UPNState extends State<UPN> {
         );
     }
 
-    Widget getTaskCard(Client task) {
+    Widget getTaskCard(Task task) {
     return Container(
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.only(right: 20, bottom: 30, top: 30),

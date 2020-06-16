@@ -1,4 +1,3 @@
-// -------------------> ВНЕШНИЕ БИБЛИОТЕКИ
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +5,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:http/http.dart' as http;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// -------------------> ВНУТРЕННИЕ ПРОГРАММЫ
+
 import 'package:delau/addTaskPage.dart';
 import 'package:delau/pages/updateTask.dart';
 import 'package:delau/autoriz.dart';
@@ -31,7 +30,7 @@ import 'widgets_helper.dart';
 
 StatelessWidget getBaner(SharedPreferences prefs){
   prefs.setBool('banner', false); 
-    DBUserProvider.dbc.firstCreateTable();// Меняем значение на false
+    DBUserProvider.dbc.firstCreateTable();
     DBNoteProvider.db.firstCreateTable().then((res){
       print(res.toString()+"Это id из Заметок");
     });
@@ -45,8 +44,6 @@ StatelessWidget getBaner(SharedPreferences prefs){
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized(); 
-  // -------------------> Проверяем в какой раз входит пользователь и создаем/не создаем таблицы в базе данных
-  // -------------------> В runApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool banner = (prefs.getBool('banner') ?? true);
 
@@ -129,8 +126,6 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
-// ---- Для Future Builder ---- 
-
 var countTask =  DBProvider.db.getContNow();
 
 bool registration = false;
@@ -158,7 +153,6 @@ List<int> countTasksByMarker = [0,0,0,0,0,0];
       DBUserProvider.dbc.getClientUser(1).then((res){
         registration = (res.reg == 1);
         userIdServer = res.userIdServer;
-        // print(registration.toString() + "UserServerId--->" + userIdServer.toString());
       });
 
 // ---- Заполняем количество задач по маркерам ---- 
@@ -198,14 +192,6 @@ List<int> countTasksByMarker = [0,0,0,0,0,0];
     MdiIcons.fromString('basketball'), FontAwesome.users, 
     MdiIcons.fromString('shopping'), FontAwesome.spinner
     ];
-
-// ---- Недоработанный метод получения иконок для карточек слайдера ---- 
-    // getIcon(int i){
-    //   print((i-7).toString() + " Чет говно");
-    //   DBMarkerProvider.db.getMarkById(i-7).then((icon){
-    //     return MdiIcons.fromString('$icon');
-    //   });
-    // }
 
   @override
   Widget build(BuildContext context) {
@@ -302,7 +288,7 @@ List<int> countTasksByMarker = [0,0,0,0,0,0];
             children: <Widget>[
             Align(
                 alignment: Alignment.centerLeft,
-                child: new FutureBuilder<int>(// ----- ToDo Лист
+                child: new FutureBuilder<int>(
               future: countTask,
               builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
              return
@@ -353,17 +339,17 @@ List<int> countTasksByMarker = [0,0,0,0,0,0];
         
          Expanded(
           child: Container(
-            child: FutureBuilder<List<Client>>(
+            child: FutureBuilder<List<Task>>(
         future: DBProvider.db.getAllTasks(),
         builder:
-         (BuildContext context, AsyncSnapshot<List<Client>> snapshot) {
+         (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
           if (snapshot.hasData) 
           {
             return ListView.builder(
               padding: const EdgeInsets.only(bottom: 0.0, top: 10.0, right: 0.0, left:0.0),
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
-                Client item = snapshot.data[index];
+                Task item = snapshot.data[index];
                 return Dismissible(
                   key: UniqueKey(),
                   background: 
@@ -463,7 +449,6 @@ List<int> countTasksByMarker = [0,0,0,0,0,0];
                       value: item.done,
                     ),
                     onTap: () {
-                    // _onTapItem(context, item);
                     Navigator.pushNamed(context, '/postPage/${item.id}');
                   }
                   ),
@@ -479,12 +464,9 @@ List<int> countTasksByMarker = [0,0,0,0,0,0];
       ),
       ),
     ),
-
       ],
-      ), 
       ),
-
-// -------------------> Navbar
+      ),
 
       bottomNavigationBar: CurvedNavigationBar(
         height: 50.0,

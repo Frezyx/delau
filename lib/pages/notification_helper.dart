@@ -38,10 +38,6 @@ NotificationDetails get _ongoing {
   return NotificationDetails(androidChannelSpecifics, iOSChannelSpecifics);
 }
 
-//-----------------------------------------------
-//-------------Использую это---------------------
-//-----------------------------------------------
-
 Future showOngoingNotification(
   FlutterLocalNotificationsPlugin notifications, {
   @required String title,
