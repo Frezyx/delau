@@ -1,10 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:delau/new_calendar_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:http/http.dart' as http;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import'package:intl/date_symbol_data_local.dart';
 
 import 'package:delau/addTaskPage.dart';
 import 'package:delau/pages/updateTask.dart';
@@ -47,6 +49,7 @@ void main() async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool banner = (prefs.getBool('banner') ?? true);
 
+  await initializeDateFormatting();
   runApp(
        banner? getBaner(prefs) : MyApp(),
     );
@@ -499,6 +502,17 @@ List<int> countTasksByMarker = [0,0,0,0,0,0];
       }
     },
   ),
+
+  floatingActionButton: FloatingActionButton(
+    onPressed: () { 
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Calendar(title: "Сос")),
+      );
+     },
+    child: Icon(Icons.add),
+  ),
+
           );
         }
 }
