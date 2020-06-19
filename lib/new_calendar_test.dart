@@ -1,10 +1,7 @@
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:table_calendar/table_calendar.dart';
-
-//  Copyright (c) 2019 Aleksander Woźniak
-//  Licensed under Apache License v2.0
-
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 import 'design/theme.dart';
 
@@ -31,6 +28,8 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
   List _selectedEvents;
   AnimationController _animationController;
   CalendarController _calendarController;
+  double screenHeight;
+  double screenWidth;
 
   @override
   void initState() {
@@ -90,6 +89,11 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    setState((){
+      screenHeight = MediaQuery.of(context).size.height;
+      screenWidth = MediaQuery.of(context).size.width;
+    });
+
     return Scaffold(
       body: Column(
         mainAxisSize: MainAxisSize.max,
@@ -98,7 +102,7 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
           const SizedBox(height: 25.0),
           _buildTableCalendar(),
           const SizedBox(height: 8.0),
-          Expanded(child: _buildEventList()),
+          Expanded(child: _buildEventList(screenWidth, screenHeight)),
         ],
       ),
     );
@@ -196,7 +200,7 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildEventList() {
+  Widget _buildEventList(double _screenWidth, double screenHeight) {
     return  _selectedEvents.length > 0? ListView(
       children:
       _selectedEvents
@@ -215,6 +219,38 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
                 ),
               ))
           .toList(),
-    ):Text("Задач нет");
+    ):Column(
+      children: <Widget>[
+        SizedBox(height:10),
+        Container(
+          height: screenHeight * 0.25,
+          child:SvgPicture.asset('assets/svg/calendar.svg')
+        ),
+        SizedBox(height:10),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Expanded(
+              child: Text("На этот день у вас нет задач. Хотите добавить?", overflow: TextOverflow.fade, textAlign: TextAlign.center,)
+            ),
+        ),
+        SizedBox(height:10),
+        Container(
+          child: RaisedButton(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50.0),
+            ),
+            onPressed: () {
+              print("login");
+            },
+            color: DesignTheme.mainColor,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 12, left: 16.0, right: 16.0, bottom:12),
+              child: Text("Добавить", style: DesignTheme.buttons.text,),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

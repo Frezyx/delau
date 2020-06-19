@@ -27,6 +27,7 @@ import 'package:delau/utils/synchroneHelper.dart';
 import 'package:delau/utils/ttsHelper.dart';
 import 'package:delau/widget/notification.dart';
 import 'addTaskPage.dart';
+import 'design/theme.dart';
 import 'pages/postPage.dart';
 import 'widgets_helper.dart';
 
@@ -61,13 +62,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
 
+      theme: DesignTheme.appTheme,
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
+      
     routes: {
       '/':(BuildContext context) => MyStatefulWidget(),
       '/second':(BuildContext context) => MyStatefulWidget3(),

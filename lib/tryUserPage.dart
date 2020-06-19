@@ -434,8 +434,8 @@ class _UPNState extends State<UPN> {
         child: Container(
           constraints: const BoxConstraints(minWidth: 0.0, minHeight: 40.0),
           alignment: Alignment.center,
-          child: Text('Зарегистрироваться', textAlign: TextAlign.center, 
-          style: TextStyle(fontStyle: FontStyle.italic, fontFamily: "Exo 2",fontSize: 24.0, fontWeight: FontWeight.w900, color: Colors.white),),
+          child: Text('n', textAlign: TextAlign.center, 
+          style: TextStyle(fontFamily: "Ubuntu",fontSize: 24.0, color: Colors.white),),
           ),
         ),
       ),
