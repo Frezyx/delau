@@ -1,9 +1,12 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter/material.dart';
 
 import 'design/theme.dart';
+import 'widget/bottom/bottomBar.dart';
 
 // Example holidays
 final Map<DateTime, List> _holidays = {
@@ -104,6 +107,93 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
           const SizedBox(height: 8.0),
           Expanded(child: _buildEventList(screenWidth, screenHeight)),
         ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        notchMargin: 10,
+        child: Container(
+          height: 60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  MaterialButton(
+                    minWidth: 40,
+                    onPressed: () {
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.dashboard,
+                          color: Colors.grey,
+                        ),
+                        Text(
+                          'Dashboard',
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  MaterialButton(
+                    minWidth: 40,
+                    onPressed: () {
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.chat,
+                          color: Colors.grey,
+                        ),
+                        Text(
+                          'Chats',
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                                    MaterialButton(
+                    minWidth: 40,
+                    onPressed: () {
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.dashboard,
+                          color: Colors.grey,
+                        ),
+                        Text(
+                          'Profile',
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+      
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: DesignTheme.mainColor,
+        child: Icon(Icons.add),
+        onPressed: () {
+
+        },
       ),
     );
   }
