@@ -1,9 +1,11 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:delau/widget/bottomSheetAndBar/bottomSheetAndBar.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'design/theme.dart';
 import 'widget/bottom/bottomBar.dart';
@@ -29,14 +31,31 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
   Map<DateTime, List> _events;
   List _selectedEvents;
+  bool isPlaying = false;
   AnimationController _animationController;
   CalendarController _calendarController;
   double screenHeight;
   double screenWidth;
+  AnimationController controller;
+  Animation animation;
+  bool _selectedIndex;
+
+  _onpressed() {
+    setState(() {
+      isPlaying = !isPlaying;
+
+      isPlaying ? controller.forward() : controller.reverse();
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+
+    controller = AnimationController(
+    duration: const Duration(milliseconds: 500),
+    vsync: this);
+
     final _selectedDay = DateTime.now();
 
     _events = {
@@ -98,6 +117,21 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
     });
 
     return Scaffold(
+
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: DesignTheme.mainColor,
+        child: AnimatedIcon(
+          icon: AnimatedIcons.add_event,
+          progress: controller,
+          semanticLabel: 'Show menu',
+        ),
+        onPressed: () {
+          _onpressed();
+        },
+      ),
+
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
@@ -110,93 +144,17 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
       ),
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),
-        notchMargin: 10,
-        child: Container(
-          height: 60,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  MaterialButton(
-                    minWidth: 40,
-                    onPressed: () {
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          Icons.dashboard,
-                          color: Colors.grey,
-                        ),
-                        Text(
-                          'Dashboard',
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  MaterialButton(
-                    minWidth: 40,
-                    onPressed: () {
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          Icons.chat,
-                          color: Colors.grey,
-                        ),
-                        Text(
-                          'Chats',
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                                    MaterialButton(
-                    minWidth: 40,
-                    onPressed: () {
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          Icons.dashboard,
-                          color: Colors.grey,
-                        ),
-                        Text(
-                          'Profile',
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+        notchMargin: 8,
+        child: BottomSheetAndBar(
+          items:[
+                  BottomBarItemButton(index:1, selectedIndex:1, icon: FontAwesomeIcons.userAlt, text: "Главная"),
+                  BottomBarItemButton(index:2, selectedIndex:1, icon: Icons.calendar_today, text: "Календарь"),
+                  BottomBarItemButton(index:3, selectedIndex:1, icon: Icons.settings, text: "Настройки"),
                 ],
-              ),
-            ],
           ),
-        ),
-      ),
-      
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: DesignTheme.mainColor,
-        child: Icon(Icons.add),
-        onPressed: () {
-
-        },
-      ),
-    );
-  }
+        )
+      );
+    }
 
   Widget _buildTableCalendar() {
     return TableCalendar(
@@ -217,11 +175,11 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
         selectedColor: DesignTheme.mainColor,
         markersColor: DesignTheme.secondColor,
         outsideDaysVisible: true,
-        todayColor: DesignTheme.blueGray,
+        todayColor: DesignTheme.blueGrey,
         outsideHolidayStyle: TextStyle().copyWith(color: DesignTheme.mainColor),
         holidayStyle: TextStyle().copyWith(color: DesignTheme.mainColor),
-        outsideWeekendStyle: TextStyle().copyWith(color: DesignTheme.blueGray),
-        outsideStyle: TextStyle().copyWith(color: DesignTheme.blueGray),
+        outsideWeekendStyle: TextStyle().copyWith(color: DesignTheme.blueGrey),
+        outsideStyle: TextStyle().copyWith(color: DesignTheme.blueGrey),
         weekendStyle: TextStyle().copyWith(color: DesignTheme.mainColor),
       ),
       builders: CalendarBuilders(

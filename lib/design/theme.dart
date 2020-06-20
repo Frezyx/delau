@@ -1,3 +1,4 @@
+import 'package:delau/design/bottomNavgationBar.dart';
 import 'package:delau/design/buttons.dart';
 import 'package:flutter/material.dart';
 
@@ -5,10 +6,16 @@ class DesignTheme {
   DesignTheme._();
 
   static final ButtonsTheme buttons = ButtonsTheme();
+  static final BottomNavigationBarTheme bnb = BottomNavigationBarTheme();
 
   static const Color mainColor = Color.fromRGBO(0, 159, 253, 1);
   static const Color secondColor = Color.fromRGBO(42, 42, 114, 1);
-  static const Color blueGray = Color.fromRGBO(188, 214, 229, 1);
+
+  static const Color blueGrey = Color.fromRGBO(188, 214, 229, 1);
+  static const Color blueGreyDark = Color.fromRGBO(145, 173, 189, 1);
+  static const Color greyMedium = Color.fromRGBO(164, 164, 164, 1);
+
+
   static const Color bgColor = Color.fromRGBO(244, 244, 244, 1);
 
   static ThemeData appTheme = ThemeData(

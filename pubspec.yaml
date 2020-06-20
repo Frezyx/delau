@@ -48,6 +48,7 @@ dependencies:
   flutter_star_rating: ^0.0.2
   table_calendar: ^2.2.3
   flutter_svg: ^0.17.3+1
+  font_awesome_flutter: ^8.8.1
   # background_fetch:
   #   git:
   #     url: https://github.com/transistorsoft/flutter_background_fetch
