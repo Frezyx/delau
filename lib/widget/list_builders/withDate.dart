@@ -3,75 +3,107 @@ import 'package:delau/design/custonDesignIcon.dart';
 import 'package:delau/design/theme.dart';
 import 'package:delau/models/provider/listItemState.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
-class ListWithDateItem extends StatelessWidget {
+class ListWithDateItem extends StatefulWidget {
 
   final int listPosition;
   final List<dynamic> data;
-  ListItemBloc itemState;
 
   ListWithDateItem({
     Key key,
     @required this.listPosition,
     @required this.data,
-    this.itemState,
   }) : super(key: key);
+
+  @override
+  _ListWithDateItemState createState() => _ListWithDateItemState();
+}
+
+class _ListWithDateItemState extends State<ListWithDateItem> {
+  bool isOpen;
 
   @override
   Widget build(BuildContext context) {
 
-    var topSpace = listPosition == 0 ? 22.0 : 9.0;
-    var bottomSpace = listPosition == data.length - 1? 22.0 : 9.0;
+    var topSpace = widget.listPosition == 0 ? 22.0 : 9.0;
+    var bottomSpace = widget.listPosition == widget.data.length - 1? 22.0 : 9.0;
+    final listItemBlocState = Provider.of<ListItemBloc>(context);
+
+    isOpen = Provider.of<bool>(context);
 
     return Expanded(
       child: Padding(
         padding: EdgeInsets.only(top: topSpace, bottom: bottomSpace),
         child: Container(
-          padding: const EdgeInsets.all(14.0),
+          padding: const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
               color: Colors.white,
-              // border: Border.all(color: DesignTheme.mainColor),
               borderRadius: BorderRadius.all(Radius.circular(8)),
               boxShadow: [
                 BoxShadow(
-                  color: Color.fromRGBO(0, 0, 0, 0.05),
+                  color: listItemBlocState.selectedEvents[widget.listPosition].isChecked ? 
+                  Colors.green.withOpacity(0.18) : Color.fromRGBO(0, 0, 0, 0.05),
                   offset: Offset(0.0, 3.0),
                   spreadRadius: 2.0,
-                  blurRadius: 10.0,
+                  blurRadius: 11.0,
                 ),
               ]),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 4.0, left: 4.0),
-                child: Icon(
-                  Icons.bluetooth, 
-                  color: DesignTheme.mainColor
-                ),
-              ),
-              Container(
-                width: 140,
+                  Padding(
+                    padding: const EdgeInsets.only(right: 14.0, left: 2.0),
+                    child: Icon(
+                      MdiIcons.fromString('${listItemBlocState.getItemIcon(widget.listPosition)}'), 
+                      color: listItemBlocState.selectedEvents[widget.listPosition].isChecked? Colors.green : DesignTheme.mainColor
+                    ),
+                  ),
+              AnimatedContainer(
+                duration: Duration(milliseconds: 500),
+                width: 152,
                 //Must be like widget.height - padding
-                height: 40,
-                // itemState.isOpen != null? itemState.isOpen? 40 : 100: 40,
+
+                height: listItemBlocState.selectedEvents[widget.listPosition].isOpen? 
+                DesignTheme.size.getAboutHeight(
+                  listItemBlocState.selectedEvents[widget.listPosition].description.length, 12,
+                  listItemBlocState.selectedEvents[widget.listPosition].name.length,20
+                ): 40,
+
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(listPosition.toString(), style: DesignTheme.listItemLabel),
-                    Expanded(child: Text(data[listPosition].toString(), style: DesignTheme.listItemSubtitle, overflow: TextOverflow.ellipsis),),
+                    Expanded(child:Text(
+                      widget.data[widget.listPosition].name,
+                      style: DesignTheme.listItemLabel,
+                      overflow: listItemBlocState.selectedEvents[widget.listPosition].isOpen? TextOverflow.fade : TextOverflow.ellipsis)
+                    ),
+                    Expanded(child: Text(
+                      widget.data[widget.listPosition].description,
+                      style: DesignTheme.listItemSubtitle,
+                      overflow: listItemBlocState.selectedEvents[widget.listPosition].isOpen? TextOverflow.fade : TextOverflow.ellipsis),
+                    ),
                   ],
                 ),
               ),
-              AnimatedContainer(
-                duration: Duration(milliseconds: 100),
-                child: Checkbox(
-                    onChanged: (bool value) {
-
-                    },
-                  value: false,
-                ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    child: Checkbox(
+                      activeColor: listItemBlocState.selectedEvents[widget.listPosition].isChecked? Colors.green: DesignTheme.mainColor,
+                        onChanged: (bool value) {
+                          // setState((){
+                            listItemBlocState.changeCheckState(widget.listPosition);
+                          // });
+                        },
+                      value: listItemBlocState.selectedEvents[widget.listPosition].isChecked,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -86,33 +118,5 @@ class ListWithDateItem extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
           child: Text(time, style: DesignTheme.listTime, textAlign: TextAlign.center,),
-        ));
-  }
-
-  Widget lineStyle(BuildContext context, double iconSize, int index,
-      int listLength, bool isFinish) {
-    return Container(
-        decoration: CustomIconDecoration(
-            iconSize: iconSize,
-            lineWidth: 1,
-            firstData: index == 0 ?? true,
-            lastData: index == listLength - 1 ?? true),
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(50)),
-              boxShadow: [
-                BoxShadow(
-                  color: DesignTheme.mainColor.withOpacity(0.2),
-                  offset: Offset(0.0, 1.0),
-                  spreadRadius: 3.0,
-                  blurRadius: 6.0,
-                ),
-              ]),
-          child: Icon(
-              isFinish
-                  ? Icons.fiber_manual_record
-                  : Icons.radio_button_unchecked,
-              size: iconSize,
-              color: DesignTheme.mainColor),
         ));
   }

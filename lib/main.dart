@@ -1,10 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:delau/blocs/listItemBloc.dart';
 import 'package:delau/new_calendar_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:http/http.dart' as http;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import'package:intl/date_symbol_data_local.dart';
 
@@ -69,7 +71,14 @@ class MyApp extends StatelessWidget {
       
     routes: {
       // '/':(BuildContext context) => MyStatefulWidget(),
-      '/':(BuildContext context) => Calendar(),
+      '/':(BuildContext context) => 
+
+      ChangeNotifierProvider<ListItemBloc>(
+          create: (_) => ListItemBloc(),
+          child:Calendar(
+            
+          ),),
+
       '/second':(BuildContext context) => MyStatefulWidget3(),
       '/ntf':(BuildContext context) => LocalNotificationWidget(),
       '/user':(BuildContext context) => UPN(),
@@ -507,7 +516,7 @@ List<int> countTasksByMarker = [0,0,0,0,0,0];
     onPressed: () { 
     Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Calendar(title: "Сос")),
+        MaterialPageRoute(builder: (context) => Calendar()),
       );
      },
     child: Icon(Icons.add),

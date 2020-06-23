@@ -1,10 +1,12 @@
 import 'package:delau/design/buttons.dart';
+import 'package:delau/design/sizeHelper.dart';
 import 'package:flutter/material.dart';
 
 class DesignTheme {
   DesignTheme._();
 
   static final ButtonsTheme buttons = ButtonsTheme();
+  static final SizeHelper size = SizeHelper();
 
   static const Color mainColor = Color.fromRGBO(0, 159, 253, 1);
   static const Color secondColor = Color.fromRGBO(42, 42, 114, 1);

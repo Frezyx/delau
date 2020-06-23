@@ -1,13 +1,13 @@
 import 'package:bottom_bar_with_sheet/bottom_bar_withs_sheet.dart';
 import 'package:delau/blocs/listItemBloc.dart';
-import 'package:delau/models/provider/listItemState.dart';
+import 'package:delau/models/task.dart';
 import 'package:delau/widget/infoIllustratedScreens/noTasks.dart';
+import 'package:delau/widget/list_builders/taskStateIconLine.dart';
 import 'package:delau/widget/list_builders/withDate.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:intl/intl.dart';
 
 import 'design/theme.dart';
 
@@ -21,18 +21,20 @@ final Map<DateTime, List> _holidays = {
 };
 
 class Calendar extends StatefulWidget {
-  Calendar({Key key, this.title}) : super(key: key);
+  Calendar({Key key, this.isOpen = false}) : super(key: key);
 
-  final String title;
+  bool isOpen;
 
   @override
-  _CalendarState createState() => _CalendarState();
+  _CalendarState createState() => _CalendarState(isOpen:isOpen);
 }
 
 class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
+  _CalendarState({this.isOpen});
+
   Map<DateTime, List> _events;
   List _selectedEvents;
-  bool isPlaying = false;
+  bool isPlaying;
   AnimationController _animationController;
   CalendarController _calendarController;
   double screenHeight;
@@ -40,7 +42,7 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
   AnimationController controller;
   Animation animation;
   int _selectedIndex = 1;
-
+  bool isOpen;
 
   @override
   void initState() {
@@ -51,22 +53,19 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
     final _selectedDay = DateTime.now();
 
     _events = {
-      _selectedDay.subtract(Duration(days: 30)): ['Event A0', 'Event B0', 'Event C0'],
-      _selectedDay.subtract(Duration(days: 27)): ['Event A1'],
-      _selectedDay.subtract(Duration(days: 20)): ['Event A2', 'Event B2', 'Event C2', 'Event D2'],
-      _selectedDay.subtract(Duration(days: 16)): ['Event A3', 'Event B3'],
-      _selectedDay.subtract(Duration(days: 10)): ['Event A4', 'Event B4', 'Event C4'],
-      _selectedDay.subtract(Duration(days: 4)): ['Event A5', 'Event B5', 'Event C5'],
-      _selectedDay.subtract(Duration(days: 2)): ['Event A6', 'Event B6'],
-      _selectedDay: ['Event A7', 'Event B7', 'Event C7', 'Event D7'],
-      _selectedDay.add(Duration(days: 1)): ['Event A8', 'Event B8', 'Event C8', 'Event D8'],
-      _selectedDay.add(Duration(days: 3)): Set.from(['Event A9', 'Event A9', 'Event B9']).toList(),
-      _selectedDay.add(Duration(days: 7)): ['Event A10', 'Event B10', 'Event C10'],
-      _selectedDay.add(Duration(days: 11)): ['Event A11', 'Event B11'],
-      _selectedDay.add(Duration(days: 17)): ['Event A12', 'Event B12', 'Event C12', 'Event D12'],
-      _selectedDay.add(Duration(days: 22)): ['Event A13', 'Event B13'],
-      _selectedDay.add(Duration(days: 26)): ['Event A14', 'Event B14', 'Event C14'],
-    };
+      _selectedDay.subtract(Duration(days: 4)): [Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event A5'), Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event B5'), Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event C5')],
+      _selectedDay.subtract(Duration(days: 2)): [Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event A6'), Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event B6')],
+      
+      _selectedDay: [
+        Task(isChecked: true, icon:"wifi", isOpen: false, description: 'Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы' , name: 'Пойти выбросить мусор', dateTime: _selectedDay),
+        Task(isChecked: false, isOpen: false, icon:"cart", description: 'Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы', name:"Задачи на сайте", dateTime: _selectedDay), 
+        Task(isChecked: false, isOpen: false, icon:"calendar", description: 'Сайт', name: 'Купить хлеба', dateTime: _selectedDay), 
+        Task(isChecked: false, isOpen: false, icon:"circle", description: 'Сайт верстальщику, вебмастеру сгенерировать несколько абзацев более', name: 'Позвонить Марине и рассказать за жизнь', dateTime: _selectedDay)
+       ],
+      
+      _selectedDay.add(Duration(days: 1)): [Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event A8'), Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event B8'), Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event C8'), Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event D8')],
+      _selectedDay.add(Duration(days: 7)): [Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event A10'), Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event B10'), Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event C10')],
+      };
 
     _selectedEvents = _events[_selectedDay] ?? [];
     _calendarController = CalendarController();
@@ -103,10 +102,14 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+
     setState((){
       screenHeight = MediaQuery.of(context).size.height;
       screenWidth = MediaQuery.of(context).size.width;
     });
+
+    final listItemBlocState = Provider.of<ListItemBloc>(context);
+    listItemBlocState.selectedEvents = _selectedEvents;
 
     return Scaffold(
       body: Column(
@@ -119,7 +122,12 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
             ),
             child: _buildTableCalendar()
           ),
-          _buildEventList(screenWidth, screenHeight)
+          MultiProvider(
+          providers: [
+            Provider<bool>.value(value: widget.isOpen),
+          ],
+          child: _buildEventList(screenWidth, screenHeight, listItemBlocState)
+          )
         ],
       ),
 
@@ -267,38 +275,32 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildEventList(double _screenWidth, double screenHeight) {
+  Widget _buildEventList(double _screenWidth, double screenHeight, listItemBlocState) {
     return  _selectedEvents.length > 0? 
      Expanded(
        child: ListView.builder(
         itemCount: _selectedEvents.length,
         padding: const EdgeInsets.all(0),
         itemBuilder: (context, index) {
-          // ListItemBloc itemState = Provider.of<ListItemBloc>(context);
-          return 
-
-        // MultiProvider(
-        //   providers: [
-        //     Provider<TasksListItemState>.value(value: _tasksListItemState),
-        // ],
-        // child:
-
-        ListTile(
-            contentPadding: const EdgeInsets.only(left: 24.0, right: 24),
+          return ListTile(
+            contentPadding: const EdgeInsets.only(left: 24, right: 24),
             title:
               Row(
                 children: <Widget>[
-
-                  lineStyle(context, 15, index, _selectedEvents.length, true),
-                  displayTime(
-                    "12:12"
+                  LineStateCheckedIcons(
+                    iconSize: 15,
+                    index: index,
+                    listLength: _selectedEvents.length,
+                    isFinish: true,
                   ),
-                  InkWell(
+                  displayTime(
+                    DateFormat('Hm').format(listItemBlocState.selectedEvents[index].dateTime)
+                  ),
+                  GestureDetector(
                     onTap: () {
-                      print(_selectedEvents[index] + "СОСИ !!!");
-                      // itemState.isOpen = !itemState.isOpen;
+                      listItemBlocState.changeOpenState(index);
                     },
-                    child: ListWithDateItem(listPosition: index, data: _selectedEvents, itemState : null),
+                    child: ListWithDateItem(listPosition: index, data: _selectedEvents),
                   ),
                 ],
               ),
