@@ -66,25 +66,37 @@ class _ListWithDateItemState extends State<ListWithDateItem> {
                 width: 152,
                 //Must be like widget.height - padding
 
-                height: listItemBlocState.selectedEvents[widget.listPosition].isOpen? 
-                DesignTheme.size.getAboutHeight(
-                  listItemBlocState.selectedEvents[widget.listPosition].description.length, 12,
-                  listItemBlocState.selectedEvents[widget.listPosition].name.length,20
-                ): 40,
-
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Expanded(child:Text(
-                      widget.data[widget.listPosition].name,
-                      style: DesignTheme.listItemLabel,
-                      overflow: listItemBlocState.selectedEvents[widget.listPosition].isOpen? TextOverflow.fade : TextOverflow.ellipsis)
+                    Container(
+
+                      height: listItemBlocState.selectedEvents[widget.listPosition].isOpen? 
+                        DesignTheme.size.getAboutHeight(
+                          listItemBlocState.selectedEvents[widget.listPosition].description.length, 12,
+                          listItemBlocState.selectedEvents[widget.listPosition].name.length,20, true,
+                        ): 25,
+
+                      child: Expanded(child:Text(
+                        widget.data[widget.listPosition].name,
+                        style: DesignTheme.listItemLabel,
+                        overflow: listItemBlocState.selectedEvents[widget.listPosition].isOpen? TextOverflow.fade : TextOverflow.ellipsis)
+                      ),
                     ),
-                    Expanded(child: Text(
-                      widget.data[widget.listPosition].description,
-                      style: DesignTheme.listItemSubtitle,
-                      overflow: listItemBlocState.selectedEvents[widget.listPosition].isOpen? TextOverflow.fade : TextOverflow.ellipsis),
+                    Container(
+
+                      height: listItemBlocState.selectedEvents[widget.listPosition].isOpen? 
+                        DesignTheme.size.getAboutHeight(
+                          listItemBlocState.selectedEvents[widget.listPosition].description.length, 12,
+                          listItemBlocState.selectedEvents[widget.listPosition].name.length,20, false,
+                        ): 15,
+
+                      child: Expanded(child: Text(
+                        widget.data[widget.listPosition].description,
+                        style: DesignTheme.listItemSubtitle,
+                        overflow: listItemBlocState.selectedEvents[widget.listPosition].isOpen? TextOverflow.fade : TextOverflow.ellipsis),
+                      ),
                     ),
                   ],
                 ),
