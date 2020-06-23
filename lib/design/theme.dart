@@ -1,4 +1,3 @@
-import 'package:delau/design/bottomNavgationBar.dart';
 import 'package:delau/design/buttons.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +5,6 @@ class DesignTheme {
   DesignTheme._();
 
   static final ButtonsTheme buttons = ButtonsTheme();
-  static final BottomNavigationBarTheme bnb = BottomNavigationBarTheme();
 
   static const Color mainColor = Color.fromRGBO(0, 159, 253, 1);
   static const Color secondColor = Color.fromRGBO(42, 42, 114, 1);
@@ -14,6 +12,7 @@ class DesignTheme {
   static const Color blueGrey = Color.fromRGBO(188, 214, 229, 1);
   static const Color blueGreyDark = Color.fromRGBO(145, 173, 189, 1);
   static const Color greyMedium = Color.fromRGBO(164, 164, 164, 1);
+  static const Color greyDark = Color.fromRGBO(120, 120, 120, 1);
 
 
   static const Color bgColor = Color.fromRGBO(244, 244, 244, 1);
@@ -25,6 +24,26 @@ class DesignTheme {
         primaryColorLight: DesignTheme.mainColor,
         primarySwatch: Colors.blue,
       );
+
+// Task list text styles
+
+  static const TextStyle listItemLabel =TextStyle(
+      fontSize: 20.0,
+      color: Colors.black87,
+    );
+
+  static const TextStyle listItemSubtitle =TextStyle(
+    fontSize: 12.0,
+    color: DesignTheme.greyMedium,
+  );
+
+  static const TextStyle listTime =TextStyle(
+    fontSize: 14.0,
+    fontWeight: FontWeight.w300,
+    color: DesignTheme.greyDark,
+  );
+
+// Task list text styles end
 
   static const LinearGradient 
     gradientButton = LinearGradient(

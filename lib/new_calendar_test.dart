@@ -1,14 +1,15 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:delau/widget/bottomSheetAndBar/bottomSheetAndBar.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:bottom_bar_with_sheet/bottom_bar_withs_sheet.dart';
+import 'package:delau/blocs/listItemBloc.dart';
+import 'package:delau/models/provider/listItemState.dart';
+import 'package:delau/widget/infoIllustratedScreens/noTasks.dart';
+import 'package:delau/widget/list_builders/withDate.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'design/theme.dart';
-import 'widget/bottom/bottomBar.dart';
 
 // Example holidays
 final Map<DateTime, List> _holidays = {
@@ -38,23 +39,14 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
   double screenWidth;
   AnimationController controller;
   Animation animation;
-  bool _selectedIndex;
+  int _selectedIndex = 1;
 
-  _onpressed() {
-    setState(() {
-      isPlaying = !isPlaying;
-
-      isPlaying ? controller.forward() : controller.reverse();
-    });
-  }
 
   @override
   void initState() {
     super.initState();
 
-    controller = AnimationController(
-    duration: const Duration(milliseconds: 500),
-    vsync: this);
+    controller = AnimationController( duration: const Duration(milliseconds: 500), vsync: this);
 
     final _selectedDay = DateTime.now();
 
@@ -117,43 +109,70 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
     });
 
     return Scaffold(
-
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: DesignTheme.mainColor,
-        child: AnimatedIcon(
-          icon: AnimatedIcons.add_event,
-          progress: controller,
-          semanticLabel: 'Show menu',
-        ),
-        onPressed: () {
-          _onpressed();
-        },
-      ),
-
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          //TODO: Добавить App Bar
           const SizedBox(height: 25.0),
-          _buildTableCalendar(),
-          const SizedBox(height: 8.0),
-          Expanded(child: _buildEventList(screenWidth, screenHeight)),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+            ),
+            child: _buildTableCalendar()
+          ),
+          _buildEventList(screenWidth, screenHeight)
         ],
       ),
-      bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
-        notchMargin: 8,
-        child: BottomSheetAndBar(
-          items:[
-                  BottomBarItemButton(index:1, selectedIndex:1, icon: FontAwesomeIcons.userAlt, text: "Главная"),
-                  BottomBarItemButton(index:2, selectedIndex:1, icon: Icons.calendar_today, text: "Календарь"),
-                  BottomBarItemButton(index:3, selectedIndex:1, icon: Icons.settings, text: "Настройки"),
-                ],
+
+      bottomNavigationBar: BottomBarWithSheet(
+        selectedIndex: _selectedIndex,
+        duration: Duration(milliseconds: 400),
+        styleBottomBar: BottomBarTheme(
+          barBackgroundColor: Colors.white,
+          selectedItemIconColor: Colors.white,
+          selectedItemLabelColor: Colors.black,
+          mainActionButtonSize: 55,
+          barHeightClosed: 70,
+          barHeightOpened: 410,
+          marginBetweenPanelAndActtionButton: 30,
+          rightMargin: 15,
+          mainActionButtonPadding: EdgeInsets.all(7),
+          mainActionButtonIconClosed: Icon(Icons.add, color:Colors.white , size: 30,),
+          mainActionButtonIconOpened: Icon(Icons.keyboard_arrow_down, color:Colors.white, size: 35,),
+        ),
+
+        onSelectItem: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+
+        sheetChild: Center(child: Text("Place for your another content")),
+
+        items: [
+          BottomBarWithSheetItem(
+            iconData: Icons.people,
+            label: 'Главная',
+            selectedBackgroundColor: Colors.blue,
           ),
-        )
-      );
+          BottomBarWithSheetItem(
+            iconData: Icons.calendar_today,
+            label: 'Календарь',
+            selectedBackgroundColor: Colors.blue,
+          ),
+          BottomBarWithSheetItem(
+            iconData: Icons.settings,
+            label: 'Настройки',
+            selectedBackgroundColor: Colors.blue,
+          ),
+        ],
+      ),
+    );
+  }
+
+    openPage(int pageIndex){
+      setState((){
+        _selectedIndex = pageIndex;
+      });
     }
 
   Widget _buildTableCalendar() {
@@ -249,56 +268,44 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
   }
 
   Widget _buildEventList(double _screenWidth, double screenHeight) {
-    return  _selectedEvents.length > 0? ListView(
-      children:
-      _selectedEvents
-          .map((event) => Container(
-                // margin: EdgeInsets.only(bottom: 20,),
-                decoration: BoxDecoration(
-                  // border: Border.all(width: 0.8),
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15.0),
-                  boxShadow: [DesignTheme.originalShadowLil],
-                ),
-                margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-                child: ListTile(
-                  title: Text(event.toString()),
-                  onTap: () => print('$event tapped!'),
-                ),
-              ))
-          .toList(),
-    ):Column(
-      children: <Widget>[
-        SizedBox(height:10),
-        Container(
-          height: screenHeight * 0.25,
-          child:SvgPicture.asset('assets/svg/calendar.svg')
-        ),
-        SizedBox(height:10),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Expanded(
-              child: Text("На этот день у вас нет задач. Хотите добавить?", overflow: TextOverflow.fade, textAlign: TextAlign.center,)
-            ),
-        ),
-        SizedBox(height:10),
-        Container(
-          child: RaisedButton(
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50.0),
-            ),
-            onPressed: () {
-              print("login");
-            },
-            color: DesignTheme.mainColor,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 12, left: 16.0, right: 16.0, bottom:12),
-              child: Text("Добавить", style: DesignTheme.buttons.text,),
-            ),
-          ),
-        ),
-      ],
-    );
+    return  _selectedEvents.length > 0? 
+     Expanded(
+       child: ListView.builder(
+        itemCount: _selectedEvents.length,
+        padding: const EdgeInsets.all(0),
+        itemBuilder: (context, index) {
+          // ListItemBloc itemState = Provider.of<ListItemBloc>(context);
+          return 
+
+        // MultiProvider(
+        //   providers: [
+        //     Provider<TasksListItemState>.value(value: _tasksListItemState),
+        // ],
+        // child:
+
+        ListTile(
+            contentPadding: const EdgeInsets.only(left: 24.0, right: 24),
+            title:
+              Row(
+                children: <Widget>[
+
+                  lineStyle(context, 15, index, _selectedEvents.length, true),
+                  displayTime(
+                    "12:12"
+                  ),
+                  InkWell(
+                    onTap: () {
+                      print(_selectedEvents[index] + "СОСИ !!!");
+                      // itemState.isOpen = !itemState.isOpen;
+                    },
+                    child: ListWithDateItem(listPosition: index, data: _selectedEvents, itemState : null),
+                  ),
+                ],
+              ),
+            // ),
+          );
+        },
+    ),
+  ) : getNoTasksScreen(screenHeight, context);
   }
 }
