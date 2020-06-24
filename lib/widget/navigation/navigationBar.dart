@@ -39,7 +39,7 @@ class _BottomBarWithSheetNavigatorState extends State<BottomBarWithSheetNavigato
           selectedItemLabelColor: Colors.black,
           mainActionButtonSize: 55,
           barHeightClosed: 70,
-          barHeightOpened: 410,
+          barHeightOpened: MediaQuery.of(context).size.height / 1.9,
           marginBetweenPanelAndActtionButton: 30,
           rightMargin: 15,
           mainActionButtonPadding: EdgeInsets.all(7),
@@ -67,6 +67,11 @@ class _BottomBarWithSheetNavigatorState extends State<BottomBarWithSheetNavigato
           BottomBarWithSheetItem(
             iconData: Icons.settings,
             label: 'Настройки',
+            selectedBackgroundColor: Colors.blue,
+          ),
+          BottomBarWithSheetItem(
+            iconData: Icons.list,
+            label: 'Заметки',
             selectedBackgroundColor: Colors.blue,
           ),
         ],

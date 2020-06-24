@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:delau/models/templates/radio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -11,21 +12,12 @@ import 'package:speech_recognition/speech_recognition.dart';
 import 'package:delau/models/dbModels.dart';
 import 'package:delau/utils/database_helper.dart';
 import 'package:delau/utils/recognize_helper.dart';
-import 'package:delau/widget/customRadio.dart';
+import 'package:delau/widget/inputs/customRadio.dart';
 import 'dart:async';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:delau/utils/synchroneHelper.dart';
 import 'package:delau/utils/timeHelper.dart';
 import 'package:flutter_star_rating/flutter_star_rating.dart';
-
-class RadioModel {
-  int index;
-  bool isSelected;
-  final IconData icon;
-  final String text;
-
-  RadioModel(this.index, this.isSelected, this.icon, this.text);
-}
 
 class MyStatefulWidget3 extends StatefulWidget {
 

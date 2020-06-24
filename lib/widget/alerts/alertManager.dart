@@ -5,7 +5,7 @@ import 'package:flutter_star_rating/flutter_star_rating.dart';
 
 class AlertManager{
 
-  static Future<double> getPriorityPiker(context) async {
+  static Future<double> getPriorityPicker(context) async {
     var selectedPriority = 0.0;
 
     await showDialog(
@@ -48,7 +48,7 @@ class AlertManager{
     return selectedPriority;
   }
 
-  static Future<int> getTimePikerAlert(BuildContext context) async{
+  static Future<int> getTimePickerAlert(BuildContext context) async{
     final TimeOfDay picked = await showTimePicker(
       context: context, 
       initialTime: TimeOfDay.now(),
@@ -57,7 +57,7 @@ class AlertManager{
     return null;
   }
   
-  static Future<int> getDatePikerAlert(BuildContext context) async {
+  static Future<int> getDatePickerAlert(BuildContext context) async {
         final DateTime picked = await showDatePicker(
           context: context,
           initialDate: DateTime.now(),
