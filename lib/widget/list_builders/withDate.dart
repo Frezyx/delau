@@ -1,7 +1,5 @@
 import 'package:delau/blocs/listItemBloc.dart';
-import 'package:delau/design/custonDesignIcon.dart';
 import 'package:delau/design/theme.dart';
-import 'package:delau/models/provider/listItemState.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
@@ -62,9 +60,9 @@ class _ListWithDateItemState extends State<ListWithDateItem> {
                     ),
                   ),
               AnimatedContainer(
-                duration: Duration(milliseconds: 500),
+                duration: Duration(milliseconds: 1500),
+                // TODO: ADAPTIVE SOLUTION
                 width: 152,
-                //Must be like widget.height - padding
 
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

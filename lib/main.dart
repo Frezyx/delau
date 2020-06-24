@@ -1,7 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:delau/blocs/listItemBloc.dart';
-import 'package:delau/new_calendar_test.dart';
+import 'package:delau/pages/calendar.dart';
+import 'package:delau/widget/navigation/navigationBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:http/http.dart' as http;
@@ -70,15 +71,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       
     routes: {
-      // '/':(BuildContext context) => MyStatefulWidget(),
-      '/':(BuildContext context) => 
-
-      ChangeNotifierProvider<ListItemBloc>(
-          create: (_) => ListItemBloc(),
-          child:Calendar(
-            
-          ),),
-
+      '/':(BuildContext context) => BottomBarWithSheetNavigator(selectedIndex: 1),
       '/second':(BuildContext context) => MyStatefulWidget3(),
       '/ntf':(BuildContext context) => LocalNotificationWidget(),
       '/user':(BuildContext context) => UPN(),

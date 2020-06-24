@@ -16,7 +16,7 @@ class SizeHelper{
       response = containerHeight * namePart + 10;
     }
     else{
-      response = containerHeight * textPart;
+      response = containerHeight * textPart * 0.7;
     }
 
     return response;
