@@ -1,5 +1,6 @@
 import 'package:delau/blocs/notesListBloc.dart';
 import 'package:delau/design/theme.dart';
+import 'package:delau/widget/alerts/addNote.dart';
 import 'package:delau/widget/notes/notesListBody.dart';
 import 'package:flutter/material.dart';
 import 'package:delau/utils/database_helper.dart';
@@ -20,29 +21,28 @@ class _NotesState extends State<Notes> {
   String searchText;
   bool dialVisible = true;
   bool isSaerching = false;
+
   SpeechRecognition _speechRecognition;
+
   bool _isAvailable = false;
   bool _isListening = false;
   bool sender = true;
   String id;
   String resultText = "";
 
+  int notesCount = 0;
+
   postNote(text){
                   if(!sender){
                     print("First text field: $text");
                     DBNoteProvider.db.updateNote(text, int.parse(id)).then((res){
-                      print(res.toString() + "Обновил");
                     });
                   }
                   if(sender){
                     DBNoteProvider.db.addNote(text).then((res){
                       setSender();
                       id = res.toString();
-                      print(res.toString() + "Добавил");
                     });
-                  }
-                  else{
-                    print("Дурак");
                   }
   }
 
@@ -95,6 +95,12 @@ class _NotesState extends State<Notes> {
   @override
     void initState(){
     super.initState();
+
+    DBNoteProvider.db.getAllNotesCount().then((count){
+      setState((){
+        notesCount = count;
+      });
+    });
 
     PermissionHandler().checkPermissionStatus(PermissionGroup.microphone).then(_updateStatus);
     
@@ -159,7 +165,13 @@ class _NotesState extends State<Notes> {
 
                 Padding(
                   padding: EdgeInsets.only(left: 15,right: 15,),
-                  child: Text("Заметки", style: DesignTheme.bigWhite)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text("Заметки", style: DesignTheme.bigWhite),
+                      Text("$notesCount", style: DesignTheme.bigWhite),
+                    ],
+                  )),
 
                 Padding(
                   padding: EdgeInsets.only(top: 10, bottom: 20),
@@ -208,7 +220,7 @@ class _NotesState extends State<Notes> {
         mainAxisAlignment: MainAxisAlignment.end,
         children:<Widget>[
           _isListening ? buildCloseAddingButton() : buildVoiceAddingButton(),
-          buildTextAddingButton(),
+          buildTextAddingButton(context),
           noteListBloc.isAnNoteSelected? buildNoteDeleteButton(noteListBloc) : Padding(padding: EdgeInsets.only(left: 0)),
         ]
       )
@@ -228,7 +240,7 @@ class _NotesState extends State<Notes> {
                                         child: Icon( Icons.delete, color: Colors.white, size: 30),
                                       ),
                                     onTap: () {
-                                      print(noteListBloc.unSelectAllNotes());
+                                      noteListBloc.unSelectAllNotes();
                                     },
                                   ),
                                 )
@@ -236,7 +248,7 @@ class _NotesState extends State<Notes> {
                             );
   }
 
-  Widget buildTextAddingButton() {
+  Widget buildTextAddingButton(context) {
     return Padding(
                               padding: EdgeInsets.only(top:5, bottom: 5),
                               child: ClipOval(
@@ -249,7 +261,7 @@ class _NotesState extends State<Notes> {
                                         child: Icon(Icons.add, color:Colors.white , size: 30),
                                       ),
                                     onTap: () {
-
+                                      getNoteCreateAlert(context);
                                     },
                                   ),
                                 )
@@ -311,5 +323,18 @@ class _NotesState extends State<Notes> {
                               ),
                             );
   }
+
+  getNoteCreateAlert(BuildContext context){
+  showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Dialog(
+                                clipBehavior: Clip.hardEdge,
+                                insetAnimationDuration: const Duration(milliseconds: 300),
+                                child: AddNoteAlert(),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(5))));
+                        });
+}
 
 }

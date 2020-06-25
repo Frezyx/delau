@@ -584,15 +584,12 @@ class DBNoteProvider {
     return(raw);
   }
 
-  Future<int> deleteCheckedNotes() async{
+  Future<int> deleteCheckedNotes(List<int> list) async{
     final db = await database;
-    var res = await db.query("Notes", where: "color = 1");
-    print(res.toString()+" Количество заметок с измененным цветом");
-    List<Note> list = res.isNotEmpty ? res.map((c) => Note.fromMap(c)).toList() : [];
     for (int i = 0; i <list.length; i++){
-      await db.rawUpdate('UPDATE Notes SET is_archived = ?, color = ? WHERE id = ?', [1,0,'${list[i].id}'])
+      await db.rawUpdate('UPDATE Notes SET is_archived = ? WHERE id = ?', [1,'${list[i]}'])
       .then((respa){
-        print("$respa Удалил");
+
       });
     }
     return 1;
@@ -617,9 +614,15 @@ class DBNoteProvider {
     var res = await db.query("Notes", where: "is_archived = ?", whereArgs: [0], orderBy: "date_last_edited DESC");
     List<Note> list =
         res.isNotEmpty ? res.map((c) => Note.fromMap(c)).toList() : [];
-        for (int i = 0; i <list.length; i++){
-        }
     return list;
+  }
+
+  Future<int> getAllNotesCount() async {
+    final db = await database;
+    var res = await db.query("Notes", where: "is_archived = ?", whereArgs: [0], orderBy: "date_last_edited DESC");
+    List<Note> list =
+        res.isNotEmpty ? res.map((c) => Note.fromMap(c)).toList() : [];
+    return list.length;
   }
 
     Future<List<Note>> getAllNotesSearch(String text) async {
@@ -629,7 +632,6 @@ class DBNoteProvider {
         res.isNotEmpty ? res.map((c) => Note.fromMap(c)).toList() : [];
         for (int i = 0; i <list.length; i++){
         }
-    print(list.length.toString() + "Кол-во ссаных заметок");
     return list;
   }
 

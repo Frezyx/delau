@@ -1,4 +1,5 @@
 import 'package:delau/models/dbModels.dart';
+import 'package:delau/utils/database_helper.dart';
 import 'package:flutter/material.dart';
 
 class NotesListBloc extends ChangeNotifier{
@@ -32,18 +33,21 @@ class NotesListBloc extends ChangeNotifier{
       if(_notes[i].isSelected){
         idList.add(_notes[i].id);
         _notes[i].isSelected = false;
+        _selectedCount--;
       }
     }
-    _isAnNoteSelected = _selectedCount >= 1;
+    DBNoteProvider.db.deleteCheckedNotes(idList);
+    _isAnNoteSelected = false;
     notifyListeners();
     return idList;
   }
 
   void selectNote(int index){
-    _selectedCount = _notes[index].isSelected? _selectedCount -1 : _selectedCount + 1;
+
     _notes[index].isSelected = !_notes[index].isSelected;
+    _selectedCount = !_notes[index].isSelected? _selectedCount - 1 : _selectedCount + 1;
     _isAnNoteSelected = _selectedCount >= 1;
-    print(_selectedCount);
+
     notifyListeners();
   }
 

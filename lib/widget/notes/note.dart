@@ -27,12 +27,13 @@ class _NotesTileState extends State<NotesTile> {
     final noteListBloc = Provider.of<NotesListBloc>(context);
 
     return Card(
+      shadowColor: noteListBloc.isItemSelected(widget.index)? Colors.red.withOpacity(0.35) : Colors.black.withOpacity(0.2),
+      elevation: 5,
       shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10.0),
-        ),
+      borderRadius: BorderRadius.all(Radius.circular(10),),
+        side: noteListBloc.isItemSelected(widget.index)? BorderSide(width: 1, color: Colors.red) : BorderSide(width: 0, color: Colors.white),
       ),
-      color: noteListBloc.isItemSelected(widget.index)? Colors.red : Colors.white,
+      color: Colors.white,
       child: InkWell(
         highlightColor: Colors.white,
         hoverColor: Colors.red,
@@ -51,7 +52,8 @@ class _NotesTileState extends State<NotesTile> {
           child: new Padding(
             padding: const EdgeInsets.all(10.0),
             child: Expanded(
-              child: Text( widget.content,
+              child: Text( 
+                widget.content,
                 textAlign: TextAlign.start,
                 overflow: TextOverflow.clip,
                 style: TextStyle(

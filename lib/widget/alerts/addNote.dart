@@ -1,6 +1,7 @@
 import 'package:delau/design/theme.dart';
 import 'package:delau/models/task.dart';
 import 'package:delau/models/templates/radio.dart';
+import 'package:delau/utils/database_helper.dart';
 import 'package:delau/widget/alerts/alertManager.dart';
 import 'package:delau/widget/inputs/customRadio.dart';
 import 'package:flutter/material.dart';
@@ -13,19 +14,13 @@ class AddNoteAlert extends StatefulWidget{
 }
 
 class _AddNoteAlertState extends State<AddNoteAlert> {
-  var task = Task();
-  List<RadioModel> sampleData = new List<RadioModel>();
+
+  String noteText;
+  final _formKey = GlobalKey<FormState>();
+
 
   @override
   void initState() {
-
-    sampleData.add(new RadioModel(0, true, FontAwesome.book, 'Учеба'));
-    sampleData.add(new RadioModel(1, false, FontAwesome.briefcase, 'Работа'));
-    sampleData.add(new RadioModel(2, false, MdiIcons.fromString('basketball'), 'Спорт'));
-    sampleData.add(new RadioModel(3, false, FontAwesome.users, 'Встречи'));
-    sampleData.add(new RadioModel(4, false, MdiIcons.fromString('shopping'), 'Покупки'));
-    sampleData.add(new RadioModel(5, false, FontAwesome.spinner, 'Другое'));
-
     super.initState();
   }
 
@@ -35,32 +30,41 @@ class _AddNoteAlertState extends State<AddNoteAlert> {
       child: Column(
         children: <Widget>[
 
-          Padding(
-            padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0, bottom: 15.0),
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 14.0, top: 4.0, left: 8.0, right: 8.0),
-                  child: Text("Добавление заметки", style: DesignTheme.alert.bigText,),
-                ),
-                buildTitleTextField(),
-                buildMarkerPicker(),
-                SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    getBottomButton("Отменить", Icons.add, Colors.red, context),
-                    getBottomButton("Сохранить", Icons.add, DesignTheme.mainColor, context),
-                  ]
-                ),
-              ]),
-            ),
+          Form(key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0, bottom: 15.0),
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 14.0, top: 4.0, left: 8.0, right: 8.0),
+                    child: Text("Добавление заметки", style: DesignTheme.alert.bigText,),
+                  ),
+                  buildTitleTextField(),
+                  SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      getBottomButton("Отменить", Icons.add, Colors.red, context, close, true, _formKey),
+                      getBottomButton("Сохранить", Icons.add, DesignTheme.mainColor, context, validate, false, _formKey),
+                    ]
+                  ),
+                ]),
+              ),
+          ),
         ],
       )
       );
     }
 
-getBottomButton(String text, IconData icon, Color color, BuildContext context){
+validate(_formKey){
+  _formKey.currentState.validate();
+}
+
+close( context){
+  Navigator.pop(context);
+}
+
+getBottomButton(String text, IconData icon, Color color, BuildContext context, Function func, bool isClose, _formKey){
     return    Padding(
                 padding:EdgeInsets.only(left: 5, right: 5, bottom: 20),
                 child:
@@ -69,7 +73,13 @@ getBottomButton(String text, IconData icon, Color color, BuildContext context){
                       focusColor: Colors.white,
                       highlightColor: Colors.white,
                       splashColor: color,
-                      onPressed: (){ },
+                      onPressed: (){ 
+                        if(isClose){
+                          func(context);
+                        }else{ 
+                          func(_formKey);
+                         }
+                      },
                       child: 
                       Padding(
                         padding:EdgeInsets.all(5),
@@ -99,35 +109,6 @@ getBottomButton(String text, IconData icon, Color color, BuildContext context){
                   );
   }
 
-  Widget buildMarkerPicker() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text("Выберите маркер", style:DesignTheme.alert.label),
-        ),
-        Container(
-                height: 100.0,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: sampleData.length,
-                  itemBuilder: (context, i) {
-                    return InkWell(
-                      onTap: () {
-
-                      },
-                      splashColor: DesignTheme.mainColor,
-                      child: getCustomRadio(sampleData[i], sampleData.length),
-                    );
-                  }
-                ),
-              ),
-      ],
-    );
-  }
-
-
   Widget buildTitleTextField() {
     return TextFormField(
             key: Key('title_task'),
@@ -147,7 +128,10 @@ getBottomButton(String text, IconData icon, Color color, BuildContext context){
             ),
             validator: (value){
               if (value.isEmpty) return 'Введите вашу заметку';
-              else { task.name = value.toString(); }
+              else { 
+                DBNoteProvider.db.addNote(value.toString());
+                Navigator.pop(context);
+                }
             },
           );
   }
