@@ -1,9 +1,11 @@
+import 'package:delau/blocs/notesListBloc.dart';
 import 'package:delau/design/theme.dart';
 import 'package:delau/widget/notes/notesListBody.dart';
 import 'package:flutter/material.dart';
 import 'package:delau/utils/database_helper.dart';
 import 'package:flutter/rendering.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 import 'package:speech_recognition/speech_recognition.dart';
 
 class Notes extends StatefulWidget {
@@ -133,6 +135,9 @@ class _NotesState extends State<Notes> {
 
   @override
   Widget build(BuildContext context) {
+    
+    final noteListBloc = Provider.of<NotesListBloc>(context);
+
     return GestureDetector( onTap: (){ 
       FocusScope.of(context).requestFocus(new FocusNode());
     },child: Scaffold(
@@ -202,28 +207,28 @@ class _NotesState extends State<Notes> {
       floatingActionButton:Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children:<Widget>[
-          buildVoiceAddingButton(),
+          _isListening ? buildCloseAddingButton() : buildVoiceAddingButton(),
           buildTextAddingButton(),
-          buildNoteDeleteButton(),
+          noteListBloc.isAnNoteSelected? buildNoteDeleteButton(noteListBloc) : Padding(padding: EdgeInsets.only(left: 0)),
         ]
       )
     )
   );
 }
-  Widget buildNoteDeleteButton(){
+  Widget buildNoteDeleteButton(noteListBloc){
     return Padding(
                               padding: EdgeInsets.only(top:5, bottom: 5, left: 10),
                               child: ClipOval(
                                 child: Material(
                                   color: Colors.red,
                                   child: InkWell(
-                                    splashColor:  Colors.white,
+                                    splashColor:  Colors.red[900],
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Icon( Icons.delete, color: Colors.white, size: 30),
                                       ),
                                     onTap: () {
-
+                                      print(noteListBloc.unSelectAllNotes());
                                     },
                                   ),
                                 )
@@ -285,4 +290,26 @@ class _NotesState extends State<Notes> {
                               ),
                             );
   }
+
+    Widget buildCloseAddingButton() {
+    return Padding(
+                              padding: EdgeInsets.only(top:5, bottom: 5, right: 10),
+                              child: ClipOval(
+                                child: Material(
+                                  color: Colors.red,
+                                  child: InkWell(
+                                    splashColor: Colors.red[900],
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Icon(Icons.close, color:Colors.white , size: 30),
+                                      ),
+                                    onTap: (){
+                                      _speechRecognition.stop();
+                                    },
+                                  ),
+                                )
+                              ),
+                            );
+  }
+
 }

@@ -1,13 +1,16 @@
+import 'package:delau/blocs/notesListBloc.dart';
 import 'package:delau/design/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
 
 class NotesTile extends StatefulWidget {
-  const NotesTile(this.backgroundColor, this.content, this.id);
+  const NotesTile(this.backgroundColor, this.content, this.id, this.index);
 
   final int backgroundColor;
   final String content;
   final int id;
+  final int index;
 
   @override
   _NotesTileState createState() => _NotesTileState();
@@ -20,22 +23,30 @@ class _NotesTileState extends State<NotesTile> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-      color: cliced ? Colors.white : Color.fromRGBO(200, 200, 200, 1),
-      borderRadius: BorderRadius.all(Radius.circular(5)),
-        boxShadow: [ BoxShadow(
-          color: Colors.black.withOpacity(0.07),
-          blurRadius: 5.0, 
-          spreadRadius: 0.5,
-          offset: Offset(0.0, 0.0,),
-        )
-      ],
-    ),
-      child: new InkWell(
-        onLongPress: (){  },
-        onTap: () {  },
-        child: Align(
+    
+    final noteListBloc = Provider.of<NotesListBloc>(context);
+
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(10.0),
+        ),
+      ),
+      color: noteListBloc.isItemSelected(widget.index)? Colors.red : Colors.white,
+      child: InkWell(
+        highlightColor: Colors.white,
+        hoverColor: Colors.red,
+        focusColor: Colors.red,
+        splashColor: Colors.red,
+        onLongPress: (){ 
+          noteListBloc.selectNote(widget.index);
+        },
+        onTap: () { 
+          noteListBloc.isItemSelected(widget.index)? noteListBloc.selectNote(widget.index): null;
+         },
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        child:
+        Align(
           alignment: Alignment.topCenter,
           child: new Padding(
             padding: const EdgeInsets.all(10.0),
