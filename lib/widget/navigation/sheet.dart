@@ -1,6 +1,7 @@
 import 'package:delau/design/theme.dart';
 import 'package:delau/models/task.dart';
 import 'package:delau/models/templates/radio.dart';
+import 'package:delau/widget/alerts/addMarker.dart';
 import 'package:delau/widget/alerts/addNote.dart';
 import 'package:delau/widget/alerts/addTask.dart';
 import 'package:delau/widget/alerts/alertManager.dart';
@@ -72,7 +73,7 @@ getMarkerCreateAlert(BuildContext context){
                             return Dialog(
                                 clipBehavior: Clip.hardEdge,
                                 insetAnimationDuration: const Duration(milliseconds: 300),
-                                child: AddTaskAlert(),
+                                child: AddMarkerAlert(),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.all(Radius.circular(5))));
                         });

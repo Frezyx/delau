@@ -132,6 +132,7 @@ getBottomButton(String text, IconData icon, Color color, BuildContext context){
     return TextFormField(
             key: Key('description_task'),
             onTap: (){},
+            maxLines: null,
             cursorColor: DesignTheme.mainColor,
             decoration: InputDecoration(
               contentPadding: new EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
