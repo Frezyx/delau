@@ -2,6 +2,7 @@ import 'package:bottom_bar_with_sheet/bottom_bar_withs_sheet.dart';
 import 'package:delau/addTaskPage.dart';
 import 'package:delau/blocs/listItemBloc.dart';
 import 'package:delau/pages/calendar.dart';
+import 'package:delau/pages/notes.dart';
 import 'package:delau/widget/navigation/sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,8 @@ class _BottomBarWithSheetNavigatorState extends State<BottomBarWithSheetNavigato
     MyStatefulWidget3(),
     ChangeNotifierProvider<ListItemBloc>(create: (_) => ListItemBloc(),
       child:Calendar( )),
+    Notes(),
+    Notes(),
   ];
 
   @override

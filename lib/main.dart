@@ -15,7 +15,7 @@ import 'package:delau/addTaskPage.dart';
 import 'package:delau/pages/updateTask.dart';
 import 'package:delau/autoriz.dart';
 import 'package:delau/models/dbModels.dart';
-import 'package:delau/notes.dart';
+import 'package:delau/pages/notes.dart';
 import 'package:delau/oneNote.dart';
 import 'package:delau/pages/addMarker.dart';
 import 'package:delau/pages/iconDrag.dart';
@@ -83,7 +83,7 @@ class MyApp extends StatelessWidget {
       '/update':(BuildContext context) => UpdatePage(),
       '/rating':(BuildContext context) => RatingPage(),
       '/icon':(BuildContext context) => IconDrag(),
-      '/notes':(BuildContext context) => Example01(),
+      '/notes':(BuildContext context) => Notes(),
       '/note':(BuildContext context) => NotePage(),
       '/updateTask':(BuildContext context) => UpdateTask(),
     },

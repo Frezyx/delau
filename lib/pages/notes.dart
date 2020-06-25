@@ -1,4 +1,5 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:delau/design/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:delau/models/dbModels.dart';
@@ -10,13 +11,13 @@ import 'package:flushbar/flushbar.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:speech_recognition/speech_recognition.dart';
 
-class Example01 extends StatefulWidget {
+class Notes extends StatefulWidget {
   
   @override
-  _Example01State createState() => _Example01State();
+  _NotesState createState() => _NotesState();
 }
 
-class _Example01State extends State<Example01> {
+class _NotesState extends State<Notes> {
   PermissionStatus _permissionStatus;
   ScrollController scrollController;
   String searchText;
@@ -223,7 +224,7 @@ class _Example01State extends State<Example01> {
                       crossAxisCount: 4,
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, i){
-                        return _Example01Tile(snapshot.data[i].color, snapshot.data[i].content, snapshot.data[i].id);
+                        return _NotesTile(snapshot.data[i].color, snapshot.data[i].content, snapshot.data[i].id);
                       },
                       staggeredTileBuilder: (int i) => 
                         StaggeredTile.count(getGridWidth(snapshot.data[i].content), getGridHeigth(snapshot.data[i].content)));
@@ -236,72 +237,20 @@ class _Example01State extends State<Example01> {
               ),
             ),
 
-             bottomNavigationBar: CurvedNavigationBar(
-              height: 50.0,
-              backgroundColor: Colors.transparent,
-              animationDuration: Duration(microseconds: 2500),
-              items: <Widget>[
-                Icon(Icons.list, size: 30, color: Colors.black54,),
-                Icon(FontAwesome.sticky_note_o, size: 30, color: Colors.deepPurpleAccent,),
-                Icon(Icons.add, size: 30, color: Colors.black54,),
-                Icon(Icons.pie_chart_outlined, size: 30, color: Colors.black54,),
-                Icon(FontAwesome.user_o, size: 30, color: Colors.black54,),
-              ],
-              index: 1,
-              animationCurve: Curves.bounceInOut,
-              onTap: (index) {
-                if(index == 0){
-                  Navigator.pushNamed(context, '/');
-                }
-                if(index == 1){
-                  Navigator.pushNamed(context, '/notes');
-                }
-                if(index == 2){
-                  Navigator.pushNamed(context, '/second');
-                }
-                if(index == 3){
-                  Navigator.pushNamed(context, '/rating');
-                }
-                if(index == 4){
-                  Navigator.pushNamed(context, '/user');
-                }
-              },
-            ),
-
-            floatingActionButton:
-            SpeedDial(
-              marginRight: 18,
-              marginBottom: 20,
-              
-              animatedIcon: AnimatedIcons.menu_close,
-              animatedIconTheme: IconThemeData(
-                color: Colors.white,
-                size: 22.0,
-                ),
-              visible: dialVisible,
-              closeManually: false,
-              curve: Curves.bounceIn,
-              overlayColor: Colors.black,
-              overlayOpacity: 0.0,
-              onOpen: () => print('OPENING DIAL'),
-              onClose: () => print('DIAL CLOSED'),
-              tooltip: 'Speed Dial',
-              heroTag: 'speed-dial-hero-tag',
-              backgroundColor: Color.fromRGBO(114, 103, 239, 1),
-              foregroundColor: Colors.black,
-              elevation: 8.0,
-              shape: CircleBorder(),
-              children: [
-                SpeedDialChild(
-                  child: Icon(Icons.add),
-                  backgroundColor: Color.fromRGBO(114, 103, 239, 1),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/note/none');
-                  }
-                ),
-                SpeedDialChild(
-                  child: Icon(Icons.keyboard_voice),
-                  backgroundColor: Color.fromRGBO(114, 103, 239, 1),
+            floatingActionButton:Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children:<Widget>[
+                Padding(
+                                padding: EdgeInsets.only(top:5, bottom: 5, left: 30, right: 30),
+                                child: ClipOval(
+                                  child: Material(
+                                    color: DesignTheme.mainColor,
+                                    child: InkWell(
+                                      splashColor:  DesignTheme.secondColor,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Icon(Icons.keyboard_voice, color:Colors.white , size: 30),
+                                        ),
                   onTap: (){
                     askPermision();
                     if (_isAvailable && !_isListening){
@@ -318,9 +267,82 @@ class _Example01State extends State<Example01> {
                           );
                       }
                   },
-                ),
-              ],
-            ),
+                                    ),
+                                  )
+                                ),
+                              ),
+                                Padding(
+                                padding: EdgeInsets.only(top:5, bottom: 5),
+                                child: ClipOval(
+                                  child: Material(
+                                    color: DesignTheme.mainColor,
+                                    child: InkWell(
+                                      splashColor:  DesignTheme.secondColor,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Icon(Icons.add, color:Colors.white , size: 30),
+                                        ),
+                                      onTap: () {
+
+                                      },
+                                    ),
+                                  )
+                                ),
+                              ),
+              ]
+            )
+            // SpeedDial(
+            //   marginRight: 18,
+            //   marginBottom: 20,
+              
+            //   animatedIcon: AnimatedIcons.menu_close,
+            //   animatedIconTheme: IconThemeData(
+            //     color: Colors.white,
+            //     size: 22.0,
+            //     ),
+            //   visible: dialVisible,
+            //   closeManually: false,
+            //   curve: Curves.bounceIn,
+            //   overlayColor: Colors.black,
+            //   overlayOpacity: 0.0,
+            //   onOpen: () => print('OPENING DIAL'),
+            //   onClose: () => print('DIAL CLOSED'),
+            //   tooltip: 'Speed Dial',
+            //   heroTag: 'speed-dial-hero-tag',
+            //   backgroundColor: Color.fromRGBO(114, 103, 239, 1),
+            //   foregroundColor: Colors.black,
+            //   elevation: 8.0,
+            //   shape: CircleBorder(),
+            //   children: [
+            //     SpeedDialChild(
+            //       child: Icon(Icons.add),
+            //       backgroundColor: Color.fromRGBO(114, 103, 239, 1),
+            //       onTap: () {
+            //         Navigator.pushNamed(context, '/note/none');
+            //       }
+            //     ),
+            //     SpeedDialChild(
+            //       child: Icon(Icons.keyboard_voice),
+            //       backgroundColor: Color.fromRGBO(114, 103, 239, 1),
+            //       onTap: (){
+            //         askPermision();
+            //         if (_isAvailable && !_isListening){
+            //             startRecognition();
+            //           }
+            //           else{
+            //             print("Говно");
+            //             _speechRecognition.cancel().then(
+            //                 (result) => setState(() {
+            //                       _isListening = result;
+            //                       resultText = "";
+            //                       startRecognition();
+            //                     }),
+            //               );
+            //           }
+            //       },
+            //     ),
+            //   ],
+            // ),
           );
   }
 }
@@ -359,18 +381,18 @@ class _Example01State extends State<Example01> {
     return fontSize;
   }
 
-class _Example01Tile extends StatefulWidget {
-  const _Example01Tile(this.backgroundColor, this.content, this.id);
+class _NotesTile extends StatefulWidget {
+  const _NotesTile(this.backgroundColor, this.content, this.id);
 
   final int backgroundColor;
   final String content;
   final int id;
 
   @override
-  __Example01TileState createState() => __Example01TileState();
+  __NotesTileState createState() => __NotesTileState();
 }
 
-class __Example01TileState extends State<_Example01Tile> {
+class __NotesTileState extends State<_NotesTile> {
     var cliced = true;
     bool showSnack = false;
     int countLongPress = 0;
