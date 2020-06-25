@@ -1,6 +1,7 @@
 import 'package:delau/design/theme.dart';
 import 'package:delau/models/task.dart';
 import 'package:delau/models/templates/radio.dart';
+import 'package:delau/widget/alerts/addNote.dart';
 import 'package:delau/widget/alerts/addTask.dart';
 import 'package:delau/widget/alerts/alertManager.dart';
 import 'package:delau/widget/inputs/customRadio.dart';
@@ -27,9 +28,9 @@ class _SheetOfBottomBarState extends State<SheetOfBottomBar> {
             padding: const EdgeInsets.only(top: 30.0, left: 30, right: 30),
             child: Column(
               children: <Widget>[
-                getBottomButton("Добавить задачу", Icons.add, DesignTheme.mainColor, context),
-                getBottomButton("Добавить заметку", Icons.list, DesignTheme.mainColor, context),
-                getBottomButton("Добавить маркер", Icons.label, DesignTheme.mainColor, context),
+                getBottomButton("Добавить задачу", Icons.add, DesignTheme.mainColor, context, getTaskCreateAlert),
+                getBottomButton("Добавить заметку", Icons.list, DesignTheme.mainColor, context, getNoteCreateAlert),
+                getBottomButton("Добавить маркер", Icons.label, DesignTheme.mainColor, context, getMarkerCreateAlert),
               ]),
             ),
         ],
@@ -38,17 +39,8 @@ class _SheetOfBottomBarState extends State<SheetOfBottomBar> {
   }
 }
 
-getBottomButton(String text, IconData icon, Color color, BuildContext context){
-    return    Padding(
-                padding:EdgeInsets.only(left:10, right: 10, bottom: 20),
-                child:
-                    OutlineButton(
-                      hoverColor: Colors.white,
-                      focusColor: Colors.white,
-                      highlightColor: Colors.white,
-                      splashColor: color,
-                      onPressed: (){ 
-                        showDialog(
+getTaskCreateAlert(BuildContext context){
+  showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return Dialog(
@@ -58,6 +50,45 @@ getBottomButton(String text, IconData icon, Color color, BuildContext context){
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.all(Radius.circular(5))));
                         });
+}
+
+getNoteCreateAlert(BuildContext context){
+  showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Dialog(
+                                clipBehavior: Clip.hardEdge,
+                                insetAnimationDuration: const Duration(milliseconds: 300),
+                                child: AddNoteAlert(),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(5))));
+                        });
+}
+
+getMarkerCreateAlert(BuildContext context){
+  showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Dialog(
+                                clipBehavior: Clip.hardEdge,
+                                insetAnimationDuration: const Duration(milliseconds: 300),
+                                child: AddTaskAlert(),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(5))));
+                        });
+}
+
+getBottomButton(String text, IconData icon, Color color, BuildContext context, Function func){
+    return    Padding(
+                padding:EdgeInsets.only(left:10, right: 10, bottom: 20),
+                child:
+                    OutlineButton(
+                      hoverColor: Colors.white,
+                      focusColor: Colors.white,
+                      highlightColor: Colors.white,
+                      splashColor: color,
+                      onPressed: (){ 
+                        func(context);
                        },
                       child: 
                       Padding(
