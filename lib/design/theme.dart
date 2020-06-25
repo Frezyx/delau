@@ -50,6 +50,31 @@ class DesignTheme {
 
 // Task list text styles end
 
+// Notes page 
+
+  static const TextStyle bigWhite =TextStyle(
+    fontSize: 28.0,
+    fontWeight: FontWeight.w700,
+    color: Colors.white,
+  );
+
+  static const TextStyle notesSearchText =TextStyle(
+    fontSize: 16.0,
+    fontWeight: FontWeight.w300,
+    color: DesignTheme.greyMedium,
+  );
+
+  static List<BoxShadow> searchFormShadow = [
+    BoxShadow(
+      color: DesignTheme.secondColor.withOpacity(0.35),
+      blurRadius: 20.0, 
+      spreadRadius: 2.0,
+      offset: Offset(10.0, 10.0,),
+    )
+  ];
+
+// Notes page end
+
   static const LinearGradient 
     gradientButton = LinearGradient(
     colors: [

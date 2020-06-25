@@ -21,4 +21,30 @@ class SizeHelper{
 
     return response;
   }
+
+  int getGridHeigth(String content){
+    var height = 1;
+    var charCount = content.length;
+    if (charCount > 80) {  height = 2;  }
+    else if (charCount <= 80) {  height = 1;  }
+    return height;
+  }
+
+  int getGridWidth(String content){
+    var width = 1;
+    var charCount = content.length;
+    if (charCount > 3 ) { width = 2; }
+    return width;
+  }
+
+  double determineFontSizeForContent(content) {
+    int charCount = content.length ;
+    double fontSize = 20 ;
+    if (charCount > 150 ) { fontSize = 12; }
+    else if (charCount > 70) {  fontSize = 14;  }
+    else if (charCount > 50) {  fontSize = 16;  }
+    else if (charCount > 10) {  fontSize = 18;  }
+    return fontSize;
+  }
+
 }
