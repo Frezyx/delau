@@ -1,3 +1,4 @@
+import 'package:delau/design/alert.dart';
 import 'package:delau/design/buttons.dart';
 import 'package:delau/design/sizeHelper.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ class DesignTheme {
 
   static final ButtonsTheme buttons = ButtonsTheme();
   static final SizeHelper size = SizeHelper();
+  static final AlertTheme alert = AlertTheme();
 
   static const Color mainColor = Color.fromRGBO(0, 159, 253, 1);
   static const Color secondColor = Color.fromRGBO(42, 42, 114, 1);
@@ -16,6 +18,7 @@ class DesignTheme {
   static const Color greyMedium = Color.fromRGBO(164, 164, 164, 1);
   static const Color greyDark = Color.fromRGBO(120, 120, 120, 1);
 
+  static const double normalBorderRadius = 5;
 
   static const Color bgColor = Color.fromRGBO(244, 244, 244, 1);
 

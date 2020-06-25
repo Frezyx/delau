@@ -36,9 +36,13 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
         children: <Widget>[
 
           Padding(
-            padding: const EdgeInsets.only(top: 20.0, left: 30, right: 30),
+            padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0, bottom: 15.0),
             child: Column(
               children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 14.0, top: 4.0, left: 8.0, right: 8.0),
+                  child: Text("Добавление задачи", style: DesignTheme.alert.bigText,),
+                ),
                 buildTitleTextField(),
                 SizedBox(height: 5),
                 buildDescriptionTextField(),
@@ -50,13 +54,60 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
                     buildDateButton(context),
                   ],
                 ),
+                buildMarkerPicker(),
+                SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    getBottomButton("Отменить", Icons.add, Colors.red, context),
+                    getBottomButton("Сохранить", Icons.add, DesignTheme.mainColor, context),
+                  ]
+                ),
               ]),
             ),
-            buildMarkerPicker(),
         ],
       )
       );
     }
+
+getBottomButton(String text, IconData icon, Color color, BuildContext context){
+    return    Padding(
+                padding:EdgeInsets.only(left: 5, right: 5, bottom: 20),
+                child:
+                    OutlineButton(
+                      hoverColor: Colors.white,
+                      focusColor: Colors.white,
+                      highlightColor: Colors.white,
+                      splashColor: color,
+                      onPressed: (){ },
+                      child: 
+                      Padding(
+                        padding:EdgeInsets.all(5),
+                        child:Stack(
+                          children: <Widget>[
+                              Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                      text,
+                                      style: TextStyle(
+                                        color:color,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600
+                                        ),
+                                      textAlign: TextAlign.center,
+                                  )
+                              )
+                          ],
+                      ),
+                      ),
+                      highlightedBorderColor: color,
+                      borderSide: new BorderSide(color:color),
+                      shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(DesignTheme.normalBorderRadius)
+                      )
+                  )
+                  );
+  }
 
   Container buildMarkerPicker() {
     return Container(
@@ -86,7 +137,7 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
               contentPadding: new EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
               hintText: "Пояснение задачи",
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5.0),
+                borderRadius: BorderRadius.circular(DesignTheme.normalBorderRadius),
                 borderSide: BorderSide(
                   style: BorderStyle.solid,
                 ),
@@ -107,7 +158,7 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
             decoration: InputDecoration(
               hintText: "Название задачи",
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5.0),
+                borderRadius: BorderRadius.circular(DesignTheme.normalBorderRadius),
                 borderSide: BorderSide(
                   style: BorderStyle.solid,
                 ),
@@ -122,9 +173,9 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
 
   Widget buildDateButton(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
+      margin: EdgeInsets.only(left: 5.0, top: 10.0, bottom: 10.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5.0),
+        borderRadius: BorderRadius.circular(DesignTheme.normalBorderRadius),
         border: Border.all(width: 1, color: DesignTheme.mainColor),
       ),
       child: FlatButton(
@@ -135,7 +186,6 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
                       AlertManager.getDatePickerAlert(context); 
                     },
                     child: Column(
-                      mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Icon(Icons.date_range,size: 28.0,),
@@ -152,9 +202,9 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
 
   Widget buildTimeButton(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only( left: 5.0, top: 5, right: 5.0, bottom: 5),
+      margin: EdgeInsets.only( top: 10, bottom: 10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5.0),
+        borderRadius: BorderRadius.circular(DesignTheme.normalBorderRadius),
         border: Border.all(width: 1, color: DesignTheme.mainColor),
       ),
       child: FlatButton(
@@ -183,9 +233,9 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
   Widget buildPriorityButton(BuildContext context) {
 
     return Container(
-      margin: EdgeInsets.only(right: 10.0, top: 5.0, bottom: 5.0),
+      margin: EdgeInsets.only(right: 5.0, top: 10.0, bottom: 10.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5.0),
+        borderRadius: BorderRadius.circular(DesignTheme.normalBorderRadius),
         border: Border.all(width: 1, color: DesignTheme.mainColor),
       ),
 

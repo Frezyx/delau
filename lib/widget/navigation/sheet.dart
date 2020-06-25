@@ -1,6 +1,7 @@
 import 'package:delau/design/theme.dart';
 import 'package:delau/models/task.dart';
 import 'package:delau/models/templates/radio.dart';
+import 'package:delau/widget/alerts/addTask.dart';
 import 'package:delau/widget/alerts/alertManager.dart';
 import 'package:delau/widget/inputs/customRadio.dart';
 import 'package:flutter/material.dart';
@@ -23,12 +24,12 @@ class _SheetOfBottomBarState extends State<SheetOfBottomBar> {
         children: <Widget>[
 
           Padding(
-            padding: const EdgeInsets.only(top: 20.0, left: 30, right: 30),
+            padding: const EdgeInsets.only(top: 30.0, left: 30, right: 30),
             child: Column(
               children: <Widget>[
-                getEditingButton("Добавить задачу", Icons.add),
-                getEditingButton("Добавить заметку", Icons.list),
-                getEditingButton("Добавить маркер", Icons.label),
+                getBottomButton("Добавить задачу", Icons.add, DesignTheme.mainColor, context),
+                getBottomButton("Добавить заметку", Icons.list, DesignTheme.mainColor, context),
+                getBottomButton("Добавить маркер", Icons.label, DesignTheme.mainColor, context),
               ]),
             ),
         ],
@@ -37,7 +38,7 @@ class _SheetOfBottomBarState extends State<SheetOfBottomBar> {
   }
 }
 
-getEditingButton(String text, IconData icon){
+getBottomButton(String text, IconData icon, Color color, BuildContext context){
     return    Padding(
                 padding:EdgeInsets.only(left:10, right: 10, bottom: 20),
                 child:
@@ -45,8 +46,19 @@ getEditingButton(String text, IconData icon){
                       hoverColor: Colors.white,
                       focusColor: Colors.white,
                       highlightColor: Colors.white,
-                      splashColor: DesignTheme.mainColor,
-                      onPressed: (){  },
+                      splashColor: color,
+                      onPressed: (){ 
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Dialog(
+                                clipBehavior: Clip.hardEdge,
+                                insetAnimationDuration: const Duration(milliseconds: 300),
+                                child: AddTaskAlert(),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(5))));
+                        });
+                       },
                       child: 
                       Padding(
                         padding:EdgeInsets.only(left:10, right: 10, bottom: 10, top: 13),
@@ -54,14 +66,14 @@ getEditingButton(String text, IconData icon){
                           children: <Widget>[
                               Align(
                                   alignment: Alignment.centerLeft,
-                                  child: Icon(icon, color: DesignTheme.mainColor)
+                                  child: Icon(icon, color: color)
                               ),
                               Align(
                                   alignment: Alignment.center,
                                   child: Text(
                                       text,
                                       style: TextStyle(
-                                        color:DesignTheme.mainColor,
+                                        color:color,
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600
                                         ),
@@ -71,10 +83,10 @@ getEditingButton(String text, IconData icon){
                           ],
                       ),
                       ),
-                      highlightedBorderColor: DesignTheme.mainColor,
-                      borderSide: new BorderSide(color:DesignTheme.mainColor),
+                      highlightedBorderColor: color,
+                      borderSide: new BorderSide(color:color),
                       shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(5.0)
+                      borderRadius: new BorderRadius.circular(DesignTheme.normalBorderRadius)
                       )
                   )
                   );
