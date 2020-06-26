@@ -24,7 +24,7 @@ dependencies:
   validators: ^2.0.0 # change to latest version
   flutter:
     sdk: flutter
-  carousel_slider: ^0.0.7
+  carousel_slider: ^2.2.1
   flutter_launcher_icons: ^0.7.3
   flutter_icons: ^1.0.0
   material_design_icons_flutter: 3.4.4795

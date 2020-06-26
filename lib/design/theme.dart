@@ -86,6 +86,28 @@ class DesignTheme {
 
 // Notes page end
 
+// Home page 
+
+  static const TextStyle biggerWhite =TextStyle(
+    fontSize: 50.0,
+    fontWeight: FontWeight.w900,
+    color: Colors.white,
+  );
+
+  static const TextStyle midleWhiteBold =TextStyle(
+    fontSize: 14.0,
+    fontWeight: FontWeight.w600,
+    color: Colors.white,
+  );
+
+  static const TextStyle midleWhiteLight =TextStyle(
+    fontSize: 16.0,
+    fontWeight: FontWeight.w100,
+    color: Colors.white,
+  );
+
+// Home page end
+
   static const LinearGradient 
     gradientButton = LinearGradient(
     colors: [

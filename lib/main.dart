@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       
     routes: {
-      '/':(BuildContext context) => BottomBarWithSheetNavigator(selectedIndex: 1),
+      '/':(BuildContext context) => BottomBarWithSheetNavigator(selectedIndex: 0),
       '/second':(BuildContext context) => MyStatefulWidget3(),
       '/ntf':(BuildContext context) => LocalNotificationWidget(),
       '/user':(BuildContext context) => UPN(),
@@ -242,10 +242,12 @@ List<int> countTasksByMarker = [0,0,0,0,0,0];
               },
             );
           }).toList(),
-          height: 140.0,
-          autoPlay: true,
-          autoPlayCurve: Curves.elasticIn,
-          autoPlayDuration: const Duration(milliseconds: 2800),
+            options: CarouselOptions(
+              height: 140.0,
+              autoPlay: true,
+              autoPlayCurve: Curves.elasticIn,
+              autoPlayAnimationDuration: Duration(milliseconds: 2800), 
+            ),
             ),
            ]
           ),
