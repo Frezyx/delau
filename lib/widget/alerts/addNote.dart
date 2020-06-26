@@ -1,4 +1,6 @@
+import 'package:delau/blocs/notesListBloc.dart';
 import 'package:delau/design/theme.dart';
+import 'package:delau/models/dbModels.dart';
 import 'package:delau/models/task.dart';
 import 'package:delau/models/templates/radio.dart';
 import 'package:delau/utils/database_helper.dart';
@@ -7,6 +9,7 @@ import 'package:delau/widget/inputs/customRadio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 
 class AddNoteAlert extends StatefulWidget{
   @override
@@ -26,6 +29,9 @@ class _AddNoteAlertState extends State<AddNoteAlert> {
 
   @override
   Widget build(BuildContext context) {
+    
+    final noteListBloc = Provider.of<NotesListBloc>(context);
+
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
@@ -39,7 +45,7 @@ class _AddNoteAlertState extends State<AddNoteAlert> {
                     padding: const EdgeInsets.only(bottom: 14.0, top: 4.0, left: 8.0, right: 8.0),
                     child: Text("Добавление заметки", style: DesignTheme.alert.bigText,),
                   ),
-                  buildTitleTextField(),
+                  buildTitleTextField(noteListBloc),
                   SizedBox(height: 5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -109,7 +115,7 @@ getBottomButton(String text, IconData icon, Color color, BuildContext context, F
                   );
   }
 
-  Widget buildTitleTextField() {
+  Widget buildTitleTextField(noteListBloc) {
     return TextFormField(
             key: Key('title_task'),
             onTap: (){},
@@ -129,9 +135,11 @@ getBottomButton(String text, IconData icon, Color color, BuildContext context, F
             validator: (value){
               if (value.isEmpty) return 'Введите вашу заметку';
               else { 
-                DBNoteProvider.db.addNote(value.toString());
-                Navigator.pop(context);
-                }
+                DBNoteProvider.db.addNote(value.toString()).then((res){
+                  noteListBloc.addNote(Note(id:res, isSelected: false));
+                  Navigator.pop(context);
+                });
+              }
             },
           );
   }

@@ -25,6 +25,7 @@ class NotesListBloc extends ChangeNotifier{
 
   void addNote(Note note){
     _notes.add(note);
+    notifyListeners();
   }
 
   List<int> unSelectAllNotes(){

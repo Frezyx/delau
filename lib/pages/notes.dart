@@ -1,5 +1,6 @@
 import 'package:delau/blocs/notesListBloc.dart';
 import 'package:delau/design/theme.dart';
+import 'package:delau/models/dbModels.dart';
 import 'package:delau/widget/alerts/addNote.dart';
 import 'package:delau/widget/notes/notesListBody.dart';
 import 'package:flutter/material.dart';
@@ -30,18 +31,20 @@ class _NotesState extends State<Notes> {
   String id;
   String resultText = "";
 
+  var noteListBloc;
+
   int notesCount = 0;
 
   postNote(text){
                   if(!sender){
-                    print("First text field: $text");
-                    DBNoteProvider.db.updateNote(text, int.parse(id)).then((res){
+                      DBNoteProvider.db.updateNote(text, int.parse(id)).then((res){
                     });
                   }
                   if(sender){
                     DBNoteProvider.db.addNote(text).then((res){
                       setSender();
                       id = res.toString();
+                      noteListBloc.addNote(Note(id:res, isSelected: false));
                     });
                   }
   }
@@ -94,6 +97,7 @@ class _NotesState extends State<Notes> {
 
   @override
     void initState(){
+
     super.initState();
 
     DBNoteProvider.db.getAllNotesCount().then((count){
@@ -141,8 +145,9 @@ class _NotesState extends State<Notes> {
 
   @override
   Widget build(BuildContext context) {
-    
-    final noteListBloc = Provider.of<NotesListBloc>(context);
+
+    noteListBloc = Provider.of<NotesListBloc>(context);
+    // final noteListBloc = Provider.of<NotesListBloc>(context);
 
     return GestureDetector( onTap: (){ 
       FocusScope.of(context).requestFocus(new FocusNode());
@@ -286,16 +291,14 @@ class _NotesState extends State<Notes> {
                                       if (_isAvailable && !_isListening){
                                           startRecognition();
                                         }
-                                        else{
-                                          print("Говно");
-                                          _speechRecognition.cancel().then(
-                                              (result) => setState(() {
-                                                    _isListening = result;
-                                                    resultText = "";
-                                                    startRecognition();
-                                                  }),
-                                            );
-                                        }
+                                      else{
+                                        _speechRecognition.cancel().then(
+                                          (result) => setState(() {
+                                            _isListening = result;
+                                          startRecognition();
+                                          }),
+                                        );
+                                      }
                                     },
                                   ),
                                 )
@@ -331,7 +334,8 @@ class _NotesState extends State<Notes> {
                             return Dialog(
                                 clipBehavior: Clip.hardEdge,
                                 insetAnimationDuration: const Duration(milliseconds: 300),
-                                child: AddNoteAlert(),
+                                child: ChangeNotifierProvider<NotesListBloc>(create: (_) => NotesListBloc(),
+                                  child:AddNoteAlert(),),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.all(Radius.circular(5))));
                         });
