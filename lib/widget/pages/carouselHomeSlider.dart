@@ -26,7 +26,7 @@ class CarouselHomeSlider extends StatelessWidget {
               ],
               borderRadius: BorderRadius.circular(15),
             ),
-            child: Text("ffff"),
+            child: Text(""),
           );
         },
       );

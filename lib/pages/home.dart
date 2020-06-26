@@ -1,10 +1,11 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:delau/design/theme.dart';
 import 'package:delau/models/task.dart';
 import 'package:delau/utils/provider/test_data/testTaskList.dart';
 import 'package:delau/widget/pages/carouselHomeSlider.dart';
 import 'package:delau/widget/starWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -72,6 +73,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ],
                         ),
+                        getPhoto(),
                       ],
                     )),
                   ]),
@@ -86,7 +88,83 @@ class _HomePageState extends State<HomePage> {
         );
   }
 
-  Text buildGridThemes() => Text("Grid");
+  Widget buildGridThemes() {
+    return Expanded(
+          child: FutureBuilder(
+            future: getTestTaskData(),
+            builder: (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                  return new Text('Input a URL to start');
+                case ConnectionState.waiting:
+                  return new Center(child: new CircularProgressIndicator());
+                case ConnectionState.active:
+                  return new Text('');
+                case ConnectionState.done:
+                  if (snapshot.hasError) {
+                    return new Text(
+                      '${snapshot.error}',
+                      style: TextStyle(color: Colors.red),
+                    );
+                  } else {
+                    var count = snapshot.data.length;
+                    var data = snapshot.data;
+                    return 
+                    AnimationLimiter(
+                      child:
+                    StaggeredGridView.countBuilder(
+                      padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20),
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      crossAxisCount: 3,
+                      itemCount: count,
+                      itemBuilder: (context, i){
+                        return AnimationConfiguration.staggeredGrid(
+                          position: i,
+                          duration: const Duration(milliseconds: 375),
+                          columnCount: 3,
+                          child: SlideAnimation(
+                            verticalOffset: 50.0,
+                            child: FadeInAnimation(
+                              child:Card(
+                          shadowColor: Colors.black.withOpacity(0.15),
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10),),
+                          ),
+                          color: Colors.white,
+                          child: InkWell(
+                            highlightColor: Colors.white,
+                            hoverColor: DesignTheme.mainColor,
+                            focusColor: DesignTheme.mainColor,
+                            splashColor: DesignTheme.mainColor,
+                            onLongPress: (){ 
+
+                            },
+                            onTap: () { 
+
+                            },
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(MdiIcons.fromString('${data[i].icon}'), color: DesignTheme.mainColor),
+                                Padding(
+                                  padding: const EdgeInsets.only(top:5.0),
+                                  child: Text("Название", style: DesignTheme.themeText),
+                                )
+                              ],
+                            )
+                          ))))
+                        );
+                      }, 
+                      staggeredTileBuilder: (int index) => StaggeredTile.count(1,1),));
+                  }
+                }
+              }
+            ),
+        );
+  }
 
   Expanded buildListTasks() {
     return Expanded(
@@ -109,11 +187,19 @@ class _HomePageState extends State<HomePage> {
                   } else {
                     var count = snapshot.data.length;
                     var data = snapshot.data;
-                    return ListView.builder(
+                    return AnimationLimiter(
+                      child:ListView.builder(
                       itemCount: count,
                       itemBuilder: (context, i) {
-                        return buildListItem(i, data);
-                      });
+                        return AnimationConfiguration.staggeredList(
+                          position: i,
+                          duration: const Duration(milliseconds: 375),
+                          child: SlideAnimation(
+                            verticalOffset: 50.0,
+                            child: FadeInAnimation(
+                              child: buildListItem(i, data)
+                            )));
+                      }));
                   }
                 }
               }
@@ -209,6 +295,29 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  getPhoto(){
+  return Container(
+                  width: 50,
+                  height: 50,
+                  decoration: new BoxDecoration(
+                      image: new DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage("assets/userEllipse.png")
+                      )
+            ),
+              child: Container(
+                margin: EdgeInsets.all(1),
+                  decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: new DecorationImage(
+                      fit: BoxFit.cover,
+                      image: new NetworkImage(
+                            "https://avatars.mds.yandex.net/get-pdb/1779125/deed738a-66f5-46d0-b3c6-020dff434219/s1200")
+                            ),
+            ),
+            ),);
+}
+
   Padding buildTabBar() {
     return Padding(
           padding: const EdgeInsets.only(left: 30.0, right: 30.0),
@@ -216,7 +325,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               buildTabButton(0, "Список", Icons.menu),
-              buildTabButton(1, "Группы", Icons.border_all),
+              buildTabButton(1, "Темы  ", Icons.border_all),
             ]
           ),
         );
@@ -234,7 +343,7 @@ class _HomePageState extends State<HomePage> {
             color: isOpen ? DesignTheme.mainColor : Colors.white,
             child: Row(
               children: <Widget>[
-                Icon(icon, color: isOpen ? Colors.white : Colors.black ),
+                Icon(icon, color: isOpen ? Colors.white : DesignTheme.greyDark ),
                 Padding(
                   padding: const EdgeInsets.only(left: 5.0),
                   child: Text(text, style: isOpen ? DesignTheme.buttons.selectedTabText : DesignTheme.buttons.tabText),

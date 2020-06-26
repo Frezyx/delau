@@ -124,6 +124,12 @@ class DesignTheme {
     color: DesignTheme.mainColor,
   );
 
+  static const TextStyle themeText =TextStyle(
+    fontSize: 14.0,
+    fontWeight: FontWeight.w400,
+    color: DesignTheme.greyDark,
+  );
+
 // Home page end
 
   static const LinearGradient 

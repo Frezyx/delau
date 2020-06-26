@@ -51,6 +51,7 @@ dependencies:
   font_awesome_flutter: ^8.8.1
   bottom_bar_with_sheet: ^0.0.1
   provider: ^4.1.3
+  flutter_staggered_animations: "^0.1.2"
   # background_fetch:
   #   git:
   #     url: https://github.com/transistorsoft/flutter_background_fetch
@@ -94,6 +95,7 @@ flutter:
    - assets/ufo.png
    - assets/pageComing.png
    - assets/demoPage/demoBG.jpg
+   - assets/userEllipse.png
 
   fonts:
     - family: Ubuntu
