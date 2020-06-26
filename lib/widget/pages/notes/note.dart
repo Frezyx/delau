@@ -43,7 +43,7 @@ class _NotesTileState extends State<NotesTile> {
           noteListBloc.selectNote(widget.index);
         },
         onTap: () { 
-          noteListBloc.isItemSelected(widget.index)? noteListBloc.selectNote(widget.index): null;
+          noteListBloc.isAnNoteSelected? noteListBloc.selectNote(widget.index): null;
          },
         borderRadius: BorderRadius.all(Radius.circular(10)),
         child:

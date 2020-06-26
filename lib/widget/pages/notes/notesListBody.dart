@@ -1,6 +1,6 @@
 import 'package:delau/blocs/notesListBloc.dart';
 import 'package:delau/design/theme.dart';
-import 'package:delau/widget/notes/note.dart';
+import 'package:delau/widget/pages/notes/note.dart';
 import 'package:flutter/material.dart';
 import 'package:delau/models/dbModels.dart';
 import 'package:delau/utils/database_helper.dart';
@@ -42,7 +42,8 @@ class NotesListBody extends StatelessWidget {
 
               // Delete Future
               child: FutureBuilder<List<Note>>(
-                future: isSaerching ? DBNoteProvider.db.getAllNotesSearch(searchText) : DBNoteProvider.db.getAllNotes(),
+                future: isSaerching ? DBNoteProvider.db.getAllNotesSearch(searchText) :
+                  noteListBloc.addedNotesCount == 0? DBNoteProvider.db.getAllNotes() : DBNoteProvider.db.getAllNotes(),
                 builder:
                 (BuildContext context, AsyncSnapshot<List<Note>> snapshot) {
                 if (snapshot.hasData) 

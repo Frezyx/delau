@@ -1,14 +1,8 @@
 import 'package:delau/blocs/notesListBloc.dart';
 import 'package:delau/design/theme.dart';
 import 'package:delau/models/dbModels.dart';
-import 'package:delau/models/task.dart';
-import 'package:delau/models/templates/radio.dart';
 import 'package:delau/utils/database_helper.dart';
-import 'package:delau/widget/alerts/alertManager.dart';
-import 'package:delau/widget/inputs/customRadio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
 class AddNoteAlert extends StatefulWidget{

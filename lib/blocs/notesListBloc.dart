@@ -6,6 +6,9 @@ class NotesListBloc extends ChangeNotifier{
 
   bool _isAnNoteSelected = false;
   int _selectedCount = 0;
+  int _addedNotesCount = 0;
+
+  int get addedNotesCount => _addedNotesCount;
 
   bool get isAnNoteSelected  => _isAnNoteSelected ;
 
@@ -25,6 +28,7 @@ class NotesListBloc extends ChangeNotifier{
 
   void addNote(Note note){
     _notes.add(note);
+    _addedNotesCount += 1;
     notifyListeners();
   }
 

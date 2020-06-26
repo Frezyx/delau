@@ -106,6 +106,24 @@ class DesignTheme {
     color: Colors.white,
   );
 
+  static const TextStyle bigItemLabel =TextStyle(
+    fontSize: 14.0,
+    fontWeight: FontWeight.w600,
+    color: Colors.black,
+  );
+
+  static const TextStyle lilItemLabel =TextStyle(
+    fontSize: 10.0,
+    fontWeight: FontWeight.w300,
+    color: Colors.grey,
+  );
+
+  static const TextStyle itemTime =TextStyle(
+    fontSize: 14.0,
+    fontWeight: FontWeight.w500,
+    color: DesignTheme.mainColor,
+  );
+
 // Home page end
 
   static const LinearGradient 

@@ -2,7 +2,7 @@ import 'package:delau/blocs/notesListBloc.dart';
 import 'package:delau/design/theme.dart';
 import 'package:delau/models/dbModels.dart';
 import 'package:delau/widget/alerts/addNote.dart';
-import 'package:delau/widget/notes/notesListBody.dart';
+import 'package:delau/widget/pages/notes/notesListBody.dart';
 import 'package:flutter/material.dart';
 import 'package:delau/utils/database_helper.dart';
 import 'package:flutter/rendering.dart';
@@ -100,11 +100,11 @@ class _NotesState extends State<Notes> {
 
     super.initState();
 
-    DBNoteProvider.db.getAllNotesCount().then((count){
-      setState((){
-        notesCount = count;
-      });
-    });
+    // DBNoteProvider.db.getAllNotesCount().then((count){
+    //   setState((){
+    //     notesCount = count;
+    //   });
+    // });
 
     PermissionHandler().checkPermissionStatus(PermissionGroup.microphone).then(_updateStatus);
     
@@ -147,6 +147,12 @@ class _NotesState extends State<Notes> {
   Widget build(BuildContext context) {
 
     noteListBloc = Provider.of<NotesListBloc>(context);
+    DBNoteProvider.db.getAllNotesCount().then((count){
+      setState((){
+        notesCount = count;
+      });
+    });
+    // DBNoteProvider.db.getAllNotesCount();
     // final noteListBloc = Provider.of<NotesListBloc>(context);
 
     return GestureDetector( onTap: (){ 
