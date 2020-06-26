@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:delau/pages/pageIsComing.dart';
 
 class UpdateTask extends StatefulWidget{
   String _id;
@@ -18,7 +17,7 @@ class _UpdateTaskState extends State<UpdateTask> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: OnWork(id: id),
+      body: Text("none"),
     );
   }
 }

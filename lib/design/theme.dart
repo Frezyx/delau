@@ -16,6 +16,7 @@ class DesignTheme {
   static const Color blueGrey = Color.fromRGBO(188, 214, 229, 1);
   static const Color blueGreyDark = Color.fromRGBO(145, 173, 189, 1);
   static const Color greyMedium = Color.fromRGBO(164, 164, 164, 1);
+  static const Color greyLight = Color.fromRGBO(194, 194, 194, 1);
   static const Color greyDark = Color.fromRGBO(120, 120, 120, 1);
 
   static const double normalBorderRadius = 5;
@@ -33,6 +34,16 @@ class DesignTheme {
 // Task list text styles
 
   static const TextStyle listItemLabel =TextStyle(
+      fontSize: 18.0,
+      color: Colors.black87,
+    );
+
+  static const TextStyle listItemLabelChecked =TextStyle(
+      fontSize: 18.0,
+      color: DesignTheme.greyDark,
+    );
+  
+  static const TextStyle listItemLabelBig =TextStyle(
       fontSize: 20.0,
       color: Colors.black87,
     );

@@ -37,12 +37,14 @@ class _ListWithDateItemState extends State<ListWithDateItem> {
         child: Container(
           padding: const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: listItemBlocState.selectedEvents[widget.listPosition].isChecked ? DesignTheme.greyLight : Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(8)),
               boxShadow: [
                 BoxShadow(
-                  color: listItemBlocState.selectedEvents[widget.listPosition].isChecked ? 
-                  Colors.green.withOpacity(0.18) : Color.fromRGBO(0, 0, 0, 0.05),
+                  color: DesignTheme.greyDark.withOpacity(0.05),
+                  // listItemBlocState.selectedEvents[widget.listPosition].isChecked ? 
+                  //   Colors.green.withOpacity(0.18) 
+                  // : Color.fromRGBO(0, 0, 0, 0.05),
                   offset: Offset(0.0, 3.0),
                   spreadRadius: 2.0,
                   blurRadius: 11.0,
@@ -56,14 +58,12 @@ class _ListWithDateItemState extends State<ListWithDateItem> {
                     padding: const EdgeInsets.only(right: 14.0, left: 2.0),
                     child: Icon(
                       MdiIcons.fromString('${listItemBlocState.getItemIcon(widget.listPosition)}'), 
-                      color: listItemBlocState.selectedEvents[widget.listPosition].isChecked? Colors.green : DesignTheme.mainColor
+                      color: listItemBlocState.selectedEvents[widget.listPosition].isChecked? DesignTheme.greyDark : DesignTheme.mainColor
                     ),
                   ),
               AnimatedContainer(
-                duration: Duration(milliseconds: 1500),
-                // TODO: ADAPTIVE SOLUTION
-                width: 152,
-
+                duration: Duration(milliseconds: 1000),
+                width: MediaQuery.of(context).size.width/2.65,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,12 +73,12 @@ class _ListWithDateItemState extends State<ListWithDateItem> {
                       height: listItemBlocState.selectedEvents[widget.listPosition].isOpen? 
                         DesignTheme.size.getAboutHeight(
                           listItemBlocState.selectedEvents[widget.listPosition].description.length, 12,
-                          listItemBlocState.selectedEvents[widget.listPosition].name.length,20, true,
+                          listItemBlocState.selectedEvents[widget.listPosition].name.length, 18, true,
                         ): 25,
 
                       child: Expanded(child:Text(
                         widget.data[widget.listPosition].name,
-                        style: DesignTheme.listItemLabel,
+                        style: listItemBlocState.selectedEvents[widget.listPosition].isChecked?  DesignTheme.listItemLabelChecked : DesignTheme.listItemLabel,
                         overflow: listItemBlocState.selectedEvents[widget.listPosition].isOpen? TextOverflow.fade : TextOverflow.ellipsis)
                       ),
                     ),
@@ -87,7 +87,7 @@ class _ListWithDateItemState extends State<ListWithDateItem> {
                       height: listItemBlocState.selectedEvents[widget.listPosition].isOpen? 
                         DesignTheme.size.getAboutHeight(
                           listItemBlocState.selectedEvents[widget.listPosition].description.length, 12,
-                          listItemBlocState.selectedEvents[widget.listPosition].name.length,20, false,
+                          listItemBlocState.selectedEvents[widget.listPosition].name.length, 18, false,
                         ): 15,
 
                       child: Expanded(child: Text(
@@ -104,7 +104,7 @@ class _ListWithDateItemState extends State<ListWithDateItem> {
                 children: <Widget>[
                   Container(
                     child: Checkbox(
-                      activeColor: listItemBlocState.selectedEvents[widget.listPosition].isChecked? Colors.green: DesignTheme.mainColor,
+                      activeColor: listItemBlocState.selectedEvents[widget.listPosition].isChecked? DesignTheme.greyDark : DesignTheme.mainColor,
                         onChanged: (bool value) {
                           // setState((){
                             listItemBlocState.changeCheckState(widget.listPosition);

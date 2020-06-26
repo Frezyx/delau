@@ -41,7 +41,6 @@ class NotesListBody extends StatelessWidget {
               padding: EdgeInsets.only(right: 15, left: 15,),
 
               // Delete Future
-
               child: FutureBuilder<List<Note>>(
                 future: isSaerching ? DBNoteProvider.db.getAllNotesSearch(searchText) : DBNoteProvider.db.getAllNotes(),
                 builder:
