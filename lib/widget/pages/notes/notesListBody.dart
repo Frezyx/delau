@@ -28,22 +28,14 @@ class NotesListBody extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(top: 170.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children:<Widget>[
-
-          // Padding(
-          //   padding: EdgeInsets.only(left: 20, bottom: 5, top: 10),
-          //   child: Text("Результаты поиска:", style: DesignTheme.listItemLabel ),),
-
-          Flexible(
+      child: Container(
+          height: 500,
             child:Padding(
               padding: EdgeInsets.only(right: 15, left: 15,),
 
               // Delete Future
               child: FutureBuilder<List<Note>>(
-                future: isSaerching ? DBNoteProvider.db.getAllNotesSearch(searchText) :
-                  noteListBloc.addedNotesCount == 0? DBNoteProvider.db.getAllNotes() : DBNoteProvider.db.getAllNotes(),
+                future: isSaerching ? DBNoteProvider.db.getAllNotesSearch(searchText) : DBNoteProvider.db.getAllNotes(),
                 builder:
                 (BuildContext context, AsyncSnapshot<List<Note>> snapshot) {
                 if (snapshot.hasData) 
@@ -77,8 +69,6 @@ class NotesListBody extends StatelessWidget {
               ),
             ),
           ),
-        ]
-      ),
     );
   }
 }

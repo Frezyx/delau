@@ -147,11 +147,13 @@ class _NotesState extends State<Notes> {
   Widget build(BuildContext context) {
 
     noteListBloc = Provider.of<NotesListBloc>(context);
+
     DBNoteProvider.db.getAllNotesCount().then((count){
       setState((){
         notesCount = count;
       });
     });
+
     // DBNoteProvider.db.getAllNotesCount();
     // final noteListBloc = Provider.of<NotesListBloc>(context);
 

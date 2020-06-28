@@ -15,9 +15,12 @@ class DesignTheme {
 
   static const Color blueGrey = Color.fromRGBO(188, 214, 229, 1);
   static const Color blueGreyDark = Color.fromRGBO(145, 173, 189, 1);
+
   static const Color greyMedium = Color.fromRGBO(164, 164, 164, 1);
   static const Color greyLight = Color.fromRGBO(194, 194, 194, 1);
+  static const Color greyLighterThenMedium = Color.fromRGBO(183, 183, 183, 1);
   static const Color greyDark = Color.fromRGBO(120, 120, 120, 1);
+  static const Color greyDarker = Color.fromRGBO( 105, 105, 105, 1);
 
   static const double normalBorderRadius = 5;
 
@@ -128,6 +131,18 @@ class DesignTheme {
     fontSize: 14.0,
     fontWeight: FontWeight.w400,
     color: DesignTheme.greyDark,
+  );
+
+  static const TextStyle carouselLabel =TextStyle(
+    fontSize: 16.0,
+    fontWeight: FontWeight.w200,
+    color: DesignTheme.greyDark,
+  );
+
+  static const TextStyle carouselUnderLabel =TextStyle(
+    fontSize: 11.0,
+    fontWeight: FontWeight.w200,
+    color: DesignTheme.greyLighterThenMedium,
   );
 
 // Home page end

@@ -1,7 +1,8 @@
 import 'package:delau/design/theme.dart';
 import 'package:delau/models/task.dart';
 import 'package:delau/utils/provider/test_data/testTaskList.dart';
-import 'package:delau/widget/pages/carouselHomeSlider.dart';
+import 'package:delau/widget/carousel/carouselHomeSlider.dart';
+import 'package:delau/widget/carousel/carouselItem.dart';
 import 'package:delau/widget/starWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -17,6 +18,13 @@ class HomePage extends StatefulWidget{
 class _HomePageState extends State<HomePage> {
 
   int _selectedTap = 0;
+  List<Widget> carouselChildrens = [];
+
+  @override
+  void initState(){
+    carouselChildrens.add(CarouselItem.ci.createMainStatsSlide());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                           children: <Widget>[
                             Text("17", style: DesignTheme.biggerWhite),
                             Padding(
-                              padding: const EdgeInsets.all(6.0),
+                              padding: const EdgeInsets.all(10.0),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +90,7 @@ class _HomePageState extends State<HomePage> {
             
             Padding(
               padding: const EdgeInsets.only(top: 100.0),
-              child: CarouselHomeSlider(),
+              child: CarouselHomeSlider(childrens: carouselChildrens,),
             ),
           ],
         );
@@ -166,7 +174,7 @@ class _HomePageState extends State<HomePage> {
         );
   }
 
-  Expanded buildListTasks() {
+  Widget buildListTasks() {
     return Expanded(
           child: FutureBuilder(
             future: getTestTaskData(),
@@ -284,9 +292,11 @@ class _HomePageState extends State<HomePage> {
                     child: Checkbox(
                       activeColor: DesignTheme.mainColor,
                         onChanged: (bool value) {
-
+                          setState((){
+                            data[i].isChecked = value;
+                          });
                         },
-                      value: false,
+                      value: data[i].isChecked,
                     ),
                   ),
                 ],
