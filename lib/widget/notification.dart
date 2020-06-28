@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:delau/pages/postPage.dart';
-import 'package:delau/pages/notification_helper.dart';
+import 'package:delau/utils/notification/notification_helper.dart';
 
-
-
-class LocalNotificationWidget extends StatefulWidget{
+class LocalNotificationWidget extends StatefulWidget {
   @override
-  _LocalNotificationWidgetState createState() => _LocalNotificationWidgetState();
+  _LocalNotificationWidgetState createState() =>
+      _LocalNotificationWidgetState();
 }
 
 class _LocalNotificationWidgetState extends State<LocalNotificationWidget> {
@@ -18,8 +17,7 @@ class _LocalNotificationWidgetState extends State<LocalNotificationWidget> {
     // TODO: implement initState
     super.initState();
 
-    final settingsAndroid 
-    = AndroidInitializationSettings('app_icon');
+    final settingsAndroid = AndroidInitializationSettings('app_icon');
     final settingsIOS = IOSInitializationSettings(
         onDidReceiveLocalNotification: (id, title, body, payload) =>
             onSelectNotification(payload));
@@ -27,19 +25,17 @@ class _LocalNotificationWidgetState extends State<LocalNotificationWidget> {
     notifications.initialize(
         InitializationSettings(settingsAndroid, settingsIOS),
         onSelectNotification: onSelectNotification);
-
   }
+
   final String _id = "67";
   Future onSelectNotification(String id) async => await Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => new PostPage(id: _id)),
-    
-  );
+        context,
+        MaterialPageRoute(builder: (context) => new PostPage(id: _id)),
+      );
 
   @override
   Widget build(BuildContext context) {
-    return
-    Scaffold(
+    return Scaffold(
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -79,7 +75,6 @@ class _LocalNotificationWidgetState extends State<LocalNotificationWidget> {
       ),
     );
   }
-
 
   Widget title(String text) => Container(
         margin: EdgeInsets.symmetric(vertical: 4),

@@ -16,11 +16,11 @@ NotificationDetails get _noSound {
 }
 
 Future showSilentNotification(
-    FlutterLocalNotificationsPlugin notifications, {
-      @required String title,
-      @required String body,
-      int id = 0,
-    }) =>
+  FlutterLocalNotificationsPlugin notifications, {
+  @required String title,
+  @required String body,
+  int id = 0,
+}) =>
     _showNotification(notifications,
         title: title, body: body, id: id, type: _noSound);
 
