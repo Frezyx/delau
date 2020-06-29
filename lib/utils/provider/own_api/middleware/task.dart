@@ -10,6 +10,11 @@ class TaskHandler {
   static final handler = "task/";
   static final create = handler + "create";
   static final getAll = handler + "get/all";
+  getCheckHandler(int id) {
+    return handler + id.toString() + "/check";
+  }
+
+  static final check = handler + "create";
 
   Future<bool> createTask(Task task) async {
     bool result = false;
@@ -20,7 +25,8 @@ class TaskHandler {
       "description": task.description,
       "marker_id": 1,
       "marker_name": task.icon,
-      "user_id": 4
+      "user_id": 4,
+      "rating": task.rating,
     });
     try {
       var response = await http.post(Server.path + create,
@@ -50,5 +56,20 @@ class TaskHandler {
       );
     } catch (error) {}
     return response;
+  }
+
+  Future<bool> checkTask(int id) async {
+    bool result = false;
+    try {
+      var response =
+          await http.put(Server.path + getCheckHandler(id), headers: {
+        "content-type": "application/json",
+        "accept": "application/json",
+      });
+      result = response.statusCode == 200;
+    } catch (error) {
+      result = false;
+    }
+    return result;
   }
 }

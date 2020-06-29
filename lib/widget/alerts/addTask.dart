@@ -20,7 +20,7 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
   var markers = new List<Marker>();
   // List<RadioModel> sampleData = new List<RadioModel>();
   final _formKey = GlobalKey<FormState>();
-  var selectedPriority = 0.0;
+  double selectedPriority;
 
   TimeOfDay time;
   DateTime date;
@@ -109,6 +109,7 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
                   var realDate = DateTime(date.year, date.month, date.day,
                       time.hour, time.minute, 0, 0, 0);
                   task.date = realDate;
+                  task.rating = selectedPriority;
                   // task.time = DateTime.fromMillisecondsSinceEpoch(time);
                   API.taskHandler.createTask(task).then((res) {
                     if (res) {
@@ -119,7 +120,6 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
                   });
                 }
               }
-              debugPrint(task.toJson().toString());
             },
             child: Padding(
               padding: EdgeInsets.all(5),
@@ -324,7 +324,9 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
             ),
             SizedBox(height: 7),
             Text(
-              selectedPriority == 0 ? "Приоритет" : selectedPriority.toString(),
+              selectedPriority == null
+                  ? "Приоритет"
+                  : selectedPriority.toString(),
               style: TextStyle(
                 fontSize: 12.0,
                 fontWeight: FontWeight.w500,
@@ -356,7 +358,7 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
                         strokeColor: DesignTheme.mainColor,
                         fillColor: DesignTheme.mainColor,
                       ),
-                      rating: selectedPriority,
+                      rating: selectedPriority ?? 0,
                       onChangeRating: (int rating) {
                         setState(() {
                           selectedPriority = double.parse(rating.toString());
@@ -368,6 +370,9 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
                     child: Text('Сохранить'),
                     textColor: DesignTheme.mainColor,
                     onPressed: () {
+                      setState(() {
+                        selectedPriority = selectedPriority;
+                      });
                       Navigator.of(context).pop();
                     },
                   ),

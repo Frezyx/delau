@@ -1,6 +1,8 @@
 import 'dart:convert';
-import 'package:delau/utils/convert/epochFromDate.dart';
+
 import 'package:intl/intl.dart';
+
+import 'package:delau/utils/convert/epochFromDate.dart';
 
 class Task {
   int id;
@@ -13,6 +15,7 @@ class Task {
   DateTime date;
   DateTime time;
   int userID;
+  double rating;
 
   Task({
     this.id,
@@ -21,10 +24,11 @@ class Task {
     this.isOpen,
     this.isChecked,
     this.icon,
+    this.markerID,
     this.date,
     this.time,
-    this.markerID,
     this.userID,
+    this.rating,
   });
 
   Map<String, dynamic> toMap() {
@@ -39,6 +43,7 @@ class Task {
       'date': epochFromDate(date),
       'time': epochFromDate(time),
       'userID': userID,
+      'rating': rating,
     };
   }
 
@@ -55,6 +60,7 @@ class Task {
       date: DateTime.fromMillisecondsSinceEpoch(map['date']),
       time: DateTime.fromMillisecondsSinceEpoch(map['time']),
       userID: map['user_id'],
+      rating: double.parse(map['rating'].toString()),
     );
   }
 

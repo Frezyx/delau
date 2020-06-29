@@ -1,5 +1,6 @@
 import 'package:delau/design/theme.dart';
 import 'package:delau/models/task.dart';
+import 'package:delau/utils/provider/own_api/api.dart';
 import 'package:delau/utils/provider/own_api/prepare/getTasksList.dart';
 import 'package:delau/utils/provider/test_data/testTaskList.dart';
 import 'package:delau/widget/carousel/carouselHomeSlider.dart';
@@ -236,7 +237,7 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.only(bottom: 6.0, left: 17),
             child: Text(
-              DateFormat('yyyy.MM.dd HH:mm').format(data[i].date),
+              DateFormat('HH:mm').format(data[i].date),
               style: DesignTheme.itemTime,
             ),
           ),
@@ -291,7 +292,7 @@ class _HomePageState extends State<HomePage> {
                     child: Text(data[i].description,
                         style: DesignTheme.lilItemLabel,
                         overflow: TextOverflow.fade)),
-                StarDisplay(value: 3),
+                StarDisplay(value: data[i].rating ~/ 1),
               ],
             )),
         Column(
@@ -301,8 +302,10 @@ class _HomePageState extends State<HomePage> {
               child: Checkbox(
                 activeColor: DesignTheme.mainColor,
                 onChanged: (bool value) {
-                  setState(() {
-                    data[i].isChecked = value;
+                  API.taskHandler.checkTask(data[i].id).then((res) {
+                    if (res) {
+                      setState(() {});
+                    }
                   });
                 },
                 value: data[i].isChecked,
