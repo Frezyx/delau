@@ -78,6 +78,13 @@ class MyApp extends StatelessWidget {
               builder: (context) => new UpdateTask(id: path[2]),
               settings: RouteSettings);
         }
+
+        if (path[1] == 'navigator') {
+          return new MaterialPageRoute(
+              builder: (context) => new BottomBarWithSheetNavigator(
+                  selectedIndex: int.parse(path[2])),
+              settings: RouteSettings);
+        }
       },
     );
   }

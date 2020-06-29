@@ -11,12 +11,13 @@ class TaskHandler {
   Future<bool> createTask(Task task) async {
     bool result = false;
     final msg = jsonEncode({
-      "date_time": 1223432343,
-      "name": "Поссать",
-      "description": "Нужно",
-      "marker_id": 45,
-      "marker_name": "not",
-      "user_id": 4
+      "date": task.date?.millisecondsSinceEpoch,
+      "time": task.time?.millisecondsSinceEpoch,
+      "name": task.name,
+      "description": task.description,
+      "marker_id": 1,
+      "marker_name": task.icon,
+      "user_id": 0
     });
     try {
       var response = await http.post(Server.path + create,
@@ -26,7 +27,9 @@ class TaskHandler {
           },
           body: msg);
       result = response.statusCode == 201;
+      print(response.body);
     } catch (error) {
+      print(error);
       result = false;
     }
     return result;

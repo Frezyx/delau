@@ -26,7 +26,7 @@ class Calendar extends StatefulWidget {
   bool isOpen;
 
   @override
-  _CalendarState createState() => _CalendarState(isOpen:isOpen);
+  _CalendarState createState() => _CalendarState(isOpen: isOpen);
 }
 
 class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
@@ -48,24 +48,66 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    controller = AnimationController( duration: const Duration(milliseconds: 500), vsync: this);
+    controller = AnimationController(
+        duration: const Duration(milliseconds: 500), vsync: this);
 
     final _selectedDay = DateTime.now();
 
     _events = {
-      _selectedDay.subtract(Duration(days: 4)): [Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event A5'), Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event B5'), Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event C5')],
-      _selectedDay.subtract(Duration(days: 2)): [Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event A6'), Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event B6')],
-      
+      _selectedDay.subtract(Duration(days: 4)): [
+        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event A5'),
+        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event B5'),
+        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event C5')
+      ],
+      _selectedDay.subtract(Duration(days: 2)): [
+        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event A6'),
+        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event B6')
+      ],
       _selectedDay: [
-        Task(isChecked: true, icon:"wifi", isOpen: false, description: 'Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы' , name: 'Пойти выбросить мусор', dateTime: _selectedDay),
-        Task(isChecked: false, isOpen: false, icon:"cart", description: 'Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы', name:"Задачи на сайте", dateTime: _selectedDay), 
-        Task(isChecked: false, isOpen: false, icon:"calendar", description: 'Сайт', name: 'Купить хлеба', dateTime: _selectedDay), 
-        Task(isChecked: false, isOpen: false, icon:"circle", description: 'Сайт верстальщику, вебмастеру сгенерировать несколько абзацев более', name: 'Позвонить Марине и рассказать за жизнь', dateTime: _selectedDay)
-       ],
-      
-      _selectedDay.add(Duration(days: 1)): [Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event A8'), Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event B8'), Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event C8'), Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event D8')],
-      _selectedDay.add(Duration(days: 7)): [Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event A10'), Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event B10'), Task(isChecked: false, isOpen: false, icon:"wifi", name: 'Event C10')],
-      };
+        Task(
+            isChecked: true,
+            icon: "wifi",
+            isOpen: false,
+            description:
+                'Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы',
+            name: 'Пойти выбросить мусор',
+            date: _selectedDay),
+        Task(
+            isChecked: false,
+            isOpen: false,
+            icon: "cart",
+            description:
+                'Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы',
+            name: "Задачи на сайте",
+            date: _selectedDay),
+        Task(
+            isChecked: false,
+            isOpen: false,
+            icon: "calendar",
+            description: 'Сайт',
+            name: 'Купить хлеба',
+            date: _selectedDay),
+        Task(
+            isChecked: false,
+            isOpen: false,
+            icon: "circle",
+            description:
+                'Сайт верстальщику, вебмастеру сгенерировать несколько абзацев более',
+            name: 'Позвонить Марине и рассказать за жизнь',
+            date: _selectedDay)
+      ],
+      _selectedDay.add(Duration(days: 1)): [
+        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event A8'),
+        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event B8'),
+        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event C8'),
+        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event D8')
+      ],
+      _selectedDay.add(Duration(days: 7)): [
+        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event A10'),
+        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event B10'),
+        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event C10')
+      ],
+    };
 
     _selectedEvents = _events[_selectedDay] ?? [];
     _calendarController = CalendarController();
@@ -92,18 +134,19 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
     });
   }
 
-  void _onVisibleDaysChanged(DateTime first, DateTime last, CalendarFormat format) {
+  void _onVisibleDaysChanged(
+      DateTime first, DateTime last, CalendarFormat format) {
     print('CALLBACK: _onVisibleDaysChanged');
   }
 
-  void _onCalendarCreated(DateTime first, DateTime last, CalendarFormat format) {
+  void _onCalendarCreated(
+      DateTime first, DateTime last, CalendarFormat format) {
     print('CALLBACK: _onCalendarCreated');
   }
 
   @override
   Widget build(BuildContext context) {
-
-    setState((){
+    setState(() {
       screenHeight = MediaQuery.of(context).size.height;
       screenWidth = MediaQuery.of(context).size.width;
     });
@@ -117,13 +160,13 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
         children: <Widget>[
           const SizedBox(height: 25.0),
           Container(
-            decoration: BoxDecoration(color: Colors.white),
-            child: buildTableCalendar(_calendarController, _events, _holidays, _onDaySelected, _onVisibleDaysChanged, _onCalendarCreated)
-          ),
+              decoration: BoxDecoration(color: Colors.white),
+              child: buildTableCalendar(_calendarController, _events, _holidays,
+                  _onDaySelected, _onVisibleDaysChanged, _onCalendarCreated)),
           MultiProvider(
-            providers: [Provider<bool>.value(value: widget.isOpen)],
-            child: buildEventList(screenWidth, screenHeight, listItemBlocState, _selectedEvents, context)
-          )
+              providers: [Provider<bool>.value(value: widget.isOpen)],
+              child: buildEventList(screenWidth, screenHeight,
+                  listItemBlocState, _selectedEvents, context))
         ],
       ),
     );
