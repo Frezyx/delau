@@ -4,17 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_star_rating/flutter_star_rating.dart';
 
 class AlertManager {
-  static Future<int> getTimePickerAlert(BuildContext context) async {
+  static Future<TimeOfDay> getTimePickerAlert(BuildContext context) async {
     final TimeOfDay picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
     );
-    var dt = DateTime(0, 0, 0, picked.hour, picked.minute, 0, 0, 0);
-    if (picked != null) return epochFromDate(dt);
+    if (picked != null) return picked;
     return null;
   }
 
-  static Future<int> getDatePickerAlert(BuildContext context) async {
+  static Future<DateTime> getDatePickerAlert(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -22,9 +21,7 @@ class AlertManager {
       lastDate: DateTime(2101),
     );
     if (picked != null) {
-      var date = DateTime(picked.year, picked.month, picked.day, 0, 0, 0, 0, 0);
-      print(epochFromDate(date));
-      return epochFromDate(date);
+      return picked;
     } else
       return null;
   }

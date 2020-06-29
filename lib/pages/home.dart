@@ -1,5 +1,6 @@
 import 'package:delau/design/theme.dart';
 import 'package:delau/models/task.dart';
+import 'package:delau/utils/provider/own_api/prepare/getTasksList.dart';
 import 'package:delau/utils/provider/test_data/testTaskList.dart';
 import 'package:delau/widget/carousel/carouselHomeSlider.dart';
 import 'package:delau/widget/carousel/carouselItem.dart';
@@ -190,7 +191,7 @@ class _HomePageState extends State<HomePage> {
   Widget buildListTasks() {
     return Expanded(
       child: FutureBuilder(
-          future: getTestTaskData(),
+          future: getUserPartiesList(4),
           builder: (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -235,7 +236,7 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.only(bottom: 6.0, left: 17),
             child: Text(
-              DateFormat('Hm').format(data[i].date),
+              DateFormat('yyyy.MM.dd HH:mm').format(data[i].date),
               style: DesignTheme.itemTime,
             ),
           ),

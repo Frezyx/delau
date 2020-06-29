@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:delau/utils/convert/epochFromDate.dart';
+import 'package:intl/intl.dart';
 
 class Task {
   int id;
@@ -34,8 +36,8 @@ class Task {
       'isChecked': isChecked,
       'icon': icon,
       'markerID': markerID,
-      'date': date?.millisecondsSinceEpoch,
-      'time': time?.millisecondsSinceEpoch,
+      'date': epochFromDate(date),
+      'time': epochFromDate(time),
       'userID': userID,
     };
   }

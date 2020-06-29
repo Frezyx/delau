@@ -22,8 +22,8 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
   final _formKey = GlobalKey<FormState>();
   var selectedPriority = 0.0;
 
-  int time;
-  int date;
+  TimeOfDay time;
+  DateTime date;
   int selectedIconIndex = 0;
 
   @override
@@ -106,8 +106,10 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
                 Navigator.pop(context);
               } else {
                 if (_formKey.currentState.validate()) {
-                  task.date = DateTime.fromMillisecondsSinceEpoch(date);
-                  task.time = DateTime.fromMillisecondsSinceEpoch(time);
+                  var realDate = DateTime(date.year, date.month, date.day,
+                      time.hour, time.minute, 0, 0, 0);
+                  task.date = realDate;
+                  // task.time = DateTime.fromMillisecondsSinceEpoch(time);
                   API.taskHandler.createTask(task).then((res) {
                     if (res) {
                       Navigator.popAndPushNamed(context, "/navigator/0");
@@ -242,10 +244,7 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
             ),
             SizedBox(height: 7),
             Text(
-              date == null
-                  ? "Дата"
-                  : DateFormat('yyyy-MM-dd')
-                      .format(DateTime.fromMillisecondsSinceEpoch(date)),
+              date == null ? "Дата" : DateFormat('yyyy-MM-dd').format(date),
               style: TextStyle(
                 fontSize: 12.0,
                 fontWeight: FontWeight.w500,
@@ -286,8 +285,7 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
             Text(
               time == null
                   ? "Вермя"
-                  : DateFormat('Hm')
-                      .format(DateTime.fromMillisecondsSinceEpoch(time)),
+                  : time.hour.toString() + " : " + time.minute.toString(),
               style: TextStyle(
                 fontSize: 12.0,
                 fontWeight: FontWeight.w500,
