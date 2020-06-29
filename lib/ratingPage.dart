@@ -28,7 +28,7 @@ void dispose() {
   super.dispose();
 }
 
-var countTask =  DBProvider.db.getContNow();
+// var countTask =  DBProvider.db.getContNow();
 bool registration = false;
 int userId = 0;
 
@@ -36,12 +36,12 @@ int userId = 0;
     void initState(){
       super.initState();
 
-      DBUserProvider.dbc.getClientUser(1).then((res){
-        registration = (res.reg == 1);
-        userId = res.userIdServer;
-        print("$userId Пользователя id" );
-        print(registration);
-      });
+      // DBUserProvider.dbc.getClientUser(1).then((res){
+      //   registration = (res.reg == 1);
+      //   userId = res.userIdServer;
+      //   print("$userId Пользователя id" );
+      //   print(registration);
+      // });
     }
 
   @override

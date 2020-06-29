@@ -1,6 +1,6 @@
+import 'package:delau/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:delau/pages/postPage.dart';
 import 'package:delau/utils/notification/notification_helper.dart';
 
 class LocalNotificationWidget extends StatefulWidget {
@@ -30,7 +30,7 @@ class _LocalNotificationWidgetState extends State<LocalNotificationWidget> {
   final String _id = "67";
   Future onSelectNotification(String id) async => await Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => new PostPage(id: _id)),
+        MaterialPageRoute(builder: (context) => HomePage()),
       );
 
   @override

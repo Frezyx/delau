@@ -29,8 +29,8 @@ class _BottomBarWithSheetNavigatorState extends State<BottomBarWithSheetNavigato
     ChangeNotifierProvider<ListItemBloc>(create: (_) => ListItemBloc(),
       child:Calendar( )),
     // MyStatefulWidget(),
-    // SettingsPage(),
-    LocalNotificationWidget(),
+    SettingsPage(),
+    // LocalNotificationWidget(),
     ChangeNotifierProvider<NotesListBloc>(create: (_) => NotesListBloc(),
     child:Notes(),),
   ];

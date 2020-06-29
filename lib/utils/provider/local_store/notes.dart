@@ -6,8 +6,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:delau/models/dbModels.dart';
 import 'package:sqflite/sqflite.dart';
 
-
-
 class DBNoteProvider {
   DBNoteProvider._();
 
@@ -36,23 +34,22 @@ class DBNoteProvider {
     });
   }
 
-  firstCreateTable() async{
+  firstCreateTable() async {
     final db = await database;
     int now = epochFromDate(DateTime.now());
     int id = 0;
     var raw = await db.rawInsert(
         "INSERT Into Notes (id, content, date_last_edited, is_archived, color)"
         " VALUES (?, ?, ?, ?, ?)",
-        [id, 'Бысртрая задча #1', now, 0, 0]
-        );
-    return(id);
+        [id, 'Бысртрая задча #1', now, 0, 0]);
+    return (id);
   }
 
-  int epochFromDate(DateTime dt) {  
+  int epochFromDate(DateTime dt) {
     return dt.millisecondsSinceEpoch ~/ 1000;
   }
 
-  Future<int>addNote(String text) async{
+  Future<int> addNote(String text) async {
     final db = await database;
     int now = epochFromDate(DateTime.now());
     var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Notes");
@@ -60,22 +57,21 @@ class DBNoteProvider {
     var raw = await db.rawInsert(
         "INSERT Into Notes (id, content, date_last_edited, is_archived, color)"
         " VALUES (?, ?, ?, ?, ?)",
-        [id, '$text', now, 0, 0]
-        );
+        [id, '$text', now, 0, 0]);
 
-    return(id);
+    return (id);
   }
 
-  Future<int>updateNote(String text, int id) async{
+  Future<int> updateNote(String text, int id) async {
     final db = await database;
     int now = epochFromDate(DateTime.now());
     int count = await db.rawUpdate(
-      'UPDATE Notes SET content = ?, date_last_edited = ? WHERE id = ?',
-      ['$text','$now', '$id']);
-    return(count);
+        'UPDATE Notes SET content = ?, date_last_edited = ? WHERE id = ?',
+        ['$text', '$now', '$id']);
+    return (count);
   }
 
-  Future<int>updateColor(int id) async{
+  Future<int> updateColor(int id) async {
     print("На выбор получил айди" + id.toString());
     final db = await database;
     var res = await db.rawQuery("SELECT * FROM Notes WHERE id = $id");
@@ -83,26 +79,27 @@ class DBNoteProvider {
     var colorSQL = item['color'];
 
     int color;
-    if(colorSQL == 0){color = 1;}
-    else{color = 0;}
-    
+    if (colorSQL == 0) {
+      color = 1;
+    } else {
+      color = 0;
+    }
+
     int count = await db.rawUpdate(
-      'UPDATE Notes SET color = ? WHERE id = ?',
-      ['$color','$id']);
-    return(color);
+        'UPDATE Notes SET color = ? WHERE id = ?', ['$color', '$id']);
+    return (color);
   }
 
-  Future<int>updateColorFalse(int id, int color) async{
+  Future<int> updateColorFalse(int id, int color) async {
     final db = await database;
     int count = await db.rawUpdate(
-      'UPDATE Notes SET color = ? WHERE id = ?',
-      ['$color','$id']);
-    return(id);
+        'UPDATE Notes SET color = ? WHERE id = ?', ['$color', '$id']);
+    return (id);
   }
 
-    Future<int>addNoteInit() async{
+  Future<int> addNoteInit() async {
     var rng = new Random();
-    List<String> randomText= [
+    List<String> randomText = [
       'Компьютерные технологии стали неотъемлемой частью жизни людей. Эти технологии имеют свои корни. Возьмём, например, слово «мышка». Компьютерная мышь совсем не то же самое, что маленький грызун, который живёт в зданиях и полях. Это небольшой прибор, который вы двигаете туда-сюда по плоской поверхности, сидя за компьютером. Мышь перемещает стрелку (или курсор) на экране компьютера. Идея такого устройства пришла в голову специалисту по компьютерам Дугласу Энгельбарту в начале 60-х годов XX века. Первая компьютерная мышь представляла собой резной деревянный кубик с двумя металлическими колёсиками. Прибор назвали мышью, так как с одного конца у него был хвостик. Хвостом был провод, который присоединял устройство к компьютеру.',
       'С другой стороны постоянное информационно-пропагандистское',
       'Не следует, однако забывать, что консультация с широким активом обеспечивает широкому кругу (специалистов) участие в формировании направлений',
@@ -116,30 +113,28 @@ class DBNoteProvider {
     var raw = await db.rawInsert(
         "INSERT Into Notes (id, content, date_last_edited, is_archived, color)"
         " VALUES (?, ?, ?, ?, ?)",
-        [id, randomText[rng.nextInt(4)], now, 0, 0]
-        );
-    return(raw);
+        [id, randomText[rng.nextInt(4)], now, 0, 0]);
+    return (raw);
   }
 
-  Future<int> deleteCheckedNotes(List<int> list) async{
+  Future<int> deleteCheckedNotes(List<int> list) async {
     final db = await database;
-    for (int i = 0; i <list.length; i++){
-      await db.rawUpdate('UPDATE Notes SET is_archived = ? WHERE id = ?', [1,'${list[i]}'])
-      .then((respa){
-
-      });
+    for (int i = 0; i < list.length; i++) {
+      await db.rawUpdate('UPDATE Notes SET is_archived = ? WHERE id = ?',
+          [1, '${list[i]}']).then((respa) {});
     }
     return 1;
   }
 
-  Future<int> recoverNotes() async{
+  Future<int> recoverNotes() async {
     final db = await database;
     var res = await db.query("Notes", where: "color = 1");
-    print(res.toString()+" Количество заметок с измененным цветом");
-    List<Note> list = res.isNotEmpty ? res.map((c) => Note.fromMap(c)).toList() : [];
-    for (int i = 0; i <list.length; i++){
-      await db.rawUpdate('UPDATE Notes SET color = ? WHERE id = ?', [0,'${list[i].id}'])
-      .then((respa){
+    print(res.toString() + " Количество заметок с измененным цветом");
+    List<Note> list =
+        res.isNotEmpty ? res.map((c) => Note.fromMap(c)).toList() : [];
+    for (int i = 0; i < list.length; i++) {
+      await db.rawUpdate('UPDATE Notes SET color = ? WHERE id = ?',
+          [0, '${list[i].id}']).then((respa) {
         print("$respa Удалил");
       });
     }
@@ -148,7 +143,10 @@ class DBNoteProvider {
 
   Future<List<Note>> getAllNotes() async {
     final db = await database;
-    var res = await db.query("Notes", where: "is_archived = ?", whereArgs: [0], orderBy: "date_last_edited DESC");
+    var res = await db.query("Notes",
+        where: "is_archived = ?",
+        whereArgs: [0],
+        orderBy: "date_last_edited DESC");
     List<Note> list =
         res.isNotEmpty ? res.map((c) => Note.fromMap(c)).toList() : [];
     return list;
@@ -156,33 +154,39 @@ class DBNoteProvider {
 
   Future<int> getAllNotesCount() async {
     final db = await database;
-    var res = await db.query("Notes", where: "is_archived = ?", whereArgs: [0], orderBy: "date_last_edited DESC");
+    var res = await db.query("Notes",
+        where: "is_archived = ?",
+        whereArgs: [0],
+        orderBy: "date_last_edited DESC");
     List<Note> list =
         res.isNotEmpty ? res.map((c) => Note.fromMap(c)).toList() : [];
     return list.length;
   }
 
-    Future<List<Note>> getAllNotesSearch(String text) async {
+  Future<List<Note>> getAllNotesSearch(String text) async {
     final db = await database;
-    var res = await db.query("Notes", where: "is_archived = ? AND content LIKE ?", whereArgs: [0, "%$text%"], orderBy: "date_last_edited DESC");
+    var res = await db.query("Notes",
+        where: "is_archived = ? AND content LIKE ?",
+        whereArgs: [0, "%$text%"],
+        orderBy: "date_last_edited DESC");
     List<Note> list =
         res.isNotEmpty ? res.map((c) => Note.fromMap(c)).toList() : [];
-        for (int i = 0; i <list.length; i++){
-        }
+    for (int i = 0; i < list.length; i++) {}
     return list;
   }
 
   Future<String> getNoteById(int i) async {
     final db = await database;
     var res = await db.rawQuery("SELECT * FROM Notes WHERE id = $i");
-      var item = res.first;
-      var content = item['content'];
+    var item = res.first;
+    var content = item['content'];
     return content;
   }
-  
-  Future<int> getArchivedCount() async{
+
+  Future<int> getArchivedCount() async {
     final db = await database;
-    var archivedNotesCount = Sqflite.firstIntValue( await db.rawQuery("SELECT COUNT(*) FROM Notes WHERE color = 1"));
+    var archivedNotesCount = Sqflite.firstIntValue(
+        await db.rawQuery("SELECT COUNT(*) FROM Notes WHERE color = 1"));
     return archivedNotesCount;
   }
 }
