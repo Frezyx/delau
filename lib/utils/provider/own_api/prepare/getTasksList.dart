@@ -3,7 +3,7 @@ import 'package:delau/utils/provider/own_api/api.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart';
 
-Future<List<Task>> getUserPartiesList(int userID) async {
+Future<List<Task>> getTasks(int userID) async {
   Response res = await API.taskHandler.getTask();
 
   var data = convert.jsonDecode(res.body);

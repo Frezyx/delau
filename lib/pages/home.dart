@@ -1,6 +1,8 @@
 import 'package:delau/design/theme.dart';
+import 'package:delau/models/marker.dart';
 import 'package:delau/models/task.dart';
 import 'package:delau/utils/provider/own_api/api.dart';
+import 'package:delau/utils/provider/own_api/prepare/getMarkersList.dart';
 import 'package:delau/utils/provider/own_api/prepare/getTasksList.dart';
 import 'package:delau/utils/provider/test_data/testTaskList.dart';
 import 'package:delau/widget/carousel/carouselHomeSlider.dart';
@@ -110,8 +112,9 @@ class _HomePageState extends State<HomePage> {
   Widget buildGridThemes() {
     return Expanded(
       child: FutureBuilder(
-          future: getTestTaskData(),
-          builder: (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
+          future: getMarkersList(4),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<Marker>> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
                 return new Text('Input a URL to start');
@@ -173,7 +176,7 @@ class _HomePageState extends State<HomePage> {
                                               Padding(
                                                 padding: const EdgeInsets.only(
                                                     top: 5.0),
-                                                child: Text("Название",
+                                                child: Text('${data[i].name}',
                                                     style:
                                                         DesignTheme.themeText),
                                               )
@@ -192,7 +195,7 @@ class _HomePageState extends State<HomePage> {
   Widget buildListTasks() {
     return Expanded(
       child: FutureBuilder(
-          future: getUserPartiesList(4),
+          future: getTasks(4),
           builder: (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:

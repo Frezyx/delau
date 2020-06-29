@@ -14,6 +14,10 @@ class TaskHandler {
     return handler + id.toString() + "/check";
   }
 
+  getAllMarkersHandler(int id) {
+    return handler + "/get/markers/" + id.toString();
+  }
+
   static final check = handler + "create";
 
   Future<bool> createTask(Task task) async {
@@ -49,6 +53,20 @@ class TaskHandler {
     try {
       response = await http.get(
         Server.path + getAll + "/4",
+        headers: {
+          "content-type": "application/json",
+          "accept": "application/json",
+        },
+      );
+    } catch (error) {}
+    return response;
+  }
+
+  Future<Response> getAllMarkers() async {
+    Response response;
+    try {
+      response = await http.get(
+        Server.path + getAllMarkersHandler(4),
         headers: {
           "content-type": "application/json",
           "accept": "application/json",
