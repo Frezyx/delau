@@ -11,13 +11,19 @@ import 'package:flutter_star_rating/flutter_star_rating.dart';
 import 'package:intl/intl.dart';
 
 class AddTaskAlert extends StatefulWidget {
+  AddTaskAlert({this.returnPageIndex, this.date});
+  int returnPageIndex;
+  DateTime date;
   @override
-  _AddTaskAlertState createState() => _AddTaskAlertState();
+  _AddTaskAlertState createState() =>
+      _AddTaskAlertState(returnPageIndex: returnPageIndex, date: date);
 }
 
 class _AddTaskAlertState extends State<AddTaskAlert> {
+  _AddTaskAlertState({this.returnPageIndex, this.date});
   var task = Task();
   var markers = new List<Marker>();
+  int returnPageIndex;
   // List<RadioModel> sampleData = new List<RadioModel>();
   final _formKey = GlobalKey<FormState>();
   double selectedPriority;
@@ -113,7 +119,8 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
                   // task.time = DateTime.fromMillisecondsSinceEpoch(time);
                   API.taskHandler.createTask(task).then((res) {
                     if (res) {
-                      Navigator.popAndPushNamed(context, "/navigator/0");
+                      Navigator.popAndPushNamed(
+                          context, "/navigator/$returnPageIndex");
                     } else {
                       // throw allet
                     }
@@ -223,11 +230,15 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
       margin: EdgeInsets.only(left: 5.0, top: 10.0, bottom: 10.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(DesignTheme.normalBorderRadius),
-        border: Border.all(width: 1, color: DesignTheme.mainColor),
+        border: Border.all(
+            width: 1,
+            color:
+                date == null ? DesignTheme.greyMedium : DesignTheme.mainColor),
       ),
       child: FlatButton(
         color: Colors.transparent,
-        textColor: DesignTheme.mainColor,
+        textColor:
+            date == null ? DesignTheme.greyMedium : DesignTheme.mainColor,
         padding: EdgeInsets.only(top: 10, bottom: 10),
         onPressed: () async {
           var getDate = await AlertManager.getDatePickerAlert(context);
@@ -261,11 +272,15 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
       margin: EdgeInsets.only(top: 10, bottom: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(DesignTheme.normalBorderRadius),
-        border: Border.all(width: 1, color: DesignTheme.mainColor),
+        border: Border.all(
+            width: 1,
+            color:
+                time == null ? DesignTheme.greyMedium : DesignTheme.mainColor),
       ),
       child: FlatButton(
         color: Colors.transparent,
-        textColor: DesignTheme.mainColor,
+        textColor:
+            time == null ? DesignTheme.greyMedium : DesignTheme.mainColor,
         padding: EdgeInsets.only(top: 10, bottom: 10),
         onPressed: () async {
           var getTime = await AlertManager.getTimePickerAlert(context);
@@ -302,11 +317,17 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
       margin: EdgeInsets.only(right: 5.0, top: 10.0, bottom: 10.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(DesignTheme.normalBorderRadius),
-        border: Border.all(width: 1, color: DesignTheme.mainColor),
+        border: Border.all(
+            width: 1,
+            color: selectedPriority == null
+                ? DesignTheme.greyMedium
+                : DesignTheme.mainColor),
       ),
       child: FlatButton(
         color: Colors.transparent,
-        textColor: DesignTheme.mainColor,
+        textColor: selectedPriority == null
+            ? DesignTheme.greyMedium
+            : DesignTheme.mainColor,
         padding: EdgeInsets.only(
           top: 10.0,
           bottom: 10.0,

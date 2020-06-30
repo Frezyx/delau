@@ -23,7 +23,13 @@ Future<List<Task>> getTasksByDate(int userID, DateTime date) async {
 
   for (var task in data) {
     Task taskFromServer = Task.fromMap(task);
-    taskList.add(taskFromServer);
+    var nowDate = DateTime.now();
+    var nowday = DateTime(nowDate.year, nowDate.month, nowDate.day);
+    var date = taskFromServer.date;
+    var day = DateTime(date.year, date.month, date.day);
+    if (day == nowday) {
+      taskList.add(taskFromServer);
+    }
   }
   return taskList;
 }

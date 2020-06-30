@@ -106,9 +106,10 @@ Widget buildEventList(double _screenWidth, double screenHeight,
     listItemBlocState, DateTime _selectedDay, context) {
   var selectedTasks = listItemBlocState.getEventsByDate(_selectedDay);
 
+  print(selectedTasks);
   return !listItemBlocState.isEventsLoad
       ? CircularProgressIndicator()
-      : selectedTasks.length > 0
+      : selectedTasks != null && selectedTasks.length > 0
           ? Expanded(
               child: ListView.builder(
                 itemCount: selectedTasks.length,

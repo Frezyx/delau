@@ -1,4 +1,5 @@
 import 'package:delau/design/theme.dart';
+import 'package:delau/widget/alerts/bottomAlerts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -35,7 +36,9 @@ getNoTasksScreen(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50.0),
               ),
-              onPressed: () {},
+              onPressed: () {
+                getTaskCreateAlert(context, 1, DateTime.now());
+              },
               color: DesignTheme.mainColor,
               child: Padding(
                 padding: const EdgeInsets.only(
