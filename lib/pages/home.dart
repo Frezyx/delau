@@ -1,3 +1,5 @@
+import 'package:delau/blocs/notesListBloc.dart';
+import 'package:delau/blocs/taskListBloc.dart';
 import 'package:delau/design/theme.dart';
 import 'package:delau/models/marker.dart';
 import 'package:delau/models/task.dart';
@@ -14,6 +16,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -23,15 +26,21 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedTap = 0;
   List<Widget> carouselChildrens = [];
+  List<Task> _taskList;
+  var taskListBloc;
 
   @override
   void initState() {
-    carouselChildrens.add(CarouselItem.ci.createMainStatsSlide());
+    getTasksByDate(4, DateTime.now()).then((taskList) {
+      taskListBloc.tasks = taskList;
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    taskListBloc = Provider.of<TaskListBloc>(context);
+
     return Column(
       children: <Widget>[
         buildAppBar(),
@@ -105,12 +114,7 @@ class _HomePageState extends State<HomePage> {
                 ]),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 100.0),
-          child: CarouselHomeSlider(
-            childrens: carouselChildrens,
-          ),
-        ),
+        Carousel(list: _taskList),
       ],
     );
   }

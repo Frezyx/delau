@@ -1,6 +1,7 @@
 import 'package:bottom_bar_with_sheet/bottom_bar_withs_sheet.dart';
 import 'package:delau/blocs/listItemBloc.dart';
 import 'package:delau/blocs/notesListBloc.dart';
+import 'package:delau/blocs/taskListBloc.dart';
 import 'package:delau/pages/calendar.dart';
 import 'package:delau/pages/home.dart';
 import 'package:delau/pages/notes.dart';
@@ -12,34 +13,38 @@ import 'package:provider/provider.dart';
 
 import '../notification.dart';
 
-class BottomBarWithSheetNavigator extends StatefulWidget{
+class BottomBarWithSheetNavigator extends StatefulWidget {
   BottomBarWithSheetNavigator({this.selectedIndex});
   int selectedIndex;
 
   @override
-  _BottomBarWithSheetNavigatorState createState() => _BottomBarWithSheetNavigatorState(selectedIndex : selectedIndex);
+  _BottomBarWithSheetNavigatorState createState() =>
+      _BottomBarWithSheetNavigatorState(selectedIndex: selectedIndex);
 }
 
-class _BottomBarWithSheetNavigatorState extends State<BottomBarWithSheetNavigator> {
+class _BottomBarWithSheetNavigatorState
+    extends State<BottomBarWithSheetNavigator> {
   _BottomBarWithSheetNavigatorState({this.selectedIndex});
   int selectedIndex;
 
   var pages = [
-    HomePage(),
-    ChangeNotifierProvider<ListItemBloc>(create: (_) => ListItemBloc(),
-      child:Calendar( )),
+    ChangeNotifierProvider<TaskListBloc>(
+        create: (_) => TaskListBloc(), child: HomePage()),
+    ChangeNotifierProvider<ListItemBloc>(
+        create: (_) => ListItemBloc(), child: Calendar()),
     // MyStatefulWidget(),
     SettingsPage(),
     // LocalNotificationWidget(),
-    ChangeNotifierProvider<NotesListBloc>(create: (_) => NotesListBloc(),
-    child:Notes(),),
+    ChangeNotifierProvider<NotesListBloc>(
+      create: (_) => NotesListBloc(),
+      child: Notes(),
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: pages[selectedIndex],
-
       bottomNavigationBar: BottomBarWithSheet(
         selectedIndex: selectedIndex,
         duration: Duration(milliseconds: 400),
@@ -53,10 +58,17 @@ class _BottomBarWithSheetNavigatorState extends State<BottomBarWithSheetNavigato
           marginBetweenPanelAndActtionButton: 30,
           rightMargin: 15,
           mainActionButtonPadding: EdgeInsets.all(7),
-          mainActionButtonIconClosed: Icon(Icons.add, color:Colors.white , size: 30,),
-          mainActionButtonIconOpened: Icon(Icons.keyboard_arrow_down, color:Colors.white, size: 35,),
+          mainActionButtonIconClosed: Icon(
+            Icons.add,
+            color: Colors.white,
+            size: 30,
+          ),
+          mainActionButtonIconOpened: Icon(
+            Icons.keyboard_arrow_down,
+            color: Colors.white,
+            size: 35,
+          ),
         ),
-
         onSelectItem: (index) {
           setState(() {
             selectedIndex = index;
