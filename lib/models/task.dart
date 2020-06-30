@@ -55,6 +55,7 @@ class Task {
       name: map['name'],
       description: map['description'],
       isChecked: map['is_done'],
+      isOpen: false,
       icon: map['marker_name'],
       markerID: map['marker_id'],
       date: DateTime.fromMillisecondsSinceEpoch(map['date']),

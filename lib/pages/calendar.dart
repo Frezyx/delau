@@ -1,6 +1,8 @@
 import 'package:bottom_bar_with_sheet/bottom_bar_withs_sheet.dart';
 import 'package:delau/blocs/listItemBloc.dart';
 import 'package:delau/models/task.dart';
+import 'package:delau/utils/provider/own_api/api.dart';
+import 'package:delau/utils/provider/own_api/prepare/getTasksList.dart';
 import 'package:delau/widget/infoIllustratedScreens/noTasks.dart';
 import 'package:delau/widget/list_builders/taskStateIconLine.dart';
 import 'package:delau/widget/list_builders/withDate.dart';
@@ -41,83 +43,25 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
   double screenWidth;
   AnimationController controller;
   Animation animation;
-  int _selectedIndex = 1;
+  // int _selectedIndex = 1;
   bool isOpen;
+  var listItemBlocState;
+  DateTime _selectedDay;
+
+  // List<Task> _taskList = [];
 
   @override
   void initState() {
-    super.initState();
-
-    controller = AnimationController(
-        duration: const Duration(milliseconds: 500), vsync: this);
-
-    final _selectedDay = DateTime.now();
-
-    _events = {
-      _selectedDay.subtract(Duration(days: 4)): [
-        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event A5'),
-        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event B5'),
-        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event C5')
-      ],
-      _selectedDay.subtract(Duration(days: 2)): [
-        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event A6'),
-        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event B6')
-      ],
-      _selectedDay: [
-        Task(
-            isChecked: true,
-            icon: "wifi",
-            isOpen: false,
-            description:
-                'Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы',
-            name: 'Пойти выбросить мусор',
-            date: _selectedDay),
-        Task(
-            isChecked: false,
-            isOpen: false,
-            icon: "cart",
-            description:
-                'Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы',
-            name: "Задачи на сайте",
-            date: _selectedDay),
-        Task(
-            isChecked: false,
-            isOpen: false,
-            icon: "calendar",
-            description: 'Сайт',
-            name: 'Купить хлеба',
-            date: _selectedDay),
-        Task(
-            isChecked: false,
-            isOpen: false,
-            icon: "circle",
-            description:
-                'Сайт верстальщику, вебмастеру сгенерировать несколько абзацев более',
-            name: 'Позвонить Марине и рассказать за жизнь',
-            date: _selectedDay)
-      ],
-      _selectedDay.add(Duration(days: 1)): [
-        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event A8'),
-        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event B8'),
-        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event C8'),
-        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event D8')
-      ],
-      _selectedDay.add(Duration(days: 7)): [
-        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event A10'),
-        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event B10'),
-        Task(isChecked: false, isOpen: false, icon: "wifi", name: 'Event C10')
-      ],
-    };
-
-    _selectedEvents = _events[_selectedDay] ?? [];
+    _selectedDay = DateTime.now();
     _calendarController = CalendarController();
-
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
     );
-
+    controller = AnimationController(
+        duration: const Duration(milliseconds: 500), vsync: this);
     _animationController.forward();
+    super.initState();
   }
 
   @override
@@ -129,8 +73,9 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
 
   void _onDaySelected(DateTime day, List events) {
     print('CALLBACK: _onDaySelected');
+    listItemBlocState.selectEvents(day);
     setState(() {
-      _selectedEvents = events;
+      _selectedDay = day;
     });
   }
 
@@ -151,8 +96,8 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
       screenWidth = MediaQuery.of(context).size.width;
     });
 
-    final listItemBlocState = Provider.of<ListItemBloc>(context);
-    listItemBlocState.selectedEvents = _selectedEvents;
+    listItemBlocState = Provider.of<ListItemBloc>(context);
+    listItemBlocState.loadEvents(4);
 
     return Scaffold(
       body: Column(
@@ -161,14 +106,31 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
           const SizedBox(height: 25.0),
           Container(
               decoration: BoxDecoration(color: Colors.white),
-              child: buildTableCalendar(_calendarController, _events, _holidays,
-                  _onDaySelected, _onVisibleDaysChanged, _onCalendarCreated)),
+              child: buildTableCalendar(
+                  _calendarController,
+                  listItemBlocState,
+                  _holidays,
+                  _onDaySelected,
+                  _onVisibleDaysChanged,
+                  _onCalendarCreated)),
           MultiProvider(
               providers: [Provider<bool>.value(value: widget.isOpen)],
               child: buildEventList(screenWidth, screenHeight,
-                  listItemBlocState, _selectedEvents, context))
+                  listItemBlocState, _selectedDay, context))
         ],
       ),
     );
   }
+}
+
+Map<DateTime, List<Task>> getEventMapFromTaskList(List<Task> _taskList) {
+  Map<DateTime, List<Task>> _events = {};
+  for (Task task in _taskList) {
+    if (_events.containsKey(task.date)) {
+      _events[task.date].add(task);
+    } else {
+      _events[task.date] = [task];
+    }
+  }
+  return _events;
 }

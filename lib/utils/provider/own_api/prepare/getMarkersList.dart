@@ -12,8 +12,8 @@ Future<List<Marker>> getMarkersList(int userID) async {
 
   for (var item in data.entries) {
     markerList.add(new Marker(
-      id: item.value[0]['marker_id'],
-      icon: item.value[0]['marker_name'],
+      id: item.value,
+      icon: item.key,
       //TODO: get name from Marker handler
       name: "Нет",
     ));

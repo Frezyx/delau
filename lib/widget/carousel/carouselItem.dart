@@ -1,7 +1,6 @@
 import 'package:delau/blocs/taskListBloc.dart';
 import 'package:delau/design/theme.dart';
 import 'package:delau/models/task.dart';
-import 'package:delau/utils/provider/own_api/prepare/getTasksList.dart';
 import 'package:delau/widget/carousel/carouselHomeSlider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

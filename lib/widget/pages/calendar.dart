@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-Widget buildTableCalendar(_calendarController, _events, _holidays,
+Widget buildTableCalendar(_calendarController, listItemBlocState, _holidays,
     _onDaySelected, _onVisibleDaysChanged, _onCalendarCreated) {
   return TableCalendar(
     locale: 'ru_RU',
     calendarController: _calendarController,
-    events: _events,
+    events: listItemBlocState.events,
     holidays: _holidays,
     availableGestures: AvailableGestures.all,
     formatAnimation: FormatAnimation.slide,
@@ -103,41 +103,50 @@ Widget buildEventsMarker(DateTime date, List events, _calendarController) {
 }
 
 Widget buildEventList(double _screenWidth, double screenHeight,
-    listItemBlocState, _selectedEvents, context) {
-  return _selectedEvents.length > 0
-      ? Expanded(
-          child: ListView.builder(
-            itemCount: _selectedEvents.length,
-            padding: const EdgeInsets.all(0),
-            itemBuilder: (context, index) {
-              //TODO: Сделать так, чтоб только контейнер можно было двигать
-              return Dismissible(
-                  key: UniqueKey(),
-                  background: Container(),
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.only(left: 24, right: 24),
-                    title: Row(
-                      children: <Widget>[
-                        LineStateCheckedIcons(
-                          iconSize: 15,
-                          index: index,
-                          listLength: _selectedEvents.length,
-                          isFinish: true,
+    listItemBlocState, DateTime _selectedDay, context) {
+  var selectedTasks = listItemBlocState.getEventsByDate(_selectedDay);
+
+  return !listItemBlocState.isEventsLoad
+      ? CircularProgressIndicator()
+      : selectedTasks.length > 0
+          ? Expanded(
+              child: ListView.builder(
+                itemCount: selectedTasks.length,
+                padding: const EdgeInsets.all(0),
+                itemBuilder: (context, index) {
+                  //TODO: Сделать так, чтоб только контейнер можно было двигать
+                  return Dismissible(
+                      key: UniqueKey(),
+                      background: Container(),
+                      child: ListTile(
+                        contentPadding:
+                            const EdgeInsets.only(left: 24, right: 24),
+                        title: Row(
+                          children: <Widget>[
+                            LineStateCheckedIcons(
+                              date: _selectedDay,
+                              iconSize: 15,
+                              index: index,
+                              listLength: selectedTasks.length,
+                              isFinish: true,
+                            ),
+                            displayTime(DateFormat('Hm')
+                                .format(selectedTasks[index].date)),
+                            GestureDetector(
+                              onTap: () {
+                                listItemBlocState.changeOpenState(index);
+                              },
+                              child: ListWithDateItem(
+                                listPosition: index,
+                                data: selectedTasks,
+                                date: _selectedDay,
+                              ),
+                            ),
+                          ],
                         ),
-                        displayTime(DateFormat('Hm').format(
-                            listItemBlocState.selectedEvents[index].date)),
-                        GestureDetector(
-                          onTap: () {
-                            listItemBlocState.changeOpenState(index);
-                          },
-                          child: ListWithDateItem(
-                              listPosition: index, data: _selectedEvents),
-                        ),
-                      ],
-                    ),
-                  ));
-            },
-          ),
-        )
-      : getNoTasksScreen(screenHeight, context);
+                      ));
+                },
+              ),
+            )
+          : getNoTasksScreen(screenHeight, context);
 }

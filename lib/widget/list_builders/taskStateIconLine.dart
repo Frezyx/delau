@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LineStateCheckedIcons extends StatelessWidget {
-
   LineStateCheckedIcons({
     Key key,
+    this.date,
     this.iconSize,
     this.index,
     this.listLength,
@@ -18,11 +18,12 @@ class LineStateCheckedIcons extends StatelessWidget {
   int index;
   int listLength;
   bool isFinish;
+  DateTime date;
 
   @override
   Widget build(BuildContext context) {
-
     final listItemBlocState = Provider.of<ListItemBloc>(context);
+    final selectedTasks = listItemBlocState.getEventsByDate(date);
 
     return Container(
         decoration: CustomIconDecoration(
@@ -35,9 +36,9 @@ class LineStateCheckedIcons extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(50)),
               boxShadow: [
                 BoxShadow(
-                  color:  listItemBlocState.selectedEvents[index].isChecked?
-                  Colors.green.withOpacity(0.2) :
-                  DesignTheme.mainColor.withOpacity(0.2),
+                  color: selectedTasks[index].isChecked
+                      ? Colors.green.withOpacity(0.2)
+                      : DesignTheme.mainColor.withOpacity(0.2),
                   offset: Offset(0.0, 1.0),
                   spreadRadius: 3.0,
                   blurRadius: 6.0,
@@ -48,8 +49,9 @@ class LineStateCheckedIcons extends StatelessWidget {
                   ? Icons.fiber_manual_record
                   : Icons.radio_button_unchecked,
               size: iconSize,
-              color: listItemBlocState.selectedEvents[index].isChecked? Colors.green :
-              DesignTheme.mainColor),
+              color: selectedTasks[index].isChecked
+                  ? Colors.green
+                  : DesignTheme.mainColor),
         ));
   }
 }
