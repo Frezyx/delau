@@ -201,7 +201,8 @@ class _HomePageState extends State<HomePage> {
   Widget buildListTasks() {
     return Expanded(
       child: FutureBuilder(
-          future: getTasks(4),
+          // future: getTasks(4),
+          future: getTasksByDate(4, DateTime.now()),
           builder: (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:

@@ -10,6 +10,7 @@ class TaskHandler {
   static final handler = "task/";
   static final create = handler + "create";
   static final getAll = handler + "get/all";
+  static final getAllByDate = handler + "get/bydate";
   getCheckHandler(int id) {
     return handler + id.toString() + "/check";
   }
@@ -40,9 +41,7 @@ class TaskHandler {
           },
           body: msg);
       result = response.statusCode == 201;
-      print(response.body);
     } catch (error) {
-      print(error);
       result = false;
     }
     return result;
@@ -57,6 +56,24 @@ class TaskHandler {
           "content-type": "application/json",
           "accept": "application/json",
         },
+      );
+    } catch (error) {}
+    return response;
+  }
+
+  Future<Response> getTaskByDate(DateTime date) async {
+    Response response;
+    final msg = jsonEncode({
+      "date": epochFromDate(date),
+    });
+    try {
+      response = await http.post(
+        Server.path + getAllByDate + "/4",
+        headers: {
+          "content-type": "application/json",
+          "accept": "application/json",
+        },
+        body: msg,
       );
     } catch (error) {}
     return response;
