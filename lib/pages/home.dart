@@ -5,6 +5,7 @@ import 'package:delau/utils/provider/own_api/api.dart';
 import 'package:delau/utils/provider/own_api/prepare/getMarkersList.dart';
 import 'package:delau/utils/provider/own_api/prepare/getTasksList.dart';
 import 'package:delau/utils/provider/test_data/testTaskList.dart';
+import 'package:delau/utils/timeHelper.dart';
 import 'package:delau/widget/carousel/carouselHomeSlider.dart';
 import 'package:delau/widget/carousel/carouselItem.dart';
 import 'package:delau/widget/starWidget.dart';
@@ -45,6 +46,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Stack buildAppBar() {
+    var date = DateTime.now();
     return Stack(
       children: <Widget>[
         Container(
@@ -77,16 +79,20 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
-                              Text("17", style: DesignTheme.biggerWhite),
+                              Text(date.day.toString(),
+                                  style: DesignTheme.biggerWhite),
                               Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    Text("понедельник",
+                                    Text(getDayNameByNum(date.weekday),
                                         style: DesignTheme.midleWhiteBold),
-                                    Text("Август 2020",
+                                    Text(
+                                        getMonthManeByNum(date.month) +
+                                            " " +
+                                            date.year.toString(),
                                         style: DesignTheme.midleWhiteLight),
                                   ],
                                 ),
