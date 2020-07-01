@@ -2,7 +2,7 @@ import 'package:delau/design/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-getPhoto(double screenHeight, double screenWidth) {
+getPhoto(double screenHeight, double screenWidth, Widget _child) {
   var imgContainerWidth = screenWidth / 2.2;
   var imgContainerHeight = imgContainerWidth;
 
@@ -33,6 +33,7 @@ getPhoto(double screenHeight, double screenWidth) {
               image: new NetworkImage(
                   "https://avatars.mds.yandex.net/get-pdb/1779125/deed738a-66f5-46d0-b3c6-020dff434219/s1200")),
         ),
+        child: _child,
       ),
     ),
   );

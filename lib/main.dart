@@ -1,7 +1,9 @@
+import 'package:delau/blocs/userPageBloc.dart';
 import 'package:delau/pages/userPage.dart';
 import 'package:delau/utils/router/customRouter.dart';
 import 'package:delau/widget/navigation/navigationBar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -39,10 +41,6 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (BuildContext context) =>
             BottomBarWithSheetNavigator(selectedIndex: 0),
-        // '/userPage': MyCustomRoute(
-        //   builder: (context) => new UserPage(),
-        // ),
-        // '/userPage': (BuildContext context) => UserPage(),
         '/ntf': (BuildContext context) => LocalNotificationWidget(),
         '/autoriz': (BuildContext context) => AutorizationPage(),
         '/rating': (BuildContext context) => RatingPage(),
@@ -54,7 +52,8 @@ class MyApp extends StatelessWidget {
 
         if (path[1] == 'userPage') {
           return MyCustomRoute(
-            builder: (context) => new UserPage(),
+            builder: (context) => ChangeNotifierProvider<UserPageBloc>(
+                create: (_) => UserPageBloc(), child: UserPage()),
           );
         }
 

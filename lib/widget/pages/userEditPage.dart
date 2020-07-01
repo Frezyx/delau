@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 getPhotoButton() {
   return Container(
-      margin: EdgeInsets.only(top: 110, left: 100, right: 10),
+      margin: EdgeInsets.all(0),
       decoration: new BoxDecoration(
         shape: BoxShape.circle,
       ),
@@ -13,20 +13,20 @@ getPhotoButton() {
         child: Container(
           decoration: new BoxDecoration(
             boxShadow: DesignTheme.buttons.selectedTabHomeShadow,
-            color: DesignTheme.mainColor,
+            color: DesignTheme.mainColor.withOpacity(0.2),
             // gradient: DesignTheme.imgCircleGradient,
             border: Border.all(
               color: Colors.transparent,
               width: 0,
             ),
-            borderRadius: BorderRadius.circular(50),
+            borderRadius: BorderRadius.circular(200),
           ),
           child: Center(
             child: Padding(
               padding: EdgeInsets.all(5.0),
               child: Icon(
                 FontAwesomeIcons.camera,
-                size: 20,
+                size: 40,
                 color: Colors.white,
               ),
             ),
@@ -34,3 +34,7 @@ getPhotoButton() {
         ),
       ));
 }
+
+final snackBar = SnackBar(
+  content: Text('Данные сохранены'),
+);
