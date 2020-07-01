@@ -1,5 +1,6 @@
 import 'package:delau/design/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 getPhoto(double screenHeight, double screenWidth) {
   var imgContainerWidth = screenWidth / 2.2;
@@ -34,5 +35,74 @@ getPhoto(double screenHeight, double screenWidth) {
         ),
       ),
     ),
+  );
+}
+
+getInfoCard(context) {
+  var itemSize = MediaQuery.of(context).size.width / 4;
+  return Column(
+    children: <Widget>[
+      Container(
+        width: itemSize,
+        height: itemSize,
+        child: Card(
+            shadowColor: Colors.black.withOpacity(0.15),
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
+              ),
+            ),
+            color: Colors.white,
+            child: InkWell(
+                highlightColor: Colors.white,
+                hoverColor: DesignTheme.mainColor,
+                focusColor: DesignTheme.mainColor,
+                splashColor: DesignTheme.mainColor,
+                onLongPress: () {},
+                onTap: () {},
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text("123", style: DesignTheme.infoCardText),
+                  ],
+                ))),
+      ),
+      SizedBox(height: 10),
+      Container(
+        width: itemSize,
+        child: Expanded(
+            child: Center(
+          child: Text("Задач создано",
+              style: DesignTheme.infoCardUnderLineText,
+              overflow: TextOverflow.fade),
+        )),
+      ),
+    ],
+  );
+}
+
+buildNotifyField() {
+  return Padding(
+    padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+    child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text("Email", style: DesignTheme.typeFieldText),
+                SizedBox(height: 3),
+                Text("dudu@gmail.com", style: DesignTheme.valueFieldText),
+              ]),
+          Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text("Уведомления", style: DesignTheme.notifyText)
+              ]),
+        ]),
   );
 }

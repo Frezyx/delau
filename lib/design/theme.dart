@@ -150,11 +150,46 @@ class DesignTheme {
 
 // Home page end
 
+  static const TextStyle infoCardText = TextStyle(
+    fontSize: 24.0,
+    fontWeight: FontWeight.w900,
+    color: DesignTheme.mainColor,
+  );
+
+  static const TextStyle infoCardUnderLineText = TextStyle(
+    fontSize: 12.0,
+    fontWeight: FontWeight.w400,
+    color: DesignTheme.greyLighterThenMedium,
+  );
+
+  static const TextStyle userPageName = TextStyle(
+    fontSize: 20.0,
+    fontWeight: FontWeight.w500,
+    color: Colors.black,
+  );
+
   static const TextStyle appBarText = TextStyle(
     fontWeight: FontWeight.w600,
     fontSize: 22,
     letterSpacing: 0.2,
     color: DesignTheme.greyLighterThenMedium,
+  );
+
+  static const TextStyle typeFieldText = TextStyle(
+    fontSize: 18.0,
+    fontWeight: FontWeight.w500,
+    color: DesignTheme.mainColor,
+  );
+  static const TextStyle notifyText = TextStyle(
+    fontSize: 12.0,
+    fontWeight: FontWeight.w300,
+    color: DesignTheme.greyLight,
+  );
+
+  static const TextStyle valueFieldText = TextStyle(
+    fontSize: 14.0,
+    fontWeight: FontWeight.w200,
+    color: DesignTheme.greyMedium,
   );
 
   static const LinearGradient gradientButton = LinearGradient(
