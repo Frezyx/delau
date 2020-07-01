@@ -337,20 +337,26 @@ class _HomePageState extends State<HomePage> {
   }
 
   getPhoto() {
-    return Container(
-      width: 50,
-      height: 50,
-      decoration: new BoxDecoration(
-          image: new DecorationImage(
-              fit: BoxFit.cover, image: AssetImage("assets/userEllipse.png"))),
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, "/userPage");
+      },
       child: Container(
-        margin: EdgeInsets.all(1),
+        width: 50,
+        height: 50,
         decoration: new BoxDecoration(
-          shape: BoxShape.circle,
-          image: new DecorationImage(
-              fit: BoxFit.cover,
-              image: new NetworkImage(
-                  "https://avatars.mds.yandex.net/get-pdb/1779125/deed738a-66f5-46d0-b3c6-020dff434219/s1200")),
+            image: new DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage("assets/userEllipse.png"))),
+        child: Container(
+          margin: EdgeInsets.all(1),
+          decoration: new BoxDecoration(
+            shape: BoxShape.circle,
+            image: new DecorationImage(
+                fit: BoxFit.cover,
+                image: new NetworkImage(
+                    "https://avatars.mds.yandex.net/get-pdb/1779125/deed738a-66f5-46d0-b3c6-020dff434219/s1200")),
+          ),
         ),
       ),
     );

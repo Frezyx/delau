@@ -1,3 +1,5 @@
+import 'package:delau/pages/userPage.dart';
+import 'package:delau/utils/router/customRouter.dart';
 import 'package:delau/widget/navigation/navigationBar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,6 +39,10 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (BuildContext context) =>
             BottomBarWithSheetNavigator(selectedIndex: 0),
+        // '/userPage': MyCustomRoute(
+        //   builder: (context) => new UserPage(),
+        // ),
+        // '/userPage': (BuildContext context) => UserPage(),
         '/ntf': (BuildContext context) => LocalNotificationWidget(),
         '/autoriz': (BuildContext context) => AutorizationPage(),
         '/rating': (BuildContext context) => RatingPage(),
@@ -45,6 +51,12 @@ class MyApp extends StatelessWidget {
       },
       onGenerateRoute: (RouteSettings) {
         var path = RouteSettings.name.split('/');
+
+        if (path[1] == 'userPage') {
+          return MyCustomRoute(
+            builder: (context) => new UserPage(),
+          );
+        }
 
         if (path[1] == 'note') {
           return new MaterialPageRoute(

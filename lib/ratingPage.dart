@@ -210,6 +210,7 @@ class _RatingPageState extends State<RatingPage> {
   }
 }
 
+// TODO : DELETE
 class UserModel {
   final int id;
   final String name;
