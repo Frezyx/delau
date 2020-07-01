@@ -53,6 +53,8 @@ dependencies:
   flutter_staggered_animations: ^0.1.2
   firebase_messaging: ^6.0.16
   background_fetch: '^0.5.1'
+  email_validator: '^1.0.0'
+
   # background_fetch:
   #   git:
   #     url: https://github.com/transistorsoft/flutter_background_fetch

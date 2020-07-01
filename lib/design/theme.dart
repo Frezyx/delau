@@ -1,4 +1,5 @@
 import 'package:delau/design/alert.dart';
+import 'package:delau/design/appBar.dart';
 import 'package:delau/design/buttons.dart';
 import 'package:delau/design/sizeHelper.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ class DesignTheme {
   static final ButtonsTheme buttons = ButtonsTheme();
   static final SizeHelper size = SizeHelper();
   static final AlertTheme alert = AlertTheme();
+  static final AppBarCustomTheme appbar = AppBarCustomTheme();
 
   static const Color mainColor = Color.fromRGBO(0, 159, 253, 1);
   static const Color secondColor = Color.fromRGBO(42, 42, 114, 1);
@@ -180,10 +182,17 @@ class DesignTheme {
     fontWeight: FontWeight.w500,
     color: DesignTheme.mainColor,
   );
+
   static const TextStyle notifyText = TextStyle(
     fontSize: 12.0,
     fontWeight: FontWeight.w300,
     color: DesignTheme.greyLight,
+  );
+
+  static const TextStyle textFieldLabel = TextStyle(
+    fontSize: 18.0,
+    fontWeight: FontWeight.w300,
+    color: DesignTheme.mainColor,
   );
 
   static const TextStyle valueFieldText = TextStyle(

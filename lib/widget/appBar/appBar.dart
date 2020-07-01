@@ -14,6 +14,10 @@ getAppBar(String text, context) {
         )),
     elevation: 0.0,
     backgroundColor: Colors.transparent,
-    title: Text(text, style: DesignTheme.appBarText),
+    title: Text(
+      text,
+      style: DesignTheme.appbar.textFieldLabel,
+      overflow: TextOverflow.fade,
+    ),
   );
 }

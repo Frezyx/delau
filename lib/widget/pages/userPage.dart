@@ -70,20 +70,16 @@ getInfoCard(context) {
                 ))),
       ),
       SizedBox(height: 10),
-      Container(
-        width: itemSize,
-        child: Expanded(
-            child: Center(
-          child: Text("Задач создано",
-              style: DesignTheme.infoCardUnderLineText,
-              overflow: TextOverflow.fade),
-        )),
+      Center(
+        child: Text("Задач создано",
+            style: DesignTheme.infoCardUnderLineText,
+            overflow: TextOverflow.fade),
       ),
     ],
   );
 }
 
-buildNotifyField() {
+buildNotifyField(String nameField, String valueField) {
   return Padding(
     padding: const EdgeInsets.only(left: 10.0, right: 10.0),
     child: Row(
@@ -93,15 +89,34 @@ buildNotifyField() {
           Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text("Email", style: DesignTheme.typeFieldText),
+                Text(nameField, style: DesignTheme.typeFieldText),
                 SizedBox(height: 3),
-                Text("dudu@gmail.com", style: DesignTheme.valueFieldText),
+                Text(valueField, style: DesignTheme.valueFieldText),
               ]),
           Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text("Уведомления", style: DesignTheme.notifyText)
+                Text("Уведомления", style: DesignTheme.notifyText),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: InkWell(
+                    onTap: () {
+                      print("as");
+                    },
+                    child: AnimatedContainer(
+                      duration: Duration(milliseconds: 300),
+                      width: 14,
+                      height: 14,
+                      decoration: new BoxDecoration(
+                        color: Colors.transparent,
+                        border: new Border.all(
+                            width: 1.0, color: DesignTheme.greyDark),
+                        borderRadius: new BorderRadius.circular(14),
+                      ),
+                    ),
+                  ),
+                ),
               ]),
         ]),
   );
