@@ -1,0 +1,72 @@
+import 'package:delau/blocs/notesListBloc.dart';
+import 'package:delau/design/theme.dart';
+import 'package:delau/widget/pages/notes/note.dart';
+import 'package:flutter/material.dart';
+import 'package:delau/models/dbModels.dart';
+import 'package:delau/utils/provider/local_store/database_helper.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
+
+class NotesListBody extends StatelessWidget {
+  const NotesListBody({
+    Key key,
+    @required this.isSaerching,
+    @required this.searchText,
+    @required this.scrollController,
+  }) : super(key: key);
+
+  final bool isSaerching;
+  final String searchText;
+  final ScrollController scrollController;
+
+  @override
+  Widget build(BuildContext context) {
+    final noteListBloc = Provider.of<NotesListBloc>(context);
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 170.0),
+      child: Container(
+        height: 500,
+        child: Padding(
+          padding: EdgeInsets.only(
+            right: 15,
+            left: 15,
+          ),
+
+          // Delete Future
+          child: FutureBuilder<List<Note>>(
+              future: isSaerching
+                  ? DBNoteProvider.db.getAllNotesSearch(searchText)
+                  : DBNoteProvider.db.getAllNotes(),
+              builder:
+                  (BuildContext context, AsyncSnapshot<List<Note>> snapshot) {
+                if (snapshot.hasData) {
+                  return StaggeredGridView.countBuilder(
+                      controller: scrollController,
+                      padding: const EdgeInsets.all(2.0),
+                      mainAxisSpacing: 3,
+                      crossAxisSpacing: 3,
+                      crossAxisCount: 4,
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, i) {
+                        snapshot.data[i].isSelected = false;
+                        noteListBloc.addNote(snapshot.data[i]);
+
+                        return NotesTile(snapshot.data[i].color,
+                            snapshot.data[i].content, snapshot.data[i].id, i);
+                      },
+                      staggeredTileBuilder: (int i) => StaggeredTile.count(
+                          DesignTheme.size
+                              .getGridWidth(snapshot.data[i].content),
+                          DesignTheme.size
+                              .getGridHeigth(snapshot.data[i].content)));
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              }),
+        ),
+      ),
+    );
+  }
+}
