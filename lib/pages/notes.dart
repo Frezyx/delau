@@ -4,7 +4,7 @@ import 'package:delau/models/dbModels.dart';
 import 'package:delau/widget/alerts/addNote.dart';
 import 'package:delau/widget/pages/notes/notesListBody.dart';
 import 'package:flutter/material.dart';
-import 'package:delau/utils/database_helper.dart';
+import 'package:delau/utils/provider/local_store/database_helper.dart';
 import 'package:flutter/rendering.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';

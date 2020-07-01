@@ -93,6 +93,8 @@ flutter:
    - assets/pageComing.png
    - assets/demoPage/demoBG.jpg
    - assets/userEllipse.png
+   - assets/svg/no-connect.svg
+   - assets/svg/bug_fixing.svg
 
   fonts:
     - family: Ubuntu

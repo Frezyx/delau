@@ -108,45 +108,47 @@ Widget buildEventList(double _screenWidth, double screenHeight,
 
   print(selectedTasks);
   return !listItemBlocState.isEventsLoad
-      ? CircularProgressIndicator()
+      ? LinearProgressIndicator()
       : selectedTasks != null && selectedTasks.length > 0
-          ? Expanded(
-              child: ListView.builder(
-                itemCount: selectedTasks.length,
-                padding: const EdgeInsets.all(0),
-                itemBuilder: (context, index) {
-                  //TODO: Сделать так, чтоб только контейнер можно было двигать
-                  return Dismissible(
-                      key: UniqueKey(),
-                      background: Container(),
-                      child: ListTile(
-                        contentPadding:
-                            const EdgeInsets.only(left: 24, right: 24),
-                        title: Row(
-                          children: <Widget>[
-                            LineStateCheckedIcons(
+          ?
+          Expanded(
+          child:
+          ListView.builder(
+              itemCount: selectedTasks.length,
+              padding: const EdgeInsets.all(0),
+              itemBuilder: (context, index) {
+                //TODO: Сделать так, чтоб только контейнер можно было двигать
+                return Dismissible(
+                    key: UniqueKey(),
+                    background: Container(),
+                    child: ListTile(
+                      contentPadding:
+                          const EdgeInsets.only(left: 24, right: 24),
+                      title: Row(
+                        children: <Widget>[
+                          LineStateCheckedIcons(
+                            date: _selectedDay,
+                            iconSize: 15,
+                            index: index,
+                            listLength: selectedTasks.length,
+                            isFinish: true,
+                          ),
+                          displayTime(DateFormat('Hm')
+                              .format(selectedTasks[index].date)),
+                          GestureDetector(
+                            onTap: () {
+                              listItemBlocState.changeOpenState(index);
+                            },
+                            child: ListWithDateItem(
+                              listPosition: index,
+                              data: selectedTasks,
                               date: _selectedDay,
-                              iconSize: 15,
-                              index: index,
-                              listLength: selectedTasks.length,
-                              isFinish: true,
                             ),
-                            displayTime(DateFormat('Hm')
-                                .format(selectedTasks[index].date)),
-                            GestureDetector(
-                              onTap: () {
-                                listItemBlocState.changeOpenState(index);
-                              },
-                              child: ListWithDateItem(
-                                listPosition: index,
-                                data: selectedTasks,
-                                date: _selectedDay,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ));
-                },
+                          ),
+                        ],
+                      ),
+                    ));
+              },
               ),
             )
           : getNoTasksScreen(screenHeight, context);

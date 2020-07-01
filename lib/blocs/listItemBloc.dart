@@ -4,30 +4,7 @@ import 'package:delau/utils/provider/own_api/prepare/getTasksList.dart';
 import 'package:flutter/material.dart';
 
 class ListItemBloc extends ChangeNotifier {
-  List _selectedEvents = [];
-
-  void changeOpenState(int index) {
-    _selectedEvents[index].isOpen = !_selectedEvents[index].isOpen;
-    notifyListeners();
-  }
-
   void notify() {
-    notifyListeners();
-  }
-
-  String getItemIcon(int index) {
-    return _selectedEvents[index].icon;
-  }
-
-  List get selectedEvents => _selectedEvents;
-
-  set selectedEvents(List val) {
-    _selectedEvents = val;
-    notifyListeners();
-  }
-
-  selectEvents(DateTime date) {
-    _selectedEvents = _events[date];
     notifyListeners();
   }
 

@@ -1,4 +1,4 @@
-import 'package:delau/utils/database_helper.dart';
+import 'package:delau/utils/provider/local_store/database_helper.dart';
 import 'package:flutter/material.dart';
 
 class NotePage extends StatefulWidget {

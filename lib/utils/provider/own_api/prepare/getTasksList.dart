@@ -17,17 +17,16 @@ Future<List<Task>> getTasks(int userID) async {
 }
 
 Future<List<Task>> getTasksByDate(int userID, DateTime date) async {
-  var res = await API.taskHandler.getTaskByDate(date);
+  var res = await API.taskHandler.getTask();
   var data = convert.jsonDecode(res.body);
   var taskList = <Task>[];
-
+  var nowday = DateTime(date.year, date.month, date.day);
   for (var task in data) {
     Task taskFromServer = Task.fromMap(task);
-    var nowDate = DateTime.now();
-    var nowday = DateTime(nowDate.year, nowDate.month, nowDate.day);
-    var date = taskFromServer.date;
-    var day = DateTime(date.year, date.month, date.day);
-    if (day == nowday) {
+    var dateSrv = taskFromServer.date;
+    var day = DateTime(dateSrv.year, dateSrv.month, dateSrv.day);
+
+    if (day.millisecondsSinceEpoch == nowday.millisecondsSinceEpoch) {
       taskList.add(taskFromServer);
     }
   }

@@ -33,9 +33,6 @@ class Calendar extends StatefulWidget {
 
 class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
   _CalendarState({this.isOpen});
-
-  Map<DateTime, List> _events;
-  List _selectedEvents;
   bool isPlaying;
   AnimationController _animationController;
   CalendarController _calendarController;
@@ -43,12 +40,9 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
   double screenWidth;
   AnimationController controller;
   Animation animation;
-  // int _selectedIndex = 1;
   bool isOpen;
   var listItemBlocState;
   DateTime _selectedDay;
-
-  // List<Task> _taskList = [];
 
   @override
   void initState() {
@@ -113,24 +107,18 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
                   _onDaySelected,
                   _onVisibleDaysChanged,
                   _onCalendarCreated)),
+          // Expanded(
+          //   child: Container(
+          //     height: double.infinity,
+          //     child:
           MultiProvider(
               providers: [Provider<bool>.value(value: widget.isOpen)],
               child: buildEventList(screenWidth, screenHeight,
-                  listItemBlocState, _selectedDay, context))
+                  listItemBlocState, _selectedDay, context)),
+          //   ),
+          // )
         ],
       ),
     );
   }
-}
-
-Map<DateTime, List<Task>> getEventMapFromTaskList(List<Task> _taskList) {
-  Map<DateTime, List<Task>> _events = {};
-  for (Task task in _taskList) {
-    if (_events.containsKey(task.date)) {
-      _events[task.date].add(task);
-    } else {
-      _events[task.date] = [task];
-    }
-  }
-  return _events;
 }

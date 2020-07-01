@@ -10,6 +10,8 @@ import 'package:delau/utils/provider/test_data/testTaskList.dart';
 import 'package:delau/utils/timeHelper.dart';
 import 'package:delau/widget/carousel/carouselHomeSlider.dart';
 import 'package:delau/widget/carousel/carouselItem.dart';
+import 'package:delau/widget/infoIllustratedScreens/infoscreens.dart';
+import 'package:delau/widget/infoIllustratedScreens/noTasks.dart';
 import 'package:delau/widget/starWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -127,75 +129,79 @@ class _HomePageState extends State<HomePage> {
               (BuildContext context, AsyncSnapshot<List<Marker>> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
-                return new Text('Input a URL to start');
+                return InfoScreen.getNoConnectionScreen(context);
               case ConnectionState.waiting:
                 return new Center(child: new CircularProgressIndicator());
               case ConnectionState.active:
                 return new Text('');
               case ConnectionState.done:
                 if (snapshot.hasError) {
-                  return new Text(
-                    '${snapshot.error}',
-                    style: TextStyle(color: Colors.red),
-                  );
+                  return InfoScreen.getErrorScreen(context);
                 } else {
                   var count = snapshot.data.length;
                   var data = snapshot.data;
-                  return AnimationLimiter(
-                      child: StaggeredGridView.countBuilder(
-                    padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20),
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
-                    crossAxisCount: 3,
-                    itemCount: count,
-                    itemBuilder: (context, i) {
-                      return AnimationConfiguration.staggeredGrid(
-                          position: i,
-                          duration: const Duration(milliseconds: 375),
-                          columnCount: 3,
-                          child: SlideAnimation(
-                              verticalOffset: 50.0,
-                              child: FadeInAnimation(
-                                  child: Card(
-                                      shadowColor:
-                                          Colors.black.withOpacity(0.15),
-                                      elevation: 10,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(10),
-                                        ),
-                                      ),
-                                      color: Colors.white,
-                                      child: InkWell(
-                                          highlightColor: Colors.white,
-                                          hoverColor: DesignTheme.mainColor,
-                                          focusColor: DesignTheme.mainColor,
-                                          splashColor: DesignTheme.mainColor,
-                                          onLongPress: () {},
-                                          onTap: () {},
+                  if (count == 0) {
+                    return getNoTasksScreen(200, context);
+                  } else {
+                    return AnimationLimiter(
+                        child: StaggeredGridView.countBuilder(
+                      padding:
+                          EdgeInsets.only(left: 20.0, right: 20.0, top: 20),
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      crossAxisCount: 3,
+                      itemCount: count,
+                      itemBuilder: (context, i) {
+                        return AnimationConfiguration.staggeredGrid(
+                            position: i,
+                            duration: const Duration(milliseconds: 375),
+                            columnCount: 3,
+                            child: SlideAnimation(
+                                verticalOffset: 50.0,
+                                child: FadeInAnimation(
+                                    child: Card(
+                                        shadowColor:
+                                            Colors.black.withOpacity(0.15),
+                                        elevation: 10,
+                                        shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.all(
-                                              Radius.circular(10)),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              Icon(
-                                                  MdiIcons.fromString(
-                                                      '${data[i].icon}'),
-                                                  color: DesignTheme.mainColor),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 5.0),
-                                                child: Text('${data[i].name}',
-                                                    style:
-                                                        DesignTheme.themeText),
-                                              )
-                                            ],
-                                          ))))));
-                    },
-                    staggeredTileBuilder: (int index) =>
-                        StaggeredTile.count(1, 1),
-                  ));
+                                            Radius.circular(10),
+                                          ),
+                                        ),
+                                        color: Colors.white,
+                                        child: InkWell(
+                                            highlightColor: Colors.white,
+                                            hoverColor: DesignTheme.mainColor,
+                                            focusColor: DesignTheme.mainColor,
+                                            splashColor: DesignTheme.mainColor,
+                                            onLongPress: () {},
+                                            onTap: () {},
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10)),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                Icon(
+                                                    MdiIcons.fromString(
+                                                        '${data[i].icon}'),
+                                                    color:
+                                                        DesignTheme.mainColor),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 5.0),
+                                                  child: Text('${data[i].name}',
+                                                      style: DesignTheme
+                                                          .themeText),
+                                                )
+                                              ],
+                                            ))))));
+                      },
+                      staggeredTileBuilder: (int index) =>
+                          StaggeredTile.count(1, 1),
+                    ));
+                  }
                 }
             }
           }),
@@ -204,23 +210,22 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildListTasks() {
     return Expanded(
+        child: Container(
+      height: double.infinity,
       child: FutureBuilder(
           // future: getTasks(4),
           future: getTasksByDate(4, DateTime.now()),
           builder: (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
-                return new Text('Input a URL to start');
+                return InfoScreen.getNoConnectionScreen(context);
               case ConnectionState.waiting:
                 return new Center(child: new CircularProgressIndicator());
               case ConnectionState.active:
                 return new Text('');
               case ConnectionState.done:
                 if (snapshot.hasError) {
-                  return new Text(
-                    '${snapshot.error}',
-                    style: TextStyle(color: Colors.red),
-                  );
+                  return InfoScreen.getErrorScreen(context);
                 } else {
                   var count = snapshot.data.length;
                   var data = snapshot.data;
@@ -239,7 +244,7 @@ class _HomePageState extends State<HomePage> {
                 }
             }
           }),
-    );
+    ));
   }
 
   Widget buildListItem(int i, data) {
