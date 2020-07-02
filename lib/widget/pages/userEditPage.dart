@@ -36,5 +36,6 @@ getPhotoButton() {
 }
 
 final snackBar = SnackBar(
+  backgroundColor: Colors.green,
   content: Text('Данные сохранены'),
 );

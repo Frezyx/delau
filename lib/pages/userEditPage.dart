@@ -117,7 +117,7 @@ class _UserEditPageState extends State<UserEditPage> {
                       ),
                     ]),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: screenHeight / 4),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
@@ -129,16 +129,16 @@ class _UserEditPageState extends State<UserEditPage> {
                           boxShadow: DesignTheme.buttons.tabHomeShadow),
                       child: RaisedButton(
                         elevation: 0,
-                        color: Colors.white,
+                        color: Colors.red,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Icon(Icons.close, color: Colors.red),
+                            Icon(Icons.close, color: Colors.white),
                             Padding(
                               padding: const EdgeInsets.only(left: 5.0),
                               child: Text("Отменить",
                                   style: DesignTheme.buttons.selectedTabText
-                                      .copyWith(color: Colors.red)),
+                                      .copyWith(color: Colors.white)),
                             ),
                           ],
                         ),

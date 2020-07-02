@@ -201,6 +201,12 @@ class DesignTheme {
     color: DesignTheme.greyMedium,
   );
 
+  static const TextStyle authText = TextStyle(
+    fontSize: 14.0,
+    fontWeight: FontWeight.w200,
+    color: DesignTheme.greyMedium,
+  );
+
   static const LinearGradient gradientButton = LinearGradient(
     colors: [DesignTheme.secondColor, DesignTheme.mainColor],
     begin: Alignment.topLeft,

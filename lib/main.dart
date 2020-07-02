@@ -1,4 +1,5 @@
 import 'package:delau/blocs/userPageBloc.dart';
+import 'package:delau/pages/auth.dart';
 import 'package:delau/pages/userPage.dart';
 import 'package:delau/utils/router/customRouter.dart';
 import 'package:delau/widget/navigation/navigationBar.dart';
@@ -39,8 +40,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (BuildContext context) =>
-            BottomBarWithSheetNavigator(selectedIndex: 0),
+        '/': (BuildContext context) => AuthPage(),
+        // '/': (BuildContext context) =>
+        //     BottomBarWithSheetNavigator(selectedIndex: 0),
         '/ntf': (BuildContext context) => LocalNotificationWidget(),
         '/autoriz': (BuildContext context) => AutorizationPage(),
         '/rating': (BuildContext context) => RatingPage(),

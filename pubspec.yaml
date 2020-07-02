@@ -83,20 +83,14 @@ flutter:
   assets:
    - assets/svg/calendar.svg
    - assets/circul1.png
-   - assets/postBackground.jpg
-   - assets/background/shop.jpg
-   - assets/background/working.jpg
-   - assets/background/learning.jpg
-   - assets/background/meet.jpg
-   - assets/background/sport.jpg
-   - assets/profile.jpg
+   - assets/img/bg.jpg
    - assets/ramk.png
-   - assets/ufo.png
    - assets/pageComing.png
-   - assets/demoPage/demoBG.jpg
    - assets/userEllipse.png
    - assets/svg/no-connect.svg
    - assets/svg/bug_fixing.svg
+   - assets/svg/auth.svg
+   - assets/img/logo.jpg
 
   fonts:
     - family: Ubuntu
