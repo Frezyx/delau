@@ -32,12 +32,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   EdgeInsets.only(left: width / 10, right: width / 10, top: 30),
               child: Form(
                 key: _formKey,
-                child: new Column(
+                child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      new SizedBox(height: 10),
-                      new TextFormField(
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child:
+                            Text("Регистрация", style: DesignTheme.bigBlueText),
+                      ),
+                      SizedBox(height: 30),
+                      TextFormField(
                         onTap: () {},
                         cursorColor: DesignTheme.mainColor,
                         decoration: InputDecoration(
@@ -54,8 +59,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           }
                         },
                       ),
-                      new SizedBox(height: 10),
-                      new TextFormField(
+                      SizedBox(height: 10),
+                      TextFormField(
                         onTap: () {},
                         cursorColor: DesignTheme.mainColor,
                         decoration: InputDecoration(
@@ -72,7 +77,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           }
                         },
                       ),
-                      new TextFormField(
+                      TextFormField(
                         onTap: () {},
                         cursorColor: DesignTheme.mainColor,
                         decoration: InputDecoration(
@@ -89,8 +94,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           }
                         },
                       ),
-                      new SizedBox(height: 10),
-                      new TextFormField(
+                      SizedBox(height: 10),
+                      TextFormField(
                         onTap: () {},
                         obscureText: authPageBloc.passwordCover,
                         cursorColor: DesignTheme.mainColor,

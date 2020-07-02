@@ -9,9 +9,24 @@ class SatrtAuthPage extends StatefulWidget {
   _SatrtAuthPageState createState() => _SatrtAuthPageState();
 }
 
-class _SatrtAuthPageState extends State<SatrtAuthPage> {
+class _SatrtAuthPageState extends State<SatrtAuthPage>
+    with SingleTickerProviderStateMixin {
   var height;
   var width;
+  AnimationController _animationController;
+  Animation<Offset> _offsetAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController =
+        AnimationController(duration: Duration(milliseconds: 5000), vsync: this)
+          ..repeat(reverse: true);
+    _offsetAnimation = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, 0.06))
+        .animate(
+            CurvedAnimation(curve: Curves.ease, parent: _animationController));
+  }
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -60,11 +75,14 @@ class _SatrtAuthPageState extends State<SatrtAuthPage> {
                     ),
                   ])),
             ),
-            Container(
-                transform: Matrix4.translationValues(38.0, 0.0, 0.0),
-                width: width * 0.95,
-                height: width * 0.9,
-                child: SvgPicture.asset('assets/svg/auth.svg')),
+            SlideTransition(
+              child: Container(
+                  transform: Matrix4.translationValues(38.0, 0.0, 0.0),
+                  width: width * 0.95,
+                  height: width * 0.9,
+                  child: SvgPicture.asset('assets/svg/auth.svg')),
+              position: _offsetAnimation,
+            ),
             Padding(
               padding: EdgeInsets.only(left: width / 4, right: width / 4),
               child: Column(

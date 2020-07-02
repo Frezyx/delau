@@ -207,6 +207,12 @@ class DesignTheme {
     color: DesignTheme.greyMedium,
   );
 
+  static const TextStyle bigBlueText = TextStyle(
+    fontSize: 36.0,
+    fontWeight: FontWeight.w900,
+    color: DesignTheme.mainColor,
+  );
+
   static const LinearGradient gradientButton = LinearGradient(
     colors: [DesignTheme.secondColor, DesignTheme.mainColor],
     begin: Alignment.topLeft,

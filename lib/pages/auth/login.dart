@@ -36,6 +36,11 @@ class _LoginPageState extends State<LoginPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text("Вход", style: DesignTheme.bigBlueText),
+                      ),
+                      new SizedBox(height: 30),
                       new TextFormField(
                         onTap: () {},
                         cursorColor: DesignTheme.mainColor,
