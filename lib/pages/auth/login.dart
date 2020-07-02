@@ -1,6 +1,8 @@
 import 'package:delau/blocs/authBloc.dart';
 import 'package:delau/design/theme.dart';
 import 'package:delau/models/user.dart';
+import 'package:delau/utils/provider/own_api/api.dart';
+import 'package:delau/widget/snackBar/snackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -23,122 +25,139 @@ class _LoginPageState extends State<LoginPage> {
     width = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: Colors.transparent,
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Padding(
-              padding:
-                  EdgeInsets.only(left: width / 10, right: width / 10, top: 30),
-              child: Form(
-                key: _formKey,
-                child: new Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text("Вход", style: DesignTheme.bigBlueText),
-                      ),
-                      new SizedBox(height: 30),
-                      new TextFormField(
-                        onTap: () {},
-                        cursorColor: DesignTheme.mainColor,
-                        decoration: InputDecoration(
-                            labelText: 'Email',
-                            labelStyle: DesignTheme.textFieldLabel,
-                            suffixIcon: Icon(
-                              Icons.people_outline,
-                            )),
-                        validator: (value) {
-                          if (value.isEmpty)
-                            return 'Введите ваш email';
-                          else {
-                            user.name = value.toString();
-                          }
-                        },
-                      ),
-                      new SizedBox(height: 10),
-                      new TextFormField(
-                        onTap: () {},
-                        cursorColor: DesignTheme.mainColor,
-                        decoration: InputDecoration(
-                          labelText: 'Пароль',
-                          labelStyle: DesignTheme.textFieldLabel,
-                          suffixIcon: IconButton(
-                            icon: Icon(authPageBloc.passwordCover
-                                ? FontAwesomeIcons.eyeSlash
-                                : FontAwesomeIcons.eye),
-                            onPressed: () {
-                              authPageBloc.setPasswordCover();
-                            },
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value.isEmpty)
-                            return 'Введите ваш пароль';
-                          else {
-                            user.surname = value.toString();
-                          }
-                        },
-                      ),
-                    ]),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: width / 4, right: width / 4),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30.0),
-                          boxShadow: DesignTheme.buttons.selectedTabHomeShadow),
-                      child: RaisedButton(
-                        elevation: 0,
-                        color: DesignTheme.mainColor,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text("Войти",
-                                style: DesignTheme.buttons.mainButtonText),
-                          ],
-                        ),
-                        onPressed: () {
-                          if (_formKey.currentState.validate()) {}
-                        },
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
+        body: Builder(
+            builder: (context) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: width / 10, right: width / 10, top: 30),
+                      child: Form(
+                        key: _formKey,
+                        child: new Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text("Вход",
+                                    style: DesignTheme.bigBlueText),
+                              ),
+                              new SizedBox(height: 30),
+                              new TextFormField(
+                                onTap: () {},
+                                cursorColor: DesignTheme.mainColor,
+                                decoration: InputDecoration(
+                                    labelText: 'Email',
+                                    labelStyle: DesignTheme.textFieldLabel,
+                                    suffixIcon: Icon(
+                                      Icons.people_outline,
+                                    )),
+                                validator: (value) {
+                                  if (value.isEmpty)
+                                    return 'Введите ваш email';
+                                  else {
+                                    user.email = value.toString();
+                                  }
+                                },
+                              ),
+                              new SizedBox(height: 10),
+                              new TextFormField(
+                                onTap: () {},
+                                obscureText: authPageBloc.passwordCover,
+                                cursorColor: DesignTheme.mainColor,
+                                decoration: InputDecoration(
+                                  labelText: 'Пароль',
+                                  labelStyle: DesignTheme.textFieldLabel,
+                                  suffixIcon: IconButton(
+                                    icon: Icon(authPageBloc.passwordCover
+                                        ? FontAwesomeIcons.eyeSlash
+                                        : FontAwesomeIcons.eye),
+                                    onPressed: () {
+                                      authPageBloc.setPasswordCover();
+                                    },
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value.isEmpty)
+                                    return 'Введите ваш пароль';
+                                  else {
+                                    user.password = value.toString();
+                                  }
+                                },
+                              ),
+                            ]),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: RaisedButton(
-                      elevation: 0,
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          side: BorderSide(color: DesignTheme.mainColor)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    Padding(
+                      padding:
+                          EdgeInsets.only(left: width / 4, right: width / 4),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
-                          Text("Регистрация",
-                              style: DesignTheme.buttons.secondaryButtonText),
+                          Padding(
+                            padding: EdgeInsets.only(left: 10, right: 10),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                  boxShadow: DesignTheme
+                                      .buttons.selectedTabHomeShadow),
+                              child: RaisedButton(
+                                elevation: 0,
+                                color: DesignTheme.mainColor,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text("Войти",
+                                        style:
+                                            DesignTheme.buttons.mainButtonText),
+                                  ],
+                                ),
+                                onPressed: () {
+                                  if (_formKey.currentState.validate()) {
+                                    API.userHandler.authUser(user).then((res) {
+                                      if (res) {
+                                        Navigator.popAndPushNamed(context, "/");
+                                      } else {
+                                        Scaffold.of(context).showSnackBar(
+                                            SnackBarCustom.badAuthSnackBar);
+                                      }
+                                    });
+                                  }
+                                },
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 10, right: 10),
+                            child: RaisedButton(
+                              elevation: 0,
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                  side:
+                                      BorderSide(color: DesignTheme.mainColor)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text("Регистрация",
+                                      style: DesignTheme
+                                          .buttons.secondaryButtonText),
+                                ],
+                              ),
+                              onPressed: () {
+                                authPageBloc.pageIndex = 2;
+                              },
+                            ),
+                          ),
                         ],
                       ),
-                      onPressed: () {
-                        authPageBloc.pageIndex = 2;
-                      },
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ));
+                  ],
+                )));
   }
 }

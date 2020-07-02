@@ -3,6 +3,7 @@ import 'package:delau/design/theme.dart';
 import 'package:delau/widget/appBar/appBar.dart';
 import 'package:delau/widget/pages/userEditPage.dart';
 import 'package:delau/widget/pages/userPage.dart';
+import 'package:delau/widget/snackBar/snackBar.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -172,7 +173,8 @@ class _UserEditPageState extends State<UserEditPage> {
                           ],
                         ),
                         onPressed: () {
-                          Scaffold.of(context).showSnackBar(snackBar);
+                          Scaffold.of(context)
+                              .showSnackBar(SnackBarCustom.snackBar);
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
