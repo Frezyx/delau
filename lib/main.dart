@@ -1,5 +1,6 @@
+import 'package:delau/blocs/authBloc.dart';
 import 'package:delau/blocs/userPageBloc.dart';
-import 'package:delau/pages/auth.dart';
+import 'package:delau/pages/auth/auth.dart';
 import 'package:delau/pages/userPage.dart';
 import 'package:delau/utils/router/customRouter.dart';
 import 'package:delau/widget/navigation/navigationBar.dart';
@@ -38,11 +39,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: DesignTheme.appTheme,
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: '/auth',
       routes: {
-        '/': (BuildContext context) => AuthPage(),
-        // '/': (BuildContext context) =>
-        //     BottomBarWithSheetNavigator(selectedIndex: 0),
+        // '/': (BuildContext context) => AuthPage(index: 0),
+        '/': (BuildContext context) =>
+            BottomBarWithSheetNavigator(selectedIndex: 0),
         '/ntf': (BuildContext context) => LocalNotificationWidget(),
         '/autoriz': (BuildContext context) => AutorizationPage(),
         '/rating': (BuildContext context) => RatingPage(),
@@ -56,6 +57,13 @@ class MyApp extends StatelessWidget {
           return MyCustomRoute(
             builder: (context) => ChangeNotifierProvider<UserPageBloc>(
                 create: (_) => UserPageBloc(), child: UserPage()),
+          );
+        }
+
+        if (path[1] == 'auth') {
+          return MyCustomRoute(
+            builder: (context) => ChangeNotifierProvider<AuthPageBloc>(
+                create: (_) => AuthPageBloc(), child: AuthPage()),
           );
         }
 
