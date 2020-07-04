@@ -2,6 +2,7 @@ import 'package:delau/blocs/authBloc.dart';
 import 'package:delau/blocs/userPageBloc.dart';
 import 'package:delau/pages/auth/auth.dart';
 import 'package:delau/pages/userPage.dart';
+import 'package:delau/utils/provider/local_store/database_helper.dart';
 import 'package:delau/utils/router/customRouter.dart';
 import 'package:delau/widget/navigation/navigationBar.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ import 'design/theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool banner = (prefs.getBool('banner') ?? true);
+  bool isReg = await UserDB.udb.isSetAuthUser();
 
   // FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   // _firebaseMessaging.getToken().then((token) {
@@ -30,20 +31,23 @@ void main() async {
   // await pnf.initialise();
 
   await initializeDateFormatting();
-  runApp(MyApp());
+  runApp(MyApp(isReg: isReg));
 }
 
 class MyApp extends StatelessWidget {
+  MyApp({@required this.isReg});
+  bool isReg;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: DesignTheme.appTheme,
       debugShowCheckedModeBanner: false,
-      initialRoute: '/auth',
+      initialRoute: isReg ? '/navigator/0' : '/',
       routes: {
-        // '/': (BuildContext context) => AuthPage(index: 0),
-        '/': (BuildContext context) =>
-            BottomBarWithSheetNavigator(selectedIndex: 0),
+        // '/auth': (BuildContext context) => AuthPage(index: 0),
+        '/': (BuildContext context) => ChangeNotifierProvider<AuthPageBloc>(
+            create: (_) => AuthPageBloc(), child: AuthPage()),
         '/ntf': (BuildContext context) => LocalNotificationWidget(),
         '/autoriz': (BuildContext context) => AutorizationPage(),
         '/rating': (BuildContext context) => RatingPage(),
@@ -60,12 +64,12 @@ class MyApp extends StatelessWidget {
           );
         }
 
-        if (path[1] == 'auth') {
-          return MyCustomRoute(
-            builder: (context) => ChangeNotifierProvider<AuthPageBloc>(
-                create: (_) => AuthPageBloc(), child: AuthPage()),
-          );
-        }
+        // if (path[1] == 'auth') {
+        //   return MyCustomRoute(
+        //     builder: (context) => ChangeNotifierProvider<AuthPageBloc>(
+        //         create: (_) => AuthPageBloc(), child: AuthPage()),
+        //   );
+        // }
 
         if (path[1] == 'note') {
           return new MaterialPageRoute(

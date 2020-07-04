@@ -9,6 +9,8 @@ class User {
   String tokenTG;
   String photoUrl;
   bool isTelegramAuth;
+  bool isAuth;
+  String authToken;
 
   User({
     this.id,
@@ -19,6 +21,8 @@ class User {
     this.tokenTG,
     this.photoUrl,
     this.isTelegramAuth,
+    this.isAuth,
+    this.authToken,
   });
 
   Map<String, dynamic> toMap() {
@@ -31,6 +35,7 @@ class User {
       'tokenTG': tokenTG,
       'photoUrl': photoUrl,
       'isTelegramAuth': isTelegramAuth,
+      'authToken': authToken,
     };
   }
 
@@ -46,6 +51,7 @@ class User {
       tokenTG: map['token_tg'],
       photoUrl: map['photoUrl'],
       isTelegramAuth: map['is_telegram_auth'],
+      authToken: map['auth_token'],
     );
   }
 

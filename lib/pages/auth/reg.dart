@@ -2,6 +2,7 @@ import 'package:delau/blocs/authBloc.dart';
 import 'package:delau/design/theme.dart';
 import 'package:delau/models/user.dart';
 import 'package:delau/utils/provider/own_api/api.dart';
+import 'package:delau/utils/provider/own_api/prepare/authUser.dart';
 import 'package:delau/widget/snackBar/snackBar.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -153,23 +154,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 ),
                                 onPressed: () {
                                   if (_formKey.currentState.validate()) {
-                                    API.userHandler
-                                        .createUser(user)
-                                        .then((res) {
+                                    regUser(user).then((res) {
                                       if (res) {
-                                        API.userHandler
-                                            .authUser(user)
-                                            .then((res) {
-                                          if (res) {
-                                            Navigator.pushNamed(context, "/");
-                                          } else {
-                                            Scaffold.of(context).showSnackBar(
-                                                SnackBarCustom.badRegSnackBar);
-                                          }
-                                        });
+                                        Navigator.popAndPushNamed(context, "/");
                                       } else {
                                         Scaffold.of(context).showSnackBar(
-                                            SnackBarCustom.badRegSnackBar);
+                                            SnackBarCustom.badAuthSnackBar);
                                       }
                                     });
                                   }

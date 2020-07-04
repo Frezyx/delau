@@ -1,7 +1,9 @@
 import 'package:delau/blocs/authBloc.dart';
 import 'package:delau/design/theme.dart';
 import 'package:delau/models/user.dart';
+import 'package:delau/utils/provider/local_store/database_helper.dart';
 import 'package:delau/utils/provider/own_api/api.dart';
+import 'package:delau/utils/provider/own_api/prepare/authUser.dart';
 import 'package:delau/widget/snackBar/snackBar.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -56,8 +58,9 @@ class _LoginPageState extends State<LoginPage> {
                                       Icons.people_outline,
                                     )),
                                 validator: (value) {
-                                  if (value.isEmpty)
-                                    return 'Введите ваш email';
+                                  if (value.isEmpty) return 'Введите ваш email';
+                                  if (!EmailValidator.validate(value, true))
+                                    return 'Введите реальный email адресс';
                                   else {
                                     user.email = value.toString();
                                   }
@@ -83,8 +86,6 @@ class _LoginPageState extends State<LoginPage> {
                                 validator: (value) {
                                   if (value.isEmpty)
                                     return 'Введите ваш пароль';
-                                  if (!EmailValidator.validate(value, true))
-                                    return 'Введите реальный email адресс';
                                   else {
                                     user.password = value.toString();
                                   }
@@ -119,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 onPressed: () {
                                   if (_formKey.currentState.validate()) {
-                                    API.userHandler.authUser(user).then((res) {
+                                    loginUser(user).then((res) {
                                       if (res) {
                                         Navigator.popAndPushNamed(context, "/");
                                       } else {

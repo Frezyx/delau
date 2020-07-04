@@ -29,30 +29,35 @@ class UserHandler {
           },
           body: msg);
       result = response.statusCode == 201;
+      print(response.body.toString() + "Созданный");
     } catch (error) {
       result = false;
     }
     return result;
   }
 
-  Future<bool> authUser(User user) async {
-    bool result = false;
+  Future<Response> authUser(User user) async {
+    Response response;
     final msg = jsonEncode({
       "email": user.email,
       "password": user.password,
     });
     try {
-      var response = await http.post(Server.path + auth,
+      response = await http.post(Server.path + auth,
           headers: {
             "content-type": "application/json",
             "accept": "application/json",
           },
           body: msg);
-      result = response.statusCode == 200;
+      var result = response.statusCode == 200;
+      print(response.body.toString() + "Вход");
+      if (!result) {
+        response = null;
+      }
     } catch (error) {
-      result = false;
+      response = null;
     }
-    return result;
+    return response;
   }
 
   Future<bool> editUser(User user) async {
@@ -76,5 +81,18 @@ class UserHandler {
       result = false;
     }
     return result;
+  }
+
+  Future<Response> getUser(User user) async {
+    bool result = false;
+    Response response;
+    try {
+      response = await http
+          .get(Server.path + "/user/private/getbyid/" + user.id.toString());
+      result = response.statusCode == 200;
+    } catch (error) {
+      result = false;
+    }
+    return response;
   }
 }

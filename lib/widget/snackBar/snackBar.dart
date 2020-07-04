@@ -18,6 +18,6 @@ class SnackBarCustom {
 
   static final badAuthSnackBar = SnackBar(
     backgroundColor: Colors.red,
-    content: Text('Ошибка редактирования'),
+    content: Text('Ошибка входа'),
   );
 }
