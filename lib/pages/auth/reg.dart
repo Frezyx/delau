@@ -3,6 +3,7 @@ import 'package:delau/design/theme.dart';
 import 'package:delau/models/user.dart';
 import 'package:delau/utils/provider/own_api/api.dart';
 import 'package:delau/widget/snackBar/snackBar.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -90,8 +91,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                       Icons.alternate_email,
                                     )),
                                 validator: (value) {
-                                  if (value.isEmpty)
-                                    return 'Введите ваш email';
+                                  if (value.isEmpty) return 'Введите ваш email';
+                                  if (!EmailValidator.validate(value, true))
+                                    return 'Введите реальный email адресс';
                                   else {
                                     user.email = value.toString();
                                   }

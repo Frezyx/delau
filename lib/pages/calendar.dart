@@ -67,7 +67,6 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
 
   void _onDaySelected(DateTime day, List events) {
     print('CALLBACK: _onDaySelected');
-    listItemBlocState.selectEvents(day);
     setState(() {
       _selectedDay = day;
     });

@@ -90,6 +90,8 @@ flutter:
    - assets/svg/no-connect.svg
    - assets/svg/bug_fixing.svg
    - assets/svg/auth.svg
+   - assets/svg/bg-figure.svg
+   - assets/svg/bg-figure-bottom.svg
    - assets/img/logo.jpg
 
   fonts:

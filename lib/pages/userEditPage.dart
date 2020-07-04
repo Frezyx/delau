@@ -1,5 +1,7 @@
 import 'package:delau/blocs/userPageBloc.dart';
 import 'package:delau/design/theme.dart';
+import 'package:delau/models/user.dart';
+import 'package:delau/utils/provider/own_api/api.dart';
 import 'package:delau/widget/appBar/appBar.dart';
 import 'package:delau/widget/pages/userEditPage.dart';
 import 'package:delau/widget/pages/userPage.dart';
@@ -15,6 +17,7 @@ class UserEditPage extends StatefulWidget {
 }
 
 class _UserEditPageState extends State<UserEditPage> {
+  User user = User();
   var userPageBloc;
   double screenWidth = 0;
   double screenHeight = 0;
@@ -75,7 +78,7 @@ class _UserEditPageState extends State<UserEditPage> {
                           if (value.isEmpty)
                             return 'Введите ваш имя';
                           else {
-                            // user.weight = double.parse(value);
+                            user.name = value;
                           }
                         },
                       ),
@@ -93,7 +96,7 @@ class _UserEditPageState extends State<UserEditPage> {
                           if (value.isEmpty)
                             return 'Введите вашу фамилию';
                           else {
-                            // user.height = double.parse(value);
+                            user.surname = value;
                           }
                         },
                       ),
@@ -112,7 +115,7 @@ class _UserEditPageState extends State<UserEditPage> {
                           if (!EmailValidator.validate(value, true))
                             return 'Введите реальный email адресс';
                           else {
-                            // user.age = double.parse(value);
+                            user.email = value;
                           }
                         },
                       ),
@@ -173,8 +176,17 @@ class _UserEditPageState extends State<UserEditPage> {
                           ],
                         ),
                         onPressed: () {
-                          Scaffold.of(context)
-                              .showSnackBar(SnackBarCustom.snackBar);
+                          if (_formKey.currentState.validate()) {
+                            API.userHandler.editUser(user).then((res) {
+                              if (res) {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBarCustom.goodEditBar);
+                              } else {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBarCustom.badEditBar);
+                              }
+                            });
+                          }
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),

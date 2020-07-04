@@ -3,6 +3,7 @@ import 'package:delau/design/theme.dart';
 import 'package:delau/models/user.dart';
 import 'package:delau/utils/provider/own_api/api.dart';
 import 'package:delau/widget/snackBar/snackBar.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -82,6 +83,8 @@ class _LoginPageState extends State<LoginPage> {
                                 validator: (value) {
                                   if (value.isEmpty)
                                     return 'Введите ваш пароль';
+                                  if (!EmailValidator.validate(value, true))
+                                    return 'Введите реальный email адресс';
                                   else {
                                     user.password = value.toString();
                                   }
