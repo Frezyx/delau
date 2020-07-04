@@ -156,7 +156,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   if (_formKey.currentState.validate()) {
                                     regUser(user).then((res) {
                                       if (res) {
-                                        Navigator.popAndPushNamed(context, "/");
+                                        Navigator.popAndPushNamed(
+                                            context, "/navigator/0");
                                       } else {
                                         Scaffold.of(context).showSnackBar(
                                             SnackBarCustom.badAuthSnackBar);

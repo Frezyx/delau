@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:delau/config/serverConfig.dart';
 import 'package:delau/models/task.dart';
+import 'package:delau/models/user.dart';
 import 'package:delau/utils/convert/epochFromDate.dart';
+import 'package:delau/utils/provider/local_store/database_helper.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
@@ -23,6 +25,7 @@ class TaskHandler {
 
   Future<bool> createTask(Task task) async {
     bool result = false;
+    User user = await UserDB.udb.getUser();
     final msg = jsonEncode({
       "date": epochFromDate(task.date),
       "time": epochFromDate(task.time),
@@ -30,7 +33,7 @@ class TaskHandler {
       "description": task.description,
       "marker_id": 1,
       "marker_name": task.icon,
-      "user_id": 4,
+      "user_id": user.id,
       "rating": task.rating,
     });
     try {
@@ -49,9 +52,10 @@ class TaskHandler {
 
   Future<Response> getTask() async {
     Response response;
+    User user = await UserDB.udb.getUser();
     try {
       response = await http.get(
-        Server.path + getAll + "/4",
+        Server.path + getAll + "/${user.id}",
         headers: {
           "content-type": "application/json",
           "accept": "application/json",
@@ -63,12 +67,13 @@ class TaskHandler {
 
   Future<Response> getTaskByDate(DateTime date) async {
     Response response;
+    User user = await UserDB.udb.getUser();
     final msg = jsonEncode({
       "date": epochFromDate(date),
     });
     try {
       response = await http.post(
-        Server.path + getAllByDate + "/4",
+        Server.path + getAllByDate + "/${user.id}",
         headers: {
           "content-type": "application/json",
           "accept": "application/json",
@@ -81,9 +86,10 @@ class TaskHandler {
 
   Future<Response> getAllMarkers() async {
     Response response;
+    User user = await UserDB.udb.getUser();
     try {
       response = await http.get(
-        Server.path + getAllMarkersHandler(4),
+        Server.path + getAllMarkersHandler(user.id),
         headers: {
           "content-type": "application/json",
           "accept": "application/json",

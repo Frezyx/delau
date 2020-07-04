@@ -22,14 +22,17 @@ class _UserEditPageState extends State<UserEditPage> {
   double screenWidth = 0;
   double screenHeight = 0;
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _weightController = TextEditingController();
-  final TextEditingController _heightController = TextEditingController();
-  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _surnameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     userPageBloc = Provider.of<UserPageBloc>(context);
     setState(() {
+      _nameController.text = userPageBloc.user.name;
+      _surnameController.text = userPageBloc.user.surname;
+      _emailController.text = userPageBloc.user.email;
       screenWidth = MediaQuery.of(context).size.width;
       screenHeight = MediaQuery.of(context).size.height;
     });
@@ -66,7 +69,7 @@ class _UserEditPageState extends State<UserEditPage> {
                         getPhotoButton(),
                       ),
                       TextFormField(
-                        controller: _weightController,
+                        controller: _nameController,
                         cursorColor: DesignTheme.mainColor,
                         decoration: InputDecoration(
                             labelText: 'Имя',
@@ -84,7 +87,7 @@ class _UserEditPageState extends State<UserEditPage> {
                       ),
                       SizedBox(height: 10),
                       TextFormField(
-                        controller: _heightController,
+                        controller: _surnameController,
                         cursorColor: DesignTheme.mainColor,
                         decoration: InputDecoration(
                             labelText: 'Фамилия',
@@ -102,7 +105,7 @@ class _UserEditPageState extends State<UserEditPage> {
                       ),
                       SizedBox(height: 10),
                       TextFormField(
-                        controller: _ageController,
+                        controller: _emailController,
                         cursorColor: DesignTheme.mainColor,
                         decoration: InputDecoration(
                             labelText: 'E-mail',
