@@ -18,6 +18,14 @@ class ButtonsTheme {
     ),
   ];
 
+  List<BoxShadow> sheetButtonShadow = [
+    BoxShadow(
+      color: Colors.black.withOpacity(0.07),
+      offset: Offset(0.0, 5.0),
+      blurRadius: 15.0,
+    ),
+  ];
+
   List<BoxShadow> tabHomeShadow = [
     BoxShadow(
       color: Colors.black.withOpacity(0.03),
@@ -30,6 +38,12 @@ class ButtonsTheme {
     fontSize: 14.0,
     fontWeight: FontWeight.w500,
     color: Colors.white,
+  );
+
+  TextStyle sheetButtonText = TextStyle(
+    fontSize: 16.0,
+    fontWeight: FontWeight.w400,
+    color: DesignTheme.mainColor,
   );
 
   TextStyle tabText = TextStyle(

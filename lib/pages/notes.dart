@@ -2,6 +2,7 @@ import 'package:delau/blocs/notesListBloc.dart';
 import 'package:delau/design/theme.dart';
 import 'package:delau/models/dbModels.dart';
 import 'package:delau/widget/alerts/addNote.dart';
+import 'package:delau/widget/alerts/bottomAlerts.dart';
 import 'package:delau/widget/pages/notes/notesListBody.dart';
 import 'package:flutter/material.dart';
 import 'package:delau/utils/provider/local_store/database_helper.dart';
@@ -281,7 +282,7 @@ class _NotesState extends State<Notes> {
             child: Icon(Icons.add, color: Colors.white, size: 30),
           ),
           onTap: () {
-            getNoteCreateAlert(context);
+            getNoteCreateAlert(context, null, null);
           },
         ),
       )),
@@ -336,21 +337,5 @@ class _NotesState extends State<Notes> {
         ),
       )),
     );
-  }
-
-  getNoteCreateAlert(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Dialog(
-              clipBehavior: Clip.hardEdge,
-              insetAnimationDuration: const Duration(milliseconds: 300),
-              child: ChangeNotifierProvider<NotesListBloc>(
-                create: (_) => NotesListBloc(),
-                child: AddNoteAlert(),
-              ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5))));
-        });
   }
 }

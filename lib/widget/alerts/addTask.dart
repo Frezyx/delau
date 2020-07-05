@@ -38,16 +38,6 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
     markers.add(new Marker(id: 0, name: "Учеба", icon: "book"));
     markers.add(new Marker(id: 0, name: "Учеба", icon: "book"));
     markers.add(new Marker(id: 0, name: "Учеба", icon: "book"));
-
-    // sampleData.add(new RadioModel(0, true, FontAwesome.book, 'Учеба'));
-    // sampleData.add(new RadioModel(1, false, FontAwesome.briefcase, 'Работа'));
-    // sampleData.add(
-    //     new RadioModel(2, false, MdiIcons.fromString('basketball'), 'Спорт'));
-    // sampleData.add(new RadioModel(3, false, FontAwesome.users, 'Встречи'));
-    // sampleData.add(
-    //     new RadioModel(4, false, MdiIcons.fromString('shopping'), 'Покупки'));
-    // sampleData.add(new RadioModel(5, false, FontAwesome.spinner, 'Другое'));
-
     super.initState();
   }
 
