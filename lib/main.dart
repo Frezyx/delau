@@ -11,7 +11,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:delau/pages/updateTask.dart';
-import 'package:delau/autoriz.dart';
 import 'package:delau/oneNote.dart';
 import 'package:delau/ratingPage.dart';
 import 'package:delau/widget/notification.dart';
@@ -49,7 +48,6 @@ class MyApp extends StatelessWidget {
         '/': (BuildContext context) => ChangeNotifierProvider<AuthPageBloc>(
             create: (_) => AuthPageBloc(), child: AuthPage()),
         '/ntf': (BuildContext context) => LocalNotificationWidget(),
-        '/autoriz': (BuildContext context) => AutorizationPage(),
         '/rating': (BuildContext context) => RatingPage(),
         '/note': (BuildContext context) => NotePage(),
         '/updateTask': (BuildContext context) => UpdateTask(),

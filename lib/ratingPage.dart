@@ -7,9 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:delau/utils/provider/local_store/database_helper.dart';
-import 'package:delau/widget/noRegister.dart';
-
 class RatingPage extends StatefulWidget {
   @override
   _RatingPageState createState() => _RatingPageState();
@@ -146,7 +143,7 @@ class _RatingPageState extends State<RatingPage> {
                             },
                           );
                         } else
-                          return NoRegister();
+                          return Container();
                     }
                   },
                 ),

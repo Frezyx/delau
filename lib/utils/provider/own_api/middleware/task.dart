@@ -21,8 +21,6 @@ class TaskHandler {
     return handler + "/get/markers/" + id.toString();
   }
 
-  static final check = handler + "create";
-
   Future<bool> createTask(Task task) async {
     bool result = false;
     User user = await UserDB.udb.getUser();

@@ -3,6 +3,8 @@ import 'package:delau/models/marker.dart';
 import 'package:delau/models/task.dart';
 import 'package:delau/models/templates/radio.dart';
 import 'package:delau/utils/iconList.dart';
+import 'package:delau/utils/provider/local_store/database_helper.dart';
+import 'package:delau/utils/provider/own_api/api.dart';
 import 'package:delau/widget/buttons/allertButton.dart';
 import 'package:delau/widget/inputs/customRadio.dart';
 import 'package:flutter/material.dart';
@@ -96,9 +98,6 @@ class _AddMarkerAlertState extends State<AddMarkerAlert> {
                         validate,
                         false,
                         _formKey),
-                    // getBottomButton("Отменить", Icons.add, Colors.red, context),
-                    // getBottomButton(
-                    //     "Сохранить", Icons.add, DesignTheme.mainColor, context),
                   ]),
             ]),
           ),
@@ -168,6 +167,17 @@ class _AddMarkerAlertState extends State<AddMarkerAlert> {
           return 'Введите название маркера';
         else {
           marker.name = value.toString();
+          API.markerHandler.createMarker(marker).then((res) {
+            if (res) {
+              MarkerDB.db.add(marker).then((response) {
+                if (response) {
+                  Navigator.pop(context);
+                }
+              });
+              // TODO : Add Created Animation
+
+            }
+          });
         }
       },
     );
