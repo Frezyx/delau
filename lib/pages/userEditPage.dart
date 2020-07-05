@@ -17,8 +17,7 @@ class UserEditPage extends StatefulWidget {
 }
 
 class _UserEditPageState extends State<UserEditPage> {
-  User user = User();
-  var userPageBloc;
+  var listenedUserPageBloc;
   double screenWidth = 0;
   double screenHeight = 0;
   final _formKey = GlobalKey<FormState>();
@@ -27,12 +26,18 @@ class _UserEditPageState extends State<UserEditPage> {
   final TextEditingController _emailController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    final userPageBloc = Provider.of<UserPageBloc>(context, listen: false);
+    _nameController.text = userPageBloc.user.name;
+    _surnameController.text = userPageBloc.user.surname;
+    _emailController.text = userPageBloc.user.email;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    userPageBloc = Provider.of<UserPageBloc>(context);
+    listenedUserPageBloc = Provider.of<UserPageBloc>(context);
     setState(() {
-      _nameController.text = userPageBloc.user.name;
-      _surnameController.text = userPageBloc.user.surname;
-      _emailController.text = userPageBloc.user.email;
       screenWidth = MediaQuery.of(context).size.width;
       screenHeight = MediaQuery.of(context).size.height;
     });
@@ -69,6 +74,10 @@ class _UserEditPageState extends State<UserEditPage> {
                         getPhotoButton(),
                       ),
                       TextFormField(
+                        onChanged: (_) {
+                          listenedUserPageBloc.isEdit =
+                              !listenedUserPageBloc.isEdit;
+                        },
                         controller: _nameController,
                         cursorColor: DesignTheme.mainColor,
                         decoration: InputDecoration(
@@ -81,12 +90,16 @@ class _UserEditPageState extends State<UserEditPage> {
                           if (value.isEmpty)
                             return 'Введите ваш имя';
                           else {
-                            user.name = value;
+                            _nameController.text = value;
                           }
                         },
                       ),
                       SizedBox(height: 10),
                       TextFormField(
+                        onChanged: (_) {
+                          listenedUserPageBloc.isEdit =
+                              !listenedUserPageBloc.isEdit;
+                        },
                         controller: _surnameController,
                         cursorColor: DesignTheme.mainColor,
                         decoration: InputDecoration(
@@ -99,12 +112,16 @@ class _UserEditPageState extends State<UserEditPage> {
                           if (value.isEmpty)
                             return 'Введите вашу фамилию';
                           else {
-                            user.surname = value;
+                            _surnameController.text = value;
                           }
                         },
                       ),
                       SizedBox(height: 10),
                       TextFormField(
+                        onChanged: (_) {
+                          listenedUserPageBloc.isEdit =
+                              !listenedUserPageBloc.isEdit;
+                        },
                         controller: _emailController,
                         cursorColor: DesignTheme.mainColor,
                         decoration: InputDecoration(
@@ -118,7 +135,7 @@ class _UserEditPageState extends State<UserEditPage> {
                           if (!EmailValidator.validate(value, true))
                             return 'Введите реальный email адресс';
                           else {
-                            user.email = value;
+                            _emailController.text = value;
                           }
                         },
                       ),
@@ -136,21 +153,31 @@ class _UserEditPageState extends State<UserEditPage> {
                           boxShadow: DesignTheme.buttons.tabHomeShadow),
                       child: RaisedButton(
                         elevation: 0,
-                        color: Colors.red,
+                        color: listenedUserPageBloc.isEdit
+                            ? Colors.red
+                            : Colors.white,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Icon(Icons.close, color: Colors.white),
+                            listenedUserPageBloc.isEdit
+                                ? DesignTheme.icons.closeIcon
+                                : DesignTheme.icons.backIcon,
                             Padding(
                               padding: const EdgeInsets.only(left: 5.0),
-                              child: Text("Отменить",
+                              child: Text(
+                                  listenedUserPageBloc.isEdit
+                                      ? "Отменить"
+                                      : "  Назад ",
                                   style: DesignTheme.buttons.selectedTabText
-                                      .copyWith(color: Colors.white)),
+                                      .copyWith(
+                                          color: listenedUserPageBloc.isEdit
+                                              ? Colors.white
+                                              : DesignTheme.mainColor)),
                             ),
                           ],
                         ),
                         onPressed: () {
-                          userPageBloc.pageIndex = 0;
+                          listenedUserPageBloc.pageIndex = 0;
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
@@ -180,6 +207,10 @@ class _UserEditPageState extends State<UserEditPage> {
                         ),
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
+                            User user = listenedUserPageBloc.user;
+                            user.name = _nameController.text;
+                            user.surname = _surnameController.text;
+                            user.email = _emailController.text;
                             API.userHandler.editUser(user).then((res) {
                               if (res) {
                                 Scaffold.of(context)

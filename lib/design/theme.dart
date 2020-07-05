@@ -1,6 +1,7 @@
 import 'package:delau/design/alert.dart';
 import 'package:delau/design/appBar.dart';
 import 'package:delau/design/buttons.dart';
+import 'package:delau/design/icons.dart';
 import 'package:delau/design/sizeHelper.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,7 @@ class DesignTheme {
   static final SizeHelper size = SizeHelper();
   static final AlertTheme alert = AlertTheme();
   static final AppBarCustomTheme appbar = AppBarCustomTheme();
+  static final CustomIcons icons = CustomIcons();
 
   static const Color mainColor = Color.fromRGBO(0, 159, 253, 1);
   static const Color secondColor = Color.fromRGBO(42, 42, 114, 1);

@@ -21,6 +21,17 @@ class _CarouselState extends State<Carousel> {
   @override
   Widget build(BuildContext context) {
     taskListBloc = Provider.of<TaskListBloc>(context);
+    var differenceText;
+    if (taskListBloc.isDataLoaded) {
+      final now = DateTime.now();
+      final dataDate = taskListBloc.tasks[0].date;
+      final differenceInMinutes = dataDate.difference(now).inMinutes;
+      if (differenceInMinutes > 60) {
+        differenceText = dataDate.difference(now).inHours.toString() + " час.";
+      } else {
+        differenceText = differenceInMinutes.toString() + " мин.";
+      }
+    }
 
     return Padding(
         padding: const EdgeInsets.only(top: 100.0),
@@ -50,20 +61,24 @@ class _CarouselState extends State<Carousel> {
                     )),
                 Padding(
                   padding: const EdgeInsets.only(left: 6.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Задач на сегодня",
-                        style: DesignTheme.carouselLabel,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text("Ближайшая истекает через 40 минут",
-                          style: DesignTheme.carouselUnderLabel,
-                          overflow: TextOverflow.fade)
-                    ],
-                  ),
+                  child: !taskListBloc.isDataLoaded
+                      ? Container(
+                          width: MediaQuery.of(context).size.height / 4,
+                          child: LinearProgressIndicator())
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "Задач на сегодня",
+                              style: DesignTheme.carouselLabel,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text("Ближайшая истекает через $differenceText",
+                                style: DesignTheme.carouselUnderLabel,
+                                overflow: TextOverflow.fade)
+                          ],
+                        ),
                 ),
               ],
             ),

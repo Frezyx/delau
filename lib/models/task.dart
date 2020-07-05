@@ -11,7 +11,7 @@ class Task {
   bool isOpen;
   bool isChecked;
   String icon;
-  int markerID;
+  String markerName;
   DateTime date;
   DateTime time;
   int userID;
@@ -24,7 +24,7 @@ class Task {
     this.isOpen,
     this.isChecked,
     this.icon,
-    this.markerID,
+    this.markerName,
     this.date,
     this.time,
     this.userID,
@@ -39,7 +39,7 @@ class Task {
       'isOpen': isOpen,
       'isChecked': isChecked,
       'icon': icon,
-      'markerID': markerID,
+      'marker_name': markerName,
       'date': epochFromDate(date),
       'time': epochFromDate(time),
       'userID': userID,
@@ -56,8 +56,8 @@ class Task {
       description: map['description'],
       isChecked: map['is_done'],
       isOpen: false,
-      icon: map['marker_name'],
-      markerID: map['marker_id'],
+      icon: map['marker_icon'],
+      markerName: map['marker_name'],
       date: DateTime.fromMillisecondsSinceEpoch(map['date']),
       time: DateTime.fromMillisecondsSinceEpoch(map['time']),
       userID: map['user_id'],

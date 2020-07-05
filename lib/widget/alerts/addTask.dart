@@ -162,7 +162,7 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
             return InkWell(
               onTap: () {
                 task.icon = markers[i].icon;
-                task.markerID = markers[i].id;
+                task.markerName = markers[i].name;
                 setState(() {
                   selectedIconIndex = i;
                 });

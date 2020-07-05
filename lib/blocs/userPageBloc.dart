@@ -12,6 +12,15 @@ class UserPageBloc extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _isEdit = false;
+
+  bool get isEdit => _isEdit;
+
+  set isEdit(bool val) {
+    _isEdit = val;
+    notifyListeners();
+  }
+
   bool _isDataLoad = false;
 
   bool get isDataLoad => _isDataLoad;

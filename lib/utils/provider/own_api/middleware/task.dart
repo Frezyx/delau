@@ -31,8 +31,8 @@ class TaskHandler {
       "time": epochFromDate(task.time),
       "name": task.name,
       "description": task.description,
-      "marker_id": 1,
-      "marker_name": task.icon,
+      "marker_icon": task.icon,
+      "marker_name": task.markerName,
       "user_id": user.id,
       "rating": task.rating,
     });
@@ -44,6 +44,7 @@ class TaskHandler {
           },
           body: msg);
       result = response.statusCode == 201;
+      print(response.body);
     } catch (error) {
       result = false;
     }

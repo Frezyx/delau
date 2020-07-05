@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class SnackBarCustom {
   static final goodEditBar = SnackBar(
     backgroundColor: Colors.green,
-    content: Text('Данные сохранены'),
+    content: Text('Изменения сохранены'),
   );
 
   static final badRegSnackBar = SnackBar(
@@ -12,8 +12,8 @@ class SnackBarCustom {
   );
 
   static const badEditBar = SnackBar(
-    backgroundColor: Colors.green,
-    content: Text('Данные сохранены'),
+    backgroundColor: Colors.red,
+    content: Text('Изменения не сохранены'),
   );
 
   static final badAuthSnackBar = SnackBar(

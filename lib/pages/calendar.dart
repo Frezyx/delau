@@ -106,16 +106,10 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
                   _onDaySelected,
                   _onVisibleDaysChanged,
                   _onCalendarCreated)),
-          // Expanded(
-          //   child: Container(
-          //     height: double.infinity,
-          //     child:
           MultiProvider(
               providers: [Provider<bool>.value(value: widget.isOpen)],
               child: buildEventList(screenWidth, screenHeight,
                   listItemBlocState, _selectedDay, context)),
-          //   ),
-          // )
         ],
       ),
     );

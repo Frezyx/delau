@@ -10,7 +10,7 @@ class UserHandler {
   static final create = handler + "create";
   static final auth = handler + "auth";
   String _getEditionHandler(user) {
-    return handler + "edit/${user.id}";
+    return handler + "private/edit/${user.id}";
   }
 
   Future<bool> createUser(User user) async {
@@ -76,7 +76,7 @@ class UserHandler {
             "accept": "application/json",
           },
           body: msg);
-      result = response.statusCode == 201;
+      result = response.statusCode == 200;
     } catch (error) {
       result = false;
     }
