@@ -17,19 +17,31 @@ class _CarouselState extends State<Carousel> {
   _CarouselState({this.list});
   List<Task> list;
   var taskListBloc;
+  var differenceText;
+
+  getDateDifference(differenceText) {
+    final now = DateTime.now();
+    final dataDate = taskListBloc.tasks[0].date;
+    final differenceInMinutes = dataDate.difference(now).inMinutes;
+    if (differenceInMinutes > 60) {
+      differenceText = 'Ближайшая истекает через' +
+          dataDate.difference(now).inHours.toString() +
+          " час.";
+    } else {
+      differenceText =
+          'Ближайшая истекает через' + differenceInMinutes.toString() + " мин.";
+    }
+    return differenceText;
+  }
 
   @override
   Widget build(BuildContext context) {
     taskListBloc = Provider.of<TaskListBloc>(context);
-    var differenceText;
     if (taskListBloc.isDataLoaded) {
-      final now = DateTime.now();
-      final dataDate = taskListBloc.tasks[0].date;
-      final differenceInMinutes = dataDate.difference(now).inMinutes;
-      if (differenceInMinutes > 60) {
-        differenceText = dataDate.difference(now).inHours.toString() + " час.";
+      if (taskListBloc.tasks.length > 0) {
+        differenceText = getDateDifference(differenceText);
       } else {
-        differenceText = differenceInMinutes.toString() + " мин.";
+        differenceText = "Распишите свои планы на этот день";
       }
     }
 
@@ -74,7 +86,7 @@ class _CarouselState extends State<Carousel> {
                               style: DesignTheme.carouselLabel,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            Text("Ближайшая истекает через $differenceText",
+                            Text("$differenceText",
                                 style: DesignTheme.carouselUnderLabel,
                                 overflow: TextOverflow.fade)
                           ],

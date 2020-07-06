@@ -116,7 +116,16 @@ class _HomePageState extends State<HomePage> {
                 ]),
           ),
         ),
-        Carousel(list: _taskList),
+        taskListBloc.isDataLoaded
+            ? Carousel(list: _taskList)
+            : Padding(
+                padding: const EdgeInsets.only(top: 140.0),
+                child: Expanded(
+                  child: Container(
+                      height: 100,
+                      child: Center(child: CircularProgressIndicator())),
+                ),
+              ),
       ],
     );
   }
@@ -141,7 +150,7 @@ class _HomePageState extends State<HomePage> {
                   var count = snapshot.data.length;
                   var data = snapshot.data;
                   if (count == 0) {
-                    return getNoTasksScreen(200, context);
+                    return Text("Нет");
                   } else {
                     return AnimationLimiter(
                         child: StaggeredGridView.countBuilder(

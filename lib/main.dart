@@ -44,7 +44,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: isReg ? '/navigator/0' : '/',
       routes: {
-        // '/auth': (BuildContext context) => AuthPage(index: 0),
         '/': (BuildContext context) => ChangeNotifierProvider<AuthPageBloc>(
             create: (_) => AuthPageBloc(), child: AuthPage()),
         '/ntf': (BuildContext context) => LocalNotificationWidget(),
@@ -61,13 +60,6 @@ class MyApp extends StatelessWidget {
                 create: (_) => UserPageBloc(), child: UserPage()),
           );
         }
-
-        // if (path[1] == 'auth') {
-        //   return MyCustomRoute(
-        //     builder: (context) => ChangeNotifierProvider<AuthPageBloc>(
-        //         create: (_) => AuthPageBloc(), child: AuthPage()),
-        //   );
-        // }
 
         if (path[1] == 'note') {
           return new MaterialPageRoute(

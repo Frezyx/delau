@@ -1,4 +1,6 @@
 import 'package:delau/blocs/listItemBloc.dart';
+import 'package:delau/models/user.dart';
+import 'package:delau/utils/provider/own_api/prepare/getUser.dart';
 import 'package:delau/widget/pages/calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +35,7 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
   bool isOpen;
   var listItemBlocState;
   DateTime _selectedDay;
+  User user;
 
   @override
   void initState() {
@@ -80,7 +83,7 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
     });
 
     listItemBlocState = Provider.of<ListItemBloc>(context);
-    listItemBlocState.loadEvents(4);
+    listItemBlocState.loadEvents();
 
     return Scaffold(
       body: Column(

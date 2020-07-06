@@ -28,22 +28,21 @@ class _NotesState extends State<Notes> {
   bool _isAvailable = false;
   bool _isListening = false;
   bool sender = true;
-  String id;
   String resultText = "";
-
   var noteListBloc;
-
-  int notesCount = 0;
 
   postNote(text) {
     if (!sender) {
-      DBNoteProvider.db.updateNote(text, int.parse(id)).then((res) {});
+      DBNoteProvider.db
+          .updateNote(text, int.parse(noteListBloc.nowCreatedNoteId))
+          .then((res) {});
+      noteListBloc.updateNote(text, noteListBloc.nowCreatedNoteId);
     }
     if (sender) {
       DBNoteProvider.db.addNote(text).then((res) {
         setSender();
-        id = res.toString();
         noteListBloc.addNote(Note(id: res, isSelected: false));
+        noteListBloc.nowCreatedNoteId = res;
       });
     }
   }
@@ -88,8 +87,7 @@ class _NotesState extends State<Notes> {
 
   void startSearch(String text) {
     setState(() {
-      isSaerching = true;
-      searchText = text;
+      noteListBloc.searchText = text;
     });
   }
 
@@ -141,15 +139,6 @@ class _NotesState extends State<Notes> {
   Widget build(BuildContext context) {
     noteListBloc = Provider.of<NotesListBloc>(context);
 
-    DBNoteProvider.db.getAllNotesCount().then((count) {
-      setState(() {
-        notesCount = count;
-      });
-    });
-
-    // DBNoteProvider.db.getAllNotesCount();
-    // final noteListBloc = Provider.of<NotesListBloc>(context);
-
     return GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
@@ -185,7 +174,7 @@ class _NotesState extends State<Notes> {
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text("Заметки", style: DesignTheme.bigWhite),
-                                  Text("$notesCount",
+                                  Text("${noteListBloc.notesCount}",
                                       style: DesignTheme.bigWhite),
                                 ],
                               )),
@@ -230,10 +219,7 @@ class _NotesState extends State<Notes> {
                         ]),
                   ),
                 ),
-                NotesListBody(
-                    isSaerching: isSaerching,
-                    searchText: searchText,
-                    scrollController: scrollController)
+                NotesListBody(isSaerching: isSaerching, searchText: searchText)
               ],
             ),
             floatingActionButton: Row(

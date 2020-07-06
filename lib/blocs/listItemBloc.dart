@@ -29,9 +29,9 @@ class ListItemBloc extends ChangeNotifier {
     return _events[dateInDay];
   }
 
-  loadEvents(int userID) async {
+  loadEvents() async {
     if (!_isEventsLoad) {
-      var taskList = await getTasks(userID);
+      var taskList = await getTasks();
       _events = getEventMapFromTaskList(taskList);
       print(_events);
       _isEventsLoad = true;

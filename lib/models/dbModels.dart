@@ -21,8 +21,7 @@ class Note {
         is_archived: json["is_archived"],
         date_last_edited:
             DateTime.fromMillisecondsSinceEpoch(json["date_last_edited"]),
-        color: json["color"],
-        isSelected: json["isSelected"],
+        isSelected: false,
       );
 
   Map<String, dynamic> toMap() => {
