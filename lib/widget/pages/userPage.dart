@@ -102,9 +102,7 @@ buildNotifyField(String nameField, String valueField) {
                 Padding(
                   padding: const EdgeInsets.only(left: 5.0),
                   child: InkWell(
-                    onTap: () {
-                      print("as");
-                    },
+                    onTap: () {},
                     child: AnimatedContainer(
                       duration: Duration(milliseconds: 300),
                       width: 14,

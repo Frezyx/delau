@@ -1,6 +1,7 @@
 import 'package:delau/blocs/userPageBloc.dart';
 import 'package:delau/design/theme.dart';
 import 'package:delau/pages/userEditPage.dart';
+import 'package:delau/widget/alerts/alertManager.dart';
 import 'package:delau/widget/appBar/appBar.dart';
 import 'package:delau/widget/pages/userPage.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,7 @@ class _UserPageState extends State<UserPage> {
                   padding:
                       const EdgeInsets.only(left: 15.0, right: 15.0, top: 10.0),
                   child: Column(children: <Widget>[
-                    getAppBar("Пофиль", context),
+                    getUserAppBar("Пофиль", context),
                     SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0, right: 15.0),
@@ -68,39 +69,82 @@ class _UserPageState extends State<UserPage> {
                           SizedBox(height: 50),
                           buildNotifyField("Email", userPageBloc.user.email),
                           SizedBox(height: 30),
-                          buildNotifyField("Telegram", "@duduri"),
-                          SizedBox(height: 30),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: screenWidth / 5, right: screenWidth / 5),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: new BorderRadius.circular(30.0),
-                                  boxShadow: DesignTheme
-                                      .buttons.selectedTabHomeShadow),
-                              child: RaisedButton(
-                                elevation: 0,
-                                color: DesignTheme.mainColor,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Icon(Icons.edit, color: Colors.white),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 5.0),
-                                      child: Text("Редактировать",
-                                          style: DesignTheme
-                                              .buttons.selectedTabText),
+                          // buildNotifyField("Telegram", "@duduri"),
+                          // SizedBox(height: 30),
+                          Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: screenWidth / 5,
+                                    right: screenWidth / 5),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                          new BorderRadius.circular(30.0),
+                                      boxShadow: DesignTheme
+                                          .buttons.selectedTabHomeShadow),
+                                  child: RaisedButton(
+                                    elevation: 0,
+                                    color: DesignTheme.mainColor,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Icon(Icons.edit, color: Colors.white),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 5.0),
+                                          child: Text("Редактировать",
+                                              style: DesignTheme
+                                                  .buttons.selectedTabText),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                onPressed: () {
-                                  userPageBloc.pageIndex = 1;
-                                },
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
+                                    onPressed: () {
+                                      userPageBloc.pageIndex = 1;
+                                    },
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
+                              SizedBox(height: 5),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: screenWidth / 5,
+                                    right: screenWidth / 5),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                          new BorderRadius.circular(30.0),
+                                      boxShadow:
+                                          DesignTheme.buttons.tabHomeShadow),
+                                  child: RaisedButton(
+                                    elevation: 0,
+                                    color: Colors.red,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        DesignTheme.icons.closeIcon,
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 5.0),
+                                          child: Text("Выйти",
+                                              style: DesignTheme
+                                                  .buttons.selectedTabText),
+                                        ),
+                                      ],
+                                    ),
+                                    onPressed: () {},
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),

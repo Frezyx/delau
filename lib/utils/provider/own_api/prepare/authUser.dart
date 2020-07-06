@@ -11,7 +11,7 @@ Future<bool> loginUser(User user) async {
     var jsonResponse = convert.jsonDecode(res.body);
     user.id = jsonResponse["id"];
     user.isAuth = jsonResponse["is_auth"];
-    user.authToken = jsonResponse["auth_token"];
+    user.authToken = jsonResponse["token"];
     result = await localAuth(user);
   } else {
     result = false;

@@ -39,10 +39,10 @@ class TaskHandler {
           headers: {
             "content-type": "application/json",
             "accept": "application/json",
+            "Authorization": "token ${user.authToken}",
           },
           body: msg);
       result = response.statusCode == 201;
-      print(response.body);
     } catch (error) {
       result = false;
     }
@@ -58,6 +58,7 @@ class TaskHandler {
         headers: {
           "content-type": "application/json",
           "accept": "application/json",
+          "Authorization": "token ${user.authToken}",
         },
       );
     } catch (error) {}
@@ -76,6 +77,7 @@ class TaskHandler {
         headers: {
           "content-type": "application/json",
           "accept": "application/json",
+          "Authorization": "token ${user.authToken}",
         },
         body: msg,
       );
@@ -92,6 +94,7 @@ class TaskHandler {
         headers: {
           "content-type": "application/json",
           "accept": "application/json",
+          "Authorization": "token ${user.authToken}",
         },
       );
     } catch (error) {}
@@ -100,11 +103,13 @@ class TaskHandler {
 
   Future<bool> checkTask(int id) async {
     bool result = false;
+    User user = await UserDB.udb.getUser();
     try {
       var response =
           await http.put(Server.path + getCheckHandler(id), headers: {
         "content-type": "application/json",
         "accept": "application/json",
+        "Authorization": "token ${user.authToken}",
       });
       result = response.statusCode == 200;
     } catch (error) {

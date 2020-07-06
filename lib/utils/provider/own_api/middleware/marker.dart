@@ -24,10 +24,10 @@ class MarkerHandler {
           headers: {
             "content-type": "application/json",
             "accept": "application/json",
+            "Authorization": "token ${user.authToken}",
           },
           body: msg);
       result = response.statusCode == 201;
-      print(response.body);
     } catch (error) {
       result = false;
     }

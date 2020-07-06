@@ -119,19 +119,13 @@ class _NotePageState extends State<NotePage> {
 
   postNote(text) {
     if (!sender) {
-      print("First text field: $text");
-      DBNoteProvider.db.updateNote(text, int.parse(id)).then((res) {
-        print(res.toString() + "Обновил");
-      });
+      DBNoteProvider.db.updateNote(text, int.parse(id)).then((res) {});
     }
     if (sender) {
       DBNoteProvider.db.addNote(text).then((res) {
         setSender();
         id = res.toString();
-        print(res.toString() + "Добавил");
       });
-    } else {
-      print("Дурак");
-    }
+    } else {}
   }
 }

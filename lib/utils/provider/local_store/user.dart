@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
 import 'package:delau/models/user.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:delau/models/dbModels.dart';
 import 'package:sqflite/sqflite.dart';
 
 class UserDB {
@@ -27,7 +25,7 @@ class UserDB {
         onCreate: (Database db, int version) async {
       await db.execute("CREATE TABLE Users ("
           "id INTEGER PRIMARY KEY,"
-          "authToken TEXT,"
+          "token TEXT,"
           "isauth INTEGER"
           ")");
     });
@@ -41,16 +39,15 @@ class UserDB {
 
     if (res.length == 0) {
       var raw = await db.rawInsert(
-          "INSERT Into Users (id, authToken, isauth)"
+          "INSERT Into Users (id, token, isauth)"
           "VALUES (?,?,?)",
           [
             user.id,
-            "dd",
+            user.authToken,
             1,
           ]);
 
       response = raw == user.id;
-      print(response.toString() + "Результат локально внутри");
     } else {
       response = 1 == await userLogin(user);
     }
@@ -60,9 +57,8 @@ class UserDB {
   Future<int> userLogin(User user) async {
     final db = await database;
     int count = await db.rawUpdate(
-        "UPDATE Users SET isauth = 1 , authToken = ? WHERE id = '${user.id}'",
+        "UPDATE Users SET isauth = 1 , token = ? WHERE id = '${user.id}'",
         [user.authToken]);
-    print(count.toString() + "Это у нас апдейт");
     return count;
   }
 
@@ -72,13 +68,11 @@ class UserDB {
     return res.length > 0;
   }
 
-  Future<int> userLogOut(User user) async {
+  Future<bool> userLogOut() async {
     final db = await database;
     int count = await db.rawUpdate(
-        "UPDATE Users SET isauth = 0 , authToken = ? WHERE id = '${user.id}'",
-        [""]);
-
-    return count;
+        "UPDATE Users SET isauth = 0 , token = ? WHERE isauth = 1", [""]);
+    return count == 1;
   }
 
   Future<int> updateOnly(String paramName, param) async {

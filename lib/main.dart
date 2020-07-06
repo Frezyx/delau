@@ -23,7 +23,6 @@ void main() async {
 
   // FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   // _firebaseMessaging.getToken().then((token) {
-  //   print(token);
   // });
 
   // PushNotificationService pnf = PushNotificationService();

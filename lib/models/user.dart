@@ -35,7 +35,7 @@ class User {
       'tokenTG': tokenTG,
       'photoUrl': photoUrl,
       'isTelegramAuth': isTelegramAuth,
-      'authToken': authToken,
+      'token': authToken,
     };
   }
 
@@ -51,7 +51,7 @@ class User {
       tokenTG: map['token_tg'],
       photoUrl: map['photoUrl'],
       isTelegramAuth: map['is_telegram_auth'],
-      authToken: map['auth_token'],
+      authToken: map['token'],
     );
   }
 

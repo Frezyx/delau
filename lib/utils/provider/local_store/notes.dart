@@ -72,7 +72,6 @@ class DBNoteProvider {
   }
 
   Future<int> updateColor(int id) async {
-    print("На выбор получил айди" + id.toString());
     final db = await database;
     var res = await db.rawQuery("SELECT * FROM Notes WHERE id = $id");
     var item = res.first;
@@ -129,14 +128,11 @@ class DBNoteProvider {
   Future<int> recoverNotes() async {
     final db = await database;
     var res = await db.query("Notes", where: "color = 1");
-    print(res.toString() + " Количество заметок с измененным цветом");
     List<Note> list =
         res.isNotEmpty ? res.map((c) => Note.fromMap(c)).toList() : [];
     for (int i = 0; i < list.length; i++) {
       await db.rawUpdate('UPDATE Notes SET color = ? WHERE id = ?',
-          [0, '${list[i].id}']).then((respa) {
-        print("$respa Удалил");
-      });
+          [0, '${list[i].id}']).then((respa) {});
     }
     return 1;
   }

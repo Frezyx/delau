@@ -54,9 +54,7 @@ class _NotesState extends State<Notes> {
   }
 
   startRecognition() {
-    _speechRecognition.listen(locale: "ru_RU").then((result) {
-      print('$result');
-    });
+    _speechRecognition.listen(locale: "ru_RU").then((result) {});
     _isListening = true;
   }
 
@@ -121,7 +119,6 @@ class _NotesState extends State<Notes> {
   void setDialVisible(bool value) {
     setState(() {
       dialVisible = value;
-      print("$value");
     });
   }
 

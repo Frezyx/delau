@@ -29,7 +29,6 @@ class UserHandler {
           },
           body: msg);
       result = response.statusCode == 201;
-      print(response.body.toString() + "Созданный");
     } catch (error) {
       result = false;
     }
@@ -50,7 +49,7 @@ class UserHandler {
           },
           body: msg);
       var result = response.statusCode == 200;
-      print(response.body.toString() + "Вход");
+
       if (!result) {
         response = null;
       }
@@ -74,6 +73,7 @@ class UserHandler {
           headers: {
             "content-type": "application/json",
             "accept": "application/json",
+            "Authorization": "token " + user.authToken,
           },
           body: msg);
       result = response.statusCode == 200;
@@ -87,8 +87,14 @@ class UserHandler {
     bool result = false;
     Response response;
     try {
-      response = await http
-          .get(Server.path + "/user/private/getbyid/" + user.id.toString());
+      response = await http.get(
+        Server.path + "/user/private/getbyid/" + user.id.toString(),
+        headers: {
+          "content-type": "application/json",
+          "accept": "application/json",
+          "Authorization": "token ${user.authToken}",
+        },
+      );
       result = response.statusCode == 200;
     } catch (error) {
       result = false;

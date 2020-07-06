@@ -33,7 +33,6 @@ class ListItemBloc extends ChangeNotifier {
     if (!_isEventsLoad) {
       var taskList = await getTasks();
       _events = getEventMapFromTaskList(taskList);
-      print(_events);
       _isEventsLoad = true;
       notifyListeners();
     }
