@@ -1,5 +1,7 @@
+import 'package:delau/models/templates/UserParams.dart';
 import 'package:delau/models/user.dart';
 import 'package:delau/utils/provider/own_api/prepare/getUser.dart';
+import 'package:delau/utils/provider/own_api/prepare/getUserTaskParams.dart';
 import 'package:flutter/material.dart';
 
 class UserPageBloc extends ChangeNotifier {
@@ -40,6 +42,30 @@ class UserPageBloc extends ChangeNotifier {
       _user = await getEnteredUser();
       if (_user != null) {
         _isLoad = true;
+      }
+      notifyListeners();
+    }
+  }
+
+  bool _isParamDataLoad = false;
+
+  bool get isParamDataLoad => _isParamDataLoad;
+
+  bool _isParamLoad = false;
+
+  bool get isParamLoad => _isParamLoad;
+
+  UserParams _userParams = UserParams();
+
+  UserParams get userParams => _userParams;
+
+  loadUserParamsData() async {
+    if (!_isParamDataLoad) {
+      _isParamDataLoad = true;
+      notifyListeners();
+      _userParams = await getUserParams();
+      if (_userParams != null) {
+        _isParamLoad = true;
       }
       notifyListeners();
     }

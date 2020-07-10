@@ -11,6 +11,7 @@ class User {
   bool isTelegramAuth;
   bool isAuth;
   String authToken;
+  int chatIdTG;
 
   User({
     this.id,
@@ -23,6 +24,7 @@ class User {
     this.isTelegramAuth,
     this.isAuth,
     this.authToken,
+    this.chatIdTG,
   });
 
   Map<String, dynamic> toMap() {
@@ -36,6 +38,7 @@ class User {
       'photoUrl': photoUrl,
       'isTelegramAuth': isTelegramAuth,
       'token': authToken,
+      'chat_id_tg': chatIdTG,
     };
   }
 
@@ -52,6 +55,7 @@ class User {
       photoUrl: map['photoUrl'],
       isTelegramAuth: map['is_telegram_auth'],
       authToken: map['token'],
+      chatIdTG: map['chat_id_tg'],
     );
   }
 

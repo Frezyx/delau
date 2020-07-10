@@ -1,6 +1,8 @@
+import 'package:delau/blocs/userPageBloc.dart';
 import 'package:delau/design/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 
 getPhoto(double screenHeight, double screenWidth, Widget _child) {
   var imgContainerWidth = screenWidth / 2.2;
@@ -39,7 +41,8 @@ getPhoto(double screenHeight, double screenWidth, Widget _child) {
   );
 }
 
-getInfoCard(context) {
+getInfoCard(context, String count, String param) {
+  final userPageBloc = Provider.of<UserPageBloc>(context);
   var itemSize = MediaQuery.of(context).size.width / 4;
   return Column(
     children: <Widget>[
@@ -66,15 +69,19 @@ getInfoCard(context) {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text("123", style: DesignTheme.infoCardText),
+                    userPageBloc.isParamLoad
+                        ? Text(count, style: DesignTheme.infoCardText)
+                        : CircularProgressIndicator(),
                   ],
                 ))),
       ),
       SizedBox(height: 10),
       Center(
-        child: Text("Задач создано",
-            style: DesignTheme.infoCardUnderLineText,
-            overflow: TextOverflow.fade),
+        child: userPageBloc.isParamLoad
+            ? Text(param,
+                style: DesignTheme.infoCardUnderLineText,
+                overflow: TextOverflow.fade)
+            : LinearProgressIndicator(),
       ),
     ],
   );

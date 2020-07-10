@@ -66,7 +66,8 @@ class UserHandler {
       "name": user.name,
       "surname": user.surname,
       "token_tg": user.tokenTG,
-      "is_telegram_auth": user.isTelegramAuth
+      "is_telegram_auth": user.isTelegramAuth,
+      "chat_id_tg": user.chatIdTG
     });
     try {
       var response = await http.put(Server.path + _getEditionHandler(user),

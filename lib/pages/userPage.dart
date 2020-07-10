@@ -32,6 +32,7 @@ class _UserPageState extends State<UserPage> {
   Widget build(BuildContext context) {
     userPageBloc = Provider.of<UserPageBloc>(context);
     userPageBloc.loadUserData();
+    userPageBloc.loadUserParamsData();
 
     Future.delayed(const Duration(milliseconds: 10)).then((val) {
       setImgWH(context);
@@ -62,9 +63,18 @@ class _UserPageState extends State<UserPage> {
                           Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                getInfoCard(context),
-                                getInfoCard(context),
-                                getInfoCard(context),
+                                getInfoCard(
+                                    context,
+                                    userPageBloc.userParams.countDay,
+                                    "Задач сегодня"),
+                                getInfoCard(
+                                    context,
+                                    userPageBloc.userParams.countAll,
+                                    "Задач создано"),
+                                getInfoCard(
+                                    context,
+                                    userPageBloc.userParams.countDone,
+                                    "Задач выполнено"),
                               ]),
                           SizedBox(height: 50),
                           buildNotifyField("Email", userPageBloc.user.email),
