@@ -6,6 +6,7 @@ import 'package:delau/widget/appBar/appBar.dart';
 import 'package:delau/widget/pages/userPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserPage extends StatefulWidget {
   @override
@@ -77,10 +78,13 @@ class _UserPageState extends State<UserPage> {
                                     "Задач выполнено"),
                               ]),
                           SizedBox(height: 50),
-                          buildNotifyField("Email", userPageBloc.user.email),
-                          SizedBox(height: 30),
-                          // buildNotifyField("Telegram", "@duduri"),
+                          // buildNotifyField("Email", userPageBloc.user.email),
                           // SizedBox(height: 30),
+                          InkWell(
+                            onTap: () => _openTelegram(),
+                            child: buildNotifyField("Telegram", userPageBloc),
+                          ),
+                          SizedBox(height: 50),
                           Column(
                             children: <Widget>[
                               Padding(
@@ -162,5 +166,12 @@ class _UserPageState extends State<UserPage> {
                   ]),
                 ),
               );
+  }
+
+  _openTelegram() async {
+    const url = 'http://t.me/delau_notify_bot';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {}
   }
 }

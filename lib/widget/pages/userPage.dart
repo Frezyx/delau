@@ -87,7 +87,7 @@ getInfoCard(context, String count, String param) {
   );
 }
 
-buildNotifyField(String nameField, String valueField) {
+buildNotifyField(String nameField, userPageBloc) {
   return Padding(
     padding: const EdgeInsets.only(left: 10.0, right: 10.0),
     child: Row(
@@ -99,31 +99,35 @@ buildNotifyField(String nameField, String valueField) {
               children: <Widget>[
                 Text(nameField, style: DesignTheme.typeFieldText),
                 SizedBox(height: 3),
-                Text(valueField, style: DesignTheme.valueFieldText),
-              ]),
-          Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text("Уведомления", style: DesignTheme.notifyText),
-                Padding(
-                  padding: const EdgeInsets.only(left: 5.0),
-                  child: InkWell(
-                    onTap: () {},
-                    child: AnimatedContainer(
-                      duration: Duration(milliseconds: 300),
-                      width: 14,
-                      height: 14,
-                      decoration: new BoxDecoration(
-                        color: Colors.transparent,
-                        border: new Border.all(
-                            width: 1.0, color: DesignTheme.greyDark),
-                        borderRadius: new BorderRadius.circular(14),
-                      ),
-                    ),
-                  ),
-                ),
+                Text(
+                    userPageBloc.isTelegramNotifyOn
+                        ? "Уведомления включены"
+                        : "Уведомления выключены",
+                    style: DesignTheme.valueFieldText),
               ]),
         ]),
   );
+}
+
+buildNotifyFieldEdit(String nameField, listenedUserPageBloc) {
+  return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+          Text(nameField, style: DesignTheme.typeFieldText),
+          SizedBox(height: 3),
+          Text(
+              listenedUserPageBloc.isTelegramNotifyOn
+                  ? "Уведомления включены"
+                  : "Уведомления выключены",
+              style: DesignTheme.valueFieldText),
+        ]),
+        Switch(
+          onChanged: (val) {
+            listenedUserPageBloc.isTelegramNotifyOn = val;
+          },
+          value: listenedUserPageBloc.isTelegramNotifyOn,
+        ),
+      ]);
 }

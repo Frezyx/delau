@@ -27,6 +27,15 @@ class UserPageBloc extends ChangeNotifier {
 
   bool get isDataLoad => _isDataLoad;
 
+  bool _isTelegramNotifyOn = false;
+
+  bool get isTelegramNotifyOn => _isTelegramNotifyOn;
+
+  set isTelegramNotifyOn(bool val) {
+    _isTelegramNotifyOn = val;
+    notifyListeners();
+  }
+
   bool _isLoad = false;
 
   bool get isLoad => _isLoad;
