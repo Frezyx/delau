@@ -140,10 +140,9 @@ class _UserEditPageState extends State<UserEditPage> {
                         },
                       ),
                       SizedBox(height: 30),
-                      buildNotifyFieldEdit("Telegram", listenedUserPageBloc),
                     ]),
               ),
-              SizedBox(height: screenHeight / 8),
+              SizedBox(height: screenHeight / 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[

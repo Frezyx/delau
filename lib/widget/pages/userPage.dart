@@ -1,8 +1,10 @@
 import 'package:delau/blocs/userPageBloc.dart';
 import 'package:delau/design/theme.dart';
+import 'package:delau/utils/provider/own_api/api.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 getPhoto(double screenHeight, double screenWidth, Widget _child) {
   var imgContainerWidth = screenWidth / 2.2;
@@ -88,25 +90,34 @@ getInfoCard(context, String count, String param) {
 }
 
 buildNotifyField(String nameField, userPageBloc) {
-  return Padding(
-    padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-    child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(nameField, style: DesignTheme.typeFieldText),
-                SizedBox(height: 3),
-                Text(
-                    userPageBloc.isTelegramNotifyOn
-                        ? "Уведомления включены"
-                        : "Уведомления выключены",
-                    style: DesignTheme.valueFieldText),
-              ]),
-        ]),
-  );
+  return InkWell(
+      onTap: () => _openTelegram(),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+        child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(nameField, style: DesignTheme.typeFieldText),
+                    SizedBox(height: 3),
+                    Text(
+                        userPageBloc.user.isTelegramAuth
+                            ? "Вы авторизированы "
+                            : "Авторизироваться в Telegram боте",
+                        style: DesignTheme.valueFieldText),
+                  ]),
+            ]),
+      ));
+}
+
+_openTelegram() async {
+  const url = 'http://t.me/delau_notify_bot';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {}
 }
 
 buildNotifyFieldEdit(String nameField, listenedUserPageBloc) {
@@ -125,9 +136,10 @@ buildNotifyFieldEdit(String nameField, listenedUserPageBloc) {
         ]),
         Switch(
           onChanged: (val) {
-            listenedUserPageBloc.isTelegramNotifyOn = val;
+            listenedUserPageBloc.user.isTelegramNotifyOn = val;
+            API.userHandler.notifier(listenedUserPageBloc.user);
           },
-          value: listenedUserPageBloc.isTelegramNotifyOn,
+          value: listenedUserPageBloc.user.isTelegramNotifyOn,
         ),
       ]);
 }

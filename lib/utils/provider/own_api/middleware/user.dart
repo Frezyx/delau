@@ -13,6 +13,10 @@ class UserHandler {
     return handler + "private/edit/${user.id}";
   }
 
+  String _getNotifierHandler(user) {
+    return handler + "private/notifier/${user.id}";
+  }
+
   Future<bool> createUser(User user) async {
     bool result = false;
     final msg = jsonEncode({
@@ -67,10 +71,31 @@ class UserHandler {
       "surname": user.surname,
       "token_tg": user.tokenTG,
       "is_telegram_auth": user.isTelegramAuth,
-      "chat_id_tg": user.chatIdTG
+      "chat_id_tg": user.chatIdTG,
+      "is_notify_tg_on": user.isTelegramNotifyOn,
     });
     try {
       var response = await http.put(Server.path + _getEditionHandler(user),
+          headers: {
+            "content-type": "application/json",
+            "accept": "application/json",
+            "Authorization": "token " + user.authToken,
+          },
+          body: msg);
+      result = response.statusCode == 200;
+    } catch (error) {
+      result = false;
+    }
+    return result;
+  }
+
+  Future<bool> notifier(User user) async {
+    bool result = false;
+    final msg = jsonEncode({
+      "is_notify_tg_on": user.isTelegramNotifyOn,
+    });
+    try {
+      var response = await http.put(Server.path + _getNotifierHandler(user),
           headers: {
             "content-type": "application/json",
             "accept": "application/json",

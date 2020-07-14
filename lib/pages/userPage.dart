@@ -80,10 +80,9 @@ class _UserPageState extends State<UserPage> {
                           SizedBox(height: 50),
                           // buildNotifyField("Email", userPageBloc.user.email),
                           // SizedBox(height: 30),
-                          InkWell(
-                            onTap: () => _openTelegram(),
-                            child: buildNotifyField("Telegram", userPageBloc),
-                          ),
+                          userPageBloc.user.isTelegramAuth
+                              ? buildNotifyFieldEdit("Telegram", userPageBloc)
+                              : buildNotifyField("Telegram", userPageBloc),
                           SizedBox(height: 50),
                           Column(
                             children: <Widget>[
@@ -166,12 +165,5 @@ class _UserPageState extends State<UserPage> {
                   ]),
                 ),
               );
-  }
-
-  _openTelegram() async {
-    const url = 'http://t.me/delau_notify_bot';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {}
   }
 }
