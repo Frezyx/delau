@@ -67,6 +67,16 @@ class DesignTheme {
     color: DesignTheme.greyDark,
   );
 
+  static const TextStyle markerThemeText = TextStyle(
+      fontSize: 22.0,
+      fontWeight: FontWeight.w500,
+      color: DesignTheme.mainColor);
+
+  static const TextStyle markerThemeFieldText = TextStyle(
+      fontSize: 12.0,
+      fontWeight: FontWeight.w300,
+      color: DesignTheme.greyMedium);
+
 // Task list text styles end
 
 // Notes page

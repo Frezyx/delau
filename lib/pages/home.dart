@@ -23,14 +23,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedTap = 0;
   List<Widget> carouselChildrens = [];
   List<Task> _taskList;
   var taskListBloc;
 
   @override
   void initState() {
-    getTasksByDate(4, DateTime.now()).then((taskList) {
+    getTasksByDate(DateTime.now()).then((taskList) {
       taskListBloc.tasks = taskList;
     });
     super.initState();
@@ -43,14 +42,56 @@ class _HomePageState extends State<HomePage> {
     return Column(
       children: <Widget>[
         buildAppBar(),
-        buildTabBar(),
-        getBody(),
+        taskListBloc.isMarkerOpened ? Container() : buildTabBar(),
+        taskListBloc.isMarkerOpened ? buildMarkerThemeBaner() : Container(),
+        getBody(taskListBloc),
       ],
     );
   }
 
-  Widget getBody() {
-    return _selectedTap == 0 ? buildListTasks() : buildGridThemes();
+  Column buildMarkerThemeBaner() {
+    return Column(
+      children: <Widget>[
+        SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 35.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Container(
+                  child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Icon(MdiIcons.fromString('${taskListBloc.markerIcon}'),
+                      color: DesignTheme.mainColor),
+                  SizedBox(width: 7),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        transform: Matrix4.translationValues(0.0, 2.0, 0.0),
+                        child: Text("Тема:",
+                            style: DesignTheme.markerThemeFieldText),
+                      ),
+                      Text(taskListBloc.marker,
+                          style: DesignTheme.markerThemeText),
+                    ],
+                  ),
+                ],
+              )),
+              buildReturnBackButton(1, "Назад  ", Icons.arrow_back),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget getBody(taskListBloc) {
+    return taskListBloc.selectedTap == 0
+        ? buildListTasks()
+        : taskListBloc.isMarkerOpened ? buildListTasks() : buildGridMarkers();
   }
 
   Stack buildAppBar() {
@@ -62,7 +103,6 @@ class _HomePageState extends State<HomePage> {
           constraints: BoxConstraints.expand(height: 160),
           decoration: BoxDecoration(
               color: DesignTheme.mainColor,
-              // gradient: DesignTheme.gradientButton,
               borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(40),
                   bottomRight: Radius.circular(40))),
@@ -127,10 +167,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget buildGridThemes() {
+  Widget buildGridMarkers() {
     return Expanded(
       child: FutureBuilder(
-          future: getMarkersList(4),
+          future: getMarkersList(),
           builder:
               (BuildContext context, AsyncSnapshot<List<Marker>> snapshot) {
             switch (snapshot.connectionState) {
@@ -181,7 +221,10 @@ class _HomePageState extends State<HomePage> {
                                             focusColor: DesignTheme.mainColor,
                                             splashColor: DesignTheme.mainColor,
                                             onLongPress: () {},
-                                            onTap: () {},
+                                            onTap: () {
+                                              taskListBloc.openMarker(
+                                                  data[i].name, data[i].icon);
+                                            },
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10)),
                                             child: Column(
@@ -220,7 +263,9 @@ class _HomePageState extends State<HomePage> {
       height: double.infinity,
       child: FutureBuilder(
           // future: getTasks(4),
-          future: getTasksByDate(4, DateTime.now()),
+          future: taskListBloc.isMarkerOpened
+              ? getTasksByMarker(taskListBloc.marker)
+              : getTasksByDate(DateTime.now()),
           builder: (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -386,7 +431,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Container buildTabButton(int index, String text, IconData icon) {
-    var isOpen = _selectedTap == index;
+    var isOpen = taskListBloc.selectedTap == index;
     return Container(
       decoration: BoxDecoration(
         borderRadius: new BorderRadius.circular(30.0),
@@ -410,9 +455,35 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         onPressed: () {
-          setState(() {
-            _selectedTap = index;
-          });
+          taskListBloc.closeMarker();
+          taskListBloc.selectedTap = index;
+        },
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+      ),
+    );
+  }
+
+  Container buildReturnBackButton(int index, String text, IconData icon) {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: new BorderRadius.circular(30.0),
+          boxShadow: DesignTheme.buttons.tabHomeShadow),
+      child: RaisedButton(
+        elevation: 0,
+        color: Colors.white,
+        child: Row(
+          children: <Widget>[
+            Icon(icon, color: DesignTheme.greyDark),
+            Padding(
+              padding: const EdgeInsets.only(left: 5.0),
+              child: Text(text, style: DesignTheme.buttons.tabText),
+            ),
+          ],
+        ),
+        onPressed: () {
+          taskListBloc.closeMarker();
         },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),

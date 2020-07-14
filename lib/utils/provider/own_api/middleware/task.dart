@@ -13,6 +13,7 @@ class TaskHandler {
   static final create = handler + "create";
   static final getAll = handler + "get/all";
   static final getAllByDate = handler + "get/bydate";
+  static final getAllByMarker = handler + "get/bymarker";
   getCheckHandler(int id) {
     return handler + id.toString() + "/check";
   }
@@ -81,6 +82,24 @@ class TaskHandler {
         },
         body: msg,
       );
+    } catch (error) {}
+    return response;
+  }
+
+  Future<Response> getTaskByMarker(String marker) async {
+    Response response;
+    User user = await UserDB.udb.getUser();
+    print(Server.path + getAllByMarker + "?id=${user.id}&marker_name=$marker");
+    try {
+      response = await http.get(
+        Server.path + getAllByMarker + "?id=${user.id}&marker_name=$marker",
+        headers: {
+          "content-type": "application/json",
+          "accept": "application/json",
+          "Authorization": "token ${user.authToken}",
+        },
+      );
+      print(response.body);
     } catch (error) {}
     return response;
   }
