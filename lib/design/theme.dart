@@ -1,6 +1,7 @@
 import 'package:delau/design/alert.dart';
 import 'package:delau/design/appBar.dart';
 import 'package:delau/design/buttons.dart';
+import 'package:delau/design/icons.dart';
 import 'package:delau/design/sizeHelper.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,7 @@ class DesignTheme {
   static final SizeHelper size = SizeHelper();
   static final AlertTheme alert = AlertTheme();
   static final AppBarCustomTheme appbar = AppBarCustomTheme();
+  static final CustomIcons icons = CustomIcons();
 
   static const Color mainColor = Color.fromRGBO(0, 159, 253, 1);
   static const Color secondColor = Color.fromRGBO(42, 42, 114, 1);
@@ -199,6 +201,18 @@ class DesignTheme {
     fontSize: 14.0,
     fontWeight: FontWeight.w200,
     color: DesignTheme.greyMedium,
+  );
+
+  static const TextStyle authText = TextStyle(
+    fontSize: 14.0,
+    fontWeight: FontWeight.w200,
+    color: DesignTheme.greyMedium,
+  );
+
+  static const TextStyle bigBlueText = TextStyle(
+    fontSize: 36.0,
+    fontWeight: FontWeight.w900,
+    color: DesignTheme.mainColor,
   );
 
   static const LinearGradient gradientButton = LinearGradient(

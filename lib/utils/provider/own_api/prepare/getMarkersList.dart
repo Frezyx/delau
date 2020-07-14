@@ -12,10 +12,10 @@ Future<List<Marker>> getMarkersList(int userID) async {
 
   for (var item in data.entries) {
     markerList.add(new Marker(
-      id: item.value,
-      icon: item.key,
+      id: 0,
+      icon: item.value,
       //TODO: get name from Marker handler
-      name: "Нет",
+      name: item.key,
     ));
   }
   return markerList;

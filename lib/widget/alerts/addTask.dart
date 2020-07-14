@@ -2,6 +2,7 @@ import 'package:delau/design/theme.dart';
 import 'package:delau/models/marker.dart';
 import 'package:delau/models/task.dart';
 import 'package:delau/models/templates/radio.dart';
+import 'package:delau/utils/provider/local_store/database_helper.dart';
 import 'package:delau/utils/provider/own_api/api.dart';
 import 'package:delau/utils/timeHelper.dart';
 import 'package:delau/widget/alerts/alertManager.dart';
@@ -34,20 +35,19 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
 
   @override
   void initState() {
-    markers.add(new Marker(id: 0, name: "Учеба", icon: "book"));
-    markers.add(new Marker(id: 0, name: "Учеба", icon: "book"));
-    markers.add(new Marker(id: 0, name: "Учеба", icon: "book"));
-    markers.add(new Marker(id: 0, name: "Учеба", icon: "book"));
-
-    // sampleData.add(new RadioModel(0, true, FontAwesome.book, 'Учеба'));
-    // sampleData.add(new RadioModel(1, false, FontAwesome.briefcase, 'Работа'));
-    // sampleData.add(
-    //     new RadioModel(2, false, MdiIcons.fromString('basketball'), 'Спорт'));
-    // sampleData.add(new RadioModel(3, false, FontAwesome.users, 'Встречи'));
-    // sampleData.add(
-    //     new RadioModel(4, false, MdiIcons.fromString('shopping'), 'Покупки'));
-    // sampleData.add(new RadioModel(5, false, FontAwesome.spinner, 'Другое'));
-
+    markers.add(Marker(id: 0, name: "Учеба", icon: "book"));
+    markers.add(Marker(id: 0, name: "Работа", icon: "walletTravel"));
+    markers.add(Marker(id: 0, name: "Спорт", icon: "basketball"));
+    markers.add(Marker(id: 0, name: "Семья", icon: "home"));
+    task.markerName = markers[0].name;
+    task.icon = markers[0].icon;
+    MarkerDB.db.getAll().then((res) {
+      for (Marker marker in res) {
+        setState(() {
+          markers.add(marker);
+        });
+      }
+    });
     super.initState();
   }
 
@@ -162,7 +162,7 @@ class _AddTaskAlertState extends State<AddTaskAlert> {
             return InkWell(
               onTap: () {
                 task.icon = markers[i].icon;
-                task.markerID = markers[i].id;
+                task.markerName = markers[i].name;
                 setState(() {
                   selectedIconIndex = i;
                 });

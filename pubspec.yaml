@@ -54,6 +54,7 @@ dependencies:
   firebase_messaging: ^6.0.16
   background_fetch: '^0.5.1'
   email_validator: '^1.0.0'
+  url_launcher: ^5.5.0
 
   # background_fetch:
   #   git:
@@ -83,20 +84,19 @@ flutter:
   assets:
    - assets/svg/calendar.svg
    - assets/circul1.png
-   - assets/postBackground.jpg
-   - assets/background/shop.jpg
-   - assets/background/working.jpg
-   - assets/background/learning.jpg
-   - assets/background/meet.jpg
-   - assets/background/sport.jpg
-   - assets/profile.jpg
+   - assets/img/bg.jpg
    - assets/ramk.png
-   - assets/ufo.png
    - assets/pageComing.png
-   - assets/demoPage/demoBG.jpg
    - assets/userEllipse.png
    - assets/svg/no-connect.svg
    - assets/svg/bug_fixing.svg
+   - assets/svg/auth.svg
+   - assets/svg/bg-figure.svg
+   - assets/svg/bg-figure-bottom.svg
+   - assets/img/logo.jpg
+   - assets/img/sheet/marker.png
+   - assets/img/sheet/note.png
+   - assets/img/sheet/task.png
 
   fonts:
     - family: Ubuntu

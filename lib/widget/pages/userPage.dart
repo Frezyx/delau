@@ -1,6 +1,10 @@
+import 'package:delau/blocs/userPageBloc.dart';
 import 'package:delau/design/theme.dart';
+import 'package:delau/utils/provider/own_api/api.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 getPhoto(double screenHeight, double screenWidth, Widget _child) {
   var imgContainerWidth = screenWidth / 2.2;
@@ -39,7 +43,8 @@ getPhoto(double screenHeight, double screenWidth, Widget _child) {
   );
 }
 
-getInfoCard(context) {
+getInfoCard(context, String count, String param) {
+  final userPageBloc = Provider.of<UserPageBloc>(context);
   var itemSize = MediaQuery.of(context).size.width / 4;
   return Column(
     children: <Widget>[
@@ -66,59 +71,75 @@ getInfoCard(context) {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text("123", style: DesignTheme.infoCardText),
+                    userPageBloc.isParamLoad
+                        ? Text(count, style: DesignTheme.infoCardText)
+                        : CircularProgressIndicator(),
                   ],
                 ))),
       ),
       SizedBox(height: 10),
       Center(
-        child: Text("Задач создано",
-            style: DesignTheme.infoCardUnderLineText,
-            overflow: TextOverflow.fade),
+        child: userPageBloc.isParamLoad
+            ? Text(param,
+                style: DesignTheme.infoCardUnderLineText,
+                overflow: TextOverflow.fade)
+            : LinearProgressIndicator(),
       ),
     ],
   );
 }
 
-buildNotifyField(String nameField, String valueField) {
-  return Padding(
-    padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-    child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(nameField, style: DesignTheme.typeFieldText),
-                SizedBox(height: 3),
-                Text(valueField, style: DesignTheme.valueFieldText),
-              ]),
-          Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text("Уведомления", style: DesignTheme.notifyText),
-                Padding(
-                  padding: const EdgeInsets.only(left: 5.0),
-                  child: InkWell(
-                    onTap: () {
-                      print("as");
-                    },
-                    child: AnimatedContainer(
-                      duration: Duration(milliseconds: 300),
-                      width: 14,
-                      height: 14,
-                      decoration: new BoxDecoration(
-                        color: Colors.transparent,
-                        border: new Border.all(
-                            width: 1.0, color: DesignTheme.greyDark),
-                        borderRadius: new BorderRadius.circular(14),
-                      ),
-                    ),
-                  ),
-                ),
-              ]),
+buildNotifyField(String nameField, userPageBloc) {
+  return InkWell(
+      onTap: () => _openTelegram(),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+        child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(nameField, style: DesignTheme.typeFieldText),
+                    SizedBox(height: 3),
+                    Text(
+                        userPageBloc.user.isTelegramAuth
+                            ? "Вы авторизированы "
+                            : "Авторизироваться в Telegram боте",
+                        style: DesignTheme.valueFieldText),
+                  ]),
+            ]),
+      ));
+}
+
+_openTelegram() async {
+  const url = 'http://t.me/delau_notify_bot';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {}
+}
+
+buildNotifyFieldEdit(String nameField, listenedUserPageBloc) {
+  return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+          Text(nameField, style: DesignTheme.typeFieldText),
+          SizedBox(height: 3),
+          Text(
+              listenedUserPageBloc.isTelegramNotifyOn
+                  ? "Уведомления включены"
+                  : "Уведомления выключены",
+              style: DesignTheme.valueFieldText),
         ]),
-  );
+        Switch(
+          onChanged: (val) {
+            listenedUserPageBloc.user.isTelegramNotifyOn = val;
+            API.userHandler.notifier(listenedUserPageBloc.user);
+          },
+          value: listenedUserPageBloc.user.isTelegramNotifyOn,
+        ),
+      ]);
 }

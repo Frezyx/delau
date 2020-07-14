@@ -17,27 +17,20 @@ class PushNotificationService {
     _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
         showOngoingNotification(notifications, title: 'fgfg', body: 'Body');
-        print("onMessage: $message");
       },
-      onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
-      },
+      onLaunch: (Map<String, dynamic> message) async {},
+      onResume: (Map<String, dynamic> message) async {},
       // onBackgroundMessage: myBackgroundMessageHandler,
     );
   }
 
   // Future<dynamic> myBackgroundMessageHandler(
   //     Map<String, dynamic> message) async {
-  //   debugPrint("background: $message");
   //   //_showNotification(NotificationModel.......(message),
   //   return Future<void>.value();
   // }
 
   // Future<dynamic> foregroundMessageHandler(Map<String, dynamic> message) async {
-  //   debugPrint("foreground: $message");
   //   //_showNotification(NotificationModel.......(message),
   // }
 }

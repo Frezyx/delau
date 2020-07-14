@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 class NotesListBloc extends ChangeNotifier {
   bool _isAnNoteSelected = false;
   int _selectedCount = 0;
-  int _addedNotesCount = 0;
-
-  int get addedNotesCount => _addedNotesCount;
 
   bool get isAnNoteSelected => _isAnNoteSelected;
 
@@ -16,31 +13,64 @@ class NotesListBloc extends ChangeNotifier {
     notifyListeners();
   }
 
-  List _notes = [];
+  String _searchText = "";
+  String get searchText => _searchText;
+  set searchText(String val) {
+    _searchText = val;
+    notifyListeners();
+  }
 
-  List get notes => _notes;
+  int _notesCount = 0;
+  int get notesCount => _notesCount;
+  set notesCount(int val) {
+    _notesCount = val;
+    notifyListeners();
+  }
+
+  int _nowCreatedNoteId = 0;
+  int get nowCreatedNoteId => _nowCreatedNoteId;
+  set nowCreatedNoteId(int val) {
+    _nowCreatedNoteId = val;
+    notifyListeners();
+  }
+
+  bool _isEventsLoad = false;
+  bool get isEventsLoad => _isEventsLoad;
+  set isEventsLoad(bool val) {
+    _isEventsLoad = val;
+    notifyListeners();
+  }
+
+  List<Note> _notes = [];
+
+  List<Note> get notes => _notes;
 
   set notes(List val) {
     _notes = val;
     notifyListeners();
   }
 
-  void addNote(Note note) {
-    _notes.add(note);
-    _addedNotesCount += 1;
+  void updateNote(String text, int id) {
+    _notes[id].content = text;
     notifyListeners();
   }
 
-  List<int> unSelectAllNotes() {
+  void addNote(Note note) {
+    _notes.add(note);
+    _notesCount += 1;
+    notifyListeners();
+  }
+
+  Future<List<int>> unSelectAllNotes() async {
     List<int> idList = [];
     for (var i = 0; i < _notes.length; i++) {
       if (_notes[i].isSelected) {
         idList.add(_notes[i].id);
-        _notes[i].isSelected = false;
+        _notes.removeAt(i);
         _selectedCount--;
       }
     }
-    DBNoteProvider.db.deleteCheckedNotes(idList);
+    await DBNoteProvider.db.deleteCheckedNotes(idList);
     _isAnNoteSelected = false;
     notifyListeners();
     return idList;
@@ -57,5 +87,14 @@ class NotesListBloc extends ChangeNotifier {
 
   bool isItemSelected(int index) {
     return _notes[index].isSelected;
+  }
+
+  loadNotes() async {
+    if (!_isEventsLoad) {
+      _notes = await DBNoteProvider.db.getAllNotesSearch(_searchText);
+      _isEventsLoad = true;
+      _notesCount = _notes.length;
+      notifyListeners();
+    }
   }
 }

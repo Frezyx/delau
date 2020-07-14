@@ -1,18 +1,10 @@
-import 'package:bottom_bar_with_sheet/bottom_bar_withs_sheet.dart';
 import 'package:delau/blocs/listItemBloc.dart';
-import 'package:delau/models/task.dart';
-import 'package:delau/utils/provider/own_api/api.dart';
-import 'package:delau/utils/provider/own_api/prepare/getTasksList.dart';
-import 'package:delau/widget/infoIllustratedScreens/noTasks.dart';
-import 'package:delau/widget/list_builders/taskStateIconLine.dart';
-import 'package:delau/widget/list_builders/withDate.dart';
+import 'package:delau/models/user.dart';
+import 'package:delau/utils/provider/own_api/prepare/getUser.dart';
 import 'package:delau/widget/pages/calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:intl/intl.dart';
-
-import 'package:delau/design/theme.dart';
 
 final Map<DateTime, List> _holidays = {
   DateTime(2019, 1, 1): ['New Year\'s Day'],
@@ -43,6 +35,7 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
   bool isOpen;
   var listItemBlocState;
   DateTime _selectedDay;
+  User user;
 
   @override
   void initState() {
@@ -67,7 +60,6 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
 
   void _onDaySelected(DateTime day, List events) {
     print('CALLBACK: _onDaySelected');
-    listItemBlocState.selectEvents(day);
     setState(() {
       _selectedDay = day;
     });
@@ -91,7 +83,7 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
     });
 
     listItemBlocState = Provider.of<ListItemBloc>(context);
-    listItemBlocState.loadEvents(4);
+    listItemBlocState.loadEvents();
 
     return Scaffold(
       body: Column(
@@ -107,16 +99,10 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
                   _onDaySelected,
                   _onVisibleDaysChanged,
                   _onCalendarCreated)),
-          // Expanded(
-          //   child: Container(
-          //     height: double.infinity,
-          //     child:
           MultiProvider(
               providers: [Provider<bool>.value(value: widget.isOpen)],
               child: buildEventList(screenWidth, screenHeight,
                   listItemBlocState, _selectedDay, context)),
-          //   ),
-          // )
         ],
       ),
     );

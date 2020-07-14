@@ -105,50 +105,46 @@ Widget buildEventsMarker(DateTime date, List events, _calendarController) {
 Widget buildEventList(double _screenWidth, double screenHeight,
     listItemBlocState, DateTime _selectedDay, context) {
   var selectedTasks = listItemBlocState.getEventsByDate(_selectedDay);
-
-  print(selectedTasks);
   return !listItemBlocState.isEventsLoad
       ? LinearProgressIndicator()
       : selectedTasks != null && selectedTasks.length > 0
-          ?
-          Expanded(
-          child:
-          ListView.builder(
-              itemCount: selectedTasks.length,
-              padding: const EdgeInsets.all(0),
-              itemBuilder: (context, index) {
-                //TODO: Сделать так, чтоб только контейнер можно было двигать
-                return Dismissible(
-                    key: UniqueKey(),
-                    background: Container(),
-                    child: ListTile(
-                      contentPadding:
-                          const EdgeInsets.only(left: 24, right: 24),
-                      title: Row(
-                        children: <Widget>[
-                          LineStateCheckedIcons(
-                            date: _selectedDay,
-                            iconSize: 15,
-                            index: index,
-                            listLength: selectedTasks.length,
-                            isFinish: true,
-                          ),
-                          displayTime(DateFormat('Hm')
-                              .format(selectedTasks[index].date)),
-                          GestureDetector(
-                            onTap: () {
-                              listItemBlocState.changeOpenState(index);
-                            },
-                            child: ListWithDateItem(
-                              listPosition: index,
-                              data: selectedTasks,
+          ? Expanded(
+              child: ListView.builder(
+                itemCount: selectedTasks.length,
+                padding: const EdgeInsets.all(0),
+                itemBuilder: (context, index) {
+                  //TODO: Сделать так, чтоб только контейнер можно было двигать
+                  return Dismissible(
+                      key: UniqueKey(),
+                      background: Container(),
+                      child: ListTile(
+                        contentPadding:
+                            const EdgeInsets.only(left: 24, right: 24),
+                        title: Row(
+                          children: <Widget>[
+                            LineStateCheckedIcons(
                               date: _selectedDay,
+                              iconSize: 15,
+                              index: index,
+                              listLength: selectedTasks.length,
+                              isFinish: true,
                             ),
-                          ),
-                        ],
-                      ),
-                    ));
-              },
+                            displayTime(DateFormat('Hm')
+                                .format(selectedTasks[index].date)),
+                            GestureDetector(
+                              onTap: () {
+                                listItemBlocState.changeOpenState(index);
+                              },
+                              child: ListWithDateItem(
+                                listPosition: index,
+                                data: selectedTasks,
+                                date: _selectedDay,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ));
+                },
               ),
             )
           : getNoTasksScreen(screenHeight, context);

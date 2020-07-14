@@ -1,8 +1,11 @@
 import 'package:delau/blocs/userPageBloc.dart';
 import 'package:delau/design/theme.dart';
+import 'package:delau/models/user.dart';
+import 'package:delau/utils/provider/own_api/api.dart';
 import 'package:delau/widget/appBar/appBar.dart';
 import 'package:delau/widget/pages/userEditPage.dart';
 import 'package:delau/widget/pages/userPage.dart';
+import 'package:delau/widget/snackBar/snackBar.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -14,17 +17,26 @@ class UserEditPage extends StatefulWidget {
 }
 
 class _UserEditPageState extends State<UserEditPage> {
-  var userPageBloc;
+  var listenedUserPageBloc;
   double screenWidth = 0;
   double screenHeight = 0;
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _weightController = TextEditingController();
-  final TextEditingController _heightController = TextEditingController();
-  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _surnameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    final userPageBloc = Provider.of<UserPageBloc>(context, listen: false);
+    _nameController.text = userPageBloc.user.name;
+    _surnameController.text = userPageBloc.user.surname;
+    _emailController.text = userPageBloc.user.email;
+  }
 
   @override
   Widget build(BuildContext context) {
-    userPageBloc = Provider.of<UserPageBloc>(context);
+    listenedUserPageBloc = Provider.of<UserPageBloc>(context);
     setState(() {
       screenWidth = MediaQuery.of(context).size.width;
       screenHeight = MediaQuery.of(context).size.height;
@@ -62,7 +74,11 @@ class _UserEditPageState extends State<UserEditPage> {
                         getPhotoButton(),
                       ),
                       TextFormField(
-                        controller: _weightController,
+                        onChanged: (_) {
+                          listenedUserPageBloc.isEdit =
+                              !listenedUserPageBloc.isEdit;
+                        },
+                        controller: _nameController,
                         cursorColor: DesignTheme.mainColor,
                         decoration: InputDecoration(
                             labelText: 'Имя',
@@ -74,13 +90,17 @@ class _UserEditPageState extends State<UserEditPage> {
                           if (value.isEmpty)
                             return 'Введите ваш имя';
                           else {
-                            // user.weight = double.parse(value);
+                            _nameController.text = value;
                           }
                         },
                       ),
                       SizedBox(height: 10),
                       TextFormField(
-                        controller: _heightController,
+                        onChanged: (_) {
+                          listenedUserPageBloc.isEdit =
+                              !listenedUserPageBloc.isEdit;
+                        },
+                        controller: _surnameController,
                         cursorColor: DesignTheme.mainColor,
                         decoration: InputDecoration(
                             labelText: 'Фамилия',
@@ -92,13 +112,17 @@ class _UserEditPageState extends State<UserEditPage> {
                           if (value.isEmpty)
                             return 'Введите вашу фамилию';
                           else {
-                            // user.height = double.parse(value);
+                            _surnameController.text = value;
                           }
                         },
                       ),
                       SizedBox(height: 10),
                       TextFormField(
-                        controller: _ageController,
+                        onChanged: (_) {
+                          listenedUserPageBloc.isEdit =
+                              !listenedUserPageBloc.isEdit;
+                        },
+                        controller: _emailController,
                         cursorColor: DesignTheme.mainColor,
                         decoration: InputDecoration(
                             labelText: 'E-mail',
@@ -111,13 +135,14 @@ class _UserEditPageState extends State<UserEditPage> {
                           if (!EmailValidator.validate(value, true))
                             return 'Введите реальный email адресс';
                           else {
-                            // user.age = double.parse(value);
+                            _emailController.text = value;
                           }
                         },
                       ),
+                      SizedBox(height: 30),
                     ]),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: screenHeight / 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
@@ -129,21 +154,31 @@ class _UserEditPageState extends State<UserEditPage> {
                           boxShadow: DesignTheme.buttons.tabHomeShadow),
                       child: RaisedButton(
                         elevation: 0,
-                        color: Colors.white,
+                        color: listenedUserPageBloc.isEdit
+                            ? Colors.red
+                            : Colors.white,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Icon(Icons.close, color: Colors.red),
+                            listenedUserPageBloc.isEdit
+                                ? DesignTheme.icons.closeIcon
+                                : DesignTheme.icons.backIcon,
                             Padding(
                               padding: const EdgeInsets.only(left: 5.0),
-                              child: Text("Отменить",
+                              child: Text(
+                                  listenedUserPageBloc.isEdit
+                                      ? "Отменить"
+                                      : "  Назад ",
                                   style: DesignTheme.buttons.selectedTabText
-                                      .copyWith(color: Colors.red)),
+                                      .copyWith(
+                                          color: listenedUserPageBloc.isEdit
+                                              ? Colors.white
+                                              : DesignTheme.mainColor)),
                             ),
                           ],
                         ),
                         onPressed: () {
-                          userPageBloc.pageIndex = 0;
+                          listenedUserPageBloc.pageIndex = 0;
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
@@ -172,7 +207,21 @@ class _UserEditPageState extends State<UserEditPage> {
                           ],
                         ),
                         onPressed: () {
-                          Scaffold.of(context).showSnackBar(snackBar);
+                          if (_formKey.currentState.validate()) {
+                            User user = listenedUserPageBloc.user;
+                            user.name = _nameController.text;
+                            user.surname = _surnameController.text;
+                            user.email = _emailController.text;
+                            API.userHandler.editUser(user).then((res) {
+                              if (res) {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBarCustom.goodEditBar);
+                              } else {
+                                Scaffold.of(context)
+                                    .showSnackBar(SnackBarCustom.badEditBar);
+                              }
+                            });
+                          }
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),

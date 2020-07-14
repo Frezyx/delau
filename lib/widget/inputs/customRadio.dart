@@ -15,13 +15,13 @@ getCustomRadio(List<Marker> markers, int index, selectedIndex) {
           child: new Center(
             child: new Icon(
               MdiIcons.fromString('${markers[index].icon}'),
-              color: index == selectedIndex ? Colors.white : Colors.black26,
+              color: index == selectedIndex
+                  ? DesignTheme.mainColor
+                  : Colors.black26,
             ),
           ),
           decoration: new BoxDecoration(
-            color: index == selectedIndex
-                ? DesignTheme.mainColor
-                : Colors.transparent,
+            color: index == selectedIndex ? Colors.white : Colors.transparent,
             border: new Border.all(
                 width: 1.0,
                 color: index == selectedIndex

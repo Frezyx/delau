@@ -34,7 +34,3 @@ getPhotoButton() {
         ),
       ));
 }
-
-final snackBar = SnackBar(
-  content: Text('Данные сохранены'),
-);

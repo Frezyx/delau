@@ -2,6 +2,7 @@ import 'package:delau/blocs/notesListBloc.dart';
 import 'package:delau/design/theme.dart';
 import 'package:delau/models/dbModels.dart';
 import 'package:delau/widget/alerts/addNote.dart';
+import 'package:delau/widget/alerts/bottomAlerts.dart';
 import 'package:delau/widget/pages/notes/notesListBody.dart';
 import 'package:flutter/material.dart';
 import 'package:delau/utils/provider/local_store/database_helper.dart';
@@ -27,22 +28,21 @@ class _NotesState extends State<Notes> {
   bool _isAvailable = false;
   bool _isListening = false;
   bool sender = true;
-  String id;
   String resultText = "";
-
   var noteListBloc;
-
-  int notesCount = 0;
 
   postNote(text) {
     if (!sender) {
-      DBNoteProvider.db.updateNote(text, int.parse(id)).then((res) {});
+      DBNoteProvider.db
+          .updateNote(text, int.parse(noteListBloc.nowCreatedNoteId))
+          .then((res) {});
+      noteListBloc.updateNote(text, noteListBloc.nowCreatedNoteId);
     }
     if (sender) {
       DBNoteProvider.db.addNote(text).then((res) {
         setSender();
-        id = res.toString();
         noteListBloc.addNote(Note(id: res, isSelected: false));
+        noteListBloc.nowCreatedNoteId = res;
       });
     }
   }
@@ -54,9 +54,7 @@ class _NotesState extends State<Notes> {
   }
 
   startRecognition() {
-    _speechRecognition.listen(locale: "ru_RU").then((result) {
-      print('$result');
-    });
+    _speechRecognition.listen(locale: "ru_RU").then((result) {});
     _isListening = true;
   }
 
@@ -87,8 +85,7 @@ class _NotesState extends State<Notes> {
 
   void startSearch(String text) {
     setState(() {
-      isSaerching = true;
-      searchText = text;
+      noteListBloc.searchText = text;
     });
   }
 
@@ -122,7 +119,6 @@ class _NotesState extends State<Notes> {
   void setDialVisible(bool value) {
     setState(() {
       dialVisible = value;
-      print("$value");
     });
   }
 
@@ -139,15 +135,6 @@ class _NotesState extends State<Notes> {
   @override
   Widget build(BuildContext context) {
     noteListBloc = Provider.of<NotesListBloc>(context);
-
-    DBNoteProvider.db.getAllNotesCount().then((count) {
-      setState(() {
-        notesCount = count;
-      });
-    });
-
-    // DBNoteProvider.db.getAllNotesCount();
-    // final noteListBloc = Provider.of<NotesListBloc>(context);
 
     return GestureDetector(
         onTap: () {
@@ -184,7 +171,7 @@ class _NotesState extends State<Notes> {
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text("Заметки", style: DesignTheme.bigWhite),
-                                  Text("$notesCount",
+                                  Text("${noteListBloc.notesCount}",
                                       style: DesignTheme.bigWhite),
                                 ],
                               )),
@@ -229,10 +216,7 @@ class _NotesState extends State<Notes> {
                         ]),
                   ),
                 ),
-                NotesListBody(
-                    isSaerching: isSaerching,
-                    searchText: searchText,
-                    scrollController: scrollController)
+                NotesListBody(isSaerching: isSaerching, searchText: searchText)
               ],
             ),
             floatingActionButton: Row(
@@ -281,7 +265,7 @@ class _NotesState extends State<Notes> {
             child: Icon(Icons.add, color: Colors.white, size: 30),
           ),
           onTap: () {
-            getNoteCreateAlert(context);
+            getNoteCreateAlert(context, null, null);
           },
         ),
       )),
@@ -336,21 +320,5 @@ class _NotesState extends State<Notes> {
         ),
       )),
     );
-  }
-
-  getNoteCreateAlert(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Dialog(
-              clipBehavior: Clip.hardEdge,
-              insetAnimationDuration: const Duration(milliseconds: 300),
-              child: ChangeNotifierProvider<NotesListBloc>(
-                create: (_) => NotesListBloc(),
-                child: AddNoteAlert(),
-              ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5))));
-        });
   }
 }

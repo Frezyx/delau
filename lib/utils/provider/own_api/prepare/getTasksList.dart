@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart';
 
-Future<List<Task>> getTasks(int userID) async {
+Future<List<Task>> getTasks() async {
   Response res = await API.taskHandler.getTask();
 
   var data = convert.jsonDecode(res.body);
