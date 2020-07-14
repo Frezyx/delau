@@ -22,17 +22,12 @@ class ListWithDateItem extends StatefulWidget {
 }
 
 class _ListWithDateItemState extends State<ListWithDateItem> {
-  bool isOpen;
-
   @override
   Widget build(BuildContext context) {
-    var topSpace = widget.listPosition == 0 ? 22.0 : 9.0;
-    var bottomSpace =
-        widget.listPosition == widget.data.length - 1 ? 22.0 : 9.0;
+    var topSpace = widget.listPosition == 0 ? 10.0 : 9.0;
+    var bottomSpace = 0.0;
     final listItemBlocState = Provider.of<ListItemBloc>(context);
     final selectedTasks = listItemBlocState.getEventsByDate(widget.date);
-
-    isOpen = Provider.of<bool>(context);
 
     return Expanded(
       child: Padding(
@@ -62,7 +57,7 @@ class _ListWithDateItemState extends State<ListWithDateItem> {
                     MdiIcons.fromString(
                         '${selectedTasks[widget.listPosition].icon}'),
                     color: selectedTasks[widget.listPosition].isChecked
-                        ? DesignTheme.greyDark
+                        ? DesignTheme.greyMedium
                         : DesignTheme.mainColor),
               ),
               AnimatedContainer(
@@ -125,7 +120,7 @@ class _ListWithDateItemState extends State<ListWithDateItem> {
                   Container(
                     child: Checkbox(
                       activeColor: selectedTasks[widget.listPosition].isChecked
-                          ? DesignTheme.greyDark
+                          ? DesignTheme.greyMedium
                           : DesignTheme.mainColor,
                       onChanged: (bool value) {
                         selectedTasks[widget.listPosition].isChecked =
@@ -152,16 +147,4 @@ class _ListWithDateItemState extends State<ListWithDateItem> {
       ),
     );
   }
-}
-
-Widget displayTime(String time) {
-  return Container(
-      child: Padding(
-    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-    child: Text(
-      time,
-      style: DesignTheme.listTime,
-      textAlign: TextAlign.center,
-    ),
-  ));
 }

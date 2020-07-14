@@ -25,6 +25,7 @@ class DesignTheme {
   static const Color greyLighterThenMedium = Color.fromRGBO(183, 183, 183, 1);
   static const Color greyDark = Color.fromRGBO(120, 120, 120, 1);
   static const Color greyDarker = Color.fromRGBO(105, 105, 105, 1);
+  static const Color greyLastDarker = Color.fromRGBO(55, 55, 55, 1);
 
   static const double normalBorderRadius = 5;
 
@@ -47,7 +48,7 @@ class DesignTheme {
 
   static const TextStyle listItemLabelChecked = TextStyle(
     fontSize: 18.0,
-    color: DesignTheme.greyDark,
+    color: DesignTheme.greyMedium,
   );
 
   static const TextStyle listItemLabelBig = TextStyle(

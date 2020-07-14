@@ -1,5 +1,6 @@
 import 'package:delau/design/theme.dart';
 import 'package:delau/widget/infoIllustratedScreens/noTasks.dart';
+import 'package:delau/widget/list_builders/displayDate.dart';
 import 'package:delau/widget/list_builders/taskStateIconLine.dart';
 import 'package:delau/widget/list_builders/withDate.dart';
 import 'package:flutter/material.dart';
@@ -133,7 +134,8 @@ Widget buildEventList(double _screenWidth, double screenHeight,
                                 .format(selectedTasks[index].date)),
                             GestureDetector(
                               onTap: () {
-                                listItemBlocState.changeOpenState(index);
+                                listItemBlocState.changeOpenState(
+                                    index, _selectedDay);
                               },
                               child: ListWithDateItem(
                                 listPosition: index,

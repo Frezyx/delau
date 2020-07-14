@@ -147,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                   var count = snapshot.data.length;
                   var data = snapshot.data;
                   if (count == 0) {
-                    return InfoScreen.getNoTasksScreen(context);
+                    return InfoScreen.getNoMarkerScreen(context);
                   } else {
                     return AnimationLimiter(
                         child: StaggeredGridView.countBuilder(
