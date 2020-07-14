@@ -33,6 +33,8 @@ class UserHandler {
           },
           body: msg);
       result = response.statusCode == 201;
+      print(user.toJson().toString());
+      print(response.body);
     } catch (error) {
       result = false;
     }

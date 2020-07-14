@@ -1,4 +1,3 @@
-import 'package:delau/blocs/notesListBloc.dart';
 import 'package:delau/blocs/taskListBloc.dart';
 import 'package:delau/design/theme.dart';
 import 'package:delau/models/marker.dart';
@@ -6,19 +5,17 @@ import 'package:delau/models/task.dart';
 import 'package:delau/utils/provider/own_api/api.dart';
 import 'package:delau/utils/provider/own_api/prepare/getMarkersList.dart';
 import 'package:delau/utils/provider/own_api/prepare/getTasksList.dart';
-import 'package:delau/utils/provider/test_data/testTaskList.dart';
 import 'package:delau/utils/timeHelper.dart';
-import 'package:delau/widget/carousel/carouselHomeSlider.dart';
 import 'package:delau/widget/carousel/carouselItem.dart';
 import 'package:delau/widget/infoIllustratedScreens/infoscreens.dart';
-import 'package:delau/widget/infoIllustratedScreens/noTasks.dart';
+import 'package:delau/widget/pages/home/home.dart';
 import 'package:delau/widget/starWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -150,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                   var count = snapshot.data.length;
                   var data = snapshot.data;
                   if (count == 0) {
-                    return Text("Нет");
+                    return InfoScreen.getNoTasksScreen(context);
                   } else {
                     return AnimationLimiter(
                         child: StaggeredGridView.countBuilder(
@@ -238,25 +235,30 @@ class _HomePageState extends State<HomePage> {
                 } else {
                   var count = snapshot.data.length;
                   var data = snapshot.data;
-                  return AnimationLimiter(
-                      child: ListView.builder(
-                          itemCount: count,
-                          itemBuilder: (context, i) {
-                            return AnimationConfiguration.staggeredList(
-                                position: i,
-                                duration: const Duration(milliseconds: 375),
-                                child: SlideAnimation(
-                                    verticalOffset: 50.0,
-                                    child: FadeInAnimation(
-                                        child: buildListItem(i, data))));
-                          }));
+                  if (count == 0) {
+                    return InfoScreen.getNoTasksScreen(context);
+                  } else {
+                    return AnimationLimiter(
+                        child: ListView.builder(
+                            itemCount: count,
+                            itemBuilder: (context, i) {
+                              return AnimationConfiguration.staggeredList(
+                                  position: i,
+                                  duration: const Duration(milliseconds: 375),
+                                  child: SlideAnimation(
+                                      verticalOffset: 50.0,
+                                      child: FadeInAnimation(
+                                          child: buildListItem(
+                                              i, data, context))));
+                            }));
+                  }
                 }
             }
           }),
     ));
   }
 
-  Widget buildListItem(int i, data) {
+  Widget buildListItem(int i, data, context) {
     return Padding(
       padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
       child: Column(

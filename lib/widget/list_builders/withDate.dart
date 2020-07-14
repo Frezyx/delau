@@ -47,9 +47,6 @@ class _ListWithDateItemState extends State<ListWithDateItem> {
               boxShadow: [
                 BoxShadow(
                   color: DesignTheme.greyDark.withOpacity(0.05),
-                  // selectedTasks[widget.listPosition].isChecked ?
-                  //   Colors.green.withOpacity(0.18)
-                  // : Color.fromRGBO(0, 0, 0, 0.05),
                   offset: Offset(0.0, 3.0),
                   spreadRadius: 2.0,
                   blurRadius: 11.0,

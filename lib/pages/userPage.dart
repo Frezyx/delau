@@ -14,7 +14,6 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-  var userPageBloc;
   double screenHeight = 50;
   double screenWidth = 50;
   setImgWH(context) {
@@ -31,7 +30,7 @@ class _UserPageState extends State<UserPage> {
 
   @override
   Widget build(BuildContext context) {
-    userPageBloc = Provider.of<UserPageBloc>(context);
+    final userPageBloc = Provider.of<UserPageBloc>(context);
     userPageBloc.loadUserData();
     userPageBloc.loadUserParamsData();
 
@@ -150,7 +149,9 @@ class _UserPageState extends State<UserPage> {
                                         ),
                                       ],
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      AlertManager.getLogoutAlert(context);
+                                    },
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(30.0),
                                     ),
