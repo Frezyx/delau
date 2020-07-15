@@ -46,18 +46,16 @@ class _CarouselState extends State<Carousel> {
       }
     }
 
-    return InkWell(
-      onTap: () {
-        Navigator.popAndPushNamed(context, "/navigator/1");
-      },
-      child: Padding(
-          padding: const EdgeInsets.only(top: 100.0),
-          child: CarouselHomeSlider(childrens: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Row(
-                children: <Widget>[
-                  Container(
+    return Padding(
+        padding: const EdgeInsets.only(top: 100.0),
+        child: CarouselHomeSlider(childrens: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Row(
+              children: <Widget>[
+                InkWell(
+                  onTap: () {},
+                  child: Container(
                       decoration: BoxDecoration(
                         color: DesignTheme.mainColor,
                         borderRadius: BorderRadius.circular(15),
@@ -76,53 +74,53 @@ class _CarouselState extends State<Carousel> {
                                 style: DesignTheme.biggerWhite
                                     .copyWith(fontSize: 35)),
                       )),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 6.0),
-                    child: !taskListBloc.isDataLoaded
-                        ? Container(
-                            width: MediaQuery.of(context).size.height / 4,
-                            child: LinearProgressIndicator())
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "Задач на сегодня",
-                                style: DesignTheme.carouselLabel,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              Text("$differenceText",
-                                  style: DesignTheme.carouselUnderLabel,
-                                  overflow: TextOverflow.fade)
-                            ],
-                          ),
-                  ),
-                ],
-              ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 6.0),
+                  child: !taskListBloc.isDataLoaded
+                      ? Container(
+                          width: MediaQuery.of(context).size.height / 4,
+                          child: LinearProgressIndicator())
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "Задач на сегодня",
+                              style: DesignTheme.carouselLabel,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text("$differenceText",
+                                style: DesignTheme.carouselUnderLabel,
+                                overflow: TextOverflow.fade)
+                          ],
+                        ),
+                ),
+              ],
             ),
-            buildTelegramBaner()
-          ])),
-    );
+          ),
+          buildTelegramBaner()
+        ]));
   }
 
   buildTelegramBaner() {
-    return InkWell(
-      onTap: () => openTelegram(),
-      child: Stack(
-        children: <Widget>[
-          Expanded(
-              child: Align(
-                  alignment: Alignment.topRight,
-                  child: SvgPicture.asset(
-                    'assets/svg/tg-figure-top.svg',
-                  ))),
-          Expanded(
-              child: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: SvgPicture.asset(
-                    'assets/svg/tg-figure.svg',
-                  ))),
-          Padding(
+    return Stack(
+      children: <Widget>[
+        Expanded(
+            child: Align(
+                alignment: Alignment.topRight,
+                child: SvgPicture.asset(
+                  'assets/svg/tg-figure-top.svg',
+                ))),
+        Expanded(
+            child: Align(
+                alignment: Alignment.bottomLeft,
+                child: SvgPicture.asset(
+                  'assets/svg/tg-figure.svg',
+                ))),
+        InkWell(
+          onTap: () => openTelegram(),
+          child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: Row(
               children: <Widget>[
@@ -163,8 +161,8 @@ class _CarouselState extends State<Carousel> {
               ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
