@@ -64,7 +64,7 @@ Stack buildAppBar(taskListBloc, taskList, context) {
         ),
       ),
       taskListBloc.isDataLoaded
-          ? Carousel(list: taskList)
+          ? Carousel()
           : Padding(
               padding: const EdgeInsets.only(top: 140.0),
               child: Expanded(

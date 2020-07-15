@@ -109,6 +109,16 @@ class DesignTheme {
 
 // Home page
 
+  static const TextStyle telegramBanerMainText = TextStyle(
+      fontSize: 16.0,
+      fontWeight: FontWeight.w500,
+      color: DesignTheme.mainColor);
+
+  static const TextStyle telegramBanerSecondText = TextStyle(
+      fontSize: 11.0,
+      fontWeight: FontWeight.w300,
+      color: DesignTheme.greyMedium);
+
   static const TextStyle biggerWhite = TextStyle(
     fontSize: 50.0,
     fontWeight: FontWeight.w900,
