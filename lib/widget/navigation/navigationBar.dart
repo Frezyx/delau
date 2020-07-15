@@ -5,13 +5,10 @@ import 'package:delau/blocs/taskListBloc.dart';
 import 'package:delau/pages/calendar.dart';
 import 'package:delau/pages/home.dart';
 import 'package:delau/pages/notes.dart';
-import 'package:delau/pages/settings.dart';
 import 'package:delau/widget/navigation/sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../notification.dart';
 
 class BottomBarWithSheetNavigator extends StatefulWidget {
   BottomBarWithSheetNavigator({this.selectedIndex});
@@ -32,9 +29,6 @@ class _BottomBarWithSheetNavigatorState
         create: (_) => TaskListBloc(), child: HomePage()),
     ChangeNotifierProvider<ListItemBloc>(
         create: (_) => ListItemBloc(), child: Calendar()),
-    // MyStatefulWidget(),
-    SettingsPage(),
-    // LocalNotificationWidget(),
     ChangeNotifierProvider<NotesListBloc>(
       create: (_) => NotesListBloc(),
       child: Notes(),
@@ -84,11 +78,6 @@ class _BottomBarWithSheetNavigatorState
           BottomBarWithSheetItem(
             iconData: Icons.calendar_today,
             label: 'Календарь',
-            selectedBackgroundColor: Colors.blue,
-          ),
-          BottomBarWithSheetItem(
-            iconData: Icons.settings,
-            label: 'Настройки',
             selectedBackgroundColor: Colors.blue,
           ),
           BottomBarWithSheetItem(
