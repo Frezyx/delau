@@ -85,6 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 validator: (value) {
                                   if (value.isEmpty)
+                                    //TODO: проверить > 6
                                     return 'Введите ваш пароль';
                                   else {
                                     user.password = value.toString();

@@ -50,11 +50,6 @@ getBottomButton(String text, BuildContext context, Function func, int pageIndex,
         children: <Widget>[
           Row(
             children: <Widget>[
-              // IconButton(
-              //   icon: Icon(Icons.info_outline,
-              //       color: DesignTheme.greyMedium, size: 25),
-              //   onPressed: () {},
-              // ),
               SizedBox(width: MediaQuery.of(context).size.height / 15),
               Container(
                 decoration: BoxDecoration(
