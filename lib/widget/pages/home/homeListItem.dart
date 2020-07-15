@@ -81,7 +81,9 @@ Widget buildItemBody(data, int i, context) {
               activeColor: DesignTheme.mainColor,
               onChanged: (bool value) {
                 API.taskHandler.checkTask(data[i].id).then((res) {
-                  if (res) {}
+                  if (res) {
+                    // Make ListRebuild
+                  }
                 });
               },
               value: data[i].isChecked,

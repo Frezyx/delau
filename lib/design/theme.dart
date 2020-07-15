@@ -193,6 +193,12 @@ class DesignTheme {
     color: Colors.black,
   );
 
+  static const TextStyle userPageEmail = TextStyle(
+    fontSize: 12.0,
+    fontWeight: FontWeight.w300,
+    color: DesignTheme.greyDark,
+  );
+
   static const TextStyle appBarText = TextStyle(
     fontWeight: FontWeight.w600,
     fontSize: 22,

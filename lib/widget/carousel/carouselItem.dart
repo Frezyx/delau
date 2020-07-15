@@ -104,65 +104,49 @@ class _CarouselState extends State<Carousel> {
   }
 
   buildTelegramBaner() {
-    return Stack(
-      children: <Widget>[
-        Expanded(
-            child: Align(
-                alignment: Alignment.topRight,
+    return InkWell(
+      onTap: () => openTelegram(),
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Row(
+          children: <Widget>[
+            Container(
                 child: SvgPicture.asset(
-                  'assets/svg/tg-figure-top.svg',
-                ))),
-        Expanded(
-            child: Align(
-                alignment: Alignment.bottomLeft,
-                child: SvgPicture.asset(
-                  'assets/svg/tg-figure.svg',
-                ))),
-        InkWell(
-          onTap: () => openTelegram(),
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Row(
-              children: <Widget>[
-                Container(
-                    child: SvgPicture.asset(
-                  'assets/svg/telegram.svg',
-                  height: 60,
-                )),
-                Padding(
-                  padding: const EdgeInsets.only(left: 6.0),
-                  child: Container(
-                    height: 90,
-                    width: MediaQuery.of(context).size.height / 3.5,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Text(
-                              "Уведомления в Telegram !",
-                              style: DesignTheme.telegramBanerMainText,
-                              overflow: TextOverflow.fade,
-                            ),
-                          ),
+              'assets/svg/telegram.svg',
+              height: 60,
+            )),
+            Padding(
+              padding: const EdgeInsets.only(left: 6.0),
+              child: Container(
+                height: 90,
+                width: MediaQuery.of(context).size.height / 3.5,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Text(
+                          "Уведомления в Telegram !",
+                          style: DesignTheme.telegramBanerMainText,
+                          overflow: TextOverflow.fade,
                         ),
-                        SizedBox(height: 4),
-                        Expanded(
-                            child: Text(
-                                "Попробуйте наш телеграм чат-бот. Авторизация за пару секунд.",
-                                style: DesignTheme.telegramBanerSecondText,
-                                overflow: TextOverflow.fade)),
-                      ],
+                      ),
                     ),
-                  ),
+                    SizedBox(height: 4),
+                    Expanded(
+                        child: Text(
+                            "Попробуйте наш телеграм чат-бот. Авторизация за пару секунд.",
+                            style: DesignTheme.telegramBanerSecondText,
+                            overflow: TextOverflow.fade)),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

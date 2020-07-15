@@ -59,6 +59,9 @@ class _UserPageState extends State<UserPage> {
                                   " " +
                                   userPageBloc.user.surname,
                               style: DesignTheme.userPageName),
+                          SizedBox(height: 5),
+                          Text(userPageBloc.user.email,
+                              style: DesignTheme.userPageEmail),
                           SizedBox(height: 30),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
