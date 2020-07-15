@@ -1,6 +1,7 @@
 import 'package:delau/blocs/userPageBloc.dart';
 import 'package:delau/design/theme.dart';
 import 'package:delau/utils/provider/own_api/api.dart';
+import 'package:delau/utils/transition/openTelegram.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
@@ -91,7 +92,7 @@ getInfoCard(context, String count, String param) {
 
 buildNotifyField(String nameField, userPageBloc) {
   return InkWell(
-      onTap: () => _openTelegram(),
+      onTap: () => openTelegram(),
       child: Padding(
         padding: const EdgeInsets.only(left: 10.0, right: 10.0),
         child: Row(
@@ -111,13 +112,6 @@ buildNotifyField(String nameField, userPageBloc) {
                   ]),
             ]),
       ));
-}
-
-_openTelegram() async {
-  const url = 'http://t.me/delau_notify_bot';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {}
 }
 
 buildNotifyFieldEdit(String nameField, listenedUserPageBloc) {

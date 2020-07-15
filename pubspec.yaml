@@ -94,9 +94,14 @@ flutter:
    - assets/svg/bg-figure.svg
    - assets/svg/bg-figure-bottom.svg
    - assets/img/logo.jpg
-   - assets/img/sheet/marker.png
-   - assets/img/sheet/note.png
-   - assets/img/sheet/task.png
+   - assets/svg/marker.svg
+   - assets/svg/telegram.svg
+   - assets/svg/tg-figure.svg
+   - assets/svg/tg-figure-top.svg
+
+   - assets/svg/sheet/checklist.svg
+   - assets/svg/sheet/marker.svg
+   - assets/svg/sheet/write.svg
 
   fonts:
     - family: Ubuntu

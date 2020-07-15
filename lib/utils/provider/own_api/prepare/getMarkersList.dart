@@ -4,7 +4,7 @@ import 'package:delau/utils/provider/own_api/api.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart';
 
-Future<List<Marker>> getMarkersList(int userID) async {
+Future<List<Marker>> getMarkersList() async {
   Response res = await API.taskHandler.getAllMarkers();
 
   var data = convert.jsonDecode(res.body);

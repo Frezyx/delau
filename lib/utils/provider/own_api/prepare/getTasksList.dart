@@ -16,7 +16,7 @@ Future<List<Task>> getTasks() async {
   return taskList;
 }
 
-Future<List<Task>> getTasksByDate(int userID, DateTime date) async {
+Future<List<Task>> getTasksByDate(DateTime date) async {
   var res = await API.taskHandler.getTask();
   var data = convert.jsonDecode(res.body);
   var taskList = <Task>[];
@@ -29,6 +29,17 @@ Future<List<Task>> getTasksByDate(int userID, DateTime date) async {
     if (day.millisecondsSinceEpoch == nowday.millisecondsSinceEpoch) {
       taskList.add(taskFromServer);
     }
+  }
+  return taskList;
+}
+
+Future<List<Task>> getTasksByMarker(String marker) async {
+  var res = await API.taskHandler.getTaskByMarker(marker);
+  var data = convert.jsonDecode(res.body);
+  var taskList = <Task>[];
+  for (var task in data) {
+    Task taskFromServer = Task.fromMap(task);
+    taskList.add(taskFromServer);
   }
   return taskList;
 }

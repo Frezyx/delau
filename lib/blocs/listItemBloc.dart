@@ -38,6 +38,12 @@ class ListItemBloc extends ChangeNotifier {
     }
   }
 
+  changeOpenState(int index, DateTime date) {
+    var dateInDay = DateTime(date.year, date.month, date.day);
+    _events[dateInDay][index].isOpen = !_events[dateInDay][index].isOpen;
+    notifyListeners();
+  }
+
   Map<DateTime, List<Task>> getEventMapFromTaskList(List<Task> _taskList) {
     Map<DateTime, List<Task>> _events = {};
     for (Task task in _taskList) {

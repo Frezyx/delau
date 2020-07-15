@@ -1,8 +1,10 @@
 import 'package:delau/design/theme.dart';
 import 'package:delau/widget/infoIllustratedScreens/noTasks.dart';
+import 'package:delau/widget/list_builders/displayDate.dart';
 import 'package:delau/widget/list_builders/taskStateIconLine.dart';
 import 'package:delau/widget/list_builders/withDate.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -109,43 +111,51 @@ Widget buildEventList(double _screenWidth, double screenHeight,
       ? LinearProgressIndicator()
       : selectedTasks != null && selectedTasks.length > 0
           ? Expanded(
-              child: ListView.builder(
+              child: AnimationLimiter(
+                  child: ListView.builder(
                 itemCount: selectedTasks.length,
                 padding: const EdgeInsets.all(0),
                 itemBuilder: (context, index) {
                   //TODO: Сделать так, чтоб только контейнер можно было двигать
-                  return Dismissible(
-                      key: UniqueKey(),
-                      background: Container(),
-                      child: ListTile(
-                        contentPadding:
-                            const EdgeInsets.only(left: 24, right: 24),
-                        title: Row(
-                          children: <Widget>[
-                            LineStateCheckedIcons(
-                              date: _selectedDay,
-                              iconSize: 15,
-                              index: index,
-                              listLength: selectedTasks.length,
-                              isFinish: true,
-                            ),
-                            displayTime(DateFormat('Hm')
-                                .format(selectedTasks[index].date)),
-                            GestureDetector(
-                              onTap: () {
-                                listItemBlocState.changeOpenState(index);
-                              },
-                              child: ListWithDateItem(
-                                listPosition: index,
-                                data: selectedTasks,
-                                date: _selectedDay,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ));
+                  return AnimationConfiguration.staggeredList(
+                      position: index,
+                      duration: const Duration(milliseconds: 375),
+                      child: SlideAnimation(
+                          verticalOffset: 50.0,
+                          child: FadeInAnimation(
+                              child: ListTile(
+                                  contentPadding: const EdgeInsets.only(
+                                      left: 24, right: 24),
+                                  title: Row(
+                                    children: <Widget>[
+                                      LineStateCheckedIcons(
+                                        date: _selectedDay,
+                                        iconSize: 15,
+                                        index: index,
+                                        listLength: selectedTasks.length,
+                                        isFinish: true,
+                                      ),
+                                      displayTime(DateFormat('Hm')
+                                          .format(selectedTasks[index].date)),
+                                      Dismissible(
+                                        key: UniqueKey(),
+                                        background: Container(),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            listItemBlocState.changeOpenState(
+                                                index, _selectedDay);
+                                          },
+                                          child: ListWithDateItem(
+                                            listPosition: index,
+                                            data: selectedTasks,
+                                            date: _selectedDay,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )))));
                 },
-              ),
+              )),
             )
           : getNoTasksScreen(screenHeight, context);
 }

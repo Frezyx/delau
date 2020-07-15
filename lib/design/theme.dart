@@ -25,6 +25,7 @@ class DesignTheme {
   static const Color greyLighterThenMedium = Color.fromRGBO(183, 183, 183, 1);
   static const Color greyDark = Color.fromRGBO(120, 120, 120, 1);
   static const Color greyDarker = Color.fromRGBO(105, 105, 105, 1);
+  static const Color greyLastDarker = Color.fromRGBO(55, 55, 55, 1);
 
   static const double normalBorderRadius = 5;
 
@@ -47,7 +48,7 @@ class DesignTheme {
 
   static const TextStyle listItemLabelChecked = TextStyle(
     fontSize: 18.0,
-    color: DesignTheme.greyDark,
+    color: DesignTheme.greyMedium,
   );
 
   static const TextStyle listItemLabelBig = TextStyle(
@@ -65,6 +66,16 @@ class DesignTheme {
     fontWeight: FontWeight.w300,
     color: DesignTheme.greyDark,
   );
+
+  static const TextStyle markerThemeText = TextStyle(
+      fontSize: 22.0,
+      fontWeight: FontWeight.w500,
+      color: DesignTheme.mainColor);
+
+  static const TextStyle markerThemeFieldText = TextStyle(
+      fontSize: 12.0,
+      fontWeight: FontWeight.w300,
+      color: DesignTheme.greyMedium);
 
 // Task list text styles end
 
@@ -97,6 +108,16 @@ class DesignTheme {
 // Notes page end
 
 // Home page
+
+  static const TextStyle telegramBanerMainText = TextStyle(
+      fontSize: 16.0,
+      fontWeight: FontWeight.w500,
+      color: DesignTheme.mainColor);
+
+  static const TextStyle telegramBanerSecondText = TextStyle(
+      fontSize: 11.0,
+      fontWeight: FontWeight.w300,
+      color: DesignTheme.greyMedium);
 
   static const TextStyle biggerWhite = TextStyle(
     fontSize: 50.0,
@@ -170,6 +191,12 @@ class DesignTheme {
     fontSize: 20.0,
     fontWeight: FontWeight.w500,
     color: Colors.black,
+  );
+
+  static const TextStyle userPageEmail = TextStyle(
+    fontSize: 12.0,
+    fontWeight: FontWeight.w300,
+    color: DesignTheme.greyDark,
   );
 
   static const TextStyle appBarText = TextStyle(
