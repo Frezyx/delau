@@ -7,7 +7,6 @@ import 'package:delau/utils/router/customRouter.dart';
 import 'package:delau/widget/navigation/navigationBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:delau/pages/updateTask.dart';
@@ -18,7 +17,6 @@ import 'design/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isReg = await UserDB.udb.isSetAuthUser();
 
   // FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
